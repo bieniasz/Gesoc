@@ -2,5 +2,5 @@ package seguridad;
 
 public interface CriterioValidacion {
 
-	boolean validar(String contrseña);
+	boolean validar(String contrasenia);
 }
