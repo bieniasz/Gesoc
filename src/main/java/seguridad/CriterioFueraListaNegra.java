@@ -2,7 +2,7 @@ package seguridad;
 
 import java.util.List;
 
-public class FueraListaNegra implements CriterioValidacion {
+public class CriterioFueraListaNegra implements CriterioValidacion {
 
 	List<String> listaNegra;
 	@Override

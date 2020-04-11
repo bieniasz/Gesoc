@@ -1,6 +1,6 @@
 package seguridad;
 
-public class CriterioOchoCaracteres implements CriterioValidacion {
+public class CriterioLongitud implements CriterioValidacion {
 
 	@Override
 	public boolean validar(String contrasenia) {
