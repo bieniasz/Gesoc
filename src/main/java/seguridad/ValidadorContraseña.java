@@ -9,7 +9,9 @@ public class ValidadorContraseña {
 	
 	boolean validarContraseñaCreacion(String contraseña) {
 		
-		return	//for each o forall aplicar todos los crtierios y devolver el resultado final
+		
+		return	this.criteriosCreacion.stream().allMatch(criterio->criterio.validar(contraseña)==true);
 		
 	}
+
 }
