@@ -7,7 +7,7 @@ public class ValidadorContrasenia {
 	List<CriterioValidacion> criteriosLogin;
 	List<CriterioValidacion> criteriosCreacion;
 	
-	boolean validarContraseñaCreacion(String contrasenia) {
+	boolean validarContraseniaCreacion(String contrasenia) {
 		
 		
 		return	this.criteriosCreacion.stream().allMatch(criterio->criterio.validar(contrasenia)==true);

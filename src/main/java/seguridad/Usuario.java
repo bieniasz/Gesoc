@@ -3,7 +3,7 @@ package seguridad;
 public class Usuario {
 
 	String nombre;
-	String contraseña;
+	String contrasenia;
 	String tipo;
 	
 	void iniciarSesion() {
