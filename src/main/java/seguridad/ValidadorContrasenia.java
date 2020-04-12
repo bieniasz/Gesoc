@@ -4,8 +4,8 @@ import java.util.List;
 
 public class ValidadorContrasenia {
 
-	List<CriterioValidacion> criteriosLogin;
-	List<CriterioValidacion> criteriosCreacion;
+	private List<CriterioValidacion> criteriosLogin;
+	private List<CriterioValidacion> criteriosCreacion;
 	
 	boolean validarContraseniaCreacion(String contrasenia) {
 		
