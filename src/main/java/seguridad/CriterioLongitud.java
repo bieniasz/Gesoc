@@ -1,11 +1,17 @@
 package seguridad;
 
+import java.util.List;
+
 public class CriterioLongitud implements CriterioValidacion {
 
 	@Override
-	public boolean validar(String contrasenia) {
-		
-		return contrasenia.length()>=8;
+	public void validar(String contrasenia, List<String> mensajesDeError) {
+
+		if(contrasenia.length() <= 8)
+		{
+			mensajesDeError.add("Contrasenia muy corta, debe tener mas de 8 letras");
+		}
+
 	}
 
 }

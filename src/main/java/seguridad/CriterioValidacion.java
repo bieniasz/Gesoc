@@ -1,6 +1,8 @@
 package seguridad;
 
+import java.util.List;
+
 public interface CriterioValidacion {
 
-	boolean validar(String contrasenia);
+	void validar(String contrasenia, List<String> mensajesDeError);
 }
