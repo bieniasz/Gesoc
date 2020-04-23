@@ -8,22 +8,23 @@ import java.util.stream.Collectors;
 public class ValidadorContrasenia {
 
 	private static List<CriterioValidacion> criteriosLogin;
-	private static List<CriterioValidacion> criteriosCreacion;
+	private static List<CriterioValidacion> criteriosCreacionContrasenia;
 
 	public ValidadorContrasenia()
 	{
 		this.criteriosLogin = new ArrayList<CriterioValidacion>();
-		this.criteriosLogin.add(new CriterioLongitud());
-		this.criteriosLogin.add(new CriterioFueraListaNegra());
 
-		this.criteriosCreacion = new ArrayList<CriterioValidacion>();
-		this.criteriosCreacion.add(new CriterioMinusculasYMayusculas());
+		this.criteriosCreacionContrasenia = new ArrayList<CriterioValidacion>();
+		this.criteriosCreacionContrasenia.add(new CriterioCaracteresEspeciales());
+		this.criteriosCreacionContrasenia.add(new CriterioFueraListaNegra());
+		this.criteriosCreacionContrasenia.add(new CriterioLongitud());
+		this.criteriosCreacionContrasenia.add(new CriterioMinusculasYMayusculas());
 	}
 
 	public List<String> ValidarContraseniaCreacion(String constrasenia) {
 
 		List<String> mensajesDeError = new ArrayList<String>();
-		this.criteriosCreacion.stream().forEach( criterio -> criterio.validar(constrasenia, mensajesDeError) );
+		this.criteriosCreacionContrasenia.stream().forEach( criterio -> criterio.validar(constrasenia, mensajesDeError) );
 
 		return mensajesDeError;
 	}

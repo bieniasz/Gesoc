@@ -13,24 +13,23 @@ public class TestValidadorContrasenia {
         this.validador = new ValidadorContrasenia();
     }
 
+
     @Test
-    public void contraseniaEnListaNegra(){
-        List<String> mensajesDeError = this.validador.ValidarContraseniaLogin("123456789");
-        Assert.assertEquals(mensajesDeError.size(), 1);
+    public void contraseniaNORompeCriterios(){
+        List<String> mensajesDeError = this.validador.ValidarContraseniaCreacion("nnKKKKK6456/(%nn");
+        Assert.assertEquals(0, mensajesDeError.size());
     }
 
     @Test
-    public void contraseniaEnListaNegraMensajeDeError(){
-        List<String> mensajesDeError = this.validador.ValidarContraseniaLogin("123456789");
-        Assert.assertEquals(mensajesDeError.get(0), "Contrasenia pertenece a lista negra");
+    public void contraseniaRompeUnSoloCriterio(){
+        List<String> mensajesDeError = this.validador.ValidarContraseniaCreacion("nnnnnnnnnnnnnnnn&#");
+        Assert.assertEquals(1, mensajesDeError.size());
     }
 
     @Test
-    public void contraseniaNoEstaEnListaNegra(){
-        List<String> mensajesDeError = this.validador.ValidarContraseniaLogin("c0ntr4SENIAcomL3333ja");
-        Assert.assertEquals(mensajesDeError.size(), 0);
+    public void contraseniaRompeMultiplesCriterios() {
+        List<String> mensajesDeError = this.validador.ValidarContraseniaCreacion("nnnn");
+        Assert.assertEquals(3, mensajesDeError.size());
     }
-
-
 }
 
