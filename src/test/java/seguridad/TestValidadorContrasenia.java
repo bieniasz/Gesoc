@@ -50,28 +50,6 @@ public class TestValidadorContrasenia {
         Assert.assertEquals(mensajesDeError.size(), 0);
     }
 
-    @Test
-    public void contraseniaNoTieneMayusculas(){
-        List<String> mensajesDeError = this.validador.ValidarContraseniaCreacion("nnnnnnnnnnnnn");
-        Assert.assertEquals(mensajesDeError.size(), 1);
-    }
 
-    @Test
-    public void contraseniaNoTieneMayusculasMensaje(){
-        List<String> mensajesDeError = this.validador.ValidarContraseniaCreacion("nnnnnnnnnnnnn");
-        Assert.assertEquals(mensajesDeError.get(0), "Faltan letras mayusculas a la contrasenia");
-    }
-
-    @Test
-    public void contraseniaNoTieneMinusculas(){
-        List<String> mensajesDeError = this.validador.ValidarContraseniaCreacion("NNNNNNNNNNNNNN");
-        Assert.assertEquals(mensajesDeError.size(), 1);
-    }
-
-    @Test
-    public void contraseniaNoTieneMinusculasMensaje(){
-        List<String> mensajesDeError = this.validador.ValidarContraseniaCreacion("NNNNNNNNNNNNNN");
-        Assert.assertEquals(mensajesDeError.get(0), "Faltan letras minusculas a la contrasenia");
-    }
 }
 
