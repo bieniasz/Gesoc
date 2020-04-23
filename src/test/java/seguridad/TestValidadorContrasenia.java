@@ -14,25 +14,6 @@ public class TestValidadorContrasenia {
     }
 
     @Test
-    public void contraseniaMuyCorta(){
-        List<String> mensajesDeError = this.validador.ValidarContraseniaLogin("hola");
-        Assert.assertEquals(mensajesDeError.size(), 1);
-    }
-
-    @Test
-    public void contraseniaCortaMensaje(){
-        List<String> mensajesDeError = this.validador.ValidarContraseniaLogin("hola");
-        Assert.assertEquals(mensajesDeError.get(0), "Contrasenia muy corta, debe tener mas de 8 letras");
-    }
-
-    @Test
-    public void contraseniaTamanioCorrecto(){
-        List<String> mensajesDeError = this.validador.ValidarContraseniaLogin("masDeOchoLetras");
-        Assert.assertEquals(mensajesDeError.size(), 0);
-    }
-
-
-    @Test
     public void contraseniaEnListaNegra(){
         List<String> mensajesDeError = this.validador.ValidarContraseniaLogin("123456789");
         Assert.assertEquals(mensajesDeError.size(), 1);

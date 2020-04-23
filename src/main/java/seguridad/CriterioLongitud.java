@@ -9,7 +9,7 @@ public class CriterioLongitud implements CriterioValidacion {
 
 		if(contrasenia.length() <= 8)
 		{
-			mensajesDeError.add("Contrasenia muy corta, debe tener mas de 8 letras");
+			mensajesDeError.add("Contrasenia muy corta, debe tener mas de 8 caracteres");
 		}
 
 	}
