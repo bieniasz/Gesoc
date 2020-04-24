@@ -21,8 +21,8 @@ public class TestCriterioCaracteresEspeciales {
     @Test
     public void caracteresEspecialesAlFinal(){
 
-        String contrasenia = "hola!$";
-        this.criterio.validar(contrasenia, errorMessages);
+        Usuario usuario = new Usuario("testUser", "hola!$");
+        this.criterio.validar(usuario, errorMessages);
 
         Assert.assertEquals(0, this.errorMessages.size());
     }
@@ -30,8 +30,8 @@ public class TestCriterioCaracteresEspeciales {
     @Test
     public void caracteresEspecialesEnMedio(){
 
-        String contrasenia = "hol!$a";
-        this.criterio.validar(contrasenia, errorMessages);
+        Usuario usuario = new Usuario("testUser", "hol!$a");
+        this.criterio.validar(usuario, errorMessages);
 
         Assert.assertEquals(0, this.errorMessages.size());
     }
@@ -39,8 +39,8 @@ public class TestCriterioCaracteresEspeciales {
     @Test
     public void caracteresEspecialesAlPrincipio(){
 
-        String contrasenia = "!$hola";
-        this.criterio.validar(contrasenia, errorMessages);
+        Usuario usuario = new Usuario("testUser", "!$hola");
+        this.criterio.validar(usuario, errorMessages);
 
         Assert.assertEquals(0, this.errorMessages.size());
     }
@@ -48,8 +48,8 @@ public class TestCriterioCaracteresEspeciales {
     @Test
     public void contraseniaSinCaracteresEspeciales(){
 
-        String contrasenia = "hola";
-        this.criterio.validar(contrasenia, errorMessages);
+        Usuario usuario = new Usuario("testUser", "hola");
+        this.criterio.validar(usuario, errorMessages);
 
         Assert.assertEquals(1, this.errorMessages.size());
     }
@@ -57,8 +57,8 @@ public class TestCriterioCaracteresEspeciales {
     @Test
     public void mensajeContraseniaSinCaracteresEspeciales(){
 
-        String contrasenia = "hola";
-        this.criterio.validar(contrasenia, errorMessages);
+        Usuario usuario = new Usuario("testUser", "hola");
+        this.criterio.validar(usuario, errorMessages);
 
         Assert.assertEquals("Faltan caracteres especiales", this.errorMessages.get(0));
     }

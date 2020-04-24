@@ -20,43 +20,64 @@ public class TestCriterioMinusculasYMayusculas {
 
     @Test
     public void contraseniaNoTieneMayusculas(){
-        this.criterio.validar("nnnnnnnnnnnn", this.errorMessages);
+
+        Usuario usuario = new Usuario("testUser", "nnnnnnnnnnnn");
+        this.criterio.validar(usuario, errorMessages);
+
         Assert.assertEquals(1, this.errorMessages.size());
     }
 
     @Test
     public void contraseniaNoTieneMayusculasMensajeDeError(){
-        this.criterio.validar("nnnnnnnnnnnn", this.errorMessages);
+
+        Usuario usuario = new Usuario("testUser", "nnnnnnnnnnnn");
+        this.criterio.validar(usuario, errorMessages);
+
         Assert.assertEquals("Faltan letras mayusculas a la contrasenia", this.errorMessages.get(0));
     }
 
     @Test
     public void contraseniaNoTieneMinusculas(){
-        this.criterio.validar("NNNNNN", this.errorMessages);
+
+        Usuario usuario = new Usuario("testUser", "NNNNNN");
+        this.criterio.validar(usuario, errorMessages);
+
         Assert.assertEquals(1, this.errorMessages.size());
     }
 
     @Test
     public void contraseniaNoTieneMinusculasMensajeDeError(){
-        this.criterio.validar("NNNNNN", this.errorMessages);
+
+        Usuario usuario = new Usuario("testUser", "NNNNNN");
+        this.criterio.validar(usuario, errorMessages);
+
         Assert.assertEquals("Faltan letras minusculas a la contrasenia", this.errorMessages.get(0));
     }
 
     @Test
     public void contraseniaNoTieneMinuscuYMayusculasOrdenadas1(){
-        this.criterio.validar("nnnnnnNNNNNN", this.errorMessages);
+
+        Usuario usuario = new Usuario("testUser", "nnnnnnNNNNNN");
+        this.criterio.validar(usuario, errorMessages);
+;
         Assert.assertEquals(0, this.errorMessages.size());
     }
 
     @Test
     public void contraseniaNoTieneMinuscuYMayusculasOrdenadas2(){
-        this.criterio.validar("NNNnnnnn", this.errorMessages);
+
+        Usuario usuario = new Usuario("testUser", "NNNnnnnn");
+        this.criterio.validar(usuario, errorMessages);
+
         Assert.assertEquals(0, this.errorMessages.size());
     }
 
     @Test
     public void contraseniaNoTieneMinuscuYMayusculasMixeadas(){
-        this.criterio.validar("nNnNn", this.errorMessages);
+
+        Usuario usuario = new Usuario("testUser", "nNnNn");
+        this.criterio.validar(usuario, errorMessages);
+
         Assert.assertEquals(0, this.errorMessages.size());
     }
 }

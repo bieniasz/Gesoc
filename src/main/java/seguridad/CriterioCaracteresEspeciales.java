@@ -7,9 +7,9 @@ public class CriterioCaracteresEspeciales implements CriterioValidacion {
 
 
     @Override
-    public void validar(String contrasenia, List<String> mensajesDeError) {
+    public void validar(Usuario usuario, List<String> mensajesDeError) {
 
-        if(!contrasenia.matches(".*[ !#$%&'()*+,~./:<=>?@^_`{|}~].*")){
+        if(!usuario.getContrasenia().matches(".*[ !#$%&'()*+,~./:<=>?@^_`{|}~].*")){
             mensajesDeError.add(("Faltan caracteres especiales"));
         }
     }

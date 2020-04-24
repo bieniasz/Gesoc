@@ -21,17 +21,17 @@ public class ValidadorContrasenia {
 		this.criteriosCreacionContrasenia.add(new CriterioMinusculasYMayusculas());
 	}
 
-	public List<String> ValidarContraseniaCreacion(String constrasenia) {
+	public List<String> ValidarCreacionContrasenia(Usuario usuario) {
 
 		List<String> mensajesDeError = new ArrayList<String>();
-		this.criteriosCreacionContrasenia.stream().forEach( criterio -> criterio.validar(constrasenia, mensajesDeError) );
+		this.criteriosCreacionContrasenia.stream().forEach( criterio -> criterio.validar(usuario, mensajesDeError) );
 
 		return mensajesDeError;
 	}
 
-	public List<String> ValidarContraseniaLogin(String constrasenia) {
+	public List<String> ValidarContraseniaLogin(Usuario usuario) {
 		List<String> mensajesDeError = new ArrayList<String>();
-		this.criteriosLogin.stream().forEach( criterio -> criterio.validar(constrasenia, mensajesDeError) );
+		this.criteriosLogin.stream().forEach( criterio -> criterio.validar(usuario, mensajesDeError) );
 
 		return mensajesDeError;
 	}

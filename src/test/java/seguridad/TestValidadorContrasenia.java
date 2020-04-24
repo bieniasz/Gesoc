@@ -16,19 +16,26 @@ public class TestValidadorContrasenia {
 
     @Test
     public void contraseniaNORompeCriterios(){
-        List<String> mensajesDeError = this.validador.ValidarContraseniaCreacion("nnKKKKK6456/(%nn");
+
+        Usuario usuario = new Usuario("testUser", "nnKKKKK6456/(%nn");
+        List<String> mensajesDeError = this.validador.ValidarCreacionContrasenia(usuario);
+
         Assert.assertEquals(0, mensajesDeError.size());
     }
 
     @Test
     public void contraseniaRompeUnSoloCriterio(){
-        List<String> mensajesDeError = this.validador.ValidarContraseniaCreacion("nnnnnnnnnnnnnnnn&#");
+
+        Usuario usuario = new Usuario("testUser", "nnnnnnnnnnnnnnnn&#");
+        List<String> mensajesDeError = this.validador.ValidarCreacionContrasenia(usuario);
         Assert.assertEquals(1, mensajesDeError.size());
     }
 
     @Test
     public void contraseniaRompeMultiplesCriterios() {
-        List<String> mensajesDeError = this.validador.ValidarContraseniaCreacion("nnnn");
+
+        Usuario usuario = new Usuario("testUser", "nnnn");
+        List<String> mensajesDeError = this.validador.ValidarCreacionContrasenia(usuario);
         Assert.assertEquals(3, mensajesDeError.size());
     }
 }

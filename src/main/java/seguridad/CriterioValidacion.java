@@ -4,5 +4,5 @@ import java.util.List;
 
 public interface CriterioValidacion {
 
-	void validar(String contrasenia, List<String> mensajesDeError);
+	void validar(Usuario usuario, List<String> mensajesDeError);
 }

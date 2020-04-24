@@ -5,9 +5,9 @@ import java.util.List;
 public class CriterioLongitud implements CriterioValidacion {
 
 	@Override
-	public void validar(String contrasenia, List<String> mensajesDeError) {
+	public void validar(Usuario usuario, List<String> mensajesDeError) {
 
-		if(contrasenia.length() <= 8)
+		if(usuario.getContrasenia().length() <= 8)
 		{
 			mensajesDeError.add("Contrasenia muy corta, debe tener mas de 8 caracteres");
 		}
