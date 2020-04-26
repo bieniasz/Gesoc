@@ -1,9 +1,7 @@
 package seguridad;
 
 import java.util.ArrayList;
-import java.util.Collection;
 import java.util.List;
-import java.util.stream.Collectors;
 
 public class ValidadorContrasenia {
 
@@ -19,12 +17,17 @@ public class ValidadorContrasenia {
 		this.criteriosCreacionContrasenia.add(new CriterioFueraListaNegra());
 		this.criteriosCreacionContrasenia.add(new CriterioLongitud());
 		this.criteriosCreacionContrasenia.add(new CriterioMinusculasYMayusculas());
+		this.criteriosCreacionContrasenia.add(new CriterioRotacionContrasenia());
 	}
 
 	public List<String> ValidarCreacionContrasenia(Usuario usuario) {
 
 		List<String> mensajesDeError = new ArrayList<String>();
 		this.criteriosCreacionContrasenia.stream().forEach( criterio -> criterio.validar(usuario, mensajesDeError) );
+
+		if(mensajesDeError.size() == 0){
+			AlmacenContrasenias.Instancia().registrarContrasenia(usuario);
+		}
 
 		return mensajesDeError;
 	}
