@@ -10,14 +10,14 @@ import java.util.List;
 public class CriterioFueraListaNegra implements CriterioValidacion {
 
 	List<String> listaNegra;
-	String archivo; // ruta de la lista negra
+	
 
-	public CriterioFueraListaNegra(String archivo) throws FileNotFoundException, IOException{
+	public CriterioFueraListaNegra(){
 		this.listaNegra = new ArrayList<String>();
-		this.agregarListaNegra(archivo);;
+		this.listaNegra.add("123456");;
 	}
 	
-	//para agregar la lista negra
+	//para agregar la lista negra desde un archivo
 	public  void agregarListaNegra(String archivo) throws FileNotFoundException, IOException {
         String cadena;
         FileReader f = new FileReader(archivo);
