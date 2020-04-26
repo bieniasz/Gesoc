@@ -14,7 +14,7 @@ public class ValidadorContrasenia {
 
 		this.criteriosCreacionContrasenia = new ArrayList<CriterioValidacion>();
 		this.criteriosCreacionContrasenia.add(new CriterioCaracteresEspeciales());
-		this.criteriosCreacionContrasenia.add(new CriterioFueraListaNegra(String archivo));
+		this.criteriosCreacionContrasenia.add(new CriterioFueraListaNegra());
 		this.criteriosCreacionContrasenia.add(new CriterioLongitud());
 		this.criteriosCreacionContrasenia.add(new CriterioMinusculasYMayusculas());
 		this.criteriosCreacionContrasenia.add(new CriterioRotacionContrasenia());
