@@ -12,12 +12,12 @@ public class CriterioFueraListaNegra implements CriterioValidacion {
 	List<String> listaNegra;
 	String archivo; // ruta de la lista negra
 
-	public CriterioFueraListaNegra(){
+	public CriterioFueraListaNegra(String archivo) throws FileNotFoundException, IOException{
 		this.listaNegra = new ArrayList<String>();
-		listaNegra.add("123456789");
+		this.agregarListaNegra(archivo);;
 	}
 	
-	//Agrego la lista negra
+	//para agregar la lista negra
 	public  void agregarListaNegra(String archivo) throws FileNotFoundException, IOException {
         String cadena;
         FileReader f = new FileReader(archivo);
