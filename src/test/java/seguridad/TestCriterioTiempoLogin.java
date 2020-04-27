@@ -17,19 +17,38 @@ public class TestCriterioTiempoLogin {
 
         this.criterio = new CriterioTiempoLogin();
         this.errorMessages = new ArrayList<String>();
-
     }
 
-        @Test
-        public void tardaMenosDeTresSegundos () throws InterruptedException {
+    @Test
+    public void tardaMenosDeTresSegundos() throws InterruptedException {
 
-            Usuario usuario = new Usuario("testUser", "NNNNNN");
-            this.criterio.validar(usuario, errorMessages);
-            Thread.sleep(1000);
-            this.criterio.validar(usuario, errorMessages);
+        Usuario usuario = new Usuario("testUser", "NNNNNN");
+        this.criterio.validar(usuario, errorMessages);
+        Thread.sleep(1000);
+        this.criterio.validar(usuario, errorMessages);
 
-            Assert.assertEquals("No han pasado 3 segundos entre los intentos", this.errorMessages.get(0));
+        Assert.assertEquals(1, this.errorMessages.size());
+    }
 
+    @Test
+    public void tardaMasDeTresSegundos () throws InterruptedException {
 
+        Usuario usuario = new Usuario("testUser", "NNNNNN");
+        this.criterio.validar(usuario, errorMessages);
+        Thread.sleep(4000);
+        this.criterio.validar(usuario, errorMessages);
+
+        Assert.assertEquals(0, this.errorMessages.size());
+    }
+
+    @Test
+     public void tardaMenosDeTresSegundosMensajeDeError () throws InterruptedException {
+
+         Usuario usuario = new Usuario("testUser", "NNNNNN");
+         this.criterio.validar(usuario, errorMessages);
+         Thread.sleep(1000);
+         this.criterio.validar(usuario, errorMessages);
+
+         Assert.assertEquals("Debe esperar mas de tres segundos para volver a intentar", this.errorMessages.get(0));
     }
 }
