@@ -22,7 +22,7 @@ public class TestCriterioListaNegra {
     @Test
     public void contraseniaEnListaNegra(){
 
-        Usuario usuario = new Usuario("testUser", "123456789");
+        Usuario usuario = new Usuario("testUser", "123456");
         this.criterio.validar(usuario, errorMessages);
 
         Assert.assertEquals(1, this.errorMessages.size());
@@ -40,7 +40,7 @@ public class TestCriterioListaNegra {
     @Test
     public void criterioListaNegraMensajeDeError(){
 
-        Usuario usuario = new Usuario("testUser", "123456789");
+        Usuario usuario = new Usuario("testUser", "123456");
         this.criterio.validar(usuario, errorMessages);;
 
         Assert.assertEquals("Contrasenia pertenece a lista negra", this.errorMessages.get(0));

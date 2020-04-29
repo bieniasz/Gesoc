@@ -14,11 +14,12 @@ public class CriterioFueraListaNegra implements CriterioValidacion {
 
 	public CriterioFueraListaNegra(){
 		this.listaNegra = new ArrayList<String>();
-		this.listaNegra.add("123456");;
+		this.listaNegra.add("123456");
 	}
 	
 	//para agregar la lista negra desde un archivo
 	//lista completa de archivos: https://github.com/danielmiessler/SecLists/tree/master/Passwords
+
 	public  void agregarListaNegra(String archivo) throws FileNotFoundException, IOException {
         String cadena;
         FileReader f = new FileReader(archivo);
