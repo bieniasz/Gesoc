@@ -8,12 +8,12 @@ public class CriterioMinusculasYMayusculas implements CriterioValidacion {
     public void validar(Usuario usuario, List<String> mensajesDeError) {
 
         boolean tieneMayusculas = usuario.getContrasenia().matches(".*[ABCDEFGHIJKLMNOPQRSTUVWXYZ].*");
-        if(!tieneMayusculas){
+        if (!tieneMayusculas) {
             mensajesDeError.add(("Faltan letras mayusculas a la contrasenia"));
         }
 
         boolean tieneMinusculas = usuario.getContrasenia().matches(".*[abcdefghijklmnopqrstuvwxyz].*");
-        if(!tieneMinusculas){
+        if (!tieneMinusculas) {
             mensajesDeError.add(("Faltan letras minusculas a la contrasenia"));
         }
     }

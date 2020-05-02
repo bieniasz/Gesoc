@@ -21,6 +21,7 @@ public class TestCriterioCaracteresEspeciales {
     @Test
     public void caracteresEspecialesAlFinal(){
 
+        // TODO testUser se repite en todos los test, es mejor utilizar un static final attribute.
         Usuario usuario = new Usuario("testUser", "hola!$");
         this.criterio.validar(usuario, errorMessages);
 

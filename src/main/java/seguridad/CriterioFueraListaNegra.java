@@ -9,6 +9,8 @@ import java.util.List;
 
 public class CriterioFueraListaNegra implements CriterioValidacion {
 
+	// TODO si es un List va a admitir repedidos. No tiene sentido una lista negra con valores repetidos.
+	// TODO revisen como usar collections en java.
 	List<String> listaNegra;
 	
 
@@ -20,6 +22,7 @@ public class CriterioFueraListaNegra implements CriterioValidacion {
 	//para agregar la lista negra desde un archivo
 	//lista completa de archivos: https://github.com/danielmiessler/SecLists/tree/master/Passwords
 
+	// TODO revisen como trabajar correctamente con archivos en java. No estan liberando bien los recursos.
 	public  void agregarListaNegra(String archivo) throws FileNotFoundException, IOException {
         String cadena;
         FileReader f = new FileReader(archivo);
