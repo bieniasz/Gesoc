@@ -12,6 +12,12 @@ public class Usuario {
     private String contrasenia;
     private String tipo;
 
+    public Usuario(String nombre, String contrasenia) {
+
+        this.nombre = nombre;
+        this.contrasenia = contrasenia;
+    }
+
     public String getNombre() {
         return nombre;
     }
@@ -24,12 +30,6 @@ public class Usuario {
         return tipo;
     }
 
-    //TODO esta mal que los nombres de variables comiencen con _. no es necesario esto ya que hacemos uso del this.
-    public Usuario(String _nombre, String _contrasenia) {
-
-        this.nombre = _nombre;
-        this.contrasenia = _contrasenia;
-    }
 
 
 }

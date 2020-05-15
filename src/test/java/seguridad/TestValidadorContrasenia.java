@@ -4,7 +4,6 @@ import org.junit.Assert;
 import org.junit.Before;
 import org.junit.Test;
 import java.util.List;
-import java.util.Optional;
 
 public class TestValidadorContrasenia {
     private ValidadorContrasenia validador;
@@ -19,7 +18,7 @@ public class TestValidadorContrasenia {
     public void contraseniaNORompeCriterios(){
 
         Usuario usuario = new Usuario("testUser", "nnKKKKK6456/(%nn");
-        List<String> mensajesDeError = this.validador.ValidarCreacionContrasenia(usuario);
+        List<String> mensajesDeError = this.validador.validarCreacionContrasenia(usuario);
 
         Assert.assertEquals(0, mensajesDeError.size());
     }
@@ -28,7 +27,7 @@ public class TestValidadorContrasenia {
     public void contraseniaRompeUnSoloCriterio(){
 
         Usuario usuario = new Usuario("testUser", "nnnnnnnnnnnnnnnn&#");
-        List<String> mensajesDeError = this.validador.ValidarCreacionContrasenia(usuario);
+        List<String> mensajesDeError = this.validador.validarCreacionContrasenia(usuario);
         Assert.assertEquals(1, mensajesDeError.size());
     }
 
@@ -36,7 +35,7 @@ public class TestValidadorContrasenia {
     public void contraseniaRompeMultiplesCriterios() {
 
         Usuario usuario = new Usuario("testUser", "nnnn");
-        List<String> mensajesDeError = this.validador.ValidarCreacionContrasenia(usuario);
+        List<String> mensajesDeError = this.validador.validarCreacionContrasenia(usuario);
         Assert.assertEquals(3, mensajesDeError.size());
     }
 
@@ -46,8 +45,8 @@ public class TestValidadorContrasenia {
 
         Usuario usuario = new Usuario("testUser", "nnKKKKK6456/(%nn");
 
-        List<String> mensajesDeError = this.validador.ValidarCreacionContrasenia(usuario);
-        mensajesDeError = this.validador.ValidarCreacionContrasenia(usuario);
+        List<String> mensajesDeError = this.validador.validarCreacionContrasenia(usuario);
+        mensajesDeError = this.validador.validarCreacionContrasenia(usuario);
 
         Assert.assertEquals(1, mensajesDeError.size());
     }

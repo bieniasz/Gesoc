@@ -5,10 +5,8 @@ import java.util.List;
 
 public class ValidadorContrasenia {
 
-	//TODO no entiendo porque hacen static estos atributos y luego los acceden con this.
-	//El uso de static es para metodos static.
-    private static List<CriterioValidacion> criteriosLogin;
-    private static List<CriterioValidacion> criteriosCreacionContrasenia;
+    private final List<CriterioValidacion> criteriosLogin;
+    private final List<CriterioValidacion> criteriosCreacionContrasenia;
 
     public ValidadorContrasenia() {
         this.criteriosLogin = new ArrayList<CriterioValidacion>();
@@ -21,16 +19,9 @@ public class ValidadorContrasenia {
         this.criteriosCreacionContrasenia.add(new CriterioRotacionContrasenia());
     }
 
-    //TODO los nombres de metodos en java comienzan con minuscula.
-    public List<String> ValidarCreacionContrasenia(Usuario usuario) {
+    public List<String> validarCreacionContrasenia(Usuario usuario) {
 
         final List<String> errores = new ArrayList<String>();
-		/**
-		 * TODO el largo del nombre de una variable esta relacionado con el scope de donde esta definida.
-		 * Por ejemplo criterio, usando en su lugar c es valido y no necesita ser tan descriptiva y
-		 * se entiende que esta haciendose en esa linea.
-		 * this.criteriosCreacionContrasenia.forEach(c -> c.validar(usuario, errores));
-		 */
         this.criteriosCreacionContrasenia.forEach(criterio -> criterio.validar(usuario, errores));
 
         if (errores.size() == 0) {

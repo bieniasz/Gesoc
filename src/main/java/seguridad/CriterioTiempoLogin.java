@@ -1,33 +1,21 @@
 package seguridad;
-//TODO imports sin uso hay que borrarlos.
-import javax.xml.crypto.Data;
 import java.time.LocalTime;
-import java.util.Calendar;
-import java.util.Date;
 import java.util.List;
 
-/**
- * TODO no se que significa aca <intentoAnterior>, para usar generics deberiamos tener una interface o una abstract
- * class con un <T> o <E>. ver la documentacion y uso de generics.
- * @param <intentoAnterior>
- */
+public class CriterioTiempoLogin implements CriterioValidacion {
 
-public class CriterioTiempoLogin<intentoAnterior> implements CriterioValidacion {
-
-
-    private Integer tiempoDeEspera;
+    private final Integer tiempoDeEspera;
     private LocalTime intentoAnterior;
 
     public CriterioTiempoLogin() {
-        this.tiempoDeEspera = 3;
-    }
 
+        this.tiempoDeEspera = 3;
+        this.intentoAnterior = LocalTime.now();
+    }
 
     @Override
     public void validar(Usuario usuario, List<String> mensajesDeError) {
-
         LocalTime horaActual = LocalTime.now();  //.compareTo();
-        horaActual.toSecondOfDay();
 
         try {
 

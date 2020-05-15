@@ -6,17 +6,15 @@ import java.util.List;
 import java.util.Map;
 
 public class AlmacenContrasenias {
+    //TODO Clase ValidadorDeContrasenia, cuando veamos db vamos a remodelar la clase para que no tenga los datos en memoria y valla a buscar los datos que necesita en la base
 
     // TODO justificar porque usamos un Map de listas, y tener en cuenta los posibles problemas a futuro de esta decision.
     private Map<String, List<String>> contraseniasPrevias;
-    // TODO si esto es una variable static definirla como final static
     private Integer periodosDeRotacion;
     private static AlmacenContrasenias instancia;
 
     private AlmacenContrasenias() {
         this.contraseniasPrevias = new HashMap<String, List<String>>();
-        // TODO esto es un code smell magic number
-        this.periodosDeRotacion = 3;
     }
 
     public static AlmacenContrasenias Instancia() {
@@ -34,10 +32,9 @@ public class AlmacenContrasenias {
 
     //TODO ojo con estos metodos que son de un singleton, deben ser synchronized para evitar problemas de manejo de threads
     //TODO java no garantiza safe-thread.
-    public void registrarContrasenia(Usuario usuario) {
-        // TODO siempre se deben utilizar en el uso de variables de scope de metodo un final.
-        List<String> contrasenias = this.contraseniasPrevias.get(usuario.getNombre());
-        // TODO si el usuario no tiene ningun password la linea 40 parece dar nullPointerException
+    public synchronized void registrarContrasenia(Usuario usuario) {
+        final List<String> contrasenias = this.contraseniasPrevias.get(usuario.getNombre());
+        // TODO si el usuario no tiene ningun password la linea 40 parece dar NullPointerException
         // TODO una mejor forma es trabajar con Optional.
         try {
             contrasenias.add(usuario.getContrasenia());
@@ -46,7 +43,7 @@ public class AlmacenContrasenias {
                 contrasenias.remove(0);
             }
 
-        } catch (Exception e) {
+        } catch (NullPointerException e) {
             this.contraseniasPrevias.put(usuario.getNombre(), new ArrayList<String>());
             this.contraseniasPrevias.get(usuario.getNombre()).add(usuario.getContrasenia());
         }
@@ -55,14 +52,17 @@ public class AlmacenContrasenias {
 
     //TODO ojo con estos metodos que son de un singleton, deben ser synchronized para evitar problemas de manejo de threads
     //TODO java no garantiza safe-thread.
-    public boolean contraseniaRepiteContraseniasViejas(Usuario usuario) {
-        // TODO siempre se deben utilizar en el uso de variables de scope de metodo un final.
-        List<String> contrasenias = this.contraseniasPrevias.get(usuario.getNombre());
+    public synchronized boolean contraseniaRepiteContraseniasViejas(Usuario usuario) {
+        final List<String> contrasenias = this.contraseniasPrevias.get(usuario.getNombre());
 
         try {
             return contrasenias.contains(usuario.getContrasenia());
         } catch (Exception e) {
             return false;
         }
+    }
+
+    public void setPeriodosDeRotacion(Integer cantPeriodos){
+        this.periodosDeRotacion = cantPeriodos;
     }
 }

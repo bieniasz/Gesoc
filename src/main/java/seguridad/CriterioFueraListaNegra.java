@@ -4,33 +4,30 @@ import java.io.BufferedReader;
 import java.io.FileNotFoundException;
 import java.io.FileReader;
 import java.io.IOException;
-import java.util.ArrayList;
+import java.util.LinkedHashSet;
 import java.util.List;
+import java.util.Set;
 
 public class CriterioFueraListaNegra implements CriterioValidacion {
-
-	// TODO si es un List va a admitir repedidos. No tiene sentido una lista negra con valores repetidos.
-	// TODO revisen como usar collections en java.
-	List<String> listaNegra;
-	
+	Set<String> listaNegra;
 
 	public CriterioFueraListaNegra(){
-		this.listaNegra = new ArrayList<String>();
+		this.listaNegra = new LinkedHashSet<>();
 		this.listaNegra.add("123456");
 	}
 	
 	//para agregar la lista negra desde un archivo
 	//lista completa de archivos: https://github.com/danielmiessler/SecLists/tree/master/Passwords
 
-	// TODO revisen como trabajar correctamente con archivos en java. No estan liberando bien los recursos.
-	public  void agregarListaNegra(String archivo) throws FileNotFoundException, IOException {
+	public  void cargarListaNegra(String rutaArchivo) throws FileNotFoundException, IOException {
         String cadena;
-        FileReader f = new FileReader(archivo);
-        BufferedReader b = new BufferedReader(f);
-        while((cadena = b.readLine())!=null) {
+        FileReader fr = new FileReader(rutaArchivo);
+        BufferedReader br = new BufferedReader(fr);
+        while((cadena = br.readLine()) != null) {
         	this.listaNegra.add(cadena);
         }
-        b.close();
+        br.close();
+        fr.close();
     }
 
 
