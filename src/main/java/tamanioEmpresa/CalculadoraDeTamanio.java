@@ -6,8 +6,7 @@ public class CalculadoraDeTamanio {
 	
 	List<CriterioTamanioEmpresa> criterios;
 
-	 public String calcularTamanio( Empresa empresa) {
-		
-		return "grande";
+	 public String calcularTamanio(organizaciones.Empresa empresa) {
+		return "";
 	}
 }
