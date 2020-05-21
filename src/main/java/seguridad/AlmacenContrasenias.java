@@ -21,7 +21,6 @@ public class AlmacenContrasenias {
         if (instancia == null) {
             instancia = new AlmacenContrasenias();
         }
-
         return instancia;
     }
 
@@ -29,16 +28,10 @@ public class AlmacenContrasenias {
         this.contraseniasPrevias.clear();
     }
 
-
-    //TODO ojo con estos metodos que son de un singleton, deben ser synchronized para evitar problemas de manejo de threads
-    //TODO java no garantiza safe-thread.
     public synchronized void registrarContrasenia(Usuario usuario) {
         final List<String> contrasenias = this.contraseniasPrevias.get(usuario.getNombre());
-        // TODO si el usuario no tiene ningun password la linea 40 parece dar NullPointerException
-        // TODO una mejor forma es trabajar con Optional.
         try {
             contrasenias.add(usuario.getContrasenia());
-
             if (contrasenias.size() > this.periodosDeRotacion) {
                 contrasenias.remove(0);
             }

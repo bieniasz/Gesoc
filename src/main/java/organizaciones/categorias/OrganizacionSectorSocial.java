@@ -1,6 +1,7 @@
-package organizaciones;
+package organizaciones.categorias;
 
 public class OrganizacionSectorSocial implements Categoria {
     private String areaDeTrabajo;
     private Integer cantidadDePersonal;
+
 }
