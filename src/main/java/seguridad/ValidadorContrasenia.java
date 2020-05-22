@@ -1,5 +1,7 @@
 package seguridad;
 
+import usuario.Usuario;
+
 import java.util.ArrayList;
 import java.util.List;
 

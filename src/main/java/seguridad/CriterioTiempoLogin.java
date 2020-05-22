@@ -1,4 +1,6 @@
 package seguridad;
+import usuario.Usuario;
+
 import java.time.LocalTime;
 import java.util.List;
 

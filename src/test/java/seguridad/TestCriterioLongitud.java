@@ -3,6 +3,8 @@ package seguridad;
 import org.junit.Assert;
 import org.junit.Before;
 import org.junit.Test;
+import usuario.Estandar;
+import usuario.Usuario;
 
 import java.util.ArrayList;
 import java.util.List;
@@ -22,7 +24,7 @@ public class TestCriterioLongitud {
     @Test
     public void contraseniaMENOSDe8Caracteres(){
 
-        Usuario usuario = new Usuario("testUser", "1234567");
+        Usuario usuario = new Estandar("testUser", "1234567");
         this.criterio.validar(usuario, errorMessages);
 
         Assert.assertEquals(1, this.errorMessages.size());
@@ -31,7 +33,7 @@ public class TestCriterioLongitud {
     @Test
     public void contraseniaMASDe8Caracteres(){
 
-        Usuario usuario = new Usuario("testUser", "123456789");
+        Usuario usuario = new Estandar("testUser", "123456789");
         this.criterio.validar(usuario, errorMessages);
 
         Assert.assertEquals(0, this.errorMessages.size());
@@ -40,7 +42,7 @@ public class TestCriterioLongitud {
     @Test
     public void contraseniaDe8Caracteres(){
 
-        Usuario usuario = new Usuario("testUser", "12345678");
+        Usuario usuario = new Estandar("testUser", "12345678");
         this.criterio.validar(usuario, errorMessages);
 
         Assert.assertEquals(1, this.errorMessages.size());
@@ -49,7 +51,7 @@ public class TestCriterioLongitud {
     @Test
     public void contraseniaCortaMensajeDeError(){
 
-        Usuario usuario = new Usuario("testUser", "1234");
+        Usuario usuario = new Estandar("testUser", "1234");
         this.criterio.validar(usuario, errorMessages);
 
         Assert.assertEquals("Contrasenia muy corta, debe tener mas de 8 caracteres", this.errorMessages.get(0));

@@ -3,6 +3,9 @@ package seguridad;
 import org.junit.Assert;
 import org.junit.Before;
 import org.junit.Test;
+import usuario.Estandar;
+import usuario.Usuario;
+
 import java.util.List;
 
 public class TestValidadorContrasenia {
@@ -17,7 +20,7 @@ public class TestValidadorContrasenia {
     @Test
     public void contraseniaNORompeCriterios(){
 
-        Usuario usuario = new Usuario("testUser", "nnKKKKK6456/(%nn");
+        Usuario usuario = new Estandar("testUser", "nnKKKKK6456/(%nn");
         List<String> mensajesDeError = this.validador.validarCreacionContrasenia(usuario);
 
         Assert.assertEquals(0, mensajesDeError.size());
@@ -26,7 +29,7 @@ public class TestValidadorContrasenia {
     @Test
     public void contraseniaRompeUnSoloCriterio(){
 
-        Usuario usuario = new Usuario("testUser", "nnnnnnnnnnnnnnnn&#");
+        Usuario usuario = new Estandar("testUser", "nnnnnnnnnnnnnnnn&#");
         List<String> mensajesDeError = this.validador.validarCreacionContrasenia(usuario);
         Assert.assertEquals(1, mensajesDeError.size());
     }
@@ -34,7 +37,7 @@ public class TestValidadorContrasenia {
     @Test
     public void contraseniaRompeMultiplesCriterios() {
 
-        Usuario usuario = new Usuario("testUser", "nnnn");
+        Usuario usuario = new Estandar("testUser", "nnnn");
         List<String> mensajesDeError = this.validador.validarCreacionContrasenia(usuario);
         Assert.assertEquals(3, mensajesDeError.size());
     }
@@ -43,7 +46,7 @@ public class TestValidadorContrasenia {
     public void validaElAlmacenContrasenias() {
         AlmacenContrasenias.Instancia().eliminarContraseniasAlmacenadas();
 
-        Usuario usuario = new Usuario("testUser", "nnKKKKK6456/(%nn");
+        Usuario usuario = new Estandar("testUser", "nnKKKKK6456/(%nn");
 
         List<String> mensajesDeError = this.validador.validarCreacionContrasenia(usuario);
         mensajesDeError = this.validador.validarCreacionContrasenia(usuario);

@@ -3,6 +3,8 @@ package seguridad;
 import org.junit.Assert;
 import org.junit.Before;
 import org.junit.Test;
+import usuario.Estandar;
+import usuario.Usuario;
 
 import java.util.ArrayList;
 import java.util.List;
@@ -23,7 +25,7 @@ public class TestCriterioRotacionContrasenia {
     @Test
     public void contraseniaEsNueva(){
 
-        Usuario usuario = new Usuario("testUser", "1234");
+        Usuario usuario = new Estandar("testUser", "1234");
         this.criterio.validar(usuario, errorMessages);
 
         Assert.assertEquals(0, this.errorMessages.size());
@@ -32,10 +34,10 @@ public class TestCriterioRotacionContrasenia {
     @Test
     public void contraseniaEsRepetida(){
 
-        AlmacenContrasenias.Instancia().registrarContrasenia(new Usuario("testUser", "1234"));
-        AlmacenContrasenias.Instancia().registrarContrasenia(new Usuario("testUser", "hola"));
+        AlmacenContrasenias.Instancia().registrarContrasenia(new Estandar("testUser", "1234"));
+        AlmacenContrasenias.Instancia().registrarContrasenia(new Estandar("testUser", "hola"));
 
-        Usuario usuario = new Usuario("testUser", "1234");
+        Usuario usuario = new Estandar("testUser", "1234");
         this.criterio.validar(usuario, errorMessages);
 
         Assert.assertEquals(1, this.errorMessages.size());
@@ -44,10 +46,10 @@ public class TestCriterioRotacionContrasenia {
     @Test
     public void criterioRotacionContraseniaMensajeError(){
 
-        AlmacenContrasenias.Instancia().registrarContrasenia(new Usuario("testUser", "1234"));
-        AlmacenContrasenias.Instancia().registrarContrasenia(new Usuario("testUser", "hola"));
+        AlmacenContrasenias.Instancia().registrarContrasenia(new Estandar("testUser", "1234"));
+        AlmacenContrasenias.Instancia().registrarContrasenia(new Estandar("testUser", "hola"));
 
-        Usuario usuario = new Usuario("testUser", "1234");
+        Usuario usuario = new Estandar("testUser", "1234");
         this.criterio.validar(usuario, errorMessages);
 
         Assert.assertEquals("La contrasenia repite contrasenias viejas", this.errorMessages.get(0));
@@ -55,12 +57,12 @@ public class TestCriterioRotacionContrasenia {
 
     @Test
     public void seBorranLasContraseniasMuyViejas(){
-        AlmacenContrasenias.Instancia().registrarContrasenia(new Usuario("testUser", "1234"));
-        AlmacenContrasenias.Instancia().registrarContrasenia(new Usuario("testUser", "hola"));
-        AlmacenContrasenias.Instancia().registrarContrasenia(new Usuario("testUser", "admin"));
-        AlmacenContrasenias.Instancia().registrarContrasenia(new Usuario("testUser", "nombreFamiliarCercano"));
+        AlmacenContrasenias.Instancia().registrarContrasenia(new Estandar("testUser", "1234"));
+        AlmacenContrasenias.Instancia().registrarContrasenia(new Estandar("testUser", "hola"));
+        AlmacenContrasenias.Instancia().registrarContrasenia(new Estandar("testUser", "admin"));
+        AlmacenContrasenias.Instancia().registrarContrasenia(new Estandar("testUser", "nombreFamiliarCercano"));
 
-        Usuario usuario = new Usuario("testUser", "1234");
+        Usuario usuario = new Estandar("testUser", "1234");
         this.criterio.validar(usuario, errorMessages);
 
         Assert.assertEquals(0, this.errorMessages.size());
@@ -68,12 +70,12 @@ public class TestCriterioRotacionContrasenia {
 
     @Test
     public void lasContraseniasNoViejasValidan(){
-        AlmacenContrasenias.Instancia().registrarContrasenia(new Usuario("testUser", "1234"));
-        AlmacenContrasenias.Instancia().registrarContrasenia(new Usuario("testUser", "hola"));
-        AlmacenContrasenias.Instancia().registrarContrasenia(new Usuario("testUser", "admin"));
-        AlmacenContrasenias.Instancia().registrarContrasenia(new Usuario("testUser", "nombreFamiliarCercano"));
+        AlmacenContrasenias.Instancia().registrarContrasenia(new Estandar("testUser", "1234"));
+        AlmacenContrasenias.Instancia().registrarContrasenia(new Estandar("testUser", "hola"));
+        AlmacenContrasenias.Instancia().registrarContrasenia(new Estandar("testUser", "admin"));
+        AlmacenContrasenias.Instancia().registrarContrasenia(new Estandar("testUser", "nombreFamiliarCercano"));
 
-        Usuario usuario = new Usuario("testUser", "admin");
+        Usuario usuario = new Estandar("testUser", "admin");
         this.criterio.validar(usuario, errorMessages);
 
         Assert.assertEquals(1, this.errorMessages.size());
@@ -81,10 +83,10 @@ public class TestCriterioRotacionContrasenia {
 
     @Test
     public void seDiferencianContraseniasDeDistintosUsuarios(){
-        AlmacenContrasenias.Instancia().registrarContrasenia(new Usuario("testUserAlfa", "1234"));
-        AlmacenContrasenias.Instancia().registrarContrasenia(new Usuario("testUserBeta", "hola"));
+        AlmacenContrasenias.Instancia().registrarContrasenia(new Estandar("testUserAlfa", "1234"));
+        AlmacenContrasenias.Instancia().registrarContrasenia(new Estandar("testUserBeta", "hola"));
 
-        Usuario usuario = new Usuario("testUserBeta", "1234");
+        Usuario usuario = new Estandar("testUserBeta", "1234");
         this.criterio.validar(usuario, errorMessages);
 
         Assert.assertEquals(0, this.errorMessages.size());
