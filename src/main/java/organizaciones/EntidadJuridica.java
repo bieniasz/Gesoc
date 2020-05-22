@@ -1,5 +1,6 @@
 package organizaciones;
 
+import organizaciones.categorias.Categoria;
 import java.util.List;
 
 public class EntidadJuridica extends Organizacion {
@@ -10,4 +11,5 @@ public class EntidadJuridica extends Organizacion {
     private List<EntidadBase> entidadesBase;
     private String codigoIGJ;
     private Categoria categoria;
+
 }

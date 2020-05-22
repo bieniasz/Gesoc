@@ -1,5 +1,6 @@
-package organizaciones;
+package organizaciones.categorias;
 
+import organizaciones.categorias.Categoria;
 import tamanioEmpresa.CalculadoraDeTamanio;
 import tamanioEmpresa.Actividad;
 
