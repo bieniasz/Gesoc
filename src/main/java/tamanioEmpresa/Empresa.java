@@ -7,8 +7,9 @@ public class Empresa {
 	double promedioVentasAnuales;
 	String tamanioCalculado;
 
-	public  calcularTamanio(this) {
+	public void calcularTamanio() {
 	
+	this.tamanioCalculado=CalculadoraDeTamanio.calcularTamanio(this); 
 		
 	}
 }
