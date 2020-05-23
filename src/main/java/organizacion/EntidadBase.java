@@ -1,4 +1,4 @@
-package organizaciones;
+package organizacion;
 
 public class EntidadBase extends Organizacion {
     private String nombreFicticio;

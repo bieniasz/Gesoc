@@ -1,6 +1,6 @@
-package organizaciones;
+package organizacion;
 
-import organizaciones.categorias.Categoria;
+import organizacion.categoria.Categoria;
 import java.util.List;
 
 public class EntidadJuridica extends Organizacion {

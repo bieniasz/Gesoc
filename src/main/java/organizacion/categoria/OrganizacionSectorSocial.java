@@ -1,4 +1,4 @@
-package organizaciones.categorias;
+package organizacion.categoria;
 
 public class OrganizacionSectorSocial implements Categoria {
     private String areaDeTrabajo;

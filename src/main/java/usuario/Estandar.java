@@ -1,6 +1,6 @@
 package usuario;
 
-import organizaciones.Organizacion;
+import organizacion.Organizacion;
 
 public class Estandar extends Usuario{
 

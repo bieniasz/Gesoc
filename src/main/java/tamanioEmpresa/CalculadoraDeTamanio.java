@@ -1,6 +1,6 @@
 package tamanioEmpresa;
 
-import organizaciones.categorias.Empresa;
+import organizacion.categoria.Empresa;
 
 import java.util.List;
 
