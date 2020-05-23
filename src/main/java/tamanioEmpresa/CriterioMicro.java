@@ -10,7 +10,7 @@ public class CriterioMicro extends CriterioTamanioEmpresa {
 	return  empresa.promedioVentasAnuales <= empresa.actividad.getMicro();
 	}
 	
-	public void setMicro() {
+	public void setMensaje() {
 		this.setTamanio("Micro");
 	}
 	

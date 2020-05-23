@@ -1,6 +1,6 @@
 package tamanioEmpresa;
 
-public class CriterioPequeña extends CriterioTamanioEmpresa {
+public class CriterioPequenia extends CriterioTamanioEmpresa {
 
 
 	@Override	
@@ -11,7 +11,7 @@ public class CriterioPequeña extends CriterioTamanioEmpresa {
 			;
 	}
 	
-	public void setMicro() {
+	public void setMensaje() {
 		this.setTamanio("Pequenia");
 	}
 }

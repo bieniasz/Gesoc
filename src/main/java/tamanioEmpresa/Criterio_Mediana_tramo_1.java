@@ -10,7 +10,7 @@ public class Criterio_Mediana_tramo_1 extends CriterioTamanioEmpresa {
 			;
 	}
 	
-	public void setMicro() {
+	public void setMensaje() {
 		this.setTamanio("Mediana_tramo_1");
 	}
 }
