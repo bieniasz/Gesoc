@@ -1,6 +1,6 @@
 package tamanioEmpresa;
 
-public class Micro extends CriterioTamanioEmpresa {
+public class CriterioMicro extends CriterioTamanioEmpresa {
 
 	
 
