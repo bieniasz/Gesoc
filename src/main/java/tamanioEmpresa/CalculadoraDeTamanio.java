@@ -8,6 +8,6 @@ public class CalculadoraDeTamanio {
 
 	 public String calcularTamanio( Empresa empresa) {
 		
-		return "grande";
+		return "ALGO";
 	}
 }
