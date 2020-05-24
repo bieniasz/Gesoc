@@ -1,5 +1,7 @@
 package tamanioEmpresa;
 
+import organizacion.categoria.Empresa;
+
 public class Criterio_Mediana_tramo_1 extends CriterioTamanioEmpresa {
 
 	@Override	

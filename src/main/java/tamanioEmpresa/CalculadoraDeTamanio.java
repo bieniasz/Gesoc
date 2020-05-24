@@ -2,6 +2,8 @@ package tamanioEmpresa;
 
 import java.util.List;
 
+import organizacion.categoria.Empresa;
+
 public class CalculadoraDeTamanio {
 	// esta clase deberia ser un singleton
 	static List<CriterioTamanioEmpresa> criterios;

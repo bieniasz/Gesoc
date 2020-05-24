@@ -1,5 +1,7 @@
 package tamanioEmpresa;
 
+import organizacion.categoria.Empresa;
+
 public class CriterioMicro extends CriterioTamanioEmpresa {
 
 	
