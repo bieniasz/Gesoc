@@ -18,7 +18,6 @@ public enum Actividad {
         this.pequenia = pequeña;
         this.mediana_tramo_1 = mediana_tramo_1;
         this.mediana_tramo_2 = mediana_tramo_2;
-
         
 
     } 
