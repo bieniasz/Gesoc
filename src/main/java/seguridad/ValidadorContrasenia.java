@@ -39,7 +39,7 @@ public class ValidadorContrasenia {
 	 * @param usuario
 	 * @return
 	 */
-	public List<String> ValidarContraseniaLogin(Usuario usuario) {
+	public List<String> validarContraseniaLogin(Usuario usuario) {
         List<String> mensajesDeError = new ArrayList<String>();
         this.criteriosLogin.stream().forEach(criterio -> criterio.validar(usuario, mensajesDeError));
 

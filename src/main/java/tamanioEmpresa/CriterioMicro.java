@@ -17,5 +17,3 @@ public class CriterioMicro extends CriterioTamanioEmpresa {
 	}
 	
 }
-
-/// esto es un cambio

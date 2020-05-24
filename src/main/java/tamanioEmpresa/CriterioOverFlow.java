@@ -2,7 +2,7 @@ package tamanioEmpresa;
 
 import organizacion.categoria.Empresa;
 
-public class Criterio_OverFlow extends CriterioTamanioEmpresa {
+public class CriterioOverFlow extends CriterioTamanioEmpresa {
 
 	@Override	
 	public Boolean esCategoria(Empresa empresa) {
