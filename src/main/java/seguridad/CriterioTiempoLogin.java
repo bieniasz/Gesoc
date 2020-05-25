@@ -12,7 +12,7 @@ public class CriterioTiempoLogin implements CriterioValidacion {
     public CriterioTiempoLogin() {
 
         this.tiempoDeEspera = 3;
-        this.intentoAnterior = LocalTime.now();
+
     }
 
     @Override

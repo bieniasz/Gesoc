@@ -12,10 +12,10 @@ public enum Actividad {
 	private final double pequenia; 
 	private final double mediana_tramo_1; 
 	private final double mediana_tramo_2; 
-	Actividad (double micro, double pequeña,double mediana_tramo_1,double mediana_tramo_2) { 
+	Actividad (double micro, double pequenia,double mediana_tramo_1,double mediana_tramo_2) {
 
         this.micro = micro;
-        this.pequenia = pequeña;
+        this.pequenia = pequenia;
         this.mediana_tramo_1 = mediana_tramo_1;
         this.mediana_tramo_2 = mediana_tramo_2;
         

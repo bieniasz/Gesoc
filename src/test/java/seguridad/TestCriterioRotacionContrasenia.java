@@ -20,6 +20,7 @@ public class TestCriterioRotacionContrasenia {
         this.criterio = new CriterioRotacionContrasenia();
         this.errorMessages = new ArrayList<String>();
         AlmacenContrasenias.Instancia().eliminarContraseniasAlmacenadas();
+        AlmacenContrasenias.Instancia().setPeriodosDeRotacion(3);
     }
 
     @Test
