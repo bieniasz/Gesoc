@@ -3,7 +3,7 @@ package seguridad;
 import org.junit.Assert;
 import org.junit.Before;
 import org.junit.Test;
-import usuario.Estandar;
+import usuario.UsuarioEstandar;
 import usuario.Usuario;
 
 import java.util.ArrayList;
@@ -25,7 +25,7 @@ public class TestCriterioTiempoLogin {
     @Test
     public void tardaMenosDeTresSegundos() throws InterruptedException {
 
-        Usuario usuario = new Estandar("testUser", "NNNNNN");
+        Usuario usuario = new UsuarioEstandar("testUser", "NNNNNN");
         this.criterio.validar(usuario, errorMessages);
         Thread.sleep(1000);
         this.criterio.validar(usuario, errorMessages);
@@ -36,7 +36,7 @@ public class TestCriterioTiempoLogin {
     @Test
     public void tardaMasDeTresSegundos () throws InterruptedException {
 
-        Usuario usuario = new Estandar("testUser", "NNNNNN");
+        Usuario usuario = new UsuarioEstandar("testUser", "NNNNNN");
         this.criterio.validar(usuario, errorMessages);
         Thread.sleep(4000);
         this.criterio.validar(usuario, errorMessages);
@@ -47,7 +47,7 @@ public class TestCriterioTiempoLogin {
     @Test
      public void tardaMenosDeTresSegundosMensajeDeError () throws InterruptedException {
 
-         Usuario usuario = new Estandar("testUser", "NNNNNN");
+         Usuario usuario = new UsuarioEstandar("testUser", "NNNNNN");
          this.criterio.validar(usuario, errorMessages);
          Thread.sleep(1000);
          this.criterio.validar(usuario, errorMessages);

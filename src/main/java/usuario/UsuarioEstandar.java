@@ -2,12 +2,12 @@ package usuario;
 
 import organizacion.Organizacion;
 
-public class Estandar extends Usuario{
+public class UsuarioEstandar extends Usuario{
 
     private Organizacion organizacion;
     // private BandejaDeMensajes bandejaDeMensajes;
 
-    public Estandar(String usuario, String contrasenia) {
+    public UsuarioEstandar(String usuario, String contrasenia) {
 
         this.usuario = usuario;
         this.contrasenia = contrasenia;

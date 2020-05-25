@@ -1,8 +1,8 @@
 package usuario;
 
-public class Admin extends Usuario{
+public class UsuarioAdmin extends Usuario{
 
-    public Admin(String usuario, String contrasenia) {
+    public UsuarioAdmin(String usuario, String contrasenia) {
 
         this.usuario = usuario;
         this.contrasenia = contrasenia;

@@ -2,7 +2,7 @@ package seguridad;
 import org.junit.Assert;
 import org.junit.Before;
 import org.junit.Test;
-import usuario.Estandar;
+import usuario.UsuarioEstandar;
 import usuario.Usuario;
 
 import java.util.ArrayList;
@@ -25,7 +25,7 @@ public class TestCriterioCaracteresEspeciales {
     @Test
     public void caracteresEspecialesAlFinal(){
 
-        Usuario usuario = new Estandar(nombreUsuario, "hola!$");
+        Usuario usuario = new UsuarioEstandar(nombreUsuario, "hola!$");
         this.criterio.validar(usuario, errorMessages);
 
         Assert.assertEquals(0, this.errorMessages.size());
@@ -34,7 +34,7 @@ public class TestCriterioCaracteresEspeciales {
     @Test
     public void caracteresEspecialesEnMedio(){
 
-        Usuario usuario = new Estandar(nombreUsuario, "hol!$a");
+        Usuario usuario = new UsuarioEstandar(nombreUsuario, "hol!$a");
         this.criterio.validar(usuario, errorMessages);
 
         Assert.assertEquals(0, this.errorMessages.size());
@@ -43,7 +43,7 @@ public class TestCriterioCaracteresEspeciales {
     @Test
     public void caracteresEspecialesAlPrincipio(){
 
-        Usuario usuario = new Estandar(nombreUsuario, "!$hola");
+        Usuario usuario = new UsuarioEstandar(nombreUsuario, "!$hola");
         this.criterio.validar(usuario, errorMessages);
 
         Assert.assertEquals(0, this.errorMessages.size());
@@ -52,7 +52,7 @@ public class TestCriterioCaracteresEspeciales {
     @Test
     public void contraseniaSinCaracteresEspeciales(){
 
-        Usuario usuario = new Estandar(nombreUsuario, "hola");
+        Usuario usuario = new UsuarioEstandar(nombreUsuario, "hola");
         this.criterio.validar(usuario, errorMessages);
 
         Assert.assertEquals(1, this.errorMessages.size());
@@ -61,7 +61,7 @@ public class TestCriterioCaracteresEspeciales {
     @Test
     public void mensajeContraseniaSinCaracteresEspeciales(){
 
-        Usuario usuario = new Estandar(nombreUsuario, "hola");
+        Usuario usuario = new UsuarioEstandar(nombreUsuario, "hola");
         this.criterio.validar(usuario, errorMessages);
 
         Assert.assertEquals("Faltan caracteres especiales", this.errorMessages.get(0));
