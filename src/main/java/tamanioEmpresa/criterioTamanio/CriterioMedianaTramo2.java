@@ -1,10 +1,11 @@
 package tamanioEmpresa.criterioTamanio;
 
 import organizacion.categoria.Empresa;
+import tamanioEmpresa.Tamanios;
 
 public class CriterioMedianaTramo2 extends CriterioTamanioEmpresa {
 	public CriterioMedianaTramo2() {
-		this.tamanio = "Mediana_tramo_2";
+		this.tamanio = Tamanios.MEDIANA_T2;
 	}
 
 	@Override
@@ -13,9 +14,5 @@ public class CriterioMedianaTramo2 extends CriterioTamanioEmpresa {
 	return  empresa.getPromedioVentasAnuales() <= empresa.getActividad().getTopeMedianaT2() &&
 			empresa.getPromedioVentasAnuales() > empresa.getActividad().getTopeMedianaT1()
 			;
-	}
-	
-	public void setMensaje() {
-		this.setTamanio("Mediana_tramo_2");
 	}
 }

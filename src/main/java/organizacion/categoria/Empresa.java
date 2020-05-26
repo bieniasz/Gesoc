@@ -5,9 +5,9 @@ import tamanioEmpresa.Actividad;
 
 
 public class Empresa {
-	private final int cantidadDePersonal;
-	private final Actividad actividad;
-	private final double promedioVentasAnuales;
+	private int cantidadDePersonal;
+	private Actividad actividad;
+	private double promedioVentasAnuales;
 	private String tamanio;
 
 	public Empresa (int cantPersonal, Actividad actividad, double promVentasAnuales) {
@@ -37,4 +37,22 @@ public class Empresa {
 	public String getTamanio() {
 		return tamanio;
 	}
+
+
+	//SETTERS
+    public void setTamanio(String tamanio) {
+        this.tamanio = tamanio;
+    }
+
+    public void setCantidadDePersonal(int cantidadDePersonal) {
+        this.cantidadDePersonal = cantidadDePersonal;
+    }
+
+    public void setActividad(Actividad actividad) {
+        this.actividad = actividad;
+    }
+
+    public void setPromedioVentasAnuales(double promedioVentasAnuales) {
+        this.promedioVentasAnuales = promedioVentasAnuales;
+    }
 }

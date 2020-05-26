@@ -1,13 +1,14 @@
 package tamanioEmpresa.criterioTamanio;
 
 import organizacion.categoria.Empresa;
+import tamanioEmpresa.Tamanios;
 
 public class CriterioOverFlow extends CriterioTamanioEmpresa {
 	public CriterioOverFlow() {
-		this.tamanio = "NA";
+		this.tamanio = Tamanios.OVERFLOW;
 	}
 
-	@Override	
+	@Override
 	public Boolean esCategoria(Empresa empresa) {
 		return  empresa.getPromedioVentasAnuales() > empresa.getActividad().getTopeMedianaT2();
 	}

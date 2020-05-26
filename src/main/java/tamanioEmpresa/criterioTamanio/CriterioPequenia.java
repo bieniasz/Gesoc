@@ -1,11 +1,12 @@
 package tamanioEmpresa.criterioTamanio;
 
 import organizacion.categoria.Empresa;
+import tamanioEmpresa.Tamanios;
 
 public class CriterioPequenia extends CriterioTamanioEmpresa {
 
 	public CriterioPequenia() {
-		this.tamanio = "Pequeña";
+		this.tamanio = Tamanios.PEQUENIA;
 	}
 
 	@Override	
