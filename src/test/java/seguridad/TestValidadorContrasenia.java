@@ -3,6 +3,7 @@ package seguridad;
 import org.junit.Assert;
 import org.junit.Before;
 import org.junit.Test;
+import usuario.UsuarioAdmin;
 import usuario.UsuarioEstandar;
 import usuario.Usuario;
 
@@ -10,6 +11,7 @@ import java.util.List;
 
 public class TestValidadorContrasenia {
     private ValidadorContrasenia validador;
+    private UsuarioAdmin usuarioAdmin = new UsuarioAdmin("admin", "admin123" );
 
     @Before
     public void init(){
@@ -20,7 +22,7 @@ public class TestValidadorContrasenia {
     @Test
     public void contraseniaNORompeCriterios(){
 
-        Usuario usuario = new UsuarioEstandar("testUser", "nnKKKKK6456/(%nn");
+        Usuario usuario = usuarioAdmin.nuevoUsuarioEstandar("testUser", "nnKKKKK6456/(%nn");
         List<String> mensajesDeError = this.validador.validarCreacionContrasenia(usuario);
 
         Assert.assertEquals(0, mensajesDeError.size());
@@ -29,7 +31,7 @@ public class TestValidadorContrasenia {
     @Test
     public void contraseniaRompeUnSoloCriterio(){
 
-        Usuario usuario = new UsuarioEstandar("testUser", "nnnnnnnnnnnnnnnn&#");
+        Usuario usuario = usuarioAdmin.nuevoUsuarioEstandar("testUser", "nnnnnnnnnnnnnnnn&#");
         List<String> mensajesDeError = this.validador.validarCreacionContrasenia(usuario);
         Assert.assertEquals(1, mensajesDeError.size());
     }
@@ -37,7 +39,7 @@ public class TestValidadorContrasenia {
     @Test
     public void contraseniaRompeMultiplesCriterios() {
 
-        Usuario usuario = new UsuarioEstandar("testUser", "nnnn");
+        Usuario usuario = usuarioAdmin.nuevoUsuarioEstandar("testUser", "nnnn");
         List<String> mensajesDeError = this.validador.validarCreacionContrasenia(usuario);
         Assert.assertEquals(3, mensajesDeError.size());
     }
@@ -46,7 +48,7 @@ public class TestValidadorContrasenia {
     public void validaElAlmacenContrasenias() {
         AlmacenContrasenias.Instancia().eliminarContraseniasAlmacenadas();
 
-        Usuario usuario = new UsuarioEstandar("testUser", "nnKKKKK6456/(%nn");
+        Usuario usuario = usuarioAdmin.nuevoUsuarioEstandar("testUser", "nnKKKKK6456/(%nn");
 
         List<String> mensajesDeError = this.validador.validarCreacionContrasenia(usuario);
         mensajesDeError = this.validador.validarCreacionContrasenia(usuario);

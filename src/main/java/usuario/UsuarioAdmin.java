@@ -1,5 +1,8 @@
 package usuario;
 
+import organizacion.EntidadJuridica;
+import organizacion.Organizacion;
+
 public class UsuarioAdmin extends Usuario{
 
     public UsuarioAdmin(String usuario, String contrasenia) {
@@ -8,8 +11,8 @@ public class UsuarioAdmin extends Usuario{
         this.contrasenia = contrasenia;
     }
 
-    public void nuevoUsuario(){
-
+    public UsuarioEstandar nuevoUsuarioEstandar(String usuario, String contrasenia){
+        return new UsuarioEstandar(usuario, contrasenia);
     }
 
     public void altaProveedor(){
@@ -20,7 +23,12 @@ public class UsuarioAdmin extends Usuario{
 
     }
 
-    public void altaOrganizacion(){
-
+    public Organizacion altaOrganizacionJuridica(){
+    return new EntidadJuridica();
     }
+
+    public void asignarOrganizacionAUsuarioEstandar(UsuarioEstandar usuario, Organizacion organizacion){
+        usuario.organizacion = organizacion;
+    }
+
 }

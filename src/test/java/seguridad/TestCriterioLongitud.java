@@ -3,6 +3,7 @@ package seguridad;
 import org.junit.Assert;
 import org.junit.Before;
 import org.junit.Test;
+import usuario.UsuarioAdmin;
 import usuario.UsuarioEstandar;
 import usuario.Usuario;
 
@@ -13,6 +14,7 @@ public class TestCriterioLongitud {
 
     private CriterioLongitud criterio;
     private List<String> errorMessages;
+    private UsuarioAdmin usuarioAdmin = new UsuarioAdmin("admin", "admin123" );
 
     @Before
     public void init(){
@@ -24,7 +26,7 @@ public class TestCriterioLongitud {
     @Test
     public void contraseniaMENOSDe8Caracteres(){
 
-        Usuario usuario = new UsuarioEstandar("testUser", "1234567");
+        Usuario usuario = usuarioAdmin.nuevoUsuarioEstandar("testUser", "1234567");
         this.criterio.validar(usuario, errorMessages);
 
         Assert.assertEquals(1, this.errorMessages.size());
@@ -33,7 +35,7 @@ public class TestCriterioLongitud {
     @Test
     public void contraseniaMASDe8Caracteres(){
 
-        Usuario usuario = new UsuarioEstandar("testUser", "123456789");
+        Usuario usuario = usuarioAdmin.nuevoUsuarioEstandar("testUser", "123456789");
         this.criterio.validar(usuario, errorMessages);
 
         Assert.assertEquals(0, this.errorMessages.size());
@@ -42,7 +44,7 @@ public class TestCriterioLongitud {
     @Test
     public void contraseniaDe8Caracteres(){
 
-        Usuario usuario = new UsuarioEstandar("testUser", "12345678");
+        Usuario usuario = usuarioAdmin.nuevoUsuarioEstandar("testUser", "12345678");
         this.criterio.validar(usuario, errorMessages);
 
         Assert.assertEquals(1, this.errorMessages.size());
@@ -51,7 +53,7 @@ public class TestCriterioLongitud {
     @Test
     public void contraseniaCortaMensajeDeError(){
 
-        Usuario usuario = new UsuarioEstandar("testUser", "1234");
+        Usuario usuario = usuarioAdmin.nuevoUsuarioEstandar("testUser", "1234");
         this.criterio.validar(usuario, errorMessages);
 
         Assert.assertEquals("Contrasenia muy corta, debe tener mas de 8 caracteres", this.errorMessages.get(0));

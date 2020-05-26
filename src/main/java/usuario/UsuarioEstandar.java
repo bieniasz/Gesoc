@@ -1,20 +1,22 @@
 package usuario;
 
+import operacionComercial.OperacionEgreso;
 import organizacion.Organizacion;
 
 public class UsuarioEstandar extends Usuario{
 
-    private Organizacion organizacion;
+    protected Organizacion organizacion;
     // private BandejaDeMensajes bandejaDeMensajes;
 
-    public UsuarioEstandar(String usuario, String contrasenia) {
+    protected UsuarioEstandar(String usuario, String contrasenia) {
 
         this.usuario = usuario;
         this.contrasenia = contrasenia;
+
     }
 
-    public void registrarNuevaOperacionDeEgreso(){
-
+    public OperacionEgreso registrarNuevaOperacionDeEgreso(){
+    return new OperacionEgreso();
     }
 
     public void validarEgresosYPresupuestos(){
@@ -27,5 +29,9 @@ public class UsuarioEstandar extends Usuario{
 
     public void suscribirseACompra(){
 
+    }
+
+    public Organizacion getOrganizacion() {
+        return this.organizacion;
     }
 }
