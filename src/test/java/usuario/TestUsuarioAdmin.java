@@ -5,34 +5,40 @@ import org.junit.Test;
 import org.junit.Assert;
 import organizacion.EntidadJuridica;
 import organizacion.Organizacion;
+import usuario.Usuario;
+import usuario.UsuarioAdmin;
 
 public class TestUsuarioAdmin {
 
-    private UsuarioAdmin usuarioAdmin = new UsuarioAdmin("admin", "admin123" );
+    private Usuario usuarioAdmin = new Usuario("admin", "admin123");
 
-
-    @Test
-    public void creacionDeUsuarioEstandar(){
-
-    Usuario usuarioEstandar = usuarioAdmin.nuevoUsuarioEstandar("estandar","estandar123");
-
-    Assert.assertTrue(usuarioEstandar instanceof UsuarioEstandar);
+    @Before
+    public void init(){
+        usuarioAdmin.setRol(new UsuarioAdmin());
     }
 
     @Test
     public void creacionDeOrganizacionJuridica(){
-        Organizacion entidadJuridica = usuarioAdmin.altaOrganizacionJuridica();
+        Organizacion entidadJuridica = usuarioAdmin.getRol().altaOrganizacionJuridica();
 
         Assert.assertTrue(entidadJuridica instanceof EntidadJuridica);
     }
 
     @Test
-    public void asignarOrganizacionAUsuarioEstandar(){
-        UsuarioEstandar usuarioEstandar = usuarioAdmin.nuevoUsuarioEstandar("estandar","estandar123");
-        Organizacion entidadJuridica = usuarioAdmin.altaOrganizacionJuridica();
+    public void creacionDeUsuarioEstandar(){
+        Organizacion entidadJuridica = usuarioAdmin.getRol().altaOrganizacionJuridica();
+        Usuario usuarioEstandar = usuarioAdmin.getRol().
+                nuevoUsuarioEstandar("estandar","estandar123", entidadJuridica);
 
-        usuarioAdmin.asignarOrganizacionAUsuarioEstandar(usuarioEstandar, entidadJuridica);
+        Assert.assertTrue(usuarioEstandar.getRol() instanceof UsuarioEstandar);
+    }
 
-        Assert.assertTrue(usuarioEstandar.getOrganizacion() instanceof Organizacion);
+    @Test
+    public void asignacionDeOrganizacionAUsuarioEstandar(){
+        Organizacion entidadJuridica = usuarioAdmin.getRol().altaOrganizacionJuridica();
+        Usuario usuarioEstandar = usuarioAdmin.getRol().
+                nuevoUsuarioEstandar("estandar","estandar123", entidadJuridica);
+
+        Assert.assertTrue(usuarioEstandar.getRol().getOrganizacion() instanceof Organizacion);
     }
 }

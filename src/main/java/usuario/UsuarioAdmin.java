@@ -3,16 +3,22 @@ package usuario;
 import organizacion.EntidadJuridica;
 import organizacion.Organizacion;
 
-public class UsuarioAdmin extends Usuario{
+public class UsuarioAdmin implements Rol{
 
-    public UsuarioAdmin(String usuario, String contrasenia) {
+    public UsuarioAdmin() {
 
-        this.usuario = usuario;
-        this.contrasenia = contrasenia;
     }
 
-    public UsuarioEstandar nuevoUsuarioEstandar(String usuario, String contrasenia){
-        return new UsuarioEstandar(usuario, contrasenia);
+    @Override
+    public Usuario nuevoUsuarioEstandar(String usuario, String contrasenia, Organizacion organizacion){
+        Usuario usuarioNuevo = new Usuario(usuario, contrasenia);
+        usuarioNuevo.setRol(new UsuarioEstandar(organizacion));
+        return usuarioNuevo;
+    }
+
+    @Override
+    public Organizacion getOrganizacion() {
+        return null;
     }
 
     public void altaProveedor(){
@@ -23,12 +29,9 @@ public class UsuarioAdmin extends Usuario{
 
     }
 
+    @Override
     public Organizacion altaOrganizacionJuridica(){
     return new EntidadJuridica();
-    }
-
-    public void asignarOrganizacionAUsuarioEstandar(UsuarioEstandar usuario, Organizacion organizacion){
-        usuario.organizacion = organizacion;
     }
 
 }

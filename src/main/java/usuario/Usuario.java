@@ -1,16 +1,26 @@
 package usuario;
 
+import seguridad.ValidadorContrasenia;
+
+import java.util.List;
+
 /**
  * TODO que una clase tan importante como usuario sea anemic.
  * Revisar esto. Ninguna clase a esta altura deberia ser anemica, esto solo seria
  * aceptado si es un DTO o una clase usada para contrato de interfaz.
  */
 
-public abstract class Usuario {
+public class Usuario {
 
     protected String usuario;
     protected String contrasenia;
-    protected String tipoUsuario;
+    protected Rol rol;
+
+    public Usuario(String usuario, String contrasenia){
+        this.usuario = usuario;
+        this.contrasenia = contrasenia;
+
+    }
 
   /*  public Usuario(String usuario, String contrasenia) {
 
@@ -34,10 +44,11 @@ public abstract class Usuario {
         return contrasenia;
     }
 
-    public String getTipoUsuario() {
-        return tipoUsuario;
+    public Rol getRol() {
+        return rol;
     }
 
-
-
+    public void setRol(Rol rol) {
+        this.rol = rol;
+    }
 }

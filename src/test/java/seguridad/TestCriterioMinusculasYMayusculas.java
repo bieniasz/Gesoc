@@ -14,7 +14,6 @@ public class TestCriterioMinusculasYMayusculas {
 
     private CriterioMinusculasYMayusculas criterio;
     private List<String> errorMessages;
-    private UsuarioAdmin usuarioAdmin = new UsuarioAdmin("admin", "admin123" );
 
     @Before
     public void init(){
@@ -26,7 +25,7 @@ public class TestCriterioMinusculasYMayusculas {
     @Test
     public void contraseniaNoTieneMayusculas(){
 
-        Usuario usuario = usuarioAdmin.nuevoUsuarioEstandar("testUser", "nnnnnnnnnnnn");
+        Usuario usuario = new Usuario("testUser", "nnnnnnnnnnnn");
         this.criterio.validar(usuario, errorMessages);
 
         Assert.assertEquals(1, this.errorMessages.size());
@@ -35,7 +34,7 @@ public class TestCriterioMinusculasYMayusculas {
     @Test
     public void contraseniaNoTieneMayusculasMensajeDeError(){
 
-        Usuario usuario = usuarioAdmin.nuevoUsuarioEstandar("testUser", "nnnnnnnnnnnn");
+        Usuario usuario = new Usuario("testUser", "nnnnnnnnnnnn");
         this.criterio.validar(usuario, errorMessages);
 
         Assert.assertEquals("Faltan letras mayusculas a la contrasenia", this.errorMessages.get(0));
@@ -44,7 +43,7 @@ public class TestCriterioMinusculasYMayusculas {
     @Test
     public void contraseniaNoTieneMinusculas(){
 
-        Usuario usuario = usuarioAdmin.nuevoUsuarioEstandar("testUser", "NNNNNN");
+        Usuario usuario = new Usuario("testUser", "NNNNNN");
         this.criterio.validar(usuario, errorMessages);
 
         Assert.assertEquals(1, this.errorMessages.size());
@@ -53,7 +52,7 @@ public class TestCriterioMinusculasYMayusculas {
     @Test
     public void contraseniaNoTieneMinusculasMensajeDeError(){
 
-        Usuario usuario = usuarioAdmin.nuevoUsuarioEstandar("testUser", "NNNNNN");
+        Usuario usuario = new Usuario("testUser", "NNNNNN");
         this.criterio.validar(usuario, errorMessages);
 
         Assert.assertEquals("Faltan letras minusculas a la contrasenia", this.errorMessages.get(0));
@@ -62,7 +61,7 @@ public class TestCriterioMinusculasYMayusculas {
     @Test
     public void contraseniaNoTieneMinuscuYMayusculasOrdenadas1(){
 
-        Usuario usuario = usuarioAdmin.nuevoUsuarioEstandar("testUser", "nnnnnnNNNNNN");
+        Usuario usuario = new Usuario("testUser", "nnnnnnNNNNNN");
         this.criterio.validar(usuario, errorMessages);
 ;
         Assert.assertEquals(0, this.errorMessages.size());
@@ -71,7 +70,7 @@ public class TestCriterioMinusculasYMayusculas {
     @Test
     public void contraseniaNoTieneMinuscuYMayusculasOrdenadas2(){
 
-        Usuario usuario = usuarioAdmin.nuevoUsuarioEstandar("testUser", "NNNnnnnn");
+        Usuario usuario = new Usuario("testUser", "NNNnnnnn");
         this.criterio.validar(usuario, errorMessages);
 
         Assert.assertEquals(0, this.errorMessages.size());
@@ -80,7 +79,7 @@ public class TestCriterioMinusculasYMayusculas {
     @Test
     public void contraseniaNoTieneMinuscuYMayusculasMixeadas(){
 
-        Usuario usuario = usuarioAdmin.nuevoUsuarioEstandar("testUser", "nNnNn");
+        Usuario usuario = new Usuario("testUser", "nNnNn");
         this.criterio.validar(usuario, errorMessages);
 
         Assert.assertEquals(0, this.errorMessages.size());

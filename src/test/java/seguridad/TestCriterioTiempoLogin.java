@@ -15,7 +15,6 @@ public class TestCriterioTiempoLogin {
 
     private CriterioTiempoLogin criterio;
     private List<String> errorMessages;
-    private UsuarioAdmin usuarioAdmin = new UsuarioAdmin("admin", "admin123" );
 
     @Before
     public void init() {
@@ -27,7 +26,7 @@ public class TestCriterioTiempoLogin {
     @Test
     public void tardaMenosDeTresSegundos() throws InterruptedException {
 
-        Usuario usuario = usuarioAdmin.nuevoUsuarioEstandar("testUser", "NNNNNN");
+        Usuario usuario = new Usuario("testUser", "NNNNNN");
         this.criterio.validar(usuario, errorMessages);
         Thread.sleep(1000);
         this.criterio.validar(usuario, errorMessages);
@@ -38,7 +37,7 @@ public class TestCriterioTiempoLogin {
     @Test
     public void tardaMasDeTresSegundos () throws InterruptedException {
 
-        Usuario usuario = usuarioAdmin.nuevoUsuarioEstandar("testUser", "NNNNNN");
+        Usuario usuario = new Usuario("testUser", "NNNNNN");
         this.criterio.validar(usuario, errorMessages);
         Thread.sleep(4000);
         this.criterio.validar(usuario, errorMessages);
@@ -49,7 +48,7 @@ public class TestCriterioTiempoLogin {
     @Test
      public void tardaMenosDeTresSegundosMensajeDeError () throws InterruptedException {
 
-        Usuario usuario = usuarioAdmin.nuevoUsuarioEstandar("testUser", "NNNNNN");
+        Usuario usuario = new Usuario("testUser", "NNNNNN");
          this.criterio.validar(usuario, errorMessages);
          Thread.sleep(1000);
          this.criterio.validar(usuario, errorMessages);
