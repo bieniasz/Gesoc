@@ -5,12 +5,12 @@ import usuario.Usuario;
 import java.util.ArrayList;
 import java.util.List;
 
-public class ValidadorContrasenia {
+public class ValidadorDeUsuario {
 
     private final List<CriterioValidacion> criteriosLogin;
     private final List<CriterioValidacion> criteriosCreacionContrasenia;
 
-    public ValidadorContrasenia() {
+    public ValidadorDeUsuario() {
         this.criteriosLogin = new ArrayList<CriterioValidacion>();
 
         this.criteriosCreacionContrasenia = new ArrayList<CriterioValidacion>();

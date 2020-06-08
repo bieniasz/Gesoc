@@ -2,9 +2,6 @@ package usuario;
 
 import organizacion.EntidadJuridica;
 import organizacion.Organizacion;
-import seguridad.ValidadorContrasenia;
-
-import java.util.List;
 
 public class UsuarioAdmin implements Rol{
 

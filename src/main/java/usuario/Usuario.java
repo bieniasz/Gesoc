@@ -1,6 +1,6 @@
 package usuario;
 
-import seguridad.ValidadorContrasenia;
+import seguridad.ValidadorDeUsuario;
 
 import java.util.List;
 
@@ -17,7 +17,7 @@ public class Usuario {
     protected Rol rol;
 
     public Usuario(String usuario, String contrasenia) throws Exception {
-        ValidadorContrasenia validador = new ValidadorContrasenia();
+        ValidadorDeUsuario validador = new ValidadorDeUsuario();
 
         List<String> mensajesDeError = validador.validarCreacionContrasenia(usuario,contrasenia);
 

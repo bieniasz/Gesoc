@@ -3,16 +3,15 @@ package seguridad;
 import org.junit.Assert;
 import org.junit.Before;
 import org.junit.Test;
-import usuario.Usuario;
 
 import java.util.List;
 
-public class TestValidadorContrasenia {
-    private ValidadorContrasenia validador;
+public class TestValidadorDeUsuario {
+    private ValidadorDeUsuario validador;
 
     @Before
     public void init(){
-        this.validador = new ValidadorContrasenia();
+        this.validador = new ValidadorDeUsuario();
     }
 
 
