@@ -3,8 +3,6 @@ package seguridad;
 import org.junit.Assert;
 import org.junit.Before;
 import org.junit.Test;
-import usuario.UsuarioAdmin;
-import usuario.UsuarioEstandar;
 import usuario.Usuario;
 
 import java.util.List;
@@ -21,8 +19,7 @@ public class TestValidadorContrasenia {
     @Test
     public void contraseniaNORompeCriterios(){
 
-        Usuario usuario = new Usuario("testUser", "nnKKKKK6456/(%nn");
-        List<String> mensajesDeError = this.validador.validarCreacionContrasenia(usuario);
+       List<String> mensajesDeError = this.validador.validarCreacionContrasenia("testUser", "nnKKKKK6456/(%nn");
 
         Assert.assertEquals(0, mensajesDeError.size());
     }
@@ -30,16 +27,14 @@ public class TestValidadorContrasenia {
     @Test
     public void contraseniaRompeUnSoloCriterio(){
 
-        Usuario usuario = new Usuario("testUser", "nnnnnnnnnnnnnnnn&#");
-        List<String> mensajesDeError = this.validador.validarCreacionContrasenia(usuario);
+        List<String> mensajesDeError = this.validador.validarCreacionContrasenia("testUser", "nnnnnnnnnnnnnnnn&#");
         Assert.assertEquals(1, mensajesDeError.size());
     }
 
     @Test
     public void contraseniaRompeMultiplesCriterios() {
 
-        Usuario usuario = new Usuario("testUser", "nnnn");
-        List<String> mensajesDeError = this.validador.validarCreacionContrasenia(usuario);
+        List<String> mensajesDeError = this.validador.validarCreacionContrasenia("testUser", "nnnn");
         Assert.assertEquals(3, mensajesDeError.size());
     }
 
@@ -47,10 +42,8 @@ public class TestValidadorContrasenia {
     public void validaElAlmacenContrasenias() {
         AlmacenContrasenias.Instancia().eliminarContraseniasAlmacenadas();
 
-        Usuario usuario = new Usuario("testUser", "nnKKKKK6456/(%nn");
-
-        List<String> mensajesDeError = this.validador.validarCreacionContrasenia(usuario);
-        mensajesDeError = this.validador.validarCreacionContrasenia(usuario);
+        List<String> mensajesDeError = this.validador.validarCreacionContrasenia("testUser","nnKKKKK6456/(%nn");
+        mensajesDeError = this.validador.validarCreacionContrasenia("testUser","nnKKKKK6456/(%nn");
 
         Assert.assertEquals(1, mensajesDeError.size());
     }

@@ -1,15 +1,13 @@
 package seguridad;
 
-import usuario.Usuario;
-
 import java.util.List;
 
 public class CriterioCaracteresEspeciales implements CriterioValidacion {
 
 
     @Override
-    public void validar(Usuario usuario, List<String> mensajesDeError) {
-        if(!usuario.getContrasenia().matches(".*[ !#$%&'()*+,~./:<=>?@^_`{|}~].*")){
+    public void validar(String usuario, String contrasenia, List<String> mensajesDeError) {
+        if(!contrasenia.matches(".*[ !#$%&'()*+,~./:<=>?@^_`{|}~].*")){
             mensajesDeError.add(("Faltan caracteres especiales"));
         }
     }

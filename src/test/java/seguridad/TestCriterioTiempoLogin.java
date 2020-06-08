@@ -3,8 +3,6 @@ package seguridad;
 import org.junit.Assert;
 import org.junit.Before;
 import org.junit.Test;
-import usuario.UsuarioAdmin;
-import usuario.UsuarioEstandar;
 import usuario.Usuario;
 
 import java.util.ArrayList;
@@ -26,10 +24,9 @@ public class TestCriterioTiempoLogin {
     @Test
     public void tardaMenosDeTresSegundos() throws InterruptedException {
 
-        Usuario usuario = new Usuario("testUser", "NNNNNN");
-        this.criterio.validar(usuario, errorMessages);
+        this.criterio.validar("testUser","NNNNNN" , errorMessages);
         Thread.sleep(1000);
-        this.criterio.validar(usuario, errorMessages);
+        this.criterio.validar("testUser","NNNNNN" , errorMessages);
 
         Assert.assertEquals(1, this.errorMessages.size());
     }
@@ -37,10 +34,9 @@ public class TestCriterioTiempoLogin {
     @Test
     public void tardaMasDeTresSegundos () throws InterruptedException {
 
-        Usuario usuario = new Usuario("testUser", "NNNNNN");
-        this.criterio.validar(usuario, errorMessages);
+        this.criterio.validar("testUser","NNNNNN" , errorMessages);
         Thread.sleep(4000);
-        this.criterio.validar(usuario, errorMessages);
+        this.criterio.validar("testUser","NNNNNN" , errorMessages);
 
         Assert.assertEquals(0, this.errorMessages.size());
     }
@@ -48,10 +44,9 @@ public class TestCriterioTiempoLogin {
     @Test
      public void tardaMenosDeTresSegundosMensajeDeError () throws InterruptedException {
 
-        Usuario usuario = new Usuario("testUser", "NNNNNN");
-         this.criterio.validar(usuario, errorMessages);
+         this.criterio.validar("testUser","NNNNNN" , errorMessages);
          Thread.sleep(1000);
-         this.criterio.validar(usuario, errorMessages);
+         this.criterio.validar("testUser", "NNNNNN", errorMessages);
 
          Assert.assertEquals("Debe esperar mas de tres segundos para volver a intentar", this.errorMessages.get(0));
     }

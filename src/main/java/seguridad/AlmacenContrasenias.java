@@ -30,28 +30,28 @@ public class AlmacenContrasenias {
         this.contraseniasPrevias.clear();
     }
 
-    public synchronized void registrarContrasenia(Usuario usuario) {
-        final List<String> contrasenias = this.contraseniasPrevias.get(usuario.getUsuario());
+    public synchronized void registrarContrasenia(String usuario, String contrasenia) {
+        final List<String> contrasenias = this.contraseniasPrevias.get(usuario);
         try {
-            contrasenias.add(usuario.getContrasenia());
+            contrasenias.add(contrasenia);
             if (contrasenias.size() > this.periodosDeRotacion) {
                 contrasenias.remove(0);
             }
 
         } catch (NullPointerException e) {
-            this.contraseniasPrevias.put(usuario.getUsuario(), new ArrayList<String>());
-            this.contraseniasPrevias.get(usuario.getUsuario()).add(usuario.getContrasenia());
+            this.contraseniasPrevias.put(usuario, new ArrayList<String>());
+            this.contraseniasPrevias.get(usuario).add(contrasenia);
         }
 
     }
 
     //TODO ojo con estos metodos que son de un singleton, deben ser synchronized para evitar problemas de manejo de threads
     //TODO java no garantiza safe-thread.
-    public synchronized boolean contraseniaRepiteContraseniasViejas(Usuario usuario) {
-        final List<String> contrasenias = this.contraseniasPrevias.get(usuario.getUsuario());
+    public synchronized boolean contraseniaRepiteContraseniasViejas(String usuario, String contrasenia) {
+        final List<String> contrasenias = this.contraseniasPrevias.get(usuario);
 
         try {
-            return contrasenias.contains(usuario.getContrasenia());
+            return contrasenias.contains(contrasenia);
         } catch (Exception e) {
             return false;
         }

@@ -1,7 +1,5 @@
 package seguridad;
 
-import usuario.Usuario;
-
 import java.util.List;
 
 public class CriterioRotacionContrasenia implements CriterioValidacion {
@@ -11,9 +9,9 @@ public class CriterioRotacionContrasenia implements CriterioValidacion {
      * y no una lista de errores y menos por parametro.
      */
     @Override
-    public void validar(Usuario usuario, List<String> mensajesDeError) {
+    public void validar(String usuario, String contrasenia, List<String> mensajesDeError) {
 
-        if (AlmacenContrasenias.Instancia().contraseniaRepiteContraseniasViejas(usuario)) {
+        if (AlmacenContrasenias.Instancia().contraseniaRepiteContraseniasViejas(usuario, contrasenia)) {
             mensajesDeError.add("La contrasenia repite contrasenias viejas");
         }
     }

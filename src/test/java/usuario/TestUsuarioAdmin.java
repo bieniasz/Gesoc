@@ -5,16 +5,22 @@ import org.junit.Test;
 import org.junit.Assert;
 import organizacion.EntidadJuridica;
 import organizacion.Organizacion;
+import seguridad.AlmacenContrasenias;
 import usuario.Usuario;
 import usuario.UsuarioAdmin;
 
 public class TestUsuarioAdmin {
 
-    private Usuario usuarioAdmin = new Usuario("admin", "admin123");
+    private Usuario usuarioAdmin = new Usuario("admin12345", "Admin@12345");
+
+    public TestUsuarioAdmin() throws Exception {
+    }
 
     @Before
     public void init(){
         usuarioAdmin.setRol(new UsuarioAdmin());
+        AlmacenContrasenias.Instancia().eliminarContraseniasAlmacenadas();
+        AlmacenContrasenias.Instancia().setPeriodosDeRotacion(3);
     }
 
     @Test
@@ -25,19 +31,19 @@ public class TestUsuarioAdmin {
     }
 
     @Test
-    public void creacionDeUsuarioEstandar(){
+    public void creacionDeUsuarioEstandar() throws Exception {
         Organizacion entidadJuridica = usuarioAdmin.getRol().altaOrganizacionJuridica();
         Usuario usuarioEstandar = usuarioAdmin.getRol().
-                nuevoUsuarioEstandar("estandar","estandar123", entidadJuridica);
+                nuevoUsuarioEstandar("estandar123","Estandar@123", entidadJuridica);
 
         Assert.assertTrue(usuarioEstandar.getRol() instanceof UsuarioEstandar);
     }
 
     @Test
-    public void asignacionDeOrganizacionAUsuarioEstandar(){
+    public void asignacionDeOrganizacionAUsuarioEstandar() throws Exception {
         Organizacion entidadJuridica = usuarioAdmin.getRol().altaOrganizacionJuridica();
         Usuario usuarioEstandar = usuarioAdmin.getRol().
-                nuevoUsuarioEstandar("estandar","estandar123", entidadJuridica);
+                nuevoUsuarioEstandar("estandar123","Estandar@123", entidadJuridica);
 
         Assert.assertTrue(usuarioEstandar.getRol().getOrganizacion() instanceof Organizacion);
     }

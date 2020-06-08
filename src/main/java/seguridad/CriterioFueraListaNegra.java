@@ -1,7 +1,5 @@
 package seguridad;
 
-import usuario.Usuario;
-
 import java.io.BufferedReader;
 import java.io.FileNotFoundException;
 import java.io.FileReader;
@@ -34,8 +32,8 @@ public class CriterioFueraListaNegra implements CriterioValidacion {
 
 
 	@Override
-	public void validar(Usuario usuario, List<String> mensajesDeError) {
-		if (listaNegra.contains(usuario.getContrasenia())) {
+	public void validar(String usuario, String contrasenia, List<String> mensajesDeError) {
+		if (listaNegra.contains(contrasenia)) {
 			mensajesDeError.add("Contrasenia pertenece a lista negra");
 		}
 	}

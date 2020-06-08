@@ -16,10 +16,18 @@ public class Usuario {
     protected String contrasenia;
     protected Rol rol;
 
-    public Usuario(String usuario, String contrasenia){
-        this.usuario = usuario;
-        this.contrasenia = contrasenia;
+    public Usuario(String usuario, String contrasenia) throws Exception {
+        ValidadorContrasenia validador = new ValidadorContrasenia();
 
+        List<String> mensajesDeError = validador.validarCreacionContrasenia(usuario,contrasenia);
+
+        if (mensajesDeError.size() > 0){
+            System.out.println(mensajesDeError);
+            throw new Exception();
+        } else {
+            this.usuario = usuario;
+            this.contrasenia = contrasenia;
+        }
     }
 
   /*  public Usuario(String usuario, String contrasenia) {

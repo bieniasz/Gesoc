@@ -3,8 +3,6 @@ package seguridad;
 import org.junit.Assert;
 import org.junit.Before;
 import org.junit.Test;
-import usuario.UsuarioAdmin;
-import usuario.UsuarioEstandar;
 import usuario.Usuario;
 
 import java.util.ArrayList;
@@ -25,8 +23,7 @@ public class TestCriterioListaNegra {
     @Test
     public void contraseniaEnListaNegra(){
 
-        Usuario usuario = new Usuario("testUser", "123456");
-        this.criterio.validar(usuario, errorMessages);
+        this.criterio.validar("testUser","123456" , errorMessages);
 
         Assert.assertEquals(1, this.errorMessages.size());
     }
@@ -34,8 +31,7 @@ public class TestCriterioListaNegra {
     @Test
     public void contraseniaNOestaEnListaNegra(){
 
-        Usuario usuario = new Usuario("testUser", "ContrS3ni$°Segur1s1m4");
-        this.criterio.validar(usuario, errorMessages);;
+        this.criterio.validar("testUser", "ContrS3ni$°Segur1s1m4", errorMessages);;
 
         Assert.assertEquals(0, this.errorMessages.size());
     }
@@ -43,8 +39,7 @@ public class TestCriterioListaNegra {
     @Test
     public void criterioListaNegraMensajeDeError(){
 
-        Usuario usuario = new Usuario("testUser", "123456");
-        this.criterio.validar(usuario, errorMessages);;
+        this.criterio.validar("testUser", "123456", errorMessages);;
 
         Assert.assertEquals("Contrasenia pertenece a lista negra", this.errorMessages.get(0));
     }
