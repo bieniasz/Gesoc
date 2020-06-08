@@ -1,13 +1,11 @@
 package usuario;
 
+import org.junit.Assert;
 import org.junit.Before;
 import org.junit.Test;
-import org.junit.Assert;
 import organizacion.EntidadJuridica;
 import organizacion.Organizacion;
 import seguridad.AlmacenContrasenias;
-import usuario.Usuario;
-import usuario.UsuarioAdmin;
 
 public class TestUsuarioAdmin {
 

@@ -18,23 +18,21 @@ public class Usuario {
 
     public Usuario(String usuario, String contrasenia) throws Exception {
         ValidadorDeUsuario validador = new ValidadorDeUsuario();
-
         List<String> mensajesDeError = validador.validarCreacionContrasenia(usuario,contrasenia);
 
-        if (mensajesDeError.size() > 0){
-            System.out.println(mensajesDeError);
-            throw new Exception();
-        } else {
-            this.usuario = usuario;
-            this.contrasenia = contrasenia;
+        try {
+            if (mensajesDeError.size() > 0){
+                throw new Exception();
+            } else {
+                this.usuario = usuario;
+                this.contrasenia = contrasenia;
+            }
+        } catch (Exception e) {
+           System.out.println("El usuario " + "\""+usuario+"\"" + " no pudo ser creado porque se presentaron los siguientes errores:");
+           System.out.println(mensajesDeError);
+           throw e;
         }
     }
-
-  /*  public Usuario(String usuario, String contrasenia) {
-
-        this.usuario = usuario;
-        this.contrasenia = contrasenia;
-    }*/
 
     public void iniciarSesion(String usuario, String contrasenia){
 
