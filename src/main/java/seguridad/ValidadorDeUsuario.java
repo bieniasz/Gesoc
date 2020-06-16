@@ -1,14 +1,16 @@
 package seguridad;
 
+import usuario.Usuario;
+
 import java.util.ArrayList;
 import java.util.List;
 
-public class ValidadorContrasenia {
+public class ValidadorDeUsuario {
 
     private final List<CriterioValidacion> criteriosLogin;
     private final List<CriterioValidacion> criteriosCreacionContrasenia;
 
-    public ValidadorContrasenia() {
+    public ValidadorDeUsuario() {
         this.criteriosLogin = new ArrayList<CriterioValidacion>();
 
         this.criteriosCreacionContrasenia = new ArrayList<CriterioValidacion>();
@@ -19,13 +21,13 @@ public class ValidadorContrasenia {
         this.criteriosCreacionContrasenia.add(new CriterioRotacionContrasenia());
     }
 
-    public List<String> validarCreacionContrasenia(Usuario usuario) {
+    public List<String> validarCreacionContrasenia(String usuario, String contrasenia) {
 
         final List<String> errores = new ArrayList<String>();
-        this.criteriosCreacionContrasenia.forEach(criterio -> criterio.validar(usuario, errores));
+        this.criteriosCreacionContrasenia.forEach(criterio -> criterio.validar(usuario,contrasenia,errores));
 
         if (errores.size() == 0) {
-            AlmacenContrasenias.Instancia().registrarContrasenia(usuario);
+            AlmacenContrasenias.Instancia().registrarContrasenia(usuario, contrasenia);
         }
 
         return errores;
@@ -37,9 +39,9 @@ public class ValidadorContrasenia {
 	 * @param usuario
 	 * @return
 	 */
-	public List<String> ValidarContraseniaLogin(Usuario usuario) {
+	public List<String> validarContraseniaLogin(String usuario, String contrasenia) {
         List<String> mensajesDeError = new ArrayList<String>();
-        this.criteriosLogin.stream().forEach(criterio -> criterio.validar(usuario, mensajesDeError));
+        this.criteriosLogin.stream().forEach(criterio -> criterio.validar(usuario, contrasenia , mensajesDeError));
 
         return mensajesDeError;
     }

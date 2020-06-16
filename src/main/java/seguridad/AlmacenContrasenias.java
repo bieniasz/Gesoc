@@ -1,5 +1,7 @@
 package seguridad;
 
+import usuario.Usuario;
+
 import java.util.ArrayList;
 import java.util.HashMap;
 import java.util.List;
@@ -21,7 +23,6 @@ public class AlmacenContrasenias {
         if (instancia == null) {
             instancia = new AlmacenContrasenias();
         }
-
         return instancia;
     }
 
@@ -29,34 +30,28 @@ public class AlmacenContrasenias {
         this.contraseniasPrevias.clear();
     }
 
-
-    //TODO ojo con estos metodos que son de un singleton, deben ser synchronized para evitar problemas de manejo de threads
-    //TODO java no garantiza safe-thread.
-    public synchronized void registrarContrasenia(Usuario usuario) {
-        final List<String> contrasenias = this.contraseniasPrevias.get(usuario.getNombre());
-        // TODO si el usuario no tiene ningun password la linea 40 parece dar NullPointerException
-        // TODO una mejor forma es trabajar con Optional.
+    public synchronized void registrarContrasenia(String usuario, String contrasenia) {
+        final List<String> contrasenias = this.contraseniasPrevias.get(usuario);
         try {
-            contrasenias.add(usuario.getContrasenia());
-
+            contrasenias.add(contrasenia);
             if (contrasenias.size() > this.periodosDeRotacion) {
                 contrasenias.remove(0);
             }
 
         } catch (NullPointerException e) {
-            this.contraseniasPrevias.put(usuario.getNombre(), new ArrayList<String>());
-            this.contraseniasPrevias.get(usuario.getNombre()).add(usuario.getContrasenia());
+            this.contraseniasPrevias.put(usuario, new ArrayList<String>());
+            this.contraseniasPrevias.get(usuario).add(contrasenia);
         }
 
     }
 
     //TODO ojo con estos metodos que son de un singleton, deben ser synchronized para evitar problemas de manejo de threads
     //TODO java no garantiza safe-thread.
-    public synchronized boolean contraseniaRepiteContraseniasViejas(Usuario usuario) {
-        final List<String> contrasenias = this.contraseniasPrevias.get(usuario.getNombre());
+    public synchronized boolean contraseniaRepiteContraseniasViejas(String usuario, String contrasenia) {
+        final List<String> contrasenias = this.contraseniasPrevias.get(usuario);
 
         try {
-            return contrasenias.contains(usuario.getContrasenia());
+            return contrasenias.contains(contrasenia);
         } catch (Exception e) {
             return false;
         }

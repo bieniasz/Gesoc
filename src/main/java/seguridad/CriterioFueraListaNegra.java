@@ -32,8 +32,8 @@ public class CriterioFueraListaNegra implements CriterioValidacion {
 
 
 	@Override
-	public void validar(Usuario usuario, List<String> mensajesDeError) {
-		if (listaNegra.contains(usuario.getContrasenia())) {
+	public void validar(String usuario, String contrasenia, List<String> mensajesDeError) {
+		if (listaNegra.contains(contrasenia)) {
 			mensajesDeError.add("Contrasenia pertenece a lista negra");
 		}
 	}

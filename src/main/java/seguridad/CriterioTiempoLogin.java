@@ -1,4 +1,5 @@
 package seguridad;
+
 import java.time.LocalTime;
 import java.util.List;
 
@@ -10,11 +11,11 @@ public class CriterioTiempoLogin implements CriterioValidacion {
     public CriterioTiempoLogin() {
 
         this.tiempoDeEspera = 3;
-        this.intentoAnterior = LocalTime.now();
+
     }
 
     @Override
-    public void validar(Usuario usuario, List<String> mensajesDeError) {
+    public void validar(String usuario, String contrasenia, List<String> mensajesDeError) {
         LocalTime horaActual = LocalTime.now();  //.compareTo();
 
         try {
