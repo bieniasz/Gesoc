@@ -10,7 +10,7 @@ public class TestEmpresaSectorServicios {
 
     @Before
     public void init(){
-        empresaTest = new Empresa(200, Actividad.SERVICIOS, 0);
+        empresaTest = new Empresa(100, Actividad.SERVICIOS, 100, false);
     }
 
     @Test
@@ -58,6 +58,58 @@ public class TestEmpresaSectorServicios {
         //topeMedianaTramo2: $607.210.000
         //PromVentas = $2048.000.512
         empresaTest.setPromedioVentasAnuales(2048000512);
+        String tamano = CalculadoraDeTamanio.calcularTamanio(empresaTest);
+
+        Assert.assertEquals(Tamanios.OVERFLOW, tamano);
+    }
+
+    //Tests de empresas comisionistas -> Se evalua la cantidad de personal
+
+    @Test
+    public void empresaServiciosComisionistaEsMicro() {
+        //topeMicro: 7
+        empresaTest.setCantidadDePersonal(4);
+        empresaTest.setComisionista(true);
+        String tamano = CalculadoraDeTamanio.calcularTamanio(empresaTest);
+
+        Assert.assertEquals(Tamanios.MICRO, tamano);
+    }
+
+    @Test
+    public void empresaServiciosComisionistaEsPequena() {
+        //topePequenia: 30
+        empresaTest.setCantidadDePersonal(16);
+        empresaTest.setComisionista(true);
+        String tamano = CalculadoraDeTamanio.calcularTamanio(empresaTest);
+
+        Assert.assertEquals(Tamanios.PEQUENIA, tamano);
+    }
+
+    @Test
+    public void empresaServiciosComisionistaEsMedianaT1() {
+        //topeMedianaT1: 165
+        empresaTest.setCantidadDePersonal(64);
+        empresaTest.setComisionista(true);
+        String tamano = CalculadoraDeTamanio.calcularTamanio(empresaTest);
+
+        Assert.assertEquals(Tamanios.MEDIANA_T1, tamano);
+    }
+
+    @Test
+    public void empresaServiciosComisionistaEsMedianaT2() {
+        //topeMedianaT2: 535
+        empresaTest.setCantidadDePersonal(256);
+        empresaTest.setComisionista(true);
+        String tamano = CalculadoraDeTamanio.calcularTamanio(empresaTest);
+
+        Assert.assertEquals(Tamanios.MEDIANA_T2, tamano);
+    }
+
+    @Test
+    public void empresaIndustriaComisionistaNoAplica() {
+        //topeMedianaT2: 535
+        empresaTest.setCantidadDePersonal(1024);
+        empresaTest.setComisionista(true);
         String tamano = CalculadoraDeTamanio.calcularTamanio(empresaTest);
 
         Assert.assertEquals(Tamanios.OVERFLOW, tamano);

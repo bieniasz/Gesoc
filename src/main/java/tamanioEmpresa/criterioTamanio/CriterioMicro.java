@@ -10,7 +10,12 @@ public class CriterioMicro extends CriterioTamanioEmpresa {
 
 	@Override	
 	public Boolean esCategoria(Empresa empresa) {
-		return  empresa.getPromedioVentasAnuales() <= empresa.getActividad().getTopeMicro();
+		boolean esMicro;
+		if(empresa.isComisionista())
+			esMicro = empresa.getCantidadDePersonal() <= empresa.getActividad().getTopeCantPersonalMicro();
+		else
+			esMicro = empresa.getPromedioVentasAnuales() <= empresa.getActividad().getTopePromVentasMicro();
+
+		return esMicro;
 	}
-	
 }

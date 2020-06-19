@@ -11,7 +11,15 @@ public class CriterioPequenia extends CriterioTamanioEmpresa {
 
 	@Override	
 	public Boolean esCategoria(Empresa empresa) {
-		return  empresa.getPromedioVentasAnuales() <= empresa.getActividad().getTopePequenia()
-				&& empresa.getPromedioVentasAnuales() > empresa.getActividad().getTopeMicro();
+		boolean esPequena;
+		if(empresa.isComisionista()) {
+			esPequena = empresa.getCantidadDePersonal() > empresa.getActividad().getTopeCantPersonalMicro()
+					&& empresa.getCantidadDePersonal() <= empresa.getActividad().getTopeCantPersonalPequenia();
+		}
+		else {
+			esPequena = empresa.getPromedioVentasAnuales() > empresa.getActividad().getTopePromVentasMicro()
+					&& empresa.getPromedioVentasAnuales() <= empresa.getActividad().getTopePromVentasPequenia();
+		}
+		return esPequena;
 	}
 }

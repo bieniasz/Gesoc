@@ -10,8 +10,15 @@ public class CriterioMedianaTramo1 extends CriterioTamanioEmpresa {
 
 	@Override
 	public Boolean esCategoria(Empresa empresa) {
-		return  empresa.getPromedioVentasAnuales() <= empresa.getActividad().getTopeMedianaT1() &&
-				empresa.getPromedioVentasAnuales() > empresa.getActividad().getTopePequenia()
-				;
+		boolean esMedianaT1;
+		if(empresa.isComisionista()) {
+			esMedianaT1 = empresa.getCantidadDePersonal() > empresa.getActividad().getTopeCantPersonalPequenia()
+					&& empresa.getCantidadDePersonal() <= empresa.getActividad().getTopeCantPersonalMedianaTramo1();
+		}
+		else {
+			esMedianaT1 = empresa.getPromedioVentasAnuales() > empresa.getActividad().getTopePromVentasPequenia()
+					&& empresa.getPromedioVentasAnuales() <= empresa.getActividad().getTopePromVentasMedianaT1();
+		}
+		return esMedianaT1;
 	}
 }

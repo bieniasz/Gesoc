@@ -10,6 +10,12 @@ public class CriterioOverFlow extends CriterioTamanioEmpresa {
 
 	@Override
 	public Boolean esCategoria(Empresa empresa) {
-		return  empresa.getPromedioVentasAnuales() > empresa.getActividad().getTopeMedianaT2();
+		boolean overflow;
+		if(empresa.isComisionista())
+			overflow = empresa.getCantidadDePersonal() > empresa.getActividad().getTopeCantPersonalMedianaTramo2();
+		else
+			overflow = empresa.getPromedioVentasAnuales() > empresa.getActividad().getTopePromVentasMedianaT2();
+
+		return overflow;
 	}
 }

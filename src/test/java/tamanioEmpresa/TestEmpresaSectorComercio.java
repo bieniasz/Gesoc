@@ -10,7 +10,7 @@ public class TestEmpresaSectorComercio {
 
     @Before
     public void init(){
-        empresaTest = new Empresa(200, Actividad.COMERCIO, 0);
+        empresaTest = new Empresa(100, Actividad.COMERCIO, 100, false);
     }
 
     @Test
@@ -63,4 +63,55 @@ public class TestEmpresaSectorComercio {
         //Assert.assertEquals(Tamanios.OVERFLOW, tamano);
     }
 
+    //Tests de empresas comisionistas -> Se evalua la cantidad de personal
+
+    @Test
+    public void empresaComercioComisionistaEsMicro() {
+        //topeMicro: 7
+        empresaTest.setCantidadDePersonal(7);
+        empresaTest.setComisionista(true);
+        String tamano = CalculadoraDeTamanio.calcularTamanio(empresaTest);
+
+        Assert.assertEquals(Tamanios.MICRO, tamano);
+    }
+
+    @Test
+    public void empresaComercioComisionistaEsPequena() {
+        //topePequenia: 35
+        empresaTest.setCantidadDePersonal(32);
+        empresaTest.setComisionista(true);
+        String tamano = CalculadoraDeTamanio.calcularTamanio(empresaTest);
+
+        Assert.assertEquals(Tamanios.PEQUENIA, tamano);
+    }
+
+    @Test
+    public void empresaComercioComisionistaEsMedianaT1() {
+        //topeMedianaT1: 135
+        empresaTest.setCantidadDePersonal(128);
+        empresaTest.setComisionista(true);
+        String tamano = CalculadoraDeTamanio.calcularTamanio(empresaTest);
+
+        Assert.assertEquals(Tamanios.MEDIANA_T1, tamano);
+    }
+
+    @Test
+    public void empresaComercioComisionistaEsMedianaT2() {
+        //topeMedianaT2: 345
+        empresaTest.setCantidadDePersonal(256);
+        empresaTest.setComisionista(true);
+        String tamano = CalculadoraDeTamanio.calcularTamanio(empresaTest);
+
+        Assert.assertEquals(Tamanios.MEDIANA_T2, tamano);
+    }
+
+    @Test
+    public void empresaComercioComisionistaNoAplica() {
+        //topeMedianaT2: 345
+        empresaTest.setCantidadDePersonal(512);
+        empresaTest.setComisionista(true);
+        String tamano = CalculadoraDeTamanio.calcularTamanio(empresaTest);
+
+        Assert.assertEquals(Tamanios.OVERFLOW, tamano);
+    }
 }
