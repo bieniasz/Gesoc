@@ -8,12 +8,15 @@ public class TestTimerValidadorTransparencia {
     @Test
     public void prueba1() throws InterruptedException, SchedulerException {
         TimerValidadorTransparencia timer = new TimerValidadorTransparencia();
+        timer.SetDummyJobForTest();
 
-        //ss mm hh * * *
         //http://www.quartz-scheduler.org/api/2.2.3/index.html
-        timer.executeJob("0 15 10 * * ?");
+        //ss mm hh * * *
+        //"0 15 10 * * ?" a X hora cada dia
+        //"0/20 * * * * ?" cada X segundos
+        timer.executeJob("0/2 * * * * ?");
 
-        Thread.sleep(5000);
+        Thread.sleep(4000);
         timer.closeScheduler();
     }
 }

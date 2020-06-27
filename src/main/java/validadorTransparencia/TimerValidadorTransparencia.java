@@ -14,7 +14,7 @@ public class TimerValidadorTransparencia {
 
     public TimerValidadorTransparencia() throws SchedulerException {
         this.job = newJob(SchedulerJob.class)
-                .withIdentity("job1", "group1")
+                .withIdentity("jobValidador", "groupValidador")
                 .build();
 
         SchedulerFactory sf = new StdSchedulerFactory();
@@ -33,5 +33,11 @@ public class TimerValidadorTransparencia {
 
     public void closeScheduler() throws SchedulerException {
         this.sched.shutdown(true);
+    }
+
+    public void SetDummyJobForTest(){
+        this.job = newJob(SchedulerJobDummy.class)
+                .withIdentity("jobDummy", "dummy")
+                .build();
     }
 }

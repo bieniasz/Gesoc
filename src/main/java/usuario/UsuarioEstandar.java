@@ -14,7 +14,7 @@ public class UsuarioEstandar implements Rol{
     }
 
     public OperacionEgreso registrarNuevaOperacionDeEgreso(){
-    return new OperacionEgreso();
+        return new OperacionEgreso(null, 0, null, null, null, null, null, null, null);
     }
 
 
