@@ -22,9 +22,7 @@ public class FiltroFecha implements FiltroDeResultado{
         List<ResultadoDeValidacion> resultadosFiltrados;
 
         resultadosFiltrados = resultados.stream()
-                .filter(res -> {
-                    return res.fecha().isAfter(fechaDesde) && res.fecha().isBefore(fechaHasta); // creo que faltan los límites del intervalo osea los =                            ;
-                })
+                .filter(res -> res.fecha().isAfter(fechaDesde) && res.fecha().isBefore(fechaHasta)) // creo que faltan los límites del intervalo osea los =                            ;
                 .collect(Collectors.toList());
 
         return resultadosFiltrados;
