@@ -23,4 +23,12 @@ public class ResultadoDeValidacion {
     public void marcarNoLeido(Usuario usuario){
 
     }
+
+    public Boolean leido() {
+        return leido;
+    }
+
+    public LocalDate fecha() {
+        return fecha;
+    }
 }
