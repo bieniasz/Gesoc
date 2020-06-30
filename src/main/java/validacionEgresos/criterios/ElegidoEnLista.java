@@ -9,7 +9,7 @@ import validacionEgresos.CriterioValidacionEgresosPresupuesto;
 public class ElegidoEnLista implements CriterioValidacionEgresosPresupuesto {
 
 	@Override
-	public boolean validar(OperacionEgreso operacion, ArrayList<Presupuesto> Presupuestos) {
+	public Presupuesto validar(OperacionEgreso operacion, ArrayList<Presupuesto> Presupuestos) {
 		// TODO Auto-generated method stub
 		return false;
 	}
