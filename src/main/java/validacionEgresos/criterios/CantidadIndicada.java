@@ -11,13 +11,13 @@ public class CantidadIndicada implements CriterioValidacionEgresosPresupuesto {
 	@Override
 	public Presupuesto validar(OperacionEgreso operacion, ArrayList<Presupuesto> Presupuestos) {
 		
-		//Presupuesto resultado;
+		Presupuesto resultado;
+	
 		
 		 //operacion.getDetalle().stream().forEach(det->det.getItem()==resultado );
-		operacion.getDetalle().stream().map(detalle ->detalle.getItemCantidad()).collect(null);
 		
-		//Presupuestos.stream().filter(presu ->presu.getDetalle().stream().())
-		//.findFirst().get();
+		resultado = Presupuestos.stream().filter(presu -> presu.equals(presu.getListaItemCantidad(),operacion.getListaItemCantidad()))
+		.findFirst().get();
 		
 		return resultado ;
 	}

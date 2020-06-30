@@ -5,6 +5,9 @@ import ProveedorDocComer.DocumentoComercial;
 
 import java.time.LocalDate;
 import java.util.List;
+import java.util.stream.Collectors;
+
+import org.javatuples.Pair;
 
 public abstract class OperacionComercial {
     private LocalDate fecha;
@@ -39,5 +42,13 @@ public abstract class OperacionComercial {
     public void setValorTotal(float valorTotal) { this.valorTotal = valorTotal; }
     public void setDocumentoComercial(DocumentoComercial documentoComercial) { this.documentoComercial = documentoComercial; }
     public void setDetalle(List<DetalleEgreso> detalle) { this.detalle = detalle; }
+    
+    public List<Pair> getListaItemCantidad() {
+    	
+    return this.getDetalle().stream().map(detalle ->detalle.getItemCantidad()).collect(Collectors.toList());
+    }
+    
+     
+	
 
 }
