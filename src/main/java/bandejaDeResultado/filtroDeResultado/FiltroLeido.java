@@ -2,7 +2,6 @@ package bandejaDeResultado.filtroDeResultado;
 
 import validadorTransparencia.ResultadoDeValidacion;
 
-import java.util.ArrayList;
 import java.util.List;
 import java.util.stream.Collectors;
 
@@ -13,7 +12,7 @@ public class FiltroLeido implements FiltroDeResultado{
         List<ResultadoDeValidacion> resultadosFiltrados;
 
         resultadosFiltrados = resultados.stream()
-                .filter(ResultadoDeValidacion::leido)
+                .filter(res -> res.leido())
                 .collect(Collectors.toList());
 
         return resultadosFiltrados;
