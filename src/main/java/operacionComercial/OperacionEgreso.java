@@ -28,7 +28,9 @@ public class OperacionEgreso extends OperacionComercial {
     }
 
     @Override
-    public void calcularValorTotal() {   }
+    public Double calcularValorTotal() {
+    	return this.getDetalle().stream().mapToDouble(d->d.getValorTotal()).sum();
+    }
     @Override
     public void registrarDetalle() {   }
     @Override
