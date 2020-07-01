@@ -9,8 +9,6 @@ public class UsuarioEstandar implements Rol{
 
     public UsuarioEstandar(Organizacion organizacion) {
         this.organizacion = organizacion;
-        //Esta instancia en nuestro sistema final debería ser ejecutada por el validador. Ya que antes de deben validar los criterios.
-
     }
 
     public OperacionEgreso registrarNuevaOperacionDeEgreso(){

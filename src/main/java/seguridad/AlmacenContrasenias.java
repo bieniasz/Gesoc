@@ -60,4 +60,9 @@ public class AlmacenContrasenias {
     public void setPeriodosDeRotacion(Integer cantPeriodos){
         this.periodosDeRotacion = cantPeriodos;
     }
+
+    //TODO poco seguro el método getContraseniasPrevias pero lo uso para testear, despues se puede cambiar.
+    public List<String> getContraseniasPreviasDeUsuario(String usuario) {
+        return contraseniasPrevias.get(usuario);
+    }
 }
