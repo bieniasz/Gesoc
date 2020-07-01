@@ -5,13 +5,16 @@ import java.util.List;
 
 public class CriterioTiempoLogin implements CriterioValidacion {
 
+    //private List<IntentosFallidosPorUsuario> intentosFallidosPorUsuarios;
     private final Integer tiempoDeEspera;
+    //private final Integer cantidadMaximaDeIntentos;
     private LocalTime intentoAnterior;
 
     public CriterioTiempoLogin() {
 
         this.tiempoDeEspera = 3;
-
+        // va a ser considerado en segundos
+        //this.cantidadMaximaDeIntentos = 3;
     }
 
     @Override

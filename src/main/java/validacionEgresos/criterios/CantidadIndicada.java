@@ -2,16 +2,28 @@ package validacionEgresos.criterios;
 
 import java.util.ArrayList;
 
-import operacionComercial.OperacionEgreso;
+import operacionComercial.*;
 import operacionComercial.Presupuesto;
 import validacionEgresos.CriterioValidacionEgresosPresupuesto;
 
 public class CantidadIndicada implements CriterioValidacionEgresosPresupuesto {
 
 	@Override
-	public boolean validar(OperacionEgreso operacion, ArrayList<Presupuesto> Presupuestos) {
-		// TODO Auto-generated method stub
-		return false;
+	public Presupuesto validar(OperacionEgreso operacion, ArrayList<Presupuesto> Presupuestos) {
+		
+		//Presupuesto resultado;
+		
+		 //operacion.getDetalle().stream().forEach(det->det.getItem()==resultado );
+		operacion.getDetalle().stream().map(detalle ->detalle.getItemCantidad()).collect(null);
+		
+		//Presupuestos.stream().filter(presu ->presu.getDetalle().stream().())
+		//.findFirst().get();
+		
+		return resultado ;
 	}
 
+	public  void corteControlItem(){
+	
+		
+	};
 }

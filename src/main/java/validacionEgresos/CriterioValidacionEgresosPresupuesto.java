@@ -7,5 +7,6 @@ import operacionComercial.Presupuesto;
 
 public interface CriterioValidacionEgresosPresupuesto {
 
-	public boolean validar (OperacionEgreso operacion, ArrayList <Presupuesto> Presupuestos );
+	public Presupuesto validar (OperacionEgreso operacion, ArrayList <Presupuesto> Presupuestos );
+
 }
