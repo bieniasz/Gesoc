@@ -26,7 +26,7 @@ public abstract class OperacionComercial {
         //this.categoriasAsociadas = categorias;
     }
 
-    public abstract void calcularValorTotal();
+    public abstract Double calcularValorTotal();
     public abstract void registrarDetalle();
     public abstract void registrarDocumentoComercial();
     //public abstract void asociarACategoria(CategoriaOperacion categoriaOperacion);
@@ -43,12 +43,7 @@ public abstract class OperacionComercial {
     public void setDocumentoComercial(DocumentoComercial documentoComercial) { this.documentoComercial = documentoComercial; }
     public void setDetalle(List<DetalleEgreso> detalle) { this.detalle = detalle; }
     
-    public List<Pair> getListaItemCantidad() {
-    	
-    return this.getDetalle().stream().map(detalle ->detalle.getItemCantidad()).collect(Collectors.toList());
-    }
-    
-     
+         
 	
 
 }

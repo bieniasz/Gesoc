@@ -8,22 +8,23 @@ import validacionEgresos.CriterioValidacionEgresosPresupuesto;
 
 public class CantidadIndicada implements CriterioValidacionEgresosPresupuesto {
 
-	@Override
-	public Presupuesto validar(OperacionEgreso operacion, ArrayList<Presupuesto> Presupuestos) {
-		
-		Presupuesto resultado;
+	public int cantidadPresupuestos;
 	
+	@Override
+	public void validar  (OperacionEgreso operacion) throws Exception{
+		int cantidad =operacion.getPresupuestos().size();
+		if (cantidad!= this.cantidadPresupuestos) {
+			throw new Exception("No coincide con la cantidad indicada de presupuestos");
+		};
 		
-		 //operacion.getDetalle().stream().forEach(det->det.getItem()==resultado );
-		
-		resultado = Presupuestos.stream().filter(presu -> presu.equals(presu.getListaItemCantidad(),operacion.getListaItemCantidad()))
-		.findFirst().get();
-		
-		return resultado ;
+		;
 	}
 
-	public  void corteControlItem(){
-	
-		
-	};
+	public int getCantidadPresupuestos() {	return cantidadPresupuestos;}
+
+	public void setCantidadPresupuestos(int cantidadPresupuestos) {
+		this.cantidadPresupuestos = cantidadPresupuestos;
+	}
+
+
 }
