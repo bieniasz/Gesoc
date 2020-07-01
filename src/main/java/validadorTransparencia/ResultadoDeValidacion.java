@@ -9,19 +9,23 @@ import java.util.List;
 
 public class ResultadoDeValidacion {
     private OperacionEgreso operacionEgreso;
-    private List<String> resultado;
+    private List<String> resultados;
     private LocalDate fecha;
     private Boolean leido;
+
+    public ResultadoDeValidacion() {
+        this.leido = false;
+    }
 
     public void registrarResultado(){
 
     }
 
-    public void marcarLeido(Usuario usuario){
-        
+    public void marcarLeido(){
+        this.leido = true;
     }
-    public void marcarNoLeido(Usuario usuario){
-
+    public void marcarNoLeido(){
+        this.leido = false;
     }
 
     public Boolean leido() {
@@ -30,5 +34,9 @@ public class ResultadoDeValidacion {
 
     public LocalDate fecha() {
         return fecha;
+    }
+
+    public void setFecha(LocalDate fecha) {
+        this.fecha = fecha;
     }
 }

@@ -3,7 +3,6 @@ package bandejaDeResultado.filtroDeResultado;
 import validadorTransparencia.ResultadoDeValidacion;
 
 import java.time.LocalDate;
-import java.util.ArrayList;
 import java.util.List;
 import java.util.stream.Collectors;
 
@@ -22,10 +21,15 @@ public class FiltroFecha implements FiltroDeResultado{
         List<ResultadoDeValidacion> resultadosFiltrados;
 
         resultadosFiltrados = resultados.stream()
-                .filter(res -> res.fecha().isAfter(fechaDesde) && res.fecha().isBefore(fechaHasta)) // creo que faltan los límites del intervalo osea los =                            ;
+                .filter(res -> this.estaDentroDelIntervaloDesdeHasta(res.fecha()))
                 .collect(Collectors.toList());
 
         return resultadosFiltrados;
+    }
+
+    private Boolean estaDentroDelIntervaloDesdeHasta(LocalDate fecha){
+        return (fecha.isEqual(fechaDesde) || fecha.isAfter(fechaDesde)) &&
+                (fecha.isEqual(fechaHasta) || fecha.isBefore(fechaHasta));
     }
     public LocalDate getFechaDesde() {
         return fechaDesde;
