@@ -38,8 +38,22 @@ public class Usuario {
 
     }
 
-    public void cambiarContrasenia(String contrasenia){
+    public void cambiarContrasenia(String contrasenia) throws Exception {
+        ValidadorDeUsuario validadorUsuario = new ValidadorDeUsuario();
+        List<String> mensajesDeError = validadorUsuario.validarCreacionContrasenia(this.getUsuario(),contrasenia);
 
+        try {
+            if (mensajesDeError.size() > 0){
+                throw new Exception();
+            } else {
+                this.contrasenia = contrasenia;
+                System.out.println("La contraseña fue cambiada con exito");
+            }
+        } catch (Exception e) {
+            System.out.println("La contraseña no pudo ser cambiada porque se presentaron los siguientes errores:");
+            System.out.println(mensajesDeError);
+            throw e;
+        }
     }
 
     public String getUsuario() {
