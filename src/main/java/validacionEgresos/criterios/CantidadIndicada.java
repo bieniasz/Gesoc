@@ -13,11 +13,9 @@ public class CantidadIndicada implements CriterioValidacionEgresosPresupuesto {
 	@Override
 	public void validar  (OperacionEgreso operacion) throws Exception{
 		int cantidad =operacion.getPresupuestos().size();
-		if (cantidad!= this.cantidadPresupuestos) {
+		if (cantidad < this.cantidadPresupuestos) {
 			throw new Exception("No coincide con la cantidad indicada de presupuestos");
-		};
-		
-		;
+		}
 	}
 
 	public int getCantidadPresupuestos() {	return cantidadPresupuestos;}

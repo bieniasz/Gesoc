@@ -17,8 +17,9 @@ public class ResultadoDeValidacion {
         this.leido = false;
     }
 
-    public void registrarResultado(){
-
+    public void registrarResultado(List<String> mensajes, OperacionEgreso operacion){
+        this.resultados = mensajes;
+        this.operacionEgreso = operacion;
     }
 
     public void marcarLeido(){
@@ -39,4 +40,9 @@ public class ResultadoDeValidacion {
     public void setFecha(LocalDate fecha) {
         this.fecha = fecha;
     }
+
+    public List<String> getResultados(){
+        return  this.resultados;
+    }
+
 }

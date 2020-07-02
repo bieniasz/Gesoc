@@ -6,6 +6,7 @@ import ProveedorDocComer.Proveedor;
 import organizacion.Organizacion;
 
 import java.time.LocalDate;
+import java.util.ArrayList;
 import java.util.List;
 
 public class OperacionEgreso extends OperacionComercial {
@@ -18,13 +19,13 @@ public class OperacionEgreso extends OperacionComercial {
 
     // TODO descomentar todo cuando exista la clase OperacionIngreso
 
-    public OperacionEgreso(LocalDate fecha, float valorTotal, DocumentoComercial docComercial, List<DetalleEgreso> detalle, MedioDePago medio, String numIdMedioPago, Proveedor proveedor, Organizacion organizacion, List<Presupuesto> presupuestos) {
+    public OperacionEgreso(LocalDate fecha, float valorTotal, DocumentoComercial docComercial, List<DetalleEgreso> detalle, MedioDePago medio, String numIdMedioPago, Proveedor proveedor, Organizacion organizacion) {
         super(fecha, valorTotal, docComercial, detalle);
         this.medioDePago = medio;
         this.numeroIdentificadorMedioPago = numIdMedioPago;
         this.proveedor = proveedor;
         this.organizacion = organizacion;
-        this.presupuestos = presupuestos;
+        this.presupuestos = new ArrayList<Presupuesto>();
     }
 
     @Override
@@ -39,7 +40,10 @@ public class OperacionEgreso extends OperacionComercial {
     public void validarExistenciaProveedor() { }
     public void validarExistenciaMedioDePago() { }
     public void informarItemsYCantidadesAPresupuesto() { }
-    public void asociarPresupuesto(Presupuesto presupuesto, boolean esElElegido) { }
+
+    public void asociarPresupuesto(Presupuesto presupuesto) {
+        this.presupuestos.add(presupuesto);
+    }
 
 
     /* GETTERS & SETTERS */

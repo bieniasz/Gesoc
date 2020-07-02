@@ -11,7 +11,7 @@ import org.javatuples.Pair;
 
 public abstract class OperacionComercial {
     private LocalDate fecha;
-    private float valorTotal;
+    public float valorTotal;
     private DocumentoComercial documentoComercial;
     private List<DetalleEgreso> detalle;
     //private List<CategoriaOperacion> categoriasAsociadas;

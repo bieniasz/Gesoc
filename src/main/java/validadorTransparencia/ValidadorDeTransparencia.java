@@ -1,7 +1,5 @@
 package validadorTransparencia;
 
-import operacionComercial.OperacionEgreso;
-
 import java.util.ArrayList;
 import java.util.List;
 
@@ -14,6 +12,8 @@ public class ValidadorDeTransparencia {
     }
 
     public void ValidarEgresos(){
-
+        this.pedidosDeValidacionPendientes.stream().forEach( (pedido) -> {
+            pedido.validar();
+        });
     };
 }

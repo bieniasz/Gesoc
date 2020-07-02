@@ -12,6 +12,7 @@ public class Presupuesto extends OperacionComercial{
     public Presupuesto(LocalDate fecha, float valorTotal, DocumentoComercial docComercial, List<DetalleEgreso> detalle, OperacionEgreso egreso, boolean esElElegido) {
         super(fecha, valorTotal, docComercial, detalle);
         this.egreso = egreso;
+        this.egreso.asociarPresupuesto(this);
         this.esElElegido = esElElegido;
     }
 

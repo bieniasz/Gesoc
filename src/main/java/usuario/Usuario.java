@@ -1,9 +1,4 @@
 package usuario;
-
-import seguridad.ValidadorDeUsuario;
-
-import java.util.List;
-
 /**
  * TODO que una clase tan importante como usuario sea anemic.
  * Revisar esto. Ninguna clase a esta altura deberia ser anemica, esto solo seria

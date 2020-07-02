@@ -36,7 +36,6 @@ public class BandejaDeResultado {
     public List<ResultadoDeValidacion> filtrarResultados(){
 
         List<ResultadoDeValidacion> resultadosFiltrados;
-
         resultadosFiltrados = this.resultadosDeValidacion;
 
         for(FiltroDeResultado unFiltro : this.filtrosDeResultados)

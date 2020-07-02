@@ -2,6 +2,6 @@ package operacionComercial;
 import java.util.List;
 
 public class CriterioDeOperaciones {
-    private List<Categoria> Categorias;
-    private List<Criterio> CriteriosHijos;
+    private List<CategoriaDeOperaciones> Categorias;
+    private List<CriterioDeOperaciones> CriteriosHijos;
 }
