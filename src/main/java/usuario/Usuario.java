@@ -13,55 +13,14 @@ import java.util.List;
 public class Usuario {
 
     protected String usuario;
-    protected String contrasenia;
     protected Rol rol;
 
-    public Usuario(String usuario, String contrasenia) throws Exception {
-        ValidadorDeUsuario validador = new ValidadorDeUsuario();
-        List<String> mensajesDeError = validador.validarCreacionContrasenia(usuario,contrasenia);
-
-        try {
-            if (mensajesDeError.size() > 0){
-                throw new Exception();
-            } else {
-                this.usuario = usuario;
-                this.contrasenia = contrasenia;
-            }
-        } catch (Exception e) {
-           System.out.println("El usuario " + "\""+usuario+"\"" + " no pudo ser creado porque se presentaron los siguientes errores:");
-           System.out.println(mensajesDeError);
-           throw e;
-        }
-    }
-
-    public void iniciarSesion(String usuario, String contrasenia){
-
-    }
-
-    public void cambiarContrasenia(String contrasenia) throws Exception {
-        ValidadorDeUsuario validadorUsuario = new ValidadorDeUsuario();
-        List<String> mensajesDeError = validadorUsuario.validarCreacionContrasenia(this.getUsuario(),contrasenia);
-
-        try {
-            if (mensajesDeError.size() > 0){
-                throw new Exception();
-            } else {
-                this.contrasenia = contrasenia;
-                System.out.println("La contraseña fue cambiada con exito");
-            }
-        } catch (Exception e) {
-            System.out.println("La contraseña no pudo ser cambiada porque se presentaron los siguientes errores:");
-            System.out.println(mensajesDeError);
-            throw e;
-        }
+    public Usuario(String usuario) {
+      this.usuario = usuario;
     }
 
     public String getUsuario() {
         return usuario;
-    }
-
-    public String getContrasenia() {
-        return contrasenia;
     }
 
     public Rol getRol() {

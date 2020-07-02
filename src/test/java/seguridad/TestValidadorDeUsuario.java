@@ -46,5 +46,53 @@ public class TestValidadorDeUsuario {
 
         Assert.assertEquals(1, mensajesDeError.size());
     }
+
+    @Test
+    public void validarMetodoContraseniaLoginConError(){
+
+        List<String> errores = this.validador.validarContraseniaLogin("user","password");
+
+        Assert.assertEquals(1,errores.size());
+
+    }
+
+    @Test
+    public void validarMetodoContraseniaLoginSinError(){
+        AlmacenContrasenias.Instancia().registrarContrasenia("user","password");
+        List<String> errores = this.validador.validarContraseniaLogin("user","password");
+
+        Assert.assertEquals(0,errores.size());
+    }
+
+    @Test
+    public void validarMetodoContraseniaLoginMultiple() throws InterruptedException {
+        AlmacenContrasenias.Instancia().registrarContrasenia("user","password");
+        List<String> errores;
+
+        //Intento 1 fallido
+        errores = this.validador.validarContraseniaLogin("user","Incorrecta");
+        Assert.assertEquals(1,errores.size());
+        Assert.assertTrue(AlmacenContrasenias.Instancia().getIntentosFallidosDeUsuario("user") != null);
+
+        //Intento 2 fallido
+        errores = this.validador.validarContraseniaLogin("user","Incorrecta");
+        Assert.assertEquals(1,errores.size());
+
+        //Intento 3 fallido
+        errores = this.validador.validarContraseniaLogin("user","Incorrecta");
+        Assert.assertEquals(1,errores.size());
+        Assert.assertEquals(3,AlmacenContrasenias.Instancia().getIntentosFallidosDeUsuario("user").getCantidadIntentos());
+
+        //Intento 4 correcto sin tiempo de espera
+        errores = this.validador.validarContraseniaLogin("user","password");
+        Assert.assertEquals(1,errores.size());
+        //System.out.println(errores);
+
+        //Intento 4 correcto con tiempo de espera
+        Thread.sleep(5000);
+        errores = this.validador.validarContraseniaLogin("user","password");
+        Assert.assertEquals(0,errores.size());
+    }
+
 }
 

@@ -1,6 +1,6 @@
 package seguridad;
 
-import usuario.Usuario;
+import com.sun.istack.internal.Nullable;
 
 import java.util.ArrayList;
 import java.util.HashMap;
@@ -14,9 +14,11 @@ public class AlmacenContrasenias {
     private Map<String, List<String>> contraseniasPrevias;
     private Integer periodosDeRotacion;
     private static AlmacenContrasenias instancia;
+    private Map<String, IntentosFallidos> intentosFallidos;
 
     private AlmacenContrasenias() {
         this.contraseniasPrevias = new HashMap<String, List<String>>();
+        this.intentosFallidos = new HashMap<String, IntentosFallidos>();
     }
 
     public static AlmacenContrasenias Instancia() {
@@ -57,12 +59,68 @@ public class AlmacenContrasenias {
         }
     }
 
-    public void setPeriodosDeRotacion(Integer cantPeriodos){
+    public synchronized void setPeriodosDeRotacion(Integer cantPeriodos){
         this.periodosDeRotacion = cantPeriodos;
     }
 
-    //TODO poco seguro el método getContraseniasPrevias pero lo uso para testear, despues se puede cambiar.
-    public List<String> getContraseniasPreviasDeUsuario(String usuario) {
+    public synchronized List<String> getContraseniasPreviasDeUsuario(String usuario) {
         return contraseniasPrevias.get(usuario);
+    }
+
+    public synchronized boolean compararContrasenia(String usuario,String contrasenia) {
+        try {
+            List<String> contraseniasPrevias = getContraseniasPreviasDeUsuario(usuario);
+            if (contraseniasPrevias.get(contraseniasPrevias.size()-1) == contrasenia) {
+                return true;
+            } else {
+                return false;
+            }
+        } catch (Exception e) {
+            return false;
+        }
+    }
+
+    public synchronized boolean existeUsuario(String usuario){
+        try {
+            List<String> contraseniasPreviasDeUsuario = getContraseniasPreviasDeUsuario(usuario);
+            if (contraseniasPreviasDeUsuario.size() > 0){
+
+                return true;
+            } else {
+                return false;
+            }
+        } catch (Exception e) {
+            return false;
+        }
+    }
+
+    public synchronized void agregarIntentoFallido(String usuario) {
+        final IntentosFallidos intentosFallidos = this.intentosFallidos.get(usuario);
+
+        try {
+            intentosFallidos.nuevoIntentoFallido();
+        } catch (NullPointerException n) {
+            this.intentosFallidos.put(usuario, new IntentosFallidos());
+            this.intentosFallidos.get(usuario).nuevoIntentoFallido();
+        }
+    }
+
+
+        public synchronized IntentosFallidos getIntentosFallidosDeUsuario(String usuario){
+        return this.intentosFallidos.get(usuario);
+    }
+
+    public synchronized void reiniciarIntentosFallidos(String usuario){
+        this.intentosFallidos.get(usuario).reiniciarIntentos();
+    }
+
+    public synchronized void setHoraDelIntentoMaximo(String usuario){
+        this.intentosFallidos.get(usuario).setHoraDelIntentoMaximo();
+    }
+
+    public synchronized void crearIntentoFallidoSiAplica(String usuario){
+        if (this.existeUsuario(usuario) && !this.intentosFallidos.containsKey(usuario)){
+            this.intentosFallidos.put(usuario, new IntentosFallidos());
+        }
     }
 }
