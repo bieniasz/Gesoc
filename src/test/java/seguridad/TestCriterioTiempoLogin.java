@@ -23,6 +23,7 @@ public class TestCriterioTiempoLogin {
         this.criterio = new CriterioTiempoLogin();
         this.errorMessages = new ArrayList<String>();
         AlmacenContrasenias.Instancia().eliminarContraseniasAlmacenadas();
+        AlmacenContrasenias.Instancia().eliminarIntentosFallidosAlmacenados();
     }
 
     @Test

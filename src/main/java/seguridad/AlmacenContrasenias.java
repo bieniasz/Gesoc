@@ -30,6 +30,10 @@ public class AlmacenContrasenias {
         this.contraseniasPrevias.clear();
     }
 
+    public synchronized void eliminarIntentosFallidosAlmacenados(){
+        this.intentosFallidos.clear();
+    }
+
     public synchronized void registrarContrasenia(String usuario, String contrasenia) {
         final List<String> contrasenias = this.contraseniasPrevias.get(usuario);
         try {

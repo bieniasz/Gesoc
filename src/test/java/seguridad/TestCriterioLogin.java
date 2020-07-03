@@ -18,6 +18,7 @@ public class TestCriterioLogin {
         this.criterio = new CriterioLogin();
         this.errorMessages = new ArrayList<String>();
         AlmacenContrasenias.Instancia().eliminarContraseniasAlmacenadas();
+        AlmacenContrasenias.Instancia().eliminarIntentosFallidosAlmacenados();
     }
 
     @Test

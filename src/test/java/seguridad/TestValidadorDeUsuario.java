@@ -12,6 +12,8 @@ public class TestValidadorDeUsuario {
     @Before
     public void init(){
         this.validador = new ValidadorDeUsuario();
+        AlmacenContrasenias.Instancia().eliminarContraseniasAlmacenadas();
+        AlmacenContrasenias.Instancia().eliminarIntentosFallidosAlmacenados();
     }
 
 
