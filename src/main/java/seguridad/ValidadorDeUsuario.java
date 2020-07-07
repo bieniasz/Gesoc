@@ -48,6 +48,7 @@ public class ValidadorDeUsuario implements iValidadorDeUsuario{
                 return new Usuario(usuario);
             }
         } catch (Exception e) {
+            //TODO cambiar para que no haga print por pantalla.
             System.out.println("El usuario " + "\"" + usuario + "\"" + " no pudo ser creado porque se presentaron los siguientes errores:");
             System.out.println(mensajesDeError);
             throw e;

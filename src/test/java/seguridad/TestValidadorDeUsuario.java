@@ -3,6 +3,7 @@ package seguridad;
 import org.junit.Assert;
 import org.junit.Before;
 import org.junit.Test;
+import usuario.Usuario;
 
 import java.util.List;
 
@@ -96,5 +97,22 @@ public class TestValidadorDeUsuario {
         Assert.assertEquals(0,errores.size());
     }
 
+    @Test
+    public void validarMetodoCreacionDeUsuario() throws Exception {
+        Usuario usuario = validador.crearUsuario("usuario123","Contraseña1234@");
+
+        Assert.assertTrue(usuario instanceof Usuario);
+    }
+
+    @Test
+    public void metodoCreacionDeusuarioConError() throws Exception {
+        try {
+            Usuario usuario = validador.crearUsuario("usuario123","contraseña1234@");
+        } catch (Exception e) {
+            Assert.assertTrue(true);
+            return;
+        }
+        Assert.assertTrue(false);
+    }
 }
 
