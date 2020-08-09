@@ -14,7 +14,7 @@ public abstract class OperacionComercial {
     public float valorTotal;
     private DocumentoComercial documentoComercial;
     private List<DetalleEgreso> detalle;
-    //private List<CategoriaOperacion> categoriasAsociadas;
+    //private List<CategoriaDeOperacion> categoriasAsociadas;
 
     // TODO descomentar todo cuando exista la clase CategoriaOperacion
 
