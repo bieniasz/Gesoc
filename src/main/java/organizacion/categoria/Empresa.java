@@ -9,11 +9,13 @@ public class Empresa {
 	private Actividad actividad;
 	private double promedioVentasAnuales;
 	private String tamanio;
+	private boolean comisionista;
 
-	public Empresa (int cantPersonal, Actividad actividad, double promVentasAnuales) {
+	public Empresa (int cantPersonal, Actividad actividad, double promVentasAnuales, boolean esComisionista) {
 		this.cantidadDePersonal = cantPersonal;
 		this.actividad = actividad;
 		this.promedioVentasAnuales = promVentasAnuales;
+		this.comisionista = esComisionista;
 	}
 
 	public void calcularTamanio() {
@@ -38,6 +40,10 @@ public class Empresa {
 		return tamanio;
 	}
 
+	public boolean isComisionista() {
+		return comisionista;
+	}
+
 
 	//SETTERS
     public void setTamanio(String tamanio) {
@@ -55,4 +61,8 @@ public class Empresa {
     public void setPromedioVentasAnuales(double promedioVentasAnuales) {
         this.promedioVentasAnuales = promedioVentasAnuales;
     }
+
+	public void setComisionista(boolean comisionista) {
+		this.comisionista = comisionista;
+	}
 }
