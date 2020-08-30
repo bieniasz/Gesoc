@@ -1,5 +1,6 @@
 package direccion;
 
+import direccion.ExcepcionesDireccion.FaltaLocacionException;
 import org.apache.http.HttpEntity;
 import org.apache.http.client.ClientProtocolException;
 import org.apache.http.client.ResponseHandler;
@@ -18,7 +19,12 @@ public class MLDireccionesService implements DireccionesService{
     private JSONArray paisesArray;
     private JSONObject informacionPaisObject;
 
-    public List<String> getCiudades(String nombreProvincia) throws IOException {
+    public List<String> getCiudades(String nombreProvincia) throws IOException, FaltaLocacionException {
+        if( this.paisesArray == null)
+            throw new FaltaLocacionException("Pais");
+
+        if( this.informacionPaisObject == null)
+            throw new FaltaLocacionException("Provincia");
 
         String id = MLJSONDataExtractor.obtenerIdDeLaProvincia(this.informacionPaisObject, nombreProvincia);
         String informacionProvinciaJson = this.llamarAServicio("https://api.mercadolibre.com/classified_locations/states/" + id);
@@ -29,7 +35,10 @@ public class MLDireccionesService implements DireccionesService{
     }
 
 
-    public List<String> getProvinciasDisponibles(String nombrePais) throws IOException {
+    public List<String> getProvinciasDisponibles(String nombrePais) throws IOException, FaltaLocacionException {
+
+        if( this.paisesArray == null)
+            throw new FaltaLocacionException("Pais");
 
         String id = MLJSONDataExtractor.obtenerIdDelPais(this.paisesArray, nombrePais);
         String informacionPaisJson = this.llamarAServicio("https://api.mercadolibre.com/classified_locations/countries/" + id);
