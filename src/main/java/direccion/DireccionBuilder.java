@@ -28,6 +28,19 @@ public class DireccionBuilder {
         return this;
     }
 
+    public DireccionBuilder setMonedaLocal(String monedaLocal) throws IOException, LocacionNoValidaException, FaltaLocacionException {
+        if ( this.pais == null )
+            throw new FaltaLocacionException("Pais");
+
+        String moneda = proveedorDatosDirecciones.getMonedaPais(this.pais);
+        if( !moneda.contains(monedaLocal) )
+            throw new LocacionNoValidaException("Moneda", monedaLocal);
+
+        this.monedaLocal = monedaLocal;
+
+        return this;
+    }
+
     public DireccionBuilder setProvincia(String provincia) throws IOException, LocacionNoValidaException, FaltaLocacionException {
         if ( this.pais == null )
             throw new FaltaLocacionException("Pais");
@@ -73,6 +86,9 @@ public class DireccionBuilder {
         if ( this.pais == null )
             throw new FaltaLocacionException("Pais");
 
+        if ( this.monedaLocal == null )
+            throw new FaltaLocacionException("Moneda");
+
         if ( this.provincia == null )
             throw new FaltaLocacionException("Provincia");
 
@@ -90,6 +106,7 @@ public class DireccionBuilder {
         direccion.altura = this.altura;
         direccion.ciudad = this.ciudad;
         direccion.provincia = this.provincia;
+        direccion.monedaLocal = this.monedaLocal;
         direccion.pais = this.pais;
 
         return this.direccion;
