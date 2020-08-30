@@ -6,5 +6,4 @@ public class Direccion {
     public String ciudad;
     public String provincia;
     public String pais;
-
 }
