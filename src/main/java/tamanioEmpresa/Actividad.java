@@ -1,7 +1,7 @@
 package tamanioEmpresa;
 
-public enum Actividad {
-
+public class Actividad {
+/*
 	AGROPECUARIO(12890000,48480000,345430000,547890000,
 			5, 10, 50, 215),
 	INDUSTRIA_Y_MINERIA(26540000,190410000,1190330000,1739590000,
@@ -12,29 +12,17 @@ public enum Actividad {
 			12, 45, 200, 590),
 	COMERCIO(29740000,178860000,1502750000,2146810000,
 			7, 35, 135, 345);
+*/
 
-	private final double topeMicro;
-	private final double topePequenia;
-	private final double topeMedianaT1;
-	private final double topeMedianaT2;
+	private double topeMicro;
+	private double topePequenia;
+	private double topeMedianaT1;
+	private double topeMedianaT2;
 
-	private final int topeCantPersonalMicro;
-	private final int topeCantPersonalPequenia;
-	private final int topeCantPersonalMedianaTramo1;
-	private final int topeCantPersonalMedianaTramo2;
-
-	Actividad (double micro, double pequenia, double mediana_tramo_1, double mediana_tramo_2,
-			   int personalMicro, int personalPequenia, int personalMedT1, int personalMedT2) {
-        this.topeMicro = micro;
-        this.topePequenia = pequenia;
-        this.topeMedianaT1 = mediana_tramo_1;
-        this.topeMedianaT2 = mediana_tramo_2;
-
-		this.topeCantPersonalMicro = personalMicro;
-		this.topeCantPersonalPequenia = personalPequenia;
-		this.topeCantPersonalMedianaTramo1 = personalMedT1;
-		this.topeCantPersonalMedianaTramo2 = personalMedT2;
-    }
+	private int topeCantPersonalMicro;
+	private int topeCantPersonalPequenia;
+	private int topeCantPersonalMedianaTramo1;
+	private int topeCantPersonalMedianaTramo2;
 
 	public double getTopePromVentasMicro() { return topeMicro; }
 	public double getTopePromVentasPequenia() { return topePequenia; }
@@ -45,4 +33,31 @@ public enum Actividad {
 	public int getTopeCantPersonalPequenia() { return topeCantPersonalPequenia;	}
 	public int getTopeCantPersonalMedianaTramo1() {	return topeCantPersonalMedianaTramo1; }
 	public int getTopeCantPersonalMedianaTramo2() {	return topeCantPersonalMedianaTramo2; }
+
+	public void setTopeMicro(double topeMicro) {
+		this.topeMicro = topeMicro;
+	}
+	public void setTopePequenia(double topePequenia) {
+		this.topePequenia = topePequenia;
+	}
+	public void setTopeMedianaT1(double topeMedianaT1) {
+		this.topeMedianaT1 = topeMedianaT1;
+	}
+	public void setTopeMedianaT2(double topeMedianaT2) {
+		this.topeMedianaT2 = topeMedianaT2;
+	}
+
+	public void setTopeCantPersonalMicro(int topeCantPersonalMicro) {
+		this.topeCantPersonalMicro = topeCantPersonalMicro;
+	}
+	public void setTopeCantPersonalPequenia(int topeCantPersonalPequenia) {
+		this.topeCantPersonalPequenia = topeCantPersonalPequenia;
+	}
+	public void setTopeCantPersonalMedianaTramo1(int topeCantPersonalMedianaTramo1) {
+		this.topeCantPersonalMedianaTramo1 = topeCantPersonalMedianaTramo1;
+	}
+	public void setTopeCantPersonalMedianaTramo2(int topeCantPersonalMedianaTramo2) {
+		this.topeCantPersonalMedianaTramo2 = topeCantPersonalMedianaTramo2;
+	}
+
 }
