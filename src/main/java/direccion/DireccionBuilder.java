@@ -15,7 +15,10 @@ public class DireccionBuilder {
     private String monedaLocal;
 
     private DireccionesService proveedorDatosDirecciones;
-    private Direccion direccion;
+
+    public void setProveedorDatosDirecciones(DireccionesService proveedorDatosDirecciones) {
+        this.proveedorDatosDirecciones = proveedorDatosDirecciones;
+    }
 
     public DireccionBuilder setPais(String paisElegioPorUsuario) throws IOException, LocacionNoValidaException {
         List<String> paisesDisponibles = proveedorDatosDirecciones.getPaisesDisponibles();
@@ -109,7 +112,7 @@ public class DireccionBuilder {
         direccion.monedaLocal = this.monedaLocal;
         direccion.pais = this.pais;
 
-        return this.direccion;
+        return direccion;
     }
 
 }
