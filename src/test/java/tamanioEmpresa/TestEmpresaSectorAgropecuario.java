@@ -10,7 +10,17 @@ public class TestEmpresaSectorAgropecuario {
 
     @Before
     public void init(){
-        empresaTest = new Empresa(100, Actividad.AGROPECUARIO, 100, false);
+        Actividad agropecuario = new Actividad();
+        agropecuario.setTopeMicro(12890000);
+        agropecuario.setTopePequenia(48480000);
+        agropecuario.setTopeMedianaT1(345430000);
+        agropecuario.setTopeMedianaT2(547890000);
+
+        agropecuario.setTopeCantPersonalMicro(5);
+        agropecuario.setTopeCantPersonalPequenia(10);
+        agropecuario.setTopeCantPersonalMedianaTramo1(50);
+        agropecuario.setTopeCantPersonalMedianaTramo2(215);
+        empresaTest = new Empresa(100, agropecuario, 100, false);
     }
 
     @Test
