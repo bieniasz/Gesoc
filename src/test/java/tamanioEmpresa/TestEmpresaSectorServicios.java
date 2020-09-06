@@ -10,7 +10,18 @@ public class TestEmpresaSectorServicios {
 
     @Before
     public void init(){
-        empresaTest = new Empresa(100, Actividad.SERVICIOS, 100, false);
+        Actividad servicios = new Actividad();
+        servicios.setTopeMicro(8500000);
+        servicios.setTopePequenia(50950000);
+        servicios.setTopeMedianaT1(425170000);
+        servicios.setTopeMedianaT2(607210000);
+
+        servicios.setTopeCantPersonalMicro(7);
+        servicios.setTopeCantPersonalPequenia(30);
+        servicios.setTopeCantPersonalMedianaTramo1(165);
+        servicios.setTopeCantPersonalMedianaTramo2(535);
+
+        empresaTest = new Empresa(100, servicios, 100, false);
     }
 
     @Test

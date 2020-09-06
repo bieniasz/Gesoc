@@ -3,7 +3,7 @@ package seguridad;
 import org.junit.Assert;
 import org.junit.Before;
 import org.junit.Test;
-import sun.font.TrueTypeFont;
+//import sun.font.TrueTypeFont;
 import usuario.Usuario;
 
 import java.time.Duration;
