@@ -1,5 +1,9 @@
 package direccion;
 
+import direccion.AtributosPersistentes.Ciudad;
+import direccion.AtributosPersistentes.Moneda;
+import direccion.AtributosPersistentes.Pais;
+import direccion.AtributosPersistentes.Provincia;
 import direccion.ExcepcionesDireccion.FaltaLocacionException;
 import direccion.ExcepcionesDireccion.LocacionNoValidaException;
 
@@ -9,10 +13,10 @@ import java.util.List;
 public class DireccionBuilder {
     private String calle;
     private String altura;
-    private String ciudad;
-    private String provincia;
-    private String pais;
-    private String monedaLocal;
+    private Ciudad ciudad;
+    private Provincia provincia;
+    private Pais pais;
+    private Moneda monedaLocal;
 
     private DireccionesService proveedorDatosDirecciones;
 
@@ -26,7 +30,7 @@ public class DireccionBuilder {
         if( !paisesDisponibles.contains(paisElegioPorUsuario) )
             throw new LocacionNoValidaException("Pais", paisElegioPorUsuario);
 
-        this.pais = paisElegioPorUsuario;
+        this.pais = new Pais(paisElegioPorUsuario);
 
         return this;
     }
@@ -35,11 +39,11 @@ public class DireccionBuilder {
         if ( this.pais == null )
             throw new FaltaLocacionException("Pais");
 
-        String moneda = proveedorDatosDirecciones.getMonedaPais(this.pais);
+        String moneda = proveedorDatosDirecciones.getMonedaPais(this.pais.nombre);
         if( !moneda.contains(monedaLocal) )
             throw new LocacionNoValidaException("Moneda", monedaLocal);
 
-        this.monedaLocal = monedaLocal;
+        this.monedaLocal = new Moneda(monedaLocal);
 
         return this;
     }
@@ -48,11 +52,11 @@ public class DireccionBuilder {
         if ( this.pais == null )
             throw new FaltaLocacionException("Pais");
 
-        List<String> provinciasDisponibles = proveedorDatosDirecciones.getProvinciasDisponibles(this.pais);
+        List<String> provinciasDisponibles = proveedorDatosDirecciones.getProvinciasDisponibles(this.pais.nombre);
         if( !provinciasDisponibles.contains(provincia) )
             throw new LocacionNoValidaException("Provincia", provincia);
 
-        this.provincia = provincia;
+        this.provincia = new Provincia(provincia);
 
         return this;
     }
@@ -64,11 +68,11 @@ public class DireccionBuilder {
         if ( this.provincia == null )
             throw new FaltaLocacionException("Provincia");
 
-        List<String> ciudadesDisponibles = proveedorDatosDirecciones.getCiudades(this.provincia);
+        List<String> ciudadesDisponibles = proveedorDatosDirecciones.getCiudades(this.provincia.nombre);
         if( !ciudadesDisponibles.contains(ciudad) )
             throw new LocacionNoValidaException("Ciudad", ciudad);
 
-        this.ciudad = ciudad;
+        this.ciudad = new Ciudad(ciudad);
 
         return this;
     }

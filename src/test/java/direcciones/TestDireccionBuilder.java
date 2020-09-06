@@ -35,12 +35,12 @@ public class TestDireccionBuilder {
                 .setMonedaLocal("ARS")
                 .build();
 
-       Assert.assertEquals(direccionConstruidaPorBuilder.pais, "Argentina");
-       Assert.assertEquals(direccionConstruidaPorBuilder.provincia, "Corrientes");
-       Assert.assertEquals(direccionConstruidaPorBuilder.ciudad, "Bella Vista");
+       Assert.assertEquals(direccionConstruidaPorBuilder.pais.nombre, "Argentina");
+       Assert.assertEquals(direccionConstruidaPorBuilder.provincia.nombre, "Corrientes");
+       Assert.assertEquals(direccionConstruidaPorBuilder.ciudad.nombre, "Bella Vista");
        Assert.assertEquals(direccionConstruidaPorBuilder.calle, "Maipu");
        Assert.assertEquals(direccionConstruidaPorBuilder.altura, "768");
-       Assert.assertEquals(direccionConstruidaPorBuilder.monedaLocal, "ARS");
+       Assert.assertEquals(direccionConstruidaPorBuilder.monedaLocal.nombre, "ARS");
     }
 
     @Test(expected = FaltaLocacionException.class)
