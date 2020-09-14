@@ -6,7 +6,7 @@ import operacionComercial.*;
 import operacionComercial.Presupuesto;
 import validacionEgresos.CriterioValidacionEgresosPresupuesto;
 
-public class CantidadIndicada implements CriterioValidacionEgresosPresupuesto {
+public class CantidadIndicada extends CriterioValidacionEgresosPresupuesto {
 
 	public int cantidadPresupuestos;
 	

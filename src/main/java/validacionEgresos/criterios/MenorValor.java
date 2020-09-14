@@ -7,7 +7,7 @@ import operacionComercial.OperacionEgreso;
 import operacionComercial.Presupuesto;
 import validacionEgresos.CriterioValidacionEgresosPresupuesto;
 
-public class MenorValor implements CriterioValidacionEgresosPresupuesto {
+public class MenorValor extends CriterioValidacionEgresosPresupuesto {
 
 	@Override
 	public  void validar(OperacionEgreso operacion) throws Exception{
@@ -16,7 +16,7 @@ public class MenorValor implements CriterioValidacionEgresosPresupuesto {
 		Presupuesto elegido= operacion.getPresupuestos().stream().filter(presu->presu.isEsElElegido()).findFirst().get();
 		if (menorValor!= elegido) {
 			throw new Exception("No coincide el presupuesto elegido con el de menor valor");
-		};	
+		};
 		
 	}
 

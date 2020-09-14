@@ -1,6 +1,6 @@
 package validadorTransparencia;
 
-public interface ValidacionPendiente {
+public abstract class ValidacionPendiente {
 
-    public void validar();
+    public void validar(){};
 }

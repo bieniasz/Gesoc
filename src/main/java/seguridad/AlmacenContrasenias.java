@@ -6,9 +6,11 @@ import java.util.List;
 import java.util.Map;
 
 public class AlmacenContrasenias {
-    //TODO Clase ValidadorDeContrasenia, cuando veamos db vamos a remodelar la clase para que no tenga los datos en memoria y valla a buscar los datos que necesita en la base
+    //TODO Clase ValidadorDeContrasenia, cuando veamos db vamos a remodelar la clase para que no tenga los
+    // datos en memoria y valla a buscar los datos que necesita en la base
 
-    // TODO justificar porque usamos un Map de listas, y tener en cuenta los posibles problemas a futuro de esta decision.
+    // TODO justificar porque usamos un Map de listas, y tener en cuenta los posibles problemas a futuro
+    //  de esta decision.
     private Map<String, List<String>> contraseniasPrevias;
     private Integer periodosDeRotacion;
     private static AlmacenContrasenias instancia;

@@ -9,12 +9,13 @@ import java.time.LocalDate;
 import java.util.ArrayList;
 import java.util.List;
 
-public class SuscripcionValidacionDeTransparencia {
+public class SuscripcionValidacionDeTransparencia extends ValidacionPendiente{
     private List<UsuarioRevisor> revisores = new ArrayList<UsuarioRevisor>();
     private OperacionEgreso operacionEgreso;
     private List<CriterioValidacionEgresosPresupuesto> criteriosDeseados = new ArrayList<CriterioValidacionEgresosPresupuesto>();
     private ResultadoDeValidacion resultadoDeValidacion;
 
+    @Override
     public void validar(){
         List<String> errores = new ArrayList<String>();
 
