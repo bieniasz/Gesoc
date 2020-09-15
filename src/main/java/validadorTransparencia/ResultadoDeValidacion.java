@@ -8,8 +8,8 @@ import java.time.LocalDate;
 import java.util.List;
 
 public class ResultadoDeValidacion {
-    private OperacionEgreso operacionEgreso;S
-    private List<tring> resultados;
+    private OperacionEgreso operacionEgreso;
+    private List<String> resultados;
     private LocalDate fecha;
     private Boolean leido;
 

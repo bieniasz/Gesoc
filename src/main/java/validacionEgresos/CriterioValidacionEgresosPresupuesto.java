@@ -7,6 +7,5 @@ import operacionComercial.Presupuesto;
 
 public abstract class CriterioValidacionEgresosPresupuesto{
 
-	public void validar (OperacionEgreso operacion ) {} throws Exception;
-
+	public abstract void validar (OperacionEgreso operacion) throws Exception;
 }

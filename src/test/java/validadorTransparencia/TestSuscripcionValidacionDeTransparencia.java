@@ -83,7 +83,7 @@ public class TestSuscripcionValidacionDeTransparencia {
 
         String mensaje = this.revisor1.bandejaDeResultado.getResultadosDeValidacion().get(0).getResultados().get(0);
 
-        Assert.assertEquals("No coincide el presupuesto elegido con el de menor valor", mensaje);
+        Assert.assertEquals("El presupuesto elegido no coincide con el/los de menor valor", mensaje);
     }
 
     @Test

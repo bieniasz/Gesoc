@@ -19,7 +19,7 @@ public class Presupuesto extends OperacionComercial{
 
     @Override
     public Double calcularValorTotal() {
-    	return this.getDetalle().stream().mapToDouble(d->d.getValorTotal()).sum();
+    	return this.getDetalle().stream().mapToDouble(DetalleEgreso::getValorTotal).sum();
     }
     @Override
     public void registrarDetalle() { }
