@@ -1,10 +1,7 @@
 <project xmlns="http://maven.apache.org/POM/4.0.0" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
          xsi:schemaLocation="http://maven.apache.org/POM/4.0.0 http://maven.apache.org/xsd/maven-4.0.0.xsd">
     <modelVersion>4.0.0</modelVersion>
-    <!-- TODO El nombre del proyecto y el groupid no es significativo.
-         tambien tener presente que la ruta que definimos en groupId debe existir como paquete inicial del proyecto.
-         tanto en src/main/java como en src/main/resources.
-      -->
+
     <groupId>2020-mi-no-group-09</groupId>
     <artifactId>tp2020-gesoc</artifactId>
     <version>0.0.1-SNAPSHOT</version>
@@ -18,18 +15,40 @@
             <version>4.12</version>
         </dependency>
 
+        <dependency>
+            <groupId>org.uqbar-project</groupId>
+            <artifactId>jpa-java8-extras</artifactId>
+            <version>1.0-alpha-1</version>
+        </dependency>
+
+
+        <dependency>
+            <groupId>mysql</groupId>
+            <artifactId>mysql-connector-java</artifactId>
+            <version>5.1.26</version>
+        </dependency>
+
+        <!-- hsqldb -->
+        <dependency>
+            <groupId>org.hsqldb</groupId>
+            <artifactId>hsqldb</artifactId>
+            <version>2.4.0</version>
+            <scope>test</scope>
+        </dependency>
+
+
         <!-- https://mvnrepository.com/artifact/org.quartz-scheduler/quartz -->
         <dependency>
             <groupId>org.quartz-scheduler</groupId>
             <artifactId>quartz</artifactId>
             <version>2.3.0</version>
         </dependency>
-        
+
         <dependency>
-			    <groupId>org.javatuples</groupId>
-			    <artifactId>javatuples</artifactId>
-			    <version>1.2</version>
-		</dependency>
+            <groupId>org.javatuples</groupId>
+            <artifactId>javatuples</artifactId>
+            <version>1.2</version>
+        </dependency>
 
         <dependency>
             <groupId>org.apache.httpcomponents</groupId>

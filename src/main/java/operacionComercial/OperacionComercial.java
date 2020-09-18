@@ -3,14 +3,24 @@ package operacionComercial;
 
 import ProveedorDocComer.DocumentoComercial;
 
+import javax.persistence.*;
 import java.time.LocalDate;
 import java.util.List;
 import java.util.stream.Collectors;
 
 import org.javatuples.Pair;
 
+import javax.persistence.*;
+
+
+
 public abstract class OperacionComercial {
+
+    private int id;
+
     private LocalDate fecha;
+
+
     public float valorTotal;
     private DocumentoComercial documentoComercial;
     private List<DetalleEgreso> detalle;
