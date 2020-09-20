@@ -2,11 +2,11 @@ package usuario;
 
 import organizacion.Organizacion;
 
-public interface Rol {
+public abstract class Rol { //La hicimos clase abstracta para poder persistir
 
-    Organizacion altaOrganizacionJuridica();
+    abstract public Organizacion altaOrganizacionJuridica();
     
-    Usuario nuevoUsuarioEstandar(String usuario, String contrasenia, Organizacion organizacion) throws Exception;
+    abstract public Usuario nuevoUsuarioEstandar(String usuario, String contrasenia, Organizacion organizacion) throws Exception;
 
-    Organizacion getOrganizacion();
+    abstract public Organizacion getOrganizacion();
 }

@@ -5,7 +5,7 @@ import operacionComercial.OperacionEgreso;
 import organizacion.Organizacion;
 import validadorTransparencia.ResultadoDeValidacion;
 
-public class UsuarioRevisor implements Rol{
+public class UsuarioRevisor extends Rol{
     private Organizacion organizacion;
     public BandejaDeResultado bandejaDeResultado = new BandejaDeResultado();
 

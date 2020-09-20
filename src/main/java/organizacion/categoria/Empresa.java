@@ -4,7 +4,7 @@ import tamanioEmpresa.CalculadoraDeTamanio;
 import tamanioEmpresa.Actividad;
 
 
-public class Empresa {
+public class Empresa extends Categoria{
 	private int cantidadDePersonal;
 	private Actividad actividad;
 	private double promedioVentasAnuales;

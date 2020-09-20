@@ -3,7 +3,7 @@ package usuario;
 import operacionComercial.OperacionEgreso;
 import organizacion.Organizacion;
 
-public class UsuarioEstandar implements Rol{
+public class UsuarioEstandar extends Rol{
 
     protected Organizacion organizacion;
 
@@ -15,7 +15,7 @@ public class UsuarioEstandar implements Rol{
         return new OperacionEgreso(null, 0, null, null, null, null, null, null);
     }
 
-
+    @Override
     public Organizacion getOrganizacion() {
         return this.organizacion;
     }

@@ -4,7 +4,7 @@ import organizacion.EntidadJuridica;
 import organizacion.Organizacion;
 import seguridad.ValidadorDeUsuario;
 
-public class UsuarioAdmin implements Rol{
+public class UsuarioAdmin extends Rol{
 
     public UsuarioAdmin() {
 

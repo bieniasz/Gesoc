@@ -1,6 +1,6 @@
 package organizacion.categoria;
 
-public class OrganizacionSectorSocial implements Categoria {
+public class OrganizacionSectorSocial extends Categoria {
     private String areaDeTrabajo;
     private Integer cantidadDePersonal;
 
