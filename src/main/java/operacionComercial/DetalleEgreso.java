@@ -3,13 +3,11 @@ package operacionComercial;
 import org.javatuples.Pair;
 
 public class DetalleEgreso {
-    private Item item;
-    private int cantidad;
-    private float valorTotal;
-	public float getValorTotal() {
+    public Item item;
+    public int cantidad;
+    public Double valorTotal;
+	public Double getValorTotal() {
 		return valorTotal;
 	}
-	
-	
 
 }

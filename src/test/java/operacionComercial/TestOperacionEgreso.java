@@ -1,0 +1,165 @@
+package operacionComercial;
+
+import ProveedorDocComer.Proveedor;
+import operacionComercial.builder.Exception.*;
+import operacionComercial.builder.OperacionEgresoBuilder;
+import org.junit.Assert;
+import org.junit.Before;
+import org.junit.Test;
+import organizacion.EntidadJuridica;
+
+import java.time.LocalDate;
+import java.util.ArrayList;
+import java.util.List;
+
+public class TestOperacionEgreso {
+    private List<DetalleEgreso> detalles;
+    private DetalleEgreso unDetalle;
+
+    @Before
+    public void init(){
+        this.unDetalle = new DetalleEgreso();
+        this.unDetalle.valorTotal = 5.0;
+        DetalleEgreso otroDetalle = new DetalleEgreso();
+        otroDetalle.valorTotal = 5.0;
+
+        this.detalles = new ArrayList<>();
+        this.detalles.add(this.unDetalle);
+        this.detalles.add(otroDetalle);
+    }
+
+    @Test
+    public void OpeacionEgresoBuilderConParametrosObligatorios() throws Exception {
+        OperacionEgresoBuilder builder = new OperacionEgresoBuilder();
+
+        builder.setDetalle(this.detalles);
+        builder.setMedioDePago(new MedioDePago());
+        builder.setNumeroIdentificadorMedioPago("AAAAAAAA");
+        builder.setProveedor(new Proveedor());
+        builder.setOrganizacion(new EntidadJuridica());
+        OperacionEgreso operacion = builder.build();
+
+        Assert.assertEquals("operacionComercial.OperacionEgreso", operacion.getClass().getName());
+    }
+
+    @Test
+    public void OpeacionEgresoValorTotalEsCalculadoViaBuilder() throws Exception {
+        OperacionEgresoBuilder builder = new OperacionEgresoBuilder();
+
+        builder.setDetalle(this.detalles);
+        builder.setMedioDePago(new MedioDePago());
+        builder.setNumeroIdentificadorMedioPago("AAAAAAAA");
+        builder.setProveedor(new Proveedor());
+        builder.setOrganizacion(new EntidadJuridica());
+        OperacionEgreso operacion = builder.build();
+
+        Double valorTotal = operacion.getValorTotal();
+        Assert.assertEquals(valorTotal, 10.0, 0.0);
+    }
+
+    @Test
+    public void OpeacionEgresoFechaActualViaBuilder() throws Exception {
+        OperacionEgresoBuilder builder = new OperacionEgresoBuilder();
+
+        builder.setDetalle(this.detalles);
+        builder.setMedioDePago(new MedioDePago());
+        builder.setNumeroIdentificadorMedioPago("AAAAAAAA");
+        builder.setProveedor(new Proveedor());
+        builder.setOrganizacion(new EntidadJuridica());
+        OperacionEgreso operacion = builder.build();
+
+        LocalDate fechaOperacion = operacion.getFecha();
+        Assert.assertEquals(fechaOperacion, LocalDate.now());
+    }
+
+    @Test(expected = FaltaDetalleException.class)
+    public void OpeacionEgresoSinDetallesBuilderFalla() throws Exception {
+        OperacionEgresoBuilder builder = new OperacionEgresoBuilder();
+
+        builder.setMedioDePago(new MedioDePago());
+        builder.setNumeroIdentificadorMedioPago("AAAAAAAA");
+        builder.setProveedor(new Proveedor());
+        builder.setOrganizacion(new EntidadJuridica());
+        builder.build();
+    }
+
+    @Test(expected = FaltaMedioDePagoException.class)
+    public void OpeacionEgresoSinMedioDePagoBuilderFalla() throws Exception {
+        OperacionEgresoBuilder builder = new OperacionEgresoBuilder();
+
+        builder.setDetalle(this.detalles);
+        builder.setNumeroIdentificadorMedioPago("AAAAAAAA");
+        builder.setProveedor(new Proveedor());
+        builder.setOrganizacion(new EntidadJuridica());
+        builder.build();
+    }
+
+    @Test(expected = FaltaNumeroIdentificadorMedioPagoException.class)
+    public void OpeacionEgresoSinNumeroIdentificadorMedioPagoBuilderFalla() throws Exception {
+        OperacionEgresoBuilder builder = new OperacionEgresoBuilder();
+
+        builder.setDetalle(this.detalles);
+        builder.setMedioDePago(new MedioDePago());
+        builder.setProveedor(new Proveedor());
+        builder.setOrganizacion(new EntidadJuridica());
+        builder.build();
+    }
+
+    @Test(expected = FaltaProveedorException.class)
+    public void OpeacionEgresoSinProveedorBuilderFalla() throws Exception {
+        OperacionEgresoBuilder builder = new OperacionEgresoBuilder();
+
+        builder.setDetalle(this.detalles);
+        builder.setMedioDePago(new MedioDePago());
+        builder.setNumeroIdentificadorMedioPago("AAAAAAAA");
+        builder.setOrganizacion(new EntidadJuridica());
+        builder.build();
+    }
+
+    @Test(expected = FaltaOrganizacionException.class)
+    public void OpeacionEgresoSinOrganizacionBuilderFalla() throws Exception {
+        OperacionEgresoBuilder builder = new OperacionEgresoBuilder();
+
+        builder.setDetalle(this.detalles);
+        builder.setMedioDePago(new MedioDePago());
+        builder.setNumeroIdentificadorMedioPago("AAAAAAAA");
+        builder.setProveedor(new Proveedor());
+        builder.build();
+    }
+
+    @Test
+    public void OperacionEgresoAgregaDetallesYRecalculaValor() throws Exception {
+        OperacionEgresoBuilder builder = new OperacionEgresoBuilder();
+
+        builder.setDetalle(this.detalles);
+        builder.setMedioDePago(new MedioDePago());
+        builder.setNumeroIdentificadorMedioPago("AAAAAAAA");
+        builder.setProveedor(new Proveedor());
+        builder.setOrganizacion(new EntidadJuridica());
+        OperacionEgreso operacion = builder.build();
+
+        DetalleEgreso otroDetalleMas = new DetalleEgreso();
+        otroDetalleMas.valorTotal = 4.0;
+        operacion.registrarDetalle(otroDetalleMas);
+
+        Double valorTotal = operacion.getValorTotal();
+        Assert.assertEquals(14.0, valorTotal, 0.0);
+    }
+
+    @Test
+    public void PresupuestoQuitaDetallesYRecalculaValor() throws Exception {
+        OperacionEgresoBuilder builder = new OperacionEgresoBuilder();
+
+        builder.setDetalle(this.detalles);
+        builder.setMedioDePago(new MedioDePago());
+        builder.setNumeroIdentificadorMedioPago("AAAAAAAA");
+        builder.setProveedor(new Proveedor());
+        builder.setOrganizacion(new EntidadJuridica());
+        OperacionEgreso operacion = builder.build();
+
+        operacion.quitarDetalle(this.unDetalle);
+
+        Double valorTotal = operacion.getValorTotal();
+        Assert.assertEquals(5.0, valorTotal, 0.0);
+    }
+}

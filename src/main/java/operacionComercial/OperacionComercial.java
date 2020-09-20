@@ -4,45 +4,52 @@ package operacionComercial;
 import ProveedorDocComer.DocumentoComercial;
 
 import java.time.LocalDate;
+import java.util.ArrayList;
 import java.util.List;
-import java.util.stream.Collectors;
 
-import org.javatuples.Pair;
 
 public abstract class OperacionComercial {
     private LocalDate fecha;
-    public float valorTotal;
+    private Double valorTotal;
     private DocumentoComercial documentoComercial;
-    private List<DetalleEgreso> detalle;
-    //private List<CategoriaOperacion> categoriasAsociadas;
+    private List<DetalleEgreso> detalle = new ArrayList<>();
+    private List<CategoriaDeOperaciones> categoriasAsociadas = new ArrayList<>();
 
-    // TODO descomentar todo cuando exista la clase CategoriaOperacion
-
-    public OperacionComercial(LocalDate fecha, float valorTotal, DocumentoComercial docComercial, List<DetalleEgreso> detalle){
-        this.fecha = fecha;
-        this.valorTotal = valorTotal;
-        this.documentoComercial = docComercial;
-        this.detalle = detalle;
-        //this.categoriasAsociadas = categorias;
-    }
-
-    public abstract Double calcularValorTotal();
-    public abstract void registrarDetalle();
-    public abstract void registrarDocumentoComercial();
-    //public abstract void asociarACategoria(CategoriaOperacion categoriaOperacion);
-
-
-    /* GETTERS & SETTERS */
     public LocalDate getFecha() { return fecha; }
-    public float getValorTotal() { return valorTotal; }
+    public Double getValorTotal() { return valorTotal; }
     public DocumentoComercial getDocumentoComercial() { return documentoComercial; }
     public List<DetalleEgreso> getDetalle() { return detalle; }
+    public List<CategoriaDeOperaciones> getCategoriasAsociadas() { return categoriasAsociadas; }
 
     public void setFecha(LocalDate fecha) { this.fecha = fecha; }
-    public void setValorTotal(float valorTotal) { this.valorTotal = valorTotal; }
-    public void setDocumentoComercial(DocumentoComercial documentoComercial) { this.documentoComercial = documentoComercial; }
     public void setDetalle(List<DetalleEgreso> detalle) { this.detalle = detalle; }
-    
+    public void setCategoriasAsociadas(List<CategoriaDeOperaciones> categorias) { this.categoriasAsociadas = categorias; }
+
+
+    public void calcularValorTotal()  {
+        this.valorTotal = this.detalle.stream().mapToDouble( (DetalleEgreso detalle) -> detalle.valorTotal ).sum();
+    }
+
+    public void registrarDocumentoComercial(DocumentoComercial documentoComercial) {
+        this.documentoComercial = documentoComercial;
+    }
+
+    public void registrarDetalle(DetalleEgreso detalle) {
+        this.detalle.add(detalle);
+        this.calcularValorTotal();
+    }
+
+    public void quitarDetalle(DetalleEgreso detalle) {
+        this.detalle.remove(detalle);
+        this.calcularValorTotal();
+    }
+
+    public void asociarACategoria(CategoriaDeOperaciones categoriaOperacion){
+        this.categoriasAsociadas.add(categoriaOperacion);
+    }
+
+
+
          
 	
 
