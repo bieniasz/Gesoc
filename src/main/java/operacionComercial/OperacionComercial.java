@@ -13,16 +13,20 @@ import org.javatuples.Pair;
 import javax.persistence.*;
 
 
+@Entity
+@Table(name="OperacionComercial")
+public abstract class OperacionComercial extends EntidadPersistente {
 
-public abstract class OperacionComercial {
-
-    private int id;
-
+    @Column(name="fecha")
     private LocalDate fecha;
 
-
+    @Column(name="valorTotal")
     public float valorTotal;
+
+    @Transient
     private DocumentoComercial documentoComercial;
+
+    @Transient
     private List<DetalleEgreso> detalle;
     //private List<CategoriaOperacion> categoriasAsociadas;
 

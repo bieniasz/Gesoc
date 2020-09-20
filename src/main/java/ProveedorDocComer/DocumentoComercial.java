@@ -1,7 +1,15 @@
 package ProveedorDocComer;
 
+
+import javax.persistence.Entity;
+import javax.persistence.Table;
+import javax.persistence.Transient;
+
+@Entity
+@Table
 public class DocumentoComercial {
 
+    @Transient
     private TipoComprobante tipoDocumentoComercial;
     private Long numeroDocumentoComercial;
     private String tipoDeAdjunto;

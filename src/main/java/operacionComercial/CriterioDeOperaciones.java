@@ -1,7 +1,15 @@
 package operacionComercial;
+import javax.persistence.*;
 import java.util.List;
 
-public class CriterioDeOperaciones {
+@Entity
+@Table
+
+public class CriterioDeOperaciones extends EntidadPersistente{
+
+@Transient
     private List<CategoriaDeOperaciones> Categorias;
+
+@Transient
     private List<CriterioDeOperaciones> CriteriosHijos;
 }

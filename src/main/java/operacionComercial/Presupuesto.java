@@ -2,11 +2,19 @@ package operacionComercial;
 
 import ProveedorDocComer.DocumentoComercial;
 
+import javax.persistence.Column;
+import javax.persistence.Entity;
+import javax.persistence.Table;
 import java.time.LocalDate;
 import java.util.List;
 
+
 public class Presupuesto extends OperacionComercial{
+
+
     private OperacionEgreso egreso;
+
+
     private boolean esElElegido;
 
     public Presupuesto(LocalDate fecha, float valorTotal, DocumentoComercial docComercial, List<DetalleEgreso> detalle, OperacionEgreso egreso, boolean esElElegido) {

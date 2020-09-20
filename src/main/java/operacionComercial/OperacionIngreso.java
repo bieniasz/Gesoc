@@ -1,7 +1,17 @@
 package operacionComercial;
 
-public class OperacionIngreso {
+import javax.persistence.Column;
+import javax.persistence.Entity;
+import javax.persistence.Table;
+
+@Entity
+@Table
+public class OperacionIngreso extends EntidadPersistente {
+
+    @Column
     String descripcion;
+
+    @Column
     Float monto;
 
     public OperacionIngreso(String descripcion, float monto){

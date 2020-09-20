@@ -1,27 +1,21 @@
 package operacionComercial;
 
 
-import javax.persistence.Entity;
-import javax.persistence.Table;
-import javax.persistence.Id;
-import javax.persistence.GeneratedValue;
-import javax.persistence.Transient;
+import org.hibernate.annotations.IndexColumn;
+
+import javax.persistence.*;
 
 @Entity
 @Table(name="MedioDePago")
-public class MedioDePago {
+public class MedioDePago extends EntidadPersistente {
 
-    @Id
-    @GeneratedValue
-    private int id;
-
-    @Transient
+    @Column(name="Nombre")
     private String idMercadoPago;
 
-    @Transient
+    @Column(name="DescuentoMercadoPago")
     private String descMercadoPago;
 
-    @Transient
+    @Column(name="TipoMercardoPago")
     private String tipoMercadoPago;
 
     public void pagar(){}
