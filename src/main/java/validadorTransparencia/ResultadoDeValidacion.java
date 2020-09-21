@@ -1,16 +1,25 @@
 package validadorTransparencia;
 
+import operacionComercial.EntidadPersistente;
 import operacionComercial.OperacionEgreso;
 import usuario.Usuario;
 import usuario.UsuarioRevisor;
 
+import javax.persistence.*;
 import java.time.LocalDate;
 import java.util.List;
 
-public class ResultadoDeValidacion {
+@Entity
+@Table
+public class ResultadoDeValidacion  extends EntidadPersistente {
+
+    @OneToOne
     private OperacionEgreso operacionEgreso;
+    @ElementCollection
     private List<String> resultados;
+    @Transient
     private LocalDate fecha;
+    @Column
     private Boolean leido;
 
     public ResultadoDeValidacion() {

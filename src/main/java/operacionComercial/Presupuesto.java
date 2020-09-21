@@ -2,19 +2,19 @@ package operacionComercial;
 
 import ProveedorDocComer.DocumentoComercial;
 
-import javax.persistence.Column;
-import javax.persistence.Entity;
-import javax.persistence.Table;
+import javax.persistence.*;
 import java.time.LocalDate;
 import java.util.List;
 
-
+@Entity
+@DiscriminatorValue("Presupuesto")
 public class Presupuesto extends OperacionComercial{
 
-
+    @ManyToOne
+    @JoinColumn(name="OperacionEgreso", referencedColumnName = "id")
     private OperacionEgreso egreso;
 
-
+    @Column
     private boolean esElElegido;
 
     public Presupuesto(LocalDate fecha, float valorTotal, DocumentoComercial docComercial, List<DetalleEgreso> detalle, OperacionEgreso egreso, boolean esElElegido) {

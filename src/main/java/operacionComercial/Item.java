@@ -2,10 +2,7 @@ package operacionComercial;
 
 import ProveedorDocComer.Proveedor;
 
-import javax.persistence.Column;
-import javax.persistence.Entity;
-import javax.persistence.Table;
-import javax.persistence.Transient;
+import javax.persistence.*;
 import java.util.List;
 
 @Entity
@@ -15,7 +12,7 @@ public class Item extends EntidadPersistente { //TODO evaluar nombre mas descrip
     @Column
     private String descripcion;
 
-    @Transient
+    @ManyToMany
     private List<Proveedor> proveedores;
 
     public void altaItem() {}

@@ -10,6 +10,12 @@ import operacionComercial.OperacionEgreso;
 import operacionComercial.Presupuesto;
 import validacionEgresos.CriterioValidacionEgresosPresupuesto;
 
+import javax.persistence.DiscriminatorColumn;
+import javax.persistence.DiscriminatorValue;
+import javax.persistence.Entity;
+
+@Entity
+@DiscriminatorValue("MenorValor")
 public class MenorValor extends CriterioValidacionEgresosPresupuesto {
 
 	@Override

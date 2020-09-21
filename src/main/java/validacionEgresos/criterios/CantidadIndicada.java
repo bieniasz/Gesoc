@@ -6,8 +6,15 @@ import operacionComercial.*;
 import operacionComercial.Presupuesto;
 import validacionEgresos.CriterioValidacionEgresosPresupuesto;
 
+import javax.persistence.Column;
+import javax.persistence.DiscriminatorValue;
+import javax.persistence.Entity;
+
+@Entity
+@DiscriminatorValue("CantidadIndicada")
 public class CantidadIndicada extends CriterioValidacionEgresosPresupuesto {
 
+	@Column
 	public int cantidadPresupuestos;
 	
 	@Override

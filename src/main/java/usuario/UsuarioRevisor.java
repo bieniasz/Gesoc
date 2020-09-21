@@ -5,8 +5,17 @@ import operacionComercial.OperacionEgreso;
 import organizacion.Organizacion;
 import validadorTransparencia.ResultadoDeValidacion;
 
+import javax.persistence.*;
+
+
+@Entity
+@DiscriminatorValue("Revisor")
 public class UsuarioRevisor extends Rol{
+
+    @ManyToOne
     private Organizacion organizacion;
+
+    @Transient
     public BandejaDeResultado bandejaDeResultado = new BandejaDeResultado();
 
     public UsuarioRevisor(Organizacion organizacion){

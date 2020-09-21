@@ -4,12 +4,11 @@ import java.util.List;
 
 @Entity
 @Table
-
 public class CriterioDeOperaciones extends EntidadPersistente{
 
-@Transient
+@OneToMany
     private List<CategoriaDeOperaciones> Categorias;
 
-@Transient
+@OneToMany
     private List<CriterioDeOperaciones> CriteriosHijos;
 }

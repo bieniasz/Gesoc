@@ -1,6 +1,15 @@
 package tamanioEmpresa;
 
-public class Actividad {
+import operacionComercial.EntidadPersistente;
+
+import javax.persistence.Column;
+import javax.persistence.Entity;
+import javax.persistence.Table;
+
+
+@Entity
+@Table
+public class Actividad extends EntidadPersistente {
 /*
 	AGROPECUARIO(12890000,48480000,345430000,547890000,
 			5, 10, 50, 215),
@@ -14,15 +23,24 @@ public class Actividad {
 			7, 35, 135, 345);
 */
 
+	@Column
 	private double topeMicro;
+	@Column
 	private double topePequenia;
+	@Column
 	private double topeMedianaT1;
+	@Column
 	private double topeMedianaT2;
 
+	@Column
 	private int topeCantPersonalMicro;
+	@Column
 	private int topeCantPersonalPequenia;
+	@Column
 	private int topeCantPersonalMedianaTramo1;
+	@Column
 	private int topeCantPersonalMedianaTramo2;
+
 
 	public double getTopePromVentasMicro() { return topeMicro; }
 	public double getTopePromVentasPequenia() { return topePequenia; }

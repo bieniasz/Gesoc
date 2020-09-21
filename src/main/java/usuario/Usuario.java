@@ -1,13 +1,23 @@
 package usuario;
+
+import operacionComercial.EntidadPersistente;
+
+import javax.persistence.*;
+
 /**
  * TODO que una clase tan importante como usuario sea anemic.
  * Revisar esto. Ninguna clase a esta altura deberia ser anemica, esto solo seria
  * aceptado si es un DTO o una clase usada para contrato de interfaz.
  */
 
-public class Usuario {
+@Entity
+@Table
+public class Usuario extends EntidadPersistente {
 
+    @Column
     protected String usuario;
+
+    @ManyToOne
     protected Rol rol;
 
     public Usuario(String usuario) {

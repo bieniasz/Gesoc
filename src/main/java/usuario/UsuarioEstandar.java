@@ -3,8 +3,15 @@ package usuario;
 import operacionComercial.OperacionEgreso;
 import organizacion.Organizacion;
 
+import javax.persistence.DiscriminatorValue;
+import javax.persistence.Entity;
+import javax.persistence.ManyToOne;
+
+@Entity
+@DiscriminatorValue("Estandar")
 public class UsuarioEstandar extends Rol{
 
+    @ManyToOne
     protected Organizacion organizacion;
 
     public UsuarioEstandar(Organizacion organizacion) {

@@ -3,12 +3,21 @@ package organizacion.categoria;
 import tamanioEmpresa.CalculadoraDeTamanio;
 import tamanioEmpresa.Actividad;
 
+import javax.persistence.*;
 
+@Entity
+@DiscriminatorValue("Empresa")
 public class Empresa extends Categoria{
+
+	@Column
 	private int cantidadDePersonal;
+	@ManyToOne
 	private Actividad actividad;
+	@Column
 	private double promedioVentasAnuales;
+	@Column
 	private String tamanio;
+	@Column
 	private boolean comisionista;
 
 	public Empresa (int cantPersonal, Actividad actividad, double promVentasAnuales, boolean esComisionista) {

@@ -1,18 +1,24 @@
 package ProveedorDocComer;
 
 
-import javax.persistence.Entity;
-import javax.persistence.Table;
-import javax.persistence.Transient;
+import operacionComercial.EntidadPersistente;
+
+import javax.persistence.*;
 
 @Entity
 @Table
-public class DocumentoComercial {
+public class DocumentoComercial extends EntidadPersistente {
 
-    @Transient
+    @ManyToOne
     private TipoComprobante tipoDocumentoComercial;
+
+    @Column
     private Long numeroDocumentoComercial;
+
+    @Column
     private String tipoDeAdjunto;
+
+    @Column
     private String content;
 
 

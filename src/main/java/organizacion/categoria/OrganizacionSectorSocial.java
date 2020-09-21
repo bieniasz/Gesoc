@@ -1,7 +1,15 @@
 package organizacion.categoria;
 
+
+import javax.persistence.*;
+
+@Entity
+@DiscriminatorValue("SectorSocial")
 public class OrganizacionSectorSocial extends Categoria {
+
+    @Column
     private String areaDeTrabajo;
+    @Column
     private Integer cantidadDePersonal;
 
     public OrganizacionSectorSocial(String areaDeTrabajo, Integer cantPersonal){

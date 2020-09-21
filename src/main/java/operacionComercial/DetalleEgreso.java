@@ -2,16 +2,13 @@ package operacionComercial;
 
 import org.javatuples.Pair;
 
-import javax.persistence.Column;
-import javax.persistence.Entity;
-import javax.persistence.Table;
-import javax.persistence.Transient;
+import javax.persistence.*;
 
 @Entity
 @Table(name="DetalleEgreso")
 public class DetalleEgreso extends EntidadPersistente{
 
-    @Transient
+    @OneToOne
     private Item item;
 
     @Column

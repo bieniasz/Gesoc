@@ -6,10 +6,7 @@ import direccion.AtributosPersistentes.Pais;
 import direccion.AtributosPersistentes.Provincia;
 import operacionComercial.EntidadPersistente;
 
-import javax.persistence.Column;
-import javax.persistence.Entity;
-import javax.persistence.Table;
-import javax.persistence.Transient;
+import javax.persistence.*;
 
 @Entity
 @Table
@@ -21,13 +18,13 @@ public class Direccion extends EntidadPersistente{
     @Column
     public String altura;
 
-    @Transient
+    @ManyToOne
     public Ciudad ciudad;
 
-    @Transient
+    @ManyToOne
     public Provincia provincia;
 
-    @Transient
+    @ManyToOne
     public Pais pais;
 
     @Transient

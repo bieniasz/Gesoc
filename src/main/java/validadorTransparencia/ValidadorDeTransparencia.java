@@ -1,9 +1,16 @@
 package validadorTransparencia;
 
+import operacionComercial.EntidadPersistente;
+
+import javax.persistence.Entity;
+import javax.persistence.OneToMany;
+import javax.persistence.Table;
 import java.util.ArrayList;
 import java.util.List;
 
-public class ValidadorDeTransparencia {
+
+public class ValidadorDeTransparencia   {
+
 
     private List<ValidacionPendiente> pedidosDeValidacionPendientes = new ArrayList<ValidacionPendiente>();
 

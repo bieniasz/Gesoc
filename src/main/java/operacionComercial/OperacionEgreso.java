@@ -5,15 +5,29 @@ import ProveedorDocComer.DocumentoComercial;
 import ProveedorDocComer.Proveedor;
 import organizacion.Organizacion;
 
+import javax.persistence.*;
 import java.time.LocalDate;
 import java.util.ArrayList;
 import java.util.List;
 
+
+@Entity
+@DiscriminatorValue("Egreso")
 public class OperacionEgreso extends OperacionComercial {
+
+    @ManyToOne
     private MedioDePago medioDePago;
+
+    @Column
     private String numeroIdentificadorMedioPago;
+
+    @ManyToOne
     private Proveedor proveedor;
+
+    @ManyToOne
     private Organizacion organizacion;
+
+    @OneToMany
     private List<Presupuesto> presupuestos;
     //private OperacionIngreso ingresoAsociado;
 

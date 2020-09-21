@@ -6,9 +6,9 @@ import javax.persistence.*;
 @Table
 public class CategoriaDeOperaciones extends EntidadPersistente {
 
-@Transient
+@Column
     private String descripcion;
 
-@Transient
+@ManyToOne
     private CriterioDeOperaciones criterioDeCategoria;
 }

@@ -15,20 +15,27 @@ import javax.persistence.*;
 
 @Entity
 @Table(name="OperacionComercial")
+@Inheritance(strategy = InheritanceType.SINGLE_TABLE)
+@DiscriminatorColumn(name = "<<TipoOperacion>>")
 public abstract class OperacionComercial extends EntidadPersistente {
 
-    @Column(name="fecha")
+    @Column
+    private String TipoOperacion;
+
+    @Transient
     private LocalDate fecha;
 
     @Column(name="valorTotal")
     public float valorTotal;
 
-    @Transient
+    @OneToOne(fetch = FetchType.LAZY, cascade=CascadeType.ALL)
     private DocumentoComercial documentoComercial;
 
-    @Transient
+    @OneToMany
     private List<DetalleEgreso> detalle;
-    //private List<CategoriaOperacion> categoriasAsociadas;
+
+    @OneToMany
+    private List<CategoriaDeOperaciones> categoriasAsociadas;
 
     // TODO descomentar todo cuando exista la clase CategoriaOperacion
 

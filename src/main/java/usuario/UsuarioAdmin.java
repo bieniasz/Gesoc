@@ -4,6 +4,12 @@ import organizacion.EntidadJuridica;
 import organizacion.Organizacion;
 import seguridad.ValidadorDeUsuario;
 
+import javax.persistence.DiscriminatorValue;
+import javax.persistence.Entity;
+import javax.persistence.Table;
+
+@Entity
+@DiscriminatorValue("Administrador")
 public class UsuarioAdmin extends Rol{
 
     public UsuarioAdmin() {
