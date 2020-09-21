@@ -3,12 +3,13 @@
   <groupId>Vinculator</groupId>
   <artifactId>Vinculator</artifactId>
   <version>0.0.1-SNAPSHOT</version>
+
   <build>
     <sourceDirectory>src</sourceDirectory>
     <plugins>
       <plugin>
         <artifactId>maven-compiler-plugin</artifactId>
-        <version>3.7.0</version>
+        <version>3.1</version>
         <configuration>
           <source>1.8</source>
           <target>1.8</target>
@@ -16,6 +17,7 @@
       </plugin>
     </plugins>
   </build>
+
   <dependencies>
         <!--- Bibliotecas de junit -->
         <dependency>
@@ -35,6 +37,24 @@
 			<artifactId>gson</artifactId>
 			<version>2.2.2</version>
 		</dependency>
-		
-    </dependencies>
+
+      <!-- Spark -->
+      <dependency>
+          <groupId>org.apache.spark</groupId>
+          <artifactId>spark-core_2.12</artifactId>
+          <version>3.0.1</version>
+      </dependency>
+
+      <!-- Handlebars -->
+      <dependency>
+          <groupId>com.github.jknack</groupId>
+          <artifactId>handlebars</artifactId>
+          <version>4.0.6</version>
+      </dependency>
+
+
+
+
+
+  </dependencies>
 </project>
