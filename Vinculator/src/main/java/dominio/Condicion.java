@@ -1,6 +1,14 @@
-package dominio;
+package main.java.dominio;
 
-public interface Condicion {
+import java.time.LocalDate;
+import java.util.List;
+import java.util.stream.Collectors;
 
-	public void  asignar();
+public abstract class Condicion extends RepositorioEgresos {
+
+	public List<Egreso> getEgresos() {
+		return egresos;
+	}
+	
+	
 }

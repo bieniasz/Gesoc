@@ -1,4 +1,4 @@
-package criterios;
+package main.java.criterios;
 
 import dominio.CriterioEjecucion;
 

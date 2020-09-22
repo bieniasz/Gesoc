@@ -1,6 +1,8 @@
-package dominio;
+package main.java.dominio;
+
+import java.util.List;
 
 public interface CriterioEjecucion {
 
-	public void  filtrarPorCondicion() ;
+	public String  ejecutar(RepositorioIngresos repositorioIngresos, RepositorioEgresos repositorioEgresos) ;
 }
