@@ -1,12 +1,20 @@
 package operacionComercial.builder;
 
+import operacionComercial.DetalleEgreso;
 import operacionComercial.OperacionEgreso;
 import operacionComercial.Presupuesto;
 import operacionComercial.builder.Exception.FaltaEgresoException;
 
+import java.util.List;
+
 public class PresupuestoBuilder extends OperacionComercialBuilder{
     private OperacionEgreso egreso;
     private boolean esElElegido;
+
+    public PresupuestoBuilder setDetalle(List<DetalleEgreso> detalleEgresos){
+        super.setDetalle(detalleEgresos);
+        return this;
+    }
 
     public PresupuestoBuilder setEgreso(OperacionEgreso egreso) {
         this.egreso = egreso;
@@ -22,9 +30,9 @@ public class PresupuestoBuilder extends OperacionComercialBuilder{
         if( this.egreso == null)
             throw new FaltaEgresoException();
 
-        this.setDetalle(this.egreso.getDetalle());
+        //this.setDetalle(this.egreso.getDetalle());
         Presupuesto presupuesto = (Presupuesto) super.build();
-        presupuesto.setEsElElegido(this.esElElegido);
+        presupuesto.setElegido(this.esElElegido);
         presupuesto.setEgreso(this.egreso);
 
 

@@ -22,11 +22,14 @@ public abstract class OperacionComercial {
     public List<CategoriaDeOperaciones> getCategoriasAsociadas() { return categoriasAsociadas; }
 
     public void setFecha(LocalDate fecha) { this.fecha = fecha; }
-    public void setDetalle(List<DetalleEgreso> detalle) { this.detalle = detalle; }
+    public void setDetalle(List<DetalleEgreso> detalle) {
+        this.detalle = detalle;
+        actualizarValorTotal();
+    }
     public void setCategoriasAsociadas(List<CategoriaDeOperaciones> categorias) { this.categoriasAsociadas = categorias; }
 
 
-    public void calcularValorTotal()  {
+    public void actualizarValorTotal()  {
         this.valorTotal = this.detalle.stream().mapToDouble( (DetalleEgreso detalle) -> detalle.valorTotal ).sum();
     }
 
@@ -36,12 +39,12 @@ public abstract class OperacionComercial {
 
     public void registrarDetalle(DetalleEgreso detalle) {
         this.detalle.add(detalle);
-        this.calcularValorTotal();
+        this.actualizarValorTotal();
     }
 
     public void quitarDetalle(DetalleEgreso detalle) {
         this.detalle.remove(detalle);
-        this.calcularValorTotal();
+        this.actualizarValorTotal();
     }
 
     public void asociarACategoria(CategoriaDeOperaciones categoriaOperacion){

@@ -8,9 +8,8 @@ import org.junit.Before;
 import org.junit.Test;
 import organizacion.EntidadBase;
 import usuario.UsuarioRevisor;
-import validacionEgresos.CriterioValidacionEgresosPresupuesto;
-import validacionEgresos.criterios.CantidadIndicada;
-import validacionEgresos.criterios.MenorValor;
+import validacionSeleccionProveedor.criteriosSeleccionProveedor.CantidadIndicada;
+import validacionSeleccionProveedor.criteriosSeleccionProveedor.MenorValor;
 
 public class TestSuscripcionValidacionDeTransparencia {
 
@@ -21,15 +20,16 @@ public class TestSuscripcionValidacionDeTransparencia {
     @Before
     public void init(){
         this.operacionEgreso = new OperacionEgreso();
+        this.operacionEgreso.setCantidadEsperadaPresupuestos(1);
+
         Presupuesto presupuesto = new Presupuesto();
         DetalleEgreso det = new DetalleEgreso();
         det.valorTotal = Double.valueOf(2);
         presupuesto.registrarDetalle(det);
-        presupuesto.setEsElElegido(true);
-        this.operacionEgreso.asociarPresupuesto(presupuesto);
+        presupuesto.setElegido(true);
+        presupuesto.setEgreso(this.operacionEgreso);
 
         CantidadIndicada criterioCantidad = new CantidadIndicada();
-        criterioCantidad.setCantidadPresupuestos(1);
         this.revisor1 = new UsuarioRevisor(new EntidadBase());
 
         this.suscripcion = new SuscripcionValidacionDeTransparencia();
@@ -87,11 +87,13 @@ public class TestSuscripcionValidacionDeTransparencia {
 
     @Test
     public void TestSuscripcionConErrorMensaje() {
+        this.operacionEgreso.setCantidadEsperadaPresupuestos(2);
+
         Presupuesto otroPresupuesto = new Presupuesto();
         DetalleEgreso det = new DetalleEgreso();
-        det.valorTotal = Double.valueOf(1);
+        det.valorTotal = 1.0;
         otroPresupuesto.registrarDetalle(det);
-        this.operacionEgreso.asociarPresupuesto(otroPresupuesto);
+        otroPresupuesto.setEgreso(this.operacionEgreso);
 
         MenorValor criterioMenorValor = new MenorValor();
         this.suscripcion.agregarCriterio(criterioMenorValor);
@@ -99,7 +101,7 @@ public class TestSuscripcionValidacionDeTransparencia {
 
         String mensaje = this.revisor1.bandejaDeResultado.getResultadosDeValidacion().get(0).getResultados().get(0);
 
-        Assert.assertEquals("No coincide el presupuesto elegido con el de menor valor", mensaje);
+        Assert.assertEquals("El presupuesto elegido no coincide con el/los de menor valor", mensaje);
     }
 
     @Test

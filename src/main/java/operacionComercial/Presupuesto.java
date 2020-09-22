@@ -1,17 +1,15 @@
 package operacionComercial;
 
-import ProveedorDocComer.DocumentoComercial;
-
-import java.time.LocalDate;
-import java.util.List;
-
 public class Presupuesto extends OperacionComercial{
     private OperacionEgreso egreso;
-    private boolean esElElegido;
+    private boolean elegido = false;
 
     public OperacionEgreso getEgreso() { return egreso; }
-    public boolean isEsElElegido() { return esElElegido; }
+    public boolean isElegido() { return elegido; }
 
-    public void setEsElElegido(boolean esElElegido) { this.esElElegido = esElElegido; }
-    public void setEgreso(OperacionEgreso egreso) { this.egreso = egreso; }
+    public void setElegido(boolean elegido) { this.elegido = elegido; }
+    public void setEgreso(OperacionEgreso egreso) {
+        this.egreso = egreso;
+        egreso.asociarPresupuesto(this);
+    }
 }

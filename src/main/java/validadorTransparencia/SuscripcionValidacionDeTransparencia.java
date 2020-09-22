@@ -1,9 +1,9 @@
 package validadorTransparencia;
 
+import operacionComercial.DetalleEgreso;
 import operacionComercial.OperacionEgreso;
-import usuario.Usuario;
 import usuario.UsuarioRevisor;
-import validacionEgresos.CriterioValidacionEgresosPresupuesto;
+import validacionSeleccionProveedor.CriterioValidacionEgresosPresupuesto;
 
 import java.time.LocalDate;
 import java.util.ArrayList;
@@ -15,10 +15,10 @@ public class SuscripcionValidacionDeTransparencia {
     private List<CriterioValidacionEgresosPresupuesto> criteriosDeseados = new ArrayList<CriterioValidacionEgresosPresupuesto>();
     private ResultadoDeValidacion resultadoDeValidacion;
 
-    public void validar(){
+    public void validar() {
         List<String> errores = new ArrayList<String>();
 
-        criteriosDeseados.stream().forEach( (criterio) -> {
+        criteriosDeseados.forEach( (criterio) -> {
             try {
                 criterio.validar(this.operacionEgreso);
             } catch (Exception e) {

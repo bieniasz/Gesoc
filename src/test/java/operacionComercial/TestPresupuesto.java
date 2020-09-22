@@ -1,7 +1,6 @@
 package operacionComercial;
 
 import ProveedorDocComer.Proveedor;
-import operacionComercial.builder.Exception.FaltaDetalleException;
 import operacionComercial.builder.Exception.FaltaEgresoException;
 import operacionComercial.builder.OperacionEgresoBuilder;
 import operacionComercial.builder.PresupuestoBuilder;
@@ -16,33 +15,49 @@ import java.util.List;
 
 public class TestPresupuesto {
     private OperacionEgreso operacionEgreso;
-    private DetalleEgreso unDetalle;
+    List<DetalleEgreso> listDetallesEgreso;
+
+    DetalleEgreso detPresupuesto1;
+    DetalleEgreso detPresupuesto2;
+    List<DetalleEgreso> listDetallesPresupuesto;
 
     @Before
     public void init() throws Exception {
-        this.unDetalle = new DetalleEgreso();
-        this.unDetalle.valorTotal = 5.0;
+        DetalleEgreso unDetalle = new DetalleEgreso();
+        unDetalle.valorTotal = 50.0;
         DetalleEgreso otroDetalle = new DetalleEgreso();
-        otroDetalle.valorTotal = 5.0;
+        otroDetalle.valorTotal = 60.0;
 
-        List<DetalleEgreso> detalles = new ArrayList<>();
-        detalles.add(this.unDetalle);
-        detalles.add(otroDetalle);
+        this.listDetallesEgreso = new ArrayList<>();
+        this.listDetallesEgreso.add(unDetalle);
+        this.listDetallesEgreso.add(otroDetalle);
 
         OperacionEgresoBuilder builder = new OperacionEgresoBuilder();
-        builder.setDetalle(detalles);
+        builder.setDetalle(this.listDetallesEgreso);
         builder.setMedioDePago(new MedioDePago());
         builder.setNumeroIdentificadorMedioPago("AAAAAAAA");
         builder.setProveedor(new Proveedor());
         builder.setOrganizacion(new EntidadJuridica());
+        builder.setCantEsperadaPresupuestos(0);
         this.operacionEgreso = builder.build();
+
+        /* Configuro el detalle del presupuesto */
+        detPresupuesto1 = new DetalleEgreso();
+        detPresupuesto1.valorTotal = 50.0;
+        detPresupuesto2 = new DetalleEgreso();
+        detPresupuesto2.valorTotal = 60.0;
+
+        this.listDetallesPresupuesto = new ArrayList<DetalleEgreso>();
+        this.listDetallesPresupuesto.add(detPresupuesto1);
+        this.listDetallesPresupuesto.add(detPresupuesto2);
+
     }
 
     @Test
     public void PresupuestoBuilderConParametrosObligatorios() throws Exception {
-
         PresupuestoBuilder presupuestoBuilder = new PresupuestoBuilder();
         presupuestoBuilder.setEgreso(this.operacionEgreso);
+        presupuestoBuilder.setDetalle(this.listDetallesPresupuesto);
         presupuestoBuilder.setEsElElegido(true);
 
         Presupuesto presupuesto = presupuestoBuilder.build();
@@ -55,18 +70,20 @@ public class TestPresupuesto {
 
         PresupuestoBuilder presupuestoBuilder = new PresupuestoBuilder();
         presupuestoBuilder.setEgreso(this.operacionEgreso);
+        presupuestoBuilder.setDetalle(this.listDetallesPresupuesto);
         presupuestoBuilder.setEsElElegido(true);
 
         Presupuesto presupuesto = presupuestoBuilder.build();
 
         Double valorTotal = presupuesto.getValorTotal();
-        Assert.assertEquals(valorTotal, 10.0, 0.0);
+        Assert.assertEquals(valorTotal, 110.0, 0.0);
     }
 
     @Test
     public void PresupuestoFechaActualViaBuilder() throws Exception {
 
         PresupuestoBuilder presupuestoBuilder = new PresupuestoBuilder();
+        presupuestoBuilder.setDetalle(this.listDetallesPresupuesto);
         presupuestoBuilder.setEgreso(this.operacionEgreso);
         presupuestoBuilder.setEsElElegido(true);
 
@@ -88,29 +105,31 @@ public class TestPresupuesto {
     public void PresupuestoAgregaDetallesYRecalculaValor() throws Exception {
 
         PresupuestoBuilder presupuestoBuilder = new PresupuestoBuilder();
+        presupuestoBuilder.setDetalle(this.listDetallesPresupuesto);
         presupuestoBuilder.setEgreso(this.operacionEgreso);
         presupuestoBuilder.setEsElElegido(true);
         Presupuesto presupuesto = presupuestoBuilder.build();
 
         DetalleEgreso otroDetalleMas = new DetalleEgreso();
-        otroDetalleMas.valorTotal = 4.0;
+        otroDetalleMas.valorTotal = 40.0;
         presupuesto.registrarDetalle(otroDetalleMas);
 
         Double valorTotal = presupuesto.getValorTotal();
-        Assert.assertEquals(14.0, valorTotal, 0.0);
+        Assert.assertEquals(150.0, valorTotal, 0.0);
     }
 
     @Test
     public void PresupuestoQuitaDetallesYRecalculaValor() throws Exception {
 
         PresupuestoBuilder presupuestoBuilder = new PresupuestoBuilder();
+        presupuestoBuilder.setDetalle(this.listDetallesPresupuesto);
         presupuestoBuilder.setEgreso(this.operacionEgreso);
         presupuestoBuilder.setEsElElegido(true);
         Presupuesto presupuesto = presupuestoBuilder.build();
 
-        presupuesto.quitarDetalle(this.unDetalle);
+        presupuesto.quitarDetalle(this.detPresupuesto1);
 
         Double valorTotal = presupuesto.getValorTotal();
-        Assert.assertEquals(5.0, valorTotal, 0.0);
+        Assert.assertEquals(60.0, valorTotal, 0.0);
     }
 }

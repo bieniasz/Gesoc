@@ -29,7 +29,7 @@ public class TestOperacionEgreso {
     }
 
     @Test
-    public void OpeacionEgresoBuilderConParametrosObligatorios() throws Exception {
+    public void OperacionEgresoBuilderConParametrosObligatorios() throws Exception {
         OperacionEgresoBuilder builder = new OperacionEgresoBuilder();
 
         builder.setDetalle(this.detalles);
@@ -37,13 +37,14 @@ public class TestOperacionEgreso {
         builder.setNumeroIdentificadorMedioPago("AAAAAAAA");
         builder.setProveedor(new Proveedor());
         builder.setOrganizacion(new EntidadJuridica());
+        builder.setCantEsperadaPresupuestos(0);
         OperacionEgreso operacion = builder.build();
 
         Assert.assertEquals("operacionComercial.OperacionEgreso", operacion.getClass().getName());
     }
 
     @Test
-    public void OpeacionEgresoValorTotalEsCalculadoViaBuilder() throws Exception {
+    public void OperacionEgresoValorTotalEsCalculadoViaBuilder() throws Exception {
         OperacionEgresoBuilder builder = new OperacionEgresoBuilder();
 
         builder.setDetalle(this.detalles);
@@ -51,6 +52,7 @@ public class TestOperacionEgreso {
         builder.setNumeroIdentificadorMedioPago("AAAAAAAA");
         builder.setProveedor(new Proveedor());
         builder.setOrganizacion(new EntidadJuridica());
+        builder.setCantEsperadaPresupuestos(0);
         OperacionEgreso operacion = builder.build();
 
         Double valorTotal = operacion.getValorTotal();
@@ -58,7 +60,7 @@ public class TestOperacionEgreso {
     }
 
     @Test
-    public void OpeacionEgresoFechaActualViaBuilder() throws Exception {
+    public void OperacionEgresoFechaActualViaBuilder() throws Exception {
         OperacionEgresoBuilder builder = new OperacionEgresoBuilder();
 
         builder.setDetalle(this.detalles);
@@ -66,6 +68,7 @@ public class TestOperacionEgreso {
         builder.setNumeroIdentificadorMedioPago("AAAAAAAA");
         builder.setProveedor(new Proveedor());
         builder.setOrganizacion(new EntidadJuridica());
+        builder.setCantEsperadaPresupuestos(0);
         OperacionEgreso operacion = builder.build();
 
         LocalDate fechaOperacion = operacion.getFecha();
@@ -73,59 +76,77 @@ public class TestOperacionEgreso {
     }
 
     @Test(expected = FaltaDetalleException.class)
-    public void OpeacionEgresoSinDetallesBuilderFalla() throws Exception {
+    public void OperacionEgresoSinDetallesBuilderFalla() throws Exception {
         OperacionEgresoBuilder builder = new OperacionEgresoBuilder();
 
         builder.setMedioDePago(new MedioDePago());
         builder.setNumeroIdentificadorMedioPago("AAAAAAAA");
         builder.setProveedor(new Proveedor());
         builder.setOrganizacion(new EntidadJuridica());
+        builder.setCantEsperadaPresupuestos(0);
         builder.build();
     }
 
     @Test(expected = FaltaMedioDePagoException.class)
-    public void OpeacionEgresoSinMedioDePagoBuilderFalla() throws Exception {
+    public void OperacionEgresoSinMedioDePagoBuilderFalla() throws Exception {
         OperacionEgresoBuilder builder = new OperacionEgresoBuilder();
 
         builder.setDetalle(this.detalles);
         builder.setNumeroIdentificadorMedioPago("AAAAAAAA");
         builder.setProveedor(new Proveedor());
         builder.setOrganizacion(new EntidadJuridica());
+        builder.setCantEsperadaPresupuestos(0);
         builder.build();
     }
 
     @Test(expected = FaltaNumeroIdentificadorMedioPagoException.class)
-    public void OpeacionEgresoSinNumeroIdentificadorMedioPagoBuilderFalla() throws Exception {
+    public void OperacionEgresoSinNumeroIdentificadorMedioPagoBuilderFalla() throws Exception {
         OperacionEgresoBuilder builder = new OperacionEgresoBuilder();
 
         builder.setDetalle(this.detalles);
         builder.setMedioDePago(new MedioDePago());
         builder.setProveedor(new Proveedor());
         builder.setOrganizacion(new EntidadJuridica());
+        builder.setCantEsperadaPresupuestos(0);
         builder.build();
     }
 
     @Test(expected = FaltaProveedorException.class)
-    public void OpeacionEgresoSinProveedorBuilderFalla() throws Exception {
+    public void OperacionEgresoSinProveedorBuilderFalla() throws Exception {
         OperacionEgresoBuilder builder = new OperacionEgresoBuilder();
 
         builder.setDetalle(this.detalles);
         builder.setMedioDePago(new MedioDePago());
         builder.setNumeroIdentificadorMedioPago("AAAAAAAA");
         builder.setOrganizacion(new EntidadJuridica());
+        builder.setCantEsperadaPresupuestos(0);
         builder.build();
     }
 
     @Test(expected = FaltaOrganizacionException.class)
-    public void OpeacionEgresoSinOrganizacionBuilderFalla() throws Exception {
+    public void OperacionEgresoSinOrganizacionBuilderFalla() throws Exception {
         OperacionEgresoBuilder builder = new OperacionEgresoBuilder();
 
         builder.setDetalle(this.detalles);
         builder.setMedioDePago(new MedioDePago());
         builder.setNumeroIdentificadorMedioPago("AAAAAAAA");
         builder.setProveedor(new Proveedor());
+        builder.setCantEsperadaPresupuestos(0);
         builder.build();
     }
+
+    @Test(expected = FaltaCantidadPresupuestosException.class)
+    public void OperacionEgresoSinCantidadPresupuestosBuilderFalla() throws Exception {
+        OperacionEgresoBuilder builder = new OperacionEgresoBuilder();
+
+        builder.setDetalle(this.detalles);
+        builder.setMedioDePago(new MedioDePago());
+        builder.setNumeroIdentificadorMedioPago("AAAAAAAA");
+        builder.setProveedor(new Proveedor());
+        builder.setOrganizacion(new EntidadJuridica());
+        builder.build();
+    }
+
 
     @Test
     public void OperacionEgresoAgregaDetallesYRecalculaValor() throws Exception {
@@ -136,6 +157,7 @@ public class TestOperacionEgreso {
         builder.setNumeroIdentificadorMedioPago("AAAAAAAA");
         builder.setProveedor(new Proveedor());
         builder.setOrganizacion(new EntidadJuridica());
+        builder.setCantEsperadaPresupuestos(0);
         OperacionEgreso operacion = builder.build();
 
         DetalleEgreso otroDetalleMas = new DetalleEgreso();
@@ -155,6 +177,7 @@ public class TestOperacionEgreso {
         builder.setNumeroIdentificadorMedioPago("AAAAAAAA");
         builder.setProveedor(new Proveedor());
         builder.setOrganizacion(new EntidadJuridica());
+        builder.setCantEsperadaPresupuestos(0);
         OperacionEgreso operacion = builder.build();
 
         operacion.quitarDetalle(this.unDetalle);

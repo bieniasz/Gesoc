@@ -5,10 +5,7 @@ import operacionComercial.MedioDePago;
 import operacionComercial.OperacionEgreso;
 import operacionComercial.OperacionIngreso;
 import operacionComercial.Presupuesto;
-import operacionComercial.builder.Exception.FaltaMedioDePagoException;
-import operacionComercial.builder.Exception.FaltaNumeroIdentificadorMedioPagoException;
-import operacionComercial.builder.Exception.FaltaOrganizacionException;
-import operacionComercial.builder.Exception.FaltaProveedorException;
+import operacionComercial.builder.Exception.*;
 import organizacion.Organizacion;
 
 import java.util.ArrayList;
@@ -19,11 +16,13 @@ public class OperacionEgresoBuilder extends OperacionComercialBuilder{
     private String numeroIdentificadorMedioPago;
     private Proveedor proveedor;
     private Organizacion organizacion;
+    private Integer cantEsperadaPresupuestos;
     private OperacionIngreso ingresoAsociado;
 
     public OperacionEgresoBuilder() {
         this.setOperacion(new OperacionEgreso());
     }
+
     public OperacionEgresoBuilder setMedioDePago(MedioDePago medioDePago) {
         this.medioDePago = medioDePago;
         return this;
@@ -38,6 +37,10 @@ public class OperacionEgresoBuilder extends OperacionComercialBuilder{
     }
     public OperacionEgresoBuilder setOrganizacion(Organizacion organizacion) {
         this.organizacion = organizacion;
+        return this;
+    }
+    public OperacionEgresoBuilder setCantEsperadaPresupuestos(Integer cantEsperadaPresupuestos){
+        this.cantEsperadaPresupuestos = cantEsperadaPresupuestos;
         return this;
     }
     public OperacionEgresoBuilder setIngresoAsociado(OperacionIngreso ingresoAsociado) {
@@ -57,11 +60,14 @@ public class OperacionEgresoBuilder extends OperacionComercialBuilder{
             throw new FaltaProveedorException();
         if ( this.organizacion == null )
             throw new FaltaOrganizacionException();
+        if ( this.cantEsperadaPresupuestos == null )
+            throw new FaltaCantidadPresupuestosException();
 
         operacion.setMedioDePago(this.medioDePago);
         operacion.setNumeroIdentificadorMedioPago(this.numeroIdentificadorMedioPago);
         operacion.setProveedor(this.proveedor);
         operacion.setOrganizacion(this.organizacion);
+        operacion.setCantidadEsperadaPresupuestos(this.cantEsperadaPresupuestos);
 
         return operacion;
     }

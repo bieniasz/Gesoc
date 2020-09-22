@@ -12,8 +12,6 @@ public class ValidadorDeTransparencia {
     }
 
     public void ValidarEgresos(){
-        this.pedidosDeValidacionPendientes.stream().forEach( (pedido) -> {
-            pedido.validar();
-        });
+        this.pedidosDeValidacionPendientes.forEach(ValidacionPendiente::validar);
     };
 }

@@ -45,7 +45,7 @@ public abstract class OperacionComercialBuilder {
             throw new FaltaDetalleException();
 
         this.operacion.setDetalle(this.detalle);
-        this.operacion.calcularValorTotal();
+        this.operacion.actualizarValorTotal();
         this.operacion.setFecha(LocalDate.now());
 
 

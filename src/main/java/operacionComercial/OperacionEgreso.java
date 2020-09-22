@@ -14,6 +14,7 @@ public class OperacionEgreso extends OperacionComercial {
     private String numeroIdentificadorMedioPago;
     private Proveedor proveedor;
     private Organizacion organizacion;
+    private Integer cantidadEsperadaPresupuestos;
     private List<Presupuesto> presupuestos = new ArrayList<Presupuesto>();
     private OperacionIngreso ingresoAsociado;
 
@@ -21,6 +22,7 @@ public class OperacionEgreso extends OperacionComercial {
     public String getNumeroIdentificadorMedioPago() { return numeroIdentificadorMedioPago; }
     public Proveedor getProveedor() { return proveedor; }
     public Organizacion getOrganizacion() { return organizacion; }
+    public Integer getCantidadEsperadaPresupuestos() { return cantidadEsperadaPresupuestos; }
     public List<Presupuesto> getPresupuestos() { return presupuestos; }
 
     public void asociarPresupuesto(Presupuesto presupuesto) {
@@ -30,5 +32,8 @@ public class OperacionEgreso extends OperacionComercial {
     public void setNumeroIdentificadorMedioPago(String numeroIdentificadorMedioPago) { this.numeroIdentificadorMedioPago = numeroIdentificadorMedioPago; }
     public void setProveedor(Proveedor proveedor) { this.proveedor = proveedor; }
     public void setOrganizacion(Organizacion organizacion) { this.organizacion = organizacion; }
+    public void setCantidadEsperadaPresupuestos(Integer cantidadEsperadaPresupuestos) {
+        this.cantidadEsperadaPresupuestos = cantidadEsperadaPresupuestos;
+    }
     public void setPresupuestos(List<Presupuesto> presupuestos) { this.presupuestos = presupuestos; }
 }
