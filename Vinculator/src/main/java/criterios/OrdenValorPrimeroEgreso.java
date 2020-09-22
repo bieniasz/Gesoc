@@ -12,12 +12,18 @@ import main.java.dominio.Ingreso;
 import main.java.dominio.IngresoVinculado;
 import main.java.dominio.RepositorioEgresos;
 import main.java.dominio.RepositorioIngresos;
+import main.java.dominio.RepositorioIngresosVinculados;
+
+import com.google.gson.Gson;
 
 public class OrdenValorPrimeroEgreso implements CriterioEjecucion {
 	
 	@Override
 	public String  ejecutar(RepositorioIngresos repositorioIngresos, RepositorioEgresos repositorioEgresos)  {
 
+		RepositorioIngresosVinculados	ingresosVinculados = new RepositorioIngresosVinculados();
+		
+		
 		// ordena de menor a mayor los egresos
 		List<Egreso> egresosOrdenados = repositorioEgresos.getEgresos().stream()
 					.sorted(Comparator.comparingDouble(Egreso::getValorTotal))
@@ -37,7 +43,7 @@ public class OrdenValorPrimeroEgreso implements CriterioEjecucion {
 			
 			Double acumulador =0.0;
 			
-			IngresoVinculado ingresoVinculado= new IngresoVinculado (ingreso.getId_egreso(),ingreso.getDescripcion(),ingreso.getFecha());
+			IngresoVinculado ingresoVinculado = new IngresoVinculado (ingreso.getId_egreso(),ingreso.getDescripcion(),ingreso.getFecha());
 		    
 			//asigno los egresos al ingreso hasta alcanzar un monto cercano al total
 				 for(  Egreso egreso   : egrePreAsignar
@@ -51,10 +57,13 @@ public class OrdenValorPrimeroEgreso implements CriterioEjecucion {
 				    		
 				    	}
 					}	
+		ingresosVinculados.agregarIngresoVinculado(ingresoVinculado);
 		}	// fin del for ingreso
-     		
+     	
+		Gson gson = new Gson();
+	String ingresosVinculadoString = gson.toJson(ingresosVinculados);
 	
-	return "hola";}
+	return ingresosVinculadoString;}
 
 }
 
