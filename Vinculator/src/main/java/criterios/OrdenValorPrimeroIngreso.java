@@ -1,6 +1,6 @@
 package main.java.criterios;
 
-import dominio.CriterioEjecucion;
+import main.java.dominio.CriterioEjecucion;
 
 public class OrdenValorPrimeroIngreso  implements CriterioEjecucion{
 	
