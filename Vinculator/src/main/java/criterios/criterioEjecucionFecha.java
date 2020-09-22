@@ -1,8 +1,11 @@
 package main.java.criterios;
 
+import java.util.Collections;
 import java.util.Comparator;
 import java.util.List;
 import java.util.stream.Collectors;
+
+import com.google.gson.Gson;
 
 import main.java.condiciones.PeriodoAceptabilidad;
 import main.java.dominio.CriterioEjecucion;
@@ -13,25 +16,41 @@ import main.java.dominio.RepositorioEgresos;
 import main.java.dominio.RepositorioIngresos;
 import main.java.dominio.RepositorioIngresosVinculados;
 
-import com.google.gson.Gson;
+public class criterioEjecucionFecha implements CriterioEjecucion {
 
-public class OrdenValorPrimeroEgreso implements CriterioEjecucion {
-	
 	@Override
 	public String  ejecutar(RepositorioIngresos repositorioIngresos, RepositorioEgresos repositorioEgresos)  {
 
 		RepositorioIngresosVinculados	ingresosVinculados = new RepositorioIngresosVinculados();
 		
+		//comparador por fechas egresos
+		Comparator<Egreso> byfechaEgreso = new Comparator<Egreso>() {
+			  public int compare(Egreso e1, Egreso e2) {
+			    if (e1.getFecha().isBefore(e2.getFecha())) return -1;
+			    else return 1;
+			  }
+			};
 		
-		// ordena de menor a mayor los egresos
-		List<Egreso> egresosOrdenados = repositorioEgresos.getEgresos().stream()
-					.sorted(Comparator.comparingDouble(Egreso::getValorTotal))
-					.collect(Collectors.toList());
+	 //comparador por fechas ingresos
+	   Comparator<Ingreso> byfechaIngreso = new Comparator<Ingreso>() {
+				  public int compare(Ingreso i1, Ingreso i2) {
+				    if (i1.getFecha().isBefore(i2.getFecha())) return -1;
+				    else return 1;
+				  }
+				};
 		
-		// ordena de menor a mayor los ingresos
-		List<Ingreso> ingresosOrdenados = repositorioIngresos.getIngresos().stream()
-				.sorted(Comparator.comparingDouble(Ingreso::getValorTotal))
-				.collect(Collectors.toList());
+		// ordena de menor a mayor los egresos por fecha
+		List<Egreso> egresosOrdenados=repositorioEgresos.getEgresos();
+		Collections.sort(egresosOrdenados, byfechaEgreso);			
+		
+		
+		
+		
+		
+		// ordena de menor a mayor los ingresos  por fecha
+		List<Ingreso> ingresosOrdenados= repositorioIngresos.getIngresos();
+		Collections.sort(ingresosOrdenados, byfechaIngreso);	
+		
 		
 				
 		
@@ -65,5 +84,3 @@ public class OrdenValorPrimeroEgreso implements CriterioEjecucion {
 	return ingresosVinculadoString;}
 
 }
-
-
