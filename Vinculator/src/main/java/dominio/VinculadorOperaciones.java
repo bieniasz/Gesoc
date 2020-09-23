@@ -15,21 +15,19 @@ import spark.Spark;
 public  class  VinculadorOperaciones  {
 
 	 CriterioEjecucion criterio;
-	 List <Condicion> condiciones;
 	 RepositorioIngresos repositorioIngresos;
 	 RepositorioEgresos repositorioEgresos;
 	 RepositorioCentral repositorioCentral;
-	 List <IngresoVinculado> vinculados; 
 	
-	 final Gson gsonEgresos = new Gson();
+	 final Gson gsonCentral = new Gson();
 	 
 	 
 	 public String vincular(Request request, Response response) {
-		 String Ingresos = request.body();
-		 String Egresos = request.body();
+		 String requestBody=request.body();
 
-	     this.repositorioIngresos = gsonEgresos.fromJson(Ingresos, RepositorioIngresos.class);	
-	     this.repositorioEgresos = gsonEgresos.fromJson(Egresos, RepositorioEgresos.class);				 
+		 this.repositorioCentral = gsonCentral.fromJson(requestBody, RepositorioCentral.class);
+		 this.repositorioEgresos=this.repositorioCentral.repositorioEgresos;
+		 this.repositorioIngresos=this.repositorioCentral.repositorioIngresos;
 	     
 
 	     return this.criterio.ejecutar(repositorioIngresos,repositorioEgresos);

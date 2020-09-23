@@ -38,12 +38,7 @@ public class CriterioEjecucionFecha implements CriterioEjecucion {
 				    else return 1;
 				  }
 				};
-		
-		
-		
-		
-		
-		
+
 		
 		// ordena de menor a mayor los ingresos  por fecha
 		List<Ingreso> ingresosOrdenados= repositorioIngresos.getIngresos();
@@ -61,7 +56,7 @@ public class CriterioEjecucionFecha implements CriterioEjecucion {
 			
 			Double acumulador =0.0;
 			
-			IngresoVinculado ingresoVinculado = new IngresoVinculado (ingreso.getId_egreso(),ingreso.getDescripcion(),ingreso.getFecha());
+			IngresoVinculado ingresoVinculado = new IngresoVinculado (ingreso.getId_Ingreso(),ingreso.getDescripcion(),ingreso.getFecha());
 		    
 			//asigno los egresos al ingreso hasta alcanzar un monto cercano al total
 				 for(  Egreso egreso   : egrePreAsignar
