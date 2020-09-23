@@ -30,7 +30,9 @@ public  class  VinculadorOperaciones  {
 		 String requestBody=request.body();
 		 
 		 this.repositorioCentral = gsonCentral.fromJson(requestBody, RepositorioCentral.class);	
-	     	      
+		 this.repositorioEgresos=this.repositorioCentral.repositorioEgresos;
+		 this.repositorioIngresos=this.repositorioCentral.repositorioIngresos;
+		 
 	     return this.criterio.ejecutar(repositorioIngresos,repositorioEgresos);
 	 
 	 }
