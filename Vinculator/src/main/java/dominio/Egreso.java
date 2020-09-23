@@ -7,14 +7,7 @@ public class Egreso {
 	private LocalDate fecha; //
 	Double valorTotal; // decimal
 	String documentoComercial; // DocumentoComercial
-	String detalle; // List<DetalleEgreso>
-	String categoriasAsociadas; // List<CategoriaDeOperacion>
-	String medioDePago; // MedioDePago
-	String numeroIdentificadorMedioPago; // string
-	String proveedor; // Proveedor
-	String organizacion; // Organizacion
-	String presupuestos; // List
-	String ingresoAsociado; // OperacionIngreso
+	String detalle; // 
 	Boolean asignado;
 	public String getId_egreso() {
 		return id_egreso;
@@ -46,48 +39,8 @@ public class Egreso {
 	public void setDetalle(String detalle) {
 		this.detalle = detalle;
 	}
-	public String getCategoriasAsociadas() {
-		return categoriasAsociadas;
-	}
-	public void setCategoriasAsociadas(String categoriasAsociadas) {
-		this.categoriasAsociadas = categoriasAsociadas;
-	}
-	public String getMedioDePago() {
-		return medioDePago;
-	}
-	public void setMedioDePago(String medioDePago) {
-		this.medioDePago = medioDePago;
-	}
-	public String getNumeroIdentificadorMedioPago() {
-		return numeroIdentificadorMedioPago;
-	}
-	public void setNumeroIdentificadorMedioPago(String numeroIdentificadorMedioPago) {
-		this.numeroIdentificadorMedioPago = numeroIdentificadorMedioPago;
-	}
-	public String getProveedor() {
-		return proveedor;
-	}
-	public void setProveedor(String proveedor) {
-		this.proveedor = proveedor;
-	}
-	public String getOrganizacion() {
-		return organizacion;
-	}
-	public void setOrganizacion(String organizacion) {
-		this.organizacion = organizacion;
-	}
-	public String getPresupuestos() {
-		return presupuestos;
-	}
-	public void setPresupuestos(String presupuestos) {
-		this.presupuestos = presupuestos;
-	}
-	public String getIngresoAsociado() {
-		return ingresoAsociado;
-	}
-	public void setIngresoAsociado(String ingresoAsociado) {
-		this.ingresoAsociado = ingresoAsociado;
-	}
+	
+	
 	public Boolean getAsignado() {
 		return asignado;
 	}

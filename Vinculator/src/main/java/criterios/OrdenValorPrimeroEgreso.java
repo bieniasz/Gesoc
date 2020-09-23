@@ -59,7 +59,7 @@ public class OrdenValorPrimeroEgreso implements CriterioEjecucion {
 		ingresosVinculados.agregarIngresoVinculado(ingresoVinculado);
 		}	// fin del for ingreso
      	
-		Gson gson = new Gson();
+	Gson gson = new Gson();
 	String ingresosVinculadoString = gson.toJson(ingresosVinculados);
 	
 	return ingresosVinculadoString;}
