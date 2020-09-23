@@ -1,29 +1,26 @@
 package main.java.server;
 
+import spark.Request;
+import spark.Response;
 import spark.Spark;
-import spark.template.handlebars.HandlebarsTemplateEngine;
-import spark.utils.BooleanHelper;
-import spark.utils.HandlebarsTemplateEngineBuilder;
 
 public class Router {
-    private static HandlebarsTemplateEngine engine;
-
-    private static void initEngine() {
-        Router.engine = HandlebarsTemplateEngineBuilder
-                .create()
-                .withDefaultHelpers()
-                .withHelper("isTrue", BooleanHelper.isTrue)
-                .build();
-    }
 
     public static void init() {
-        Router.initEngine();
         Spark.staticFileLocation("/public");
         Router.configure();
     }
 
     private static void configure(){
+        PruebaRouter prueba = new PruebaRouter();
 
+        Spark.get("/saludo", prueba::saludar);
     }
-
 }
+
+class PruebaRouter {
+    public String saludar(Request request, Response response){
+        return "hola posta";
+    }
+}
+
