@@ -21,23 +21,21 @@ public  class  VinculadorOperaciones  {
 	 RepositorioCentral repositorioCentral;
 	 List <IngresoVinculado> vinculados; 
 	
-	 final Gson gsonCentral = new Gson();
+	 final Gson gsonEgresos = new Gson();
 	 
-		 
 	 
 	 public String vincular(Request request, Response response) {
-				 
-		 String requestBody=request.body();
-		 
-		 this.repositorioCentral = gsonCentral.fromJson(requestBody, RepositorioCentral.class);	
-		 this.repositorioEgresos=this.repositorioCentral.repositorioEgresos;
-		 this.repositorioIngresos=this.repositorioCentral.repositorioIngresos;
-		 
+		 String Ingresos = request.body();
+		 String Egresos = request.body();
+
+	     this.repositorioIngresos = gsonEgresos.fromJson(Ingresos, RepositorioIngresos.class);	
+	     this.repositorioEgresos = gsonEgresos.fromJson(Egresos, RepositorioEgresos.class);				 
+	     
+
 	     return this.criterio.ejecutar(repositorioIngresos,repositorioEgresos);
 	 
 	 }
 	 
-	 
-	 
+
 	  
 }

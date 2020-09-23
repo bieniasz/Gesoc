@@ -4,7 +4,7 @@ import java.util.List;
 
 public class RepositorioEgresos {
 
-	List <Egreso> egresos;
+	List<Egreso> egresos;
 
 	public List<Egreso> getEgresos() {
 		return egresos;
@@ -13,6 +13,6 @@ public class RepositorioEgresos {
 	public void setEgresos(List<Egreso> egresos) {
 		this.egresos = egresos;
 	}
-	
-	
+
 }
+

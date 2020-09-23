@@ -13,17 +13,8 @@ public class Router {
     }
 
     private static void configure(){
-        PruebaRouter prueba = new PruebaRouter();
-        VinculadorOperaciones vinculadorOperaciones = new VinculadorOperaciones();
-        
-        Spark.get("/saludo", prueba::saludar);
-        Spark.put("/vincular", vinculadorOperaciones::vincular);
+        VinculadorOperaciones vinculador = new VinculadorOperaciones();
+
+        Spark.get("/saludo", vinculador::vincular);
     }
 }
-
-class PruebaRouter {
-    public String saludar(Request request, Response response){
-        return "hola posta";
-    }
-}
-

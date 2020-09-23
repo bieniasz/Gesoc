@@ -9,9 +9,6 @@ public class Egreso {
 	String documentoComercial; // DocumentoComercial
 	String detalle; // 
 	Boolean asignado;
-	
-	
-	
 	public String getId_egreso() {
 		return id_egreso;
 	}
