@@ -1,5 +1,6 @@
 package main.java.server;
 
+import main.java.dominio.VinculadorOperaciones;
 import spark.Request;
 import spark.Response;
 import spark.Spark;
@@ -12,15 +13,8 @@ public class Router {
     }
 
     private static void configure(){
-        PruebaRouter prueba = new PruebaRouter();
+        VinculadorOperaciones vinculador = new VinculadorOperaciones();
 
-        Spark.get("/saludo", prueba::saludar);
+        Spark.get("/saludo", vinculador::vincular);
     }
 }
-
-class PruebaRouter {
-    public String saludar(Request request, Response response){
-        return "hola posta";
-    }
-}
-
