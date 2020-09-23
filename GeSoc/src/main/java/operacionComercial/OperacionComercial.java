@@ -22,7 +22,7 @@ public abstract class OperacionComercial extends EntidadPersistente {
     @Column
     private String TipoOperacion;
 
-    @Transient
+    @Column(columnDefinition = "DATE")
     private LocalDate fecha;
 
     @Column(name="valorTotal")
@@ -32,9 +32,11 @@ public abstract class OperacionComercial extends EntidadPersistente {
     private DocumentoComercial documentoComercial;
 
     @OneToMany
+    @JoinColumn(name="DetalleEgreso",referencedColumnName = "id")
     private List<DetalleEgreso> detalle;
 
     @OneToMany
+    @JoinColumn(name="CategoriaDeOperaciones",referencedColumnName = "id")
     private List<CategoriaDeOperaciones> categoriasAsociadas;
 
     // TODO descomentar todo cuando exista la clase CategoriaOperacion

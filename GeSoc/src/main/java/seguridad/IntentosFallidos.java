@@ -1,12 +1,22 @@
 package seguridad;
 
+import operacionComercial.EntidadPersistente;
+
+import javax.persistence.Column;
+import javax.persistence.Entity;
+import javax.persistence.Table;
+import javax.persistence.Transient;
 import java.time.LocalDate;
 import java.time.LocalDateTime;
 import java.time.LocalTime;
 
-public class IntentosFallidos {
+@Entity
+@Table
+public class IntentosFallidos extends EntidadPersistente {
 
+    @Column
     private int intentosRealizados;
+    @Column(columnDefinition = "DATE")
     private LocalDateTime horaDelIntentoMaximo;
 
     public IntentosFallidos(){

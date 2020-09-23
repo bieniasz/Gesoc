@@ -1,14 +1,22 @@
 package bandejaDeResultado;
 
 import bandejaDeResultado.filtroDeResultado.FiltroDeResultado;
+import operacionComercial.EntidadPersistente;
 import validadorTransparencia.ResultadoDeValidacion;
 
+import javax.persistence.*;
 import java.util.ArrayList;
 import java.util.List;
 
-public class BandejaDeResultado {
+@Entity
+@Table
+public class BandejaDeResultado extends EntidadPersistente {
 
+    @OneToMany
+    @JoinColumn(name="ResultadoDeValidacion",referencedColumnName = "id")
     private List<ResultadoDeValidacion> resultadosDeValidacion;
+
+    @Transient
     private List<FiltroDeResultado> filtrosDeResultados;
 
 

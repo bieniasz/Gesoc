@@ -1,33 +1,45 @@
 package seguridad;
 
+import operacionComercial.EntidadPersistente;
+
+import javax.persistence.Column;
+import javax.persistence.JoinColumn;
+import javax.persistence.OneToMany;
 import java.util.ArrayList;
 import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
 
-public class AlmacenContrasenias {
+public class AlmacenContrasenias extends EntidadPersistente {
     //TODO Clase ValidadorDeContrasenia, cuando veamos db vamos a remodelar la clase para que no tenga los
     // datos en memoria y valla a buscar los datos que necesita en la base
 
     // TODO justificar porque usamos un Map de listas, y tener en cuenta los posibles problemas a futuro
     //  de esta decision.
-    private Map<String, List<String>> contraseniasPrevias;
-    private Integer periodosDeRotacion;
-    private static AlmacenContrasenias instancia;
-    private Map<String, IntentosFallidos> intentosFallidos;
+    @OneToMany
+    @JoinColumn(name="ContraseniasPrevias",referencedColumnName = "id")
+    private List <ContraseniasPrevias> contraseniasPrevias;
 
-    private AlmacenContrasenias() {
+    @Column
+    private Integer periodosDeRotacion;
+
+    @OneToMany
+    @JoinColumn(name="IntentosFallidos",referencedColumnName = "id")
+    private List<IntentosFallidos> intentosFallidos;
+
+    /*private AlmacenContrasenias() {
         this.contraseniasPrevias = new HashMap<String, List<String>>();
         this.intentosFallidos = new HashMap<String, IntentosFallidos>();
-    }
+    }*/
 
-    public static AlmacenContrasenias Instancia() {
+    /*public static AlmacenContrasenias Instancia() {
         if (instancia == null) {
             instancia = new AlmacenContrasenias();
         }
         return instancia;
-    }
+    }*/
 
+/*
     public void eliminarContraseniasAlmacenadas() {
         this.contraseniasPrevias.clear();
     }
@@ -50,7 +62,9 @@ public class AlmacenContrasenias {
         }
 
     }
-
+/*
+ */
+    /*
     //TODO ojo con estos metodos que son de un singleton, deben ser synchronized para evitar problemas de manejo de threads
     //TODO java no garantiza safe-thread.
     public synchronized boolean contraseniaRepiteContraseniasViejas(String usuario, String contrasenia) {
@@ -127,4 +141,7 @@ public class AlmacenContrasenias {
             this.intentosFallidos.put(usuario, new IntentosFallidos());
         }
     }
+    */
+
+
 }

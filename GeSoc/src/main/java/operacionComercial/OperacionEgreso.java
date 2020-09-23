@@ -25,6 +25,7 @@ public class OperacionEgreso extends OperacionComercial {
     private Proveedor proveedor;
 
     @ManyToOne
+    @JoinColumn(name = "Organizacion",referencedColumnName = "id")
     private Organizacion organizacion;
 
     @OneToMany

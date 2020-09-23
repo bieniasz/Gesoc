@@ -9,8 +9,9 @@ import javax.persistence.Table;
 import javax.persistence.*;
 
 @Entity
-@Inheritance(strategy = InheritanceType.TABLE_PER_CLASS)
-@DiscriminatorColumn(name="<<TipoCategoria>>")
+@Table
+@Inheritance(strategy = InheritanceType.SINGLE_TABLE)
+@DiscriminatorColumn(name ="<<TipoCategoria>>")
 public abstract class Categoria extends EntidadPersistente {
 
     @Column

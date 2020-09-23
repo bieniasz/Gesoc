@@ -4,7 +4,7 @@ import java.util.List;
 
 public class CriterioLogin implements CriterioValidacion{
 
-    @Override
+    /*@Override
     public void validar(String usuario, String contrasenia, List<String> mensajesDeError) {
         try{
         if (false == AlmacenContrasenias.Instancia().compararContrasenia(usuario,contrasenia)) {
@@ -14,4 +14,7 @@ public class CriterioLogin implements CriterioValidacion{
 
         AlmacenContrasenias.Instancia().crearIntentoFallidoSiAplica(usuario);
     }
+
+
+     */
 }

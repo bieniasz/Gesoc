@@ -4,6 +4,7 @@ import java.time.Duration;
 import java.time.LocalDateTime;
 import java.util.List;
 
+
 public class CriterioTiempoLogin implements CriterioValidacion {
 
     private final Integer tiempoDeEspera;
@@ -15,7 +16,7 @@ public class CriterioTiempoLogin implements CriterioValidacion {
 
         this.cantidadMaximaDeIntentos = 3;
     }
-
+/*
     @Override
     public void validar(String usuario, String contrasenia, List<String> mensajesDeError) {
         LocalDateTime horaActual = LocalDateTime.now();  //.compareTo();
@@ -64,4 +65,6 @@ public class CriterioTiempoLogin implements CriterioValidacion {
             return true;
         }else return false;
     }
+
+ */
 }

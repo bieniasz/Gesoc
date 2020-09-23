@@ -17,7 +17,7 @@ public class ResultadoDeValidacion  extends EntidadPersistente {
     private OperacionEgreso operacionEgreso;
     @ElementCollection
     private List<String> resultados;
-    @Transient
+    @Column(columnDefinition = "DATE")
     private LocalDate fecha;
     @Column
     private Boolean leido;
