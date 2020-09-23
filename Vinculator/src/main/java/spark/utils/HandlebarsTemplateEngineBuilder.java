@@ -1,4 +1,4 @@
-package spark.utils;
+package main.java.spark.utils;
 
 import spark.template.handlebars.HandlebarsTemplateEngine;
 

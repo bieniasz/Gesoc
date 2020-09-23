@@ -6,22 +6,34 @@ import java.util.stream.Collectors;
 
 import com.google.gson.Gson;
 
+import spark.Spark;
 
 
-public abstract class  VinculadorOperaciones  {
+
+public  class  VinculadorOperaciones  {
 
 	 CriterioEjecucion criterio;
 	 List <Condicion> condiciones;
 	 RepositorioIngresos repositorioIngresos;
 	 RepositorioEgresos repositorioEgresos;
+	 RepositorioCentral repositorioCentral;
 	 List <IngresoVinculado> vinculados; 
+	
+	 final Gson gsonEgresos = new Gson();
 	 
-	 public String vincular(String Egresos, String Ingresos, String fecha ) {
-		 DateTimeFormatter formatter = DateTimeFormatter.ofPattern("d/MM/yyyy");
-		 
-		 LocalDate fecha_hasta=LocalDate.parse(fecha);
-		 final Gson gsonEgresos = new Gson();
+	 public static void main(String[] args) {
+			
+	
+			
+			
+	}
+
+	 
+	 
+	 public String vincular(String Egresos, String Ingresos) {
 				 
+		 
+		 
 		
 	     
 	     this.repositorioIngresos = gsonEgresos.fromJson(Ingresos, RepositorioIngresos.class);	

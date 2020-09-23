@@ -23,10 +23,7 @@ public class OrdenValorPrimeroEgreso implements CriterioEjecucion {
 		RepositorioIngresosVinculados	ingresosVinculados = new RepositorioIngresosVinculados();
 		
 		
-		// ordena de menor a mayor los egresos
-		List<Egreso> egresosOrdenados = repositorioEgresos.getEgresos().stream()
-					.sorted(Comparator.comparingDouble(Egreso::getValorTotal))
-					.collect(Collectors.toList());
+		
 		
 		// ordena de menor a mayor los ingresos
 		List<Ingreso> ingresosOrdenados = repositorioIngresos.getIngresos().stream()
@@ -40,12 +37,19 @@ public class OrdenValorPrimeroEgreso implements CriterioEjecucion {
 			//filtro los egresos con la condicion dada
 			List<Egreso> egrePreAsignar = new PeriodoAceptabilidad(repositorioEgresos,ingreso.getFecha()).getEgresos();
 			
+			// ordena de menor a mayor los egresos
+			List<Egreso> egresosOrdenados = egrePreAsignar.stream()
+						.sorted(Comparator.comparingDouble(Egreso::getValorTotal))
+						.collect(Collectors.toList());
+			
+			
+			
 			Double acumulador =0.0;
 			
 			IngresoVinculado ingresoVinculado = new IngresoVinculado (ingreso.getId_egreso(),ingreso.getDescripcion(),ingreso.getFecha());
 		    
 			//asigno los egresos al ingreso hasta alcanzar un monto cercano al total
-				 for(  Egreso egreso   : egrePreAsignar
+				 for(  Egreso egreso   : egresosOrdenados
 				      
 				      ) {
 				    	
