@@ -6,6 +6,8 @@ import java.util.stream.Collectors;
 
 import com.google.gson.Gson;
 
+import spark.Request;
+import spark.Response;
 import spark.Spark;
 
 
@@ -19,32 +21,16 @@ public  class  VinculadorOperaciones  {
 	 RepositorioCentral repositorioCentral;
 	 List <IngresoVinculado> vinculados; 
 	
-	 final Gson gsonEgresos = new Gson();
+	 final Gson gsonCentral = new Gson();
 	 
-	 public static void main(String[] args) {
-			
-	
-			
-			
-	}
-
+		 
 	 
-	 
-	 public String vincular(String Egresos, String Ingresos) {
+	 public String vincular(Request request, Response response) {
 				 
+		 String requestBody=request.body();
 		 
-		 
-		
-	     
-	     this.repositorioIngresos = gsonEgresos.fromJson(Ingresos, RepositorioIngresos.class);	
-	     this.repositorioEgresos = gsonEgresos.fromJson(Egresos, RepositorioEgresos.class);				 
-	     
-
-	     
-	  
-	      
-	      
-	      
+		 this.repositorioCentral = gsonCentral.fromJson(requestBody, RepositorioCentral.class);	
+	     	      
 	     return this.criterio.ejecutar(repositorioIngresos,repositorioEgresos);
 	 
 	 }

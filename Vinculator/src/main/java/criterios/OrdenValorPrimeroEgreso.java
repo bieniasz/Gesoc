@@ -24,14 +24,12 @@ public class OrdenValorPrimeroEgreso implements CriterioEjecucion {
 		
 		
 		
-		
 		// ordena de menor a mayor los ingresos
 		List<Ingreso> ingresosOrdenados = repositorioIngresos.getIngresos().stream()
 				.sorted(Comparator.comparingDouble(Ingreso::getValorTotal))
 				.collect(Collectors.toList());
 		
 				
-		
 		for(  Ingreso ingreso   : ingresosOrdenados) {
 			
 			//filtro los egresos con la condicion dada
@@ -41,12 +39,11 @@ public class OrdenValorPrimeroEgreso implements CriterioEjecucion {
 			List<Egreso> egresosOrdenados = egrePreAsignar.stream()
 						.sorted(Comparator.comparingDouble(Egreso::getValorTotal))
 						.collect(Collectors.toList());
-			
-			
+					
 			
 			Double acumulador =0.0;
 			
-			IngresoVinculado ingresoVinculado = new IngresoVinculado (ingreso.getId_egreso(),ingreso.getDescripcion(),ingreso.getFecha());
+			IngresoVinculado ingresoVinculado = new IngresoVinculado (ingreso.getId_Ingreso(),ingreso.getDescripcion(),ingreso.getFecha());
 		    
 			//asigno los egresos al ingreso hasta alcanzar un monto cercano al total
 				 for(  Egreso egreso   : egresosOrdenados
