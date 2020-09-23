@@ -15,10 +15,11 @@ import spark.Spark;
 public  class  VinculadorOperaciones  {
 
 	 CriterioEjecucion criterio;
+	 List <Condicion> condiciones;
 	 RepositorioIngresos repositorioIngresos;
 	 RepositorioEgresos repositorioEgresos;
 	 RepositorioCentral repositorioCentral;
-	
+	 List <IngresoVinculado> vinculados; 
 	
 	 final Gson gsonEgresos = new Gson();
 	 
