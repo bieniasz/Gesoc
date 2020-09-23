@@ -31,6 +31,7 @@ public class OperacionEgreso extends OperacionComercial {
     @OneToMany
     private List<Presupuesto> presupuestos;
 
+    @ManyToOne
     private OperacionIngreso ingresoAsociado;
 
     public OperacionEgreso(LocalDate fecha, float valorTotal, DocumentoComercial docComercial, List<DetalleEgreso> detalle, MedioDePago medio, String numIdMedioPago, Proveedor proveedor, Organizacion organizacion) {

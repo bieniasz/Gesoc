@@ -16,5 +16,6 @@ public class Router {
         VinculadorOperaciones vinculador = new VinculadorOperaciones();
 
         Spark.get("/saludo", vinculador::vincular);
+        Spark.put("/vincular", vinculador::vincular);
     }
 }
