@@ -12,11 +12,12 @@ public class PeriodoAceptabilidad extends Condicion {
 	
 	private RepositorioEgresos repositorioEgresos;
 	private LocalDate fecha_hasta;
-
+	private LocalDate fecha_desde;
 	
 	
-	public PeriodoAceptabilidad(RepositorioEgresos repositorioEgresos, LocalDate fecha) {
-		this.fecha_hasta=fecha;
+	public PeriodoAceptabilidad(RepositorioEgresos repositorioEgresos, LocalDate fecha_desde, LocalDate fecha_hasta) {
+		this.fecha_desde=fecha_desde;
+		this.fecha_hasta=fecha_hasta;
 		this.repositorioEgresos=repositorioEgresos;
 	}
 
@@ -24,7 +25,7 @@ public class PeriodoAceptabilidad extends Condicion {
 	public List<Egreso> getEgresos() {
 		
 		return repositorioEgresos.getEgresos().stream().
-	    filter(e->e.getFecha().isAfter(fecha_hasta)&& e.getFecha().isBefore(fecha_hasta)).collect(Collectors.toList());
+	    filter(e->e.getFecha().isAfter(fecha_desde)&& e.getFecha().isBefore(fecha_hasta)).collect(Collectors.toList());
 
 	}
 
@@ -42,6 +43,14 @@ public class PeriodoAceptabilidad extends Condicion {
 
 	public void setRepositorioEgresos(RepositorioEgresos repositorioEgresos) {
 		this.repositorioEgresos = repositorioEgresos;
+	}
+
+	public LocalDate getFecha_desde() {
+		return fecha_desde;
+	}
+
+	public void setFecha_desde(LocalDate fecha_desde) {
+		this.fecha_desde = fecha_desde;
 	};
 
 }

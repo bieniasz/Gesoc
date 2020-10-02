@@ -35,7 +35,7 @@ public class OrdenValorPrimeroEgreso implements CriterioEjecucion {
 		for(  Ingreso ingreso   : ingresosOrdenados) {
 			
 			//filtro los egresos con la condicion dada
-			List<Egreso> egrePreAsignar = new PeriodoAceptabilidad(repositorioEgresos,ingreso.getFecha()).getEgresos();
+			List<Egreso> egrePreAsignar = new PeriodoAceptabilidad(repositorioEgresos,ingreso.getFecha(),ingreso.getFecha_hasta()).getEgresos();
 			
 			// ordena de menor a mayor los egresos
 			List<Egreso> egresosOrdenados = egrePreAsignar.stream()

@@ -5,6 +5,7 @@ import java.time.LocalDate;
 public class Ingreso {
 	String id_ingreso;
 	private LocalDate fecha; //
+	private LocalDate fecha_hasta; //
 	Double valorTotal; // decimal
 	String descripcion;
 	public String getId_Ingreso() {
@@ -30,5 +31,11 @@ public class Ingreso {
 	}
 	public void setDescripcion(String descripcion) {
 		this.descripcion = descripcion;
+	}
+	public LocalDate getFecha_hasta() {
+		return fecha_hasta;
+	}
+	public void setFecha_hasta(LocalDate fecha_hasta) {
+		this.fecha_hasta = fecha_hasta;
 	} 
 }

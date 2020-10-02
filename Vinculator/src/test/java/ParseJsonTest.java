@@ -1,39 +1,70 @@
 package test.java;
 
-import com.google.gson.Gson;
+import com.google.gson.*;
+
+import com.google.gson.stream.JsonReader;
+
+import main.java.dominio.Egreso;
+import main.java.dominio.Ingreso;
 import main.java.dominio.RepositorioCentral;
+
+import java.io.BufferedReader;
+import java.io.FileReader;
+import java.io.IOException;
+import java.lang.reflect.Type;
+import java.time.LocalDate;
+
 import org.junit.Test;
 
 public class ParseJsonTest {
-
-    @Test
+	 
+	private static final Gson gsonCentral = new GsonBuilder().registerTypeAdapter(LocalDate.class, new JsonDeserializer<LocalDate>() {
+         @Override
+         public LocalDate deserialize(JsonElement json, Type type, JsonDeserializationContext jsonDeserializationContext) throws JsonParseException {
+             return LocalDate.parse(json.getAsJsonPrimitive().getAsString());
+         }
+     }).create();
+     
+	 private   RepositorioCentral repositorioCentral;
+	
+	@Test
     public void lala(){
-        String repo = "{" +
-                "\"repositorioEgresos\": {" +
-                "\"egresos\":[" +
-                "{" +
-                "\"id_egreso\":\"123123412\"," +
-                "\"fecha\":\"2020-02-01\"," +
-                "\"valorTotal\": 12.5," +
-                "\"documentoComercial\":\"213123123\"," +
-                "\"detalle\" :\"media docena facturas\"," +
-                "}" +
-		"]" +
-        "}," +
-
-                "\"repositorioIgresos\":{" +
-            "\"ingresos\":[" +
-        "{" +
-        "\"id_ingreso\":\"5445345\"," +
-        "\"fecha\":\"2020-09-20\"," +
-        "\"valorTotal\":\"5654654\"," +
-        "\"descripcion\":\"una donacion\"" +
-        "}"+
-        "]"+
-        "}" +
-        "}";
-
-        Gson gsonCentral = new Gson();
-        RepositorioCentral repositorioCentral = gsonCentral.fromJson(repo, RepositorioCentral.class);
-    }
+       
+       
+       
+        
+        //String filename="C:\\Users\\Abdul\\ejemplo_repositorio_central.json";
+       String filename="/Vinculator/resources/ejemplo_repositorio_central.json";
+        try {
+    		
+        	 BufferedReader bufferedReader = new BufferedReader(new FileReader(filename));
+        
+         this.repositorioCentral = gsonCentral.fromJson(bufferedReader, RepositorioCentral.class);
+        
+        
+	    } catch (IOException e) {
+		       e.printStackTrace(); 
+		       
+		   		}
+        //System.out.println(repositorioCentral.getRepositorioIngresos().getIngresos().get(10).getDescripcion());  
+	    
+       
+        for(  Ingreso ingreso   : repositorioCentral.getRepositorioIngresos().getIngresos()
+			      
+			      ) {
+			    	
+        				System.out.println(ingreso.getDescripcion()); 			    	
+				}	
+        
+        for(  Egreso egreso   : repositorioCentral.getRepositorioEgresos().getEgresos()
+			      
+			      ) {
+			    	
+        					System.out.println(egreso.getDetalle()); 			    	
+				}	
+        
+	
+	}
+    
+	
 }
