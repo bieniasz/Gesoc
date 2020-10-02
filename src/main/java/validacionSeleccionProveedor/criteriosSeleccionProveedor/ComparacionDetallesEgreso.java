@@ -7,30 +7,30 @@ import validacionSeleccionProveedor.CriterioValidacionEgresosPresupuesto;
 
 import java.util.List;
 import java.util.concurrent.atomic.AtomicBoolean;
+import java.util.stream.Collectors;
 
 public class ComparacionDetallesEgreso extends CriterioValidacionEgresosPresupuesto {
 
     @Override
     public void validar(OperacionEgreso operacion) throws Exception {
-        AtomicBoolean flag = new AtomicBoolean(false);
-
-        operacion.getPresupuestos().forEach(presupuesto -> {
-            try {
-                compararDetalles(operacion, presupuesto);
-            } catch (Exception e) {
-                flag.set(true);
-            }
-        });
-
-        if (flag.get())
-            throw new Exception("El detalle de un presupuesto no coincide con el detalle del egreso");
-    }
-
-    private void compararDetalles(OperacionEgreso operacion, Presupuesto presupuesto) throws Exception {
-        List<DetalleEgreso> detallePresupuesto = presupuesto.getDetalle();
+        List<Presupuesto> presupuestos = operacion.getPresupuestos();
         List<DetalleEgreso> detalleEgreso = operacion.getDetalle();
 
-        if(!detalleEgreso.containsAll(detallePresupuesto))
-            throw new Exception();
+        for (Presupuesto pres : presupuestos) {
+            List<DetalleEgreso> detallePresupuesto = pres.getDetalle();
+            for (DetalleEgreso itemPresupuesto : detallePresupuesto) {
+                boolean coincideDetalle = detalleEgreso
+                    .stream()
+                    .anyMatch(itemEgreso -> itemsDetalleCoinciden(itemEgreso, itemPresupuesto));
+
+                if (!coincideDetalle)
+                    throw new Exception("El detalle de un presupuesto no coincide con el detalle del egreso");
+            }
+        }
+    }
+
+    private boolean itemsDetalleCoinciden(DetalleEgreso itemEgreso, DetalleEgreso itemPresupuesto) {
+        return (itemEgreso.item.getDescripcion().equals(itemPresupuesto.item.getDescripcion()))
+                && (itemEgreso.cantidad == itemPresupuesto.cantidad);
     }
 }
