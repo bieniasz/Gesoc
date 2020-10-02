@@ -2,35 +2,37 @@
    "repositorioEgresos": {	
 	"egresos":[
 			{
-				"id_egreso":"123123412",
+				"id_egreso":"1",
 				"fecha":"2020-09-20",
-				"valorTotal":"123123123",
+				"valorTotal":1.00,
 				"documentoComercial":"213123123",
 				"detalle" :"media docena facturas"
 			},
 	
 			{
-				"id_egreso":"12312312",
+				"id_egreso":"2",
 				"fecha":"2020-09-20",
-				"valorTotal":"123123123",
+				"valorTotal":1.00,
 				"documentoComercial":"213123123",
 				"detalle" :"media docena penca donas"
 			}
 		]
    },
 
-   "repositorioIgresos":{	
+   "repositorioIngresos":{	
 	"ingresos":[
 				{
-					"id_ingreso":"5445345",
-					"fecha":"2020-09-20",
-					"valorTotal":"5654654",
+					"id_ingreso":"10",
+					"fecha":"2020-08-20",
+					"fecha_hasta":"2021-09-20",
+					"valorTotal":2.00,
 					"descripcion":"una donacion"
 				},
 				{
-					"id_ingreso":"80800",
-					"fecha":"2020-10-20",
-					"valorTotal":"45454",
+					"id_ingreso":"20",
+					"fecha":"2020-08-20",
+					"fecha_hasta":"2021-09-20",
+					"valorTotal":45454.00,
 					"descripcion":"siguen donando"
 				}
 			]

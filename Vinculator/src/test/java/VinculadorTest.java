@@ -1,9 +1,13 @@
 package test.java;
 
 import java.io.BufferedReader;
+import java.io.File;
 import java.io.FileReader;
 import java.io.IOException;
 import java.lang.reflect.Type;
+import java.net.URISyntaxException;
+import java.net.URL;
+import java.nio.file.Paths;
 import java.time.LocalDate;
 
 import org.junit.Test;
@@ -43,8 +47,12 @@ public class VinculadorTest {
 	 
 	 
 	@Test
-	 public void  vincular() {
-		  String filename="C:\\Users\\Abdul\\ejemplo_repositorio_central.json";
+	 public void  vincular() throws Exception {
+				// caargo el modelo de json  guardado en resources
+				URL res = getClass().getClassLoader().getResource("ejemplo_repositorio_central.json");
+				File file = Paths.get(res.toURI()).toFile();
+				String filename = file.getAbsolutePath();
+				System.out.println(filename);
 	       
 		  this.criterio= new OrdenValorPrimeroEgreso();	
 		  

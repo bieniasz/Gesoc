@@ -55,6 +55,7 @@ public class OrdenValorPrimeroEgreso implements CriterioEjecucion {
 				    	
 				    	if (acumulador<=ingreso.getValorTotal() && !egreso.getAsignado()) {
 				    		acumulador+=egreso.getValorTotal();
+				    		
 				    		ingresoVinculado.agregarEgreso(egreso.getId_egreso());
 				    		egreso.setAsignado(true);
 				    		
