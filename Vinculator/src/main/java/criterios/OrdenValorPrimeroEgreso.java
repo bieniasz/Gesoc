@@ -46,7 +46,7 @@ public class OrdenValorPrimeroEgreso implements CriterioEjecucion {
 			
 			Double acumulador =0.0;
 			
-			IngresoVinculado ingresoVinculado = new IngresoVinculado (ingreso.getId_Ingreso(),ingreso.getDescripcion(),ingreso.getFecha());
+			IngresoVinculado ingresoVinculado = new IngresoVinculado (ingreso.getId_Ingreso(),ingreso.getDescripcion());
 		    
 			//asigno los egresos al ingreso hasta alcanzar un monto cercano al total
 				 for(  Egreso egreso   : egresosOrdenados

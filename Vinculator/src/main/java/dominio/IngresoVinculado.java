@@ -6,24 +6,18 @@ import java.util.List;
 
 public class IngresoVinculado {
 	
-	LocalDate fecha ; //fecha del ingreso
 	String id_ingreso;
 	String Descripcion; // descripcion del ingreso
 	List <String> egresos= new ArrayList<> ();// lista de id de egresos
 	
-	public IngresoVinculado(String id_ingreso,String Descripcion,LocalDate fecha )  {
+	public IngresoVinculado(String id_ingreso,String Descripcion )  {
 		this.id_ingreso=id_ingreso;
 		this.Descripcion=Descripcion;
-		this.fecha=fecha;
+		
 		
 	}
 	
-	public LocalDate getFecha() {
-		return fecha;
-	}
-	public void setFecha(LocalDate fecha) {
-		this.fecha = fecha;
-	}
+	
 	public String getId_ingreso() {
 		return id_ingreso;
 	}
