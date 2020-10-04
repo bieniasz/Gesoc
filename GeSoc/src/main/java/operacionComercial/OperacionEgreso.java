@@ -28,37 +28,13 @@ public class OperacionEgreso extends OperacionComercial {
     @JoinColumn(name = "Organizacion",referencedColumnName = "id")
     private Organizacion organizacion;
 
+    private Integer cantidadEsperadaPresupuestos;
+
     @OneToMany
-    private List<Presupuesto> presupuestos;
+    private List<Presupuesto> presupuestos = new ArrayList<Presupuesto>();
 
     @ManyToOne
     private OperacionIngreso ingresoAsociado;
-
-    public OperacionEgreso(LocalDate fecha, float valorTotal, DocumentoComercial docComercial, List<DetalleEgreso> detalle, MedioDePago medio, String numIdMedioPago, Proveedor proveedor, Organizacion organizacion) {
-        super(fecha, valorTotal, docComercial, detalle);
-        this.medioDePago = medio;
-        this.numeroIdentificadorMedioPago = numIdMedioPago;
-        this.proveedor = proveedor;
-        this.organizacion = organizacion;
-        this.presupuestos = new ArrayList<Presupuesto>();
-    }
-
-    @Override
-    public Double calcularValorTotal() {
-    	return this.getDetalle().stream().mapToDouble(d->d.getValorTotal()).sum();
-    }
-    @Override
-    public void registrarDetalle() {   }
-    @Override
-    public void registrarDocumentoComercial() {   }
-    public void altaOperacionEgreso() { }
-    public void validarExistenciaProveedor() { }
-    public void validarExistenciaMedioDePago() { }
-    public void informarItemsYCantidadesAPresupuesto() { }
-
-    public void asociarPresupuesto(Presupuesto presupuesto) {
-        this.presupuestos.add(presupuesto);
-    }
 
 
     public MedioDePago getMedioDePago() {  return medioDePago; }

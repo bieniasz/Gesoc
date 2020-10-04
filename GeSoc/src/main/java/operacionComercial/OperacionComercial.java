@@ -26,18 +26,18 @@ public abstract class OperacionComercial extends EntidadPersistente {
 
 
     @Column(name="valorTotal")
-    public float valorTotal;
+    public Double valorTotal;
 
     @OneToOne(fetch = FetchType.LAZY, cascade=CascadeType.ALL)
     private DocumentoComercial documentoComercial;
 
     @OneToMany
     @JoinColumn(name="DetalleEgreso",referencedColumnName = "id")
-    private List<DetalleEgreso> detalle;
+    private List<DetalleEgreso> detalle = new ArrayList<>();
 
     @OneToMany
     @JoinColumn(name="CategoriaDeOperaciones",referencedColumnName = "id")
-    private List<CategoriaDeOperaciones> categoriasAsociadas;
+    private List<CategoriaDeOperaciones> categoriasAsociadas = new ArrayList<>();
 
     public LocalDate getFecha() { return fecha; }
     public Double getValorTotal() { return valorTotal; }
