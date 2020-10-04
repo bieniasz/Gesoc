@@ -1,5 +1,6 @@
 package validadorTransparencia;
 
+import operacionComercial.DetalleEgreso;
 import operacionComercial.OperacionEgreso;
 import operacionComercial.Presupuesto;
 import org.junit.Assert;
@@ -7,9 +8,8 @@ import org.junit.Before;
 import org.junit.Test;
 import organizacion.EntidadBase;
 import usuario.UsuarioRevisor;
-import validacionEgresos.CriterioValidacionEgresosPresupuesto;
-import validacionEgresos.criterios.CantidadIndicada;
-import validacionEgresos.criterios.MenorValor;
+import validacionSeleccionProveedor.criteriosSeleccionProveedor.CantidadIndicada;
+import validacionSeleccionProveedor.criteriosSeleccionProveedor.MenorValor;
 
 public class TestSuscripcionValidacionDeTransparencia {
 
@@ -19,10 +19,17 @@ public class TestSuscripcionValidacionDeTransparencia {
 
     @Before
     public void init(){
-        this.operacionEgreso = new OperacionEgreso(null,2,null,null,null,null,null,null);
-        Presupuesto presupuesto = new Presupuesto(null,2,null,null, operacionEgreso,true);
+        this.operacionEgreso = new OperacionEgreso();
+        this.operacionEgreso.setCantidadEsperadaPresupuestos(1);
+
+        Presupuesto presupuesto = new Presupuesto();
+        DetalleEgreso det = new DetalleEgreso();
+        det.valorTotal = Double.valueOf(2);
+        presupuesto.registrarDetalle(det);
+        presupuesto.setElegido(true);
+        presupuesto.setEgreso(this.operacionEgreso);
+
         CantidadIndicada criterioCantidad = new CantidadIndicada();
-        criterioCantidad.setCantidadPresupuestos(1);
         this.revisor1 = new UsuarioRevisor(new EntidadBase());
 
         this.suscripcion = new SuscripcionValidacionDeTransparencia();
@@ -54,7 +61,7 @@ public class TestSuscripcionValidacionDeTransparencia {
 
     @Test
     public void TestSuscripcionConErrorGenera1SoloResultado() {
-        Presupuesto otroPresupuesto = new Presupuesto(null,1,null,null, this.operacionEgreso,false);
+        Presupuesto otroPresupuesto = new Presupuesto();
         MenorValor criterioMenorValor = new MenorValor();
         this.suscripcion.agregarCriterio(criterioMenorValor);
         this.suscripcion.validar();
@@ -65,7 +72,11 @@ public class TestSuscripcionValidacionDeTransparencia {
 
     @Test
     public void TestSuscripcionConErrorGeneraCantidadDeMensajes() {
-        Presupuesto otroPresupuesto = new Presupuesto(null,1,null,null, this.operacionEgreso,false);
+        Presupuesto otroPresupuesto = new Presupuesto();
+        DetalleEgreso detalle = new DetalleEgreso();
+        detalle.valorTotal = Double.valueOf(1);
+        otroPresupuesto.registrarDetalle(detalle);
+
         MenorValor criterioMenorValor = new MenorValor();
         this.suscripcion.agregarCriterio(criterioMenorValor);
         this.suscripcion.validar();
@@ -76,14 +87,21 @@ public class TestSuscripcionValidacionDeTransparencia {
 
     @Test
     public void TestSuscripcionConErrorMensaje() {
-        Presupuesto otroPresupuesto = new Presupuesto(null,1,null,null, this.operacionEgreso,false);
+        this.operacionEgreso.setCantidadEsperadaPresupuestos(2);
+
+        Presupuesto otroPresupuesto = new Presupuesto();
+        DetalleEgreso det = new DetalleEgreso();
+        det.valorTotal = 1.0;
+        otroPresupuesto.registrarDetalle(det);
+        otroPresupuesto.setEgreso(this.operacionEgreso);
+
         MenorValor criterioMenorValor = new MenorValor();
         this.suscripcion.agregarCriterio(criterioMenorValor);
         this.suscripcion.validar();
 
         String mensaje = this.revisor1.bandejaDeResultado.getResultadosDeValidacion().get(0).getResultados().get(0);
 
-        Assert.assertEquals("No coincide el presupuesto elegido con el de menor valor", mensaje);
+        Assert.assertEquals("El presupuesto elegido no coincide con el/los de menor valor", mensaje);
     }
 
     @Test
@@ -91,7 +109,7 @@ public class TestSuscripcionValidacionDeTransparencia {
         UsuarioRevisor revisor2 = new UsuarioRevisor(new EntidadBase());
         this.suscripcion.agregarRevisor(revisor2);
 
-        Presupuesto otroPresupuesto = new Presupuesto(null,1,null,null, this.operacionEgreso,false);
+        Presupuesto otroPresupuesto = new Presupuesto();
         MenorValor criterioMenorValor = new MenorValor();
         this.suscripcion.agregarCriterio(criterioMenorValor);
         this.suscripcion.validar();

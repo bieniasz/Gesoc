@@ -11,9 +11,7 @@ public class UsuarioEstandar implements Rol{
         this.organizacion = organizacion;
     }
 
-    public OperacionEgreso registrarNuevaOperacionDeEgreso(){
-        return new OperacionEgreso(null, 0, null, null, null, null, null, null);
-    }
+
 
 
     public Organizacion getOrganizacion() {
