@@ -19,8 +19,8 @@ public class TestUsuarioAdmin {
     @Before
     public void init(){
         usuarioAdmin.setRol(new UsuarioAdmin());
-        AlmacenContrasenias.Instancia().eliminarContraseniasAlmacenadas();
-        AlmacenContrasenias.Instancia().setPeriodosDeRotacion(3);
+       // AlmacenContrasenias.Instancia().eliminarContraseniasAlmacenadas();
+       // AlmacenContrasenias.Instancia().setPeriodosDeRotacion(3);
     }
 
     @Test

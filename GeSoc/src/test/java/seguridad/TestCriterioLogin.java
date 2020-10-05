@@ -17,13 +17,13 @@ public class TestCriterioLogin {
 
         this.criterio = new CriterioLogin();
         this.errorMessages = new ArrayList<String>();
-        AlmacenContrasenias.Instancia().eliminarContraseniasAlmacenadas();
-        AlmacenContrasenias.Instancia().eliminarIntentosFallidosAlmacenados();
+      /*  AlmacenContrasenias.Instancia().eliminarContraseniasAlmacenadas();
+        AlmacenContrasenias.Instancia().eliminarIntentosFallidosAlmacenados();*/
     }
 
     @Test
     public void usuarioYcontraseniaCoincidenConElALmacen(){
-        AlmacenContrasenias.Instancia().registrarContrasenia("user","password");
+       // AlmacenContrasenias.Instancia().registrarContrasenia("user","password");
         this.criterio.validar("user","password",errorMessages);
 
         Assert.assertEquals(0,errorMessages.size());
@@ -31,7 +31,7 @@ public class TestCriterioLogin {
 
     @Test
     public void usuarioNoCoincideConElALmacen(){
-        AlmacenContrasenias.Instancia().registrarContrasenia("user","password");
+       // AlmacenContrasenias.Instancia().registrarContrasenia("user","password");
         this.criterio.validar("usuarioNoExiste","password",errorMessages);
 
         Assert.assertEquals(1,errorMessages.size());
@@ -39,7 +39,7 @@ public class TestCriterioLogin {
 
     @Test
     public void contraseniaNoCoincideConElALmacen(){
-        AlmacenContrasenias.Instancia().registrarContrasenia("user","password");
+      //  AlmacenContrasenias.Instancia().registrarContrasenia("user","password");
         this.criterio.validar("user","passwordInconrrecta",errorMessages);
 
         Assert.assertEquals(1,errorMessages.size());
@@ -47,7 +47,7 @@ public class TestCriterioLogin {
 
     @Test
     public void usuarioYContraseniaNoCoincideConElALmacen(){
-        AlmacenContrasenias.Instancia().registrarContrasenia("user","password");
+       // AlmacenContrasenias.Instancia().registrarContrasenia("user","password");
         this.criterio.validar("usuarioNoExiste","passwordincorrecta",errorMessages);
 
         Assert.assertEquals(1,errorMessages.size());

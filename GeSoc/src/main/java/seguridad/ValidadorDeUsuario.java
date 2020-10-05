@@ -21,12 +21,12 @@ public class ValidadorDeUsuario implements iValidadorDeUsuario{
 
     public List<String> validarCreacionContrasenia(String usuario, String contrasenia) {
 
-        final List<String> errores = new ArrayList<String>();
+        final List<String> errores = new ArrayList<String>(); /*
         this.criteriosCreacionContrasenia.forEach(criterio -> criterio.validar(usuario,contrasenia,errores));
 
         if (errores.size() == 0) {
             AlmacenContrasenias.Instancia().registrarContrasenia(usuario, contrasenia);
-        }
+        }*/
 
         return errores;
     }
@@ -57,7 +57,7 @@ public class ValidadorDeUsuario implements iValidadorDeUsuario{
 
     public List<String> validarContraseniaLogin(String usuario, String contrasenia) {
 
-        List<String> mensajesDeError = new ArrayList<>();
+        List<String> mensajesDeError = new ArrayList<>();/*
         CriterioLogin criterioLogin = new CriterioLogin();
         CriterioTiempoLogin criterioTiempoLogin = new CriterioTiempoLogin();
 
@@ -67,7 +67,7 @@ public class ValidadorDeUsuario implements iValidadorDeUsuario{
             criterioTiempoLogin.errorAlLogear(usuario);
         } else{
             criterioTiempoLogin.validar(usuario,contrasenia,mensajesDeError);
-        }
+        }*/
 
         return mensajesDeError;
     }

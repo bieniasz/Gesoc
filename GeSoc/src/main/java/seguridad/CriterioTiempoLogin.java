@@ -16,11 +16,11 @@ public class CriterioTiempoLogin implements CriterioValidacion {
 
         this.cantidadMaximaDeIntentos = 3;
     }
-/*
+
     @Override
     public void validar(String usuario, String contrasenia, List<String> mensajesDeError) {
         LocalDateTime horaActual = LocalDateTime.now();  //.compareTo();
-        IntentosFallidos intentosFallidos = AlmacenContrasenias.Instancia().getIntentosFallidosDeUsuario(usuario);
+        /*IntentosFallidos intentosFallidos = AlmacenContrasenias.Instancia().getIntentosFallidosDeUsuario(usuario);
 
         if (intentosFallidos.getCantidadIntentos() >= cantidadMaximaDeIntentos) {
             LocalDateTime horaDelIntentoMaximo = intentosFallidos.getHoraDelIntentoMaximo();
@@ -30,14 +30,14 @@ public class CriterioTiempoLogin implements CriterioValidacion {
                 } else {
                     AlmacenContrasenias.Instancia().reiniciarIntentosFallidos(usuario);
             }
-        }
+        }*/
 
 
     }
 
 
     public void errorAlLogear(String usuario) {
-        IntentosFallidos intentosFallidos = AlmacenContrasenias.Instancia().getIntentosFallidosDeUsuario(usuario);
+       /* IntentosFallidos intentosFallidos = AlmacenContrasenias.Instancia().getIntentosFallidosDeUsuario(usuario);
 
         if (intentosFallidos != null){
             AlmacenContrasenias.Instancia().agregarIntentoFallido(usuario);
@@ -45,7 +45,7 @@ public class CriterioTiempoLogin implements CriterioValidacion {
             if (intentosFallidos.getCantidadIntentos() == this.cantidadMaximaDeIntentos) {
                 AlmacenContrasenias.Instancia().setHoraDelIntentoMaximo(usuario);
             }
-        }
+        }*/
     }
 
     private int distanciaEnSegundosEntreTiempos(LocalDateTime desde, LocalDateTime hasta){
@@ -66,5 +66,5 @@ public class CriterioTiempoLogin implements CriterioValidacion {
         }else return false;
     }
 
- */
+
 }

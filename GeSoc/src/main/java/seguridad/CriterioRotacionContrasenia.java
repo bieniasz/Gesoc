@@ -11,8 +11,8 @@ public class CriterioRotacionContrasenia implements CriterioValidacion {
     @Override
     public void validar(String usuario, String contrasenia, List<String> mensajesDeError) {
 
-        if (AlmacenContrasenias.Instancia().contraseniaRepiteContraseniasViejas(usuario, contrasenia)) {
+       /*if (AlmacenContrasenias.Instancia().contraseniaRepiteContraseniasViejas(usuario, contrasenia)) {
             mensajesDeError.add("La contrasenia repite contrasenias viejas");
-        }
+        }*/
     }
 }

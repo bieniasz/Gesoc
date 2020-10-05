@@ -19,8 +19,8 @@ public class TestSuscripcionValidacionDeTransparencia {
 
     @Before
     public void init(){
-        this.operacionEgreso = new OperacionEgreso(null,2,null,null,null,null,null,null);
-        Presupuesto presupuesto = new Presupuesto(null,2,null,null, operacionEgreso,true);
+       // this.operacionEgreso = new OperacionEgreso(null,2,null,null,null,null,null,null);
+       // Presupuesto presupuesto = new Presupuesto(null,2,null,null, operacionEgreso,true);
         CantidadIndicada criterioCantidad = new CantidadIndicada();
         criterioCantidad.setCantidadPresupuestos(1);
         this.revisor1 = new UsuarioRevisor(new EntidadBase());
@@ -54,7 +54,7 @@ public class TestSuscripcionValidacionDeTransparencia {
 
     @Test
     public void TestSuscripcionConErrorGenera1SoloResultado() {
-        Presupuesto otroPresupuesto = new Presupuesto(null,1,null,null, this.operacionEgreso,false);
+      //  Presupuesto otroPresupuesto = new Presupuesto(null,1,null,null, this.operacionEgreso,false);
         MenorValor criterioMenorValor = new MenorValor();
         this.suscripcion.agregarCriterio(criterioMenorValor);
         this.suscripcion.validar();
@@ -65,7 +65,7 @@ public class TestSuscripcionValidacionDeTransparencia {
 
     @Test
     public void TestSuscripcionConErrorGeneraCantidadDeMensajes() {
-        Presupuesto otroPresupuesto = new Presupuesto(null,1,null,null, this.operacionEgreso,false);
+       // Presupuesto otroPresupuesto = new Presupuesto(null,1,null,null, this.operacionEgreso,false);
         MenorValor criterioMenorValor = new MenorValor();
         this.suscripcion.agregarCriterio(criterioMenorValor);
         this.suscripcion.validar();
@@ -76,7 +76,7 @@ public class TestSuscripcionValidacionDeTransparencia {
 
     @Test
     public void TestSuscripcionConErrorMensaje() {
-        Presupuesto otroPresupuesto = new Presupuesto(null,1,null,null, this.operacionEgreso,false);
+      //  Presupuesto otroPresupuesto = new Presupuesto(null,1,null,null, this.operacionEgreso,false);
         MenorValor criterioMenorValor = new MenorValor();
         this.suscripcion.agregarCriterio(criterioMenorValor);
         this.suscripcion.validar();
@@ -91,7 +91,7 @@ public class TestSuscripcionValidacionDeTransparencia {
         UsuarioRevisor revisor2 = new UsuarioRevisor(new EntidadBase());
         this.suscripcion.agregarRevisor(revisor2);
 
-        Presupuesto otroPresupuesto = new Presupuesto(null,1,null,null, this.operacionEgreso,false);
+       // Presupuesto otroPresupuesto = new Presupuesto(null,1,null,null, this.operacionEgreso,false);
         MenorValor criterioMenorValor = new MenorValor();
         this.suscripcion.agregarCriterio(criterioMenorValor);
         this.suscripcion.validar();

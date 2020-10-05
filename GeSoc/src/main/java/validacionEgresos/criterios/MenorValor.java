@@ -30,7 +30,7 @@ public class MenorValor extends CriterioValidacionEgresosPresupuesto {
 		Presupuesto elegido = operacion
 				.getPresupuestos()
 				.stream()
-				.filter(Presupuesto::isEsElElegido)
+				.filter(Presupuesto::isElegido)
 				.findFirst()
 				.get();
 

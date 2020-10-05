@@ -18,9 +18,6 @@ public class UsuarioEstandar extends Rol{
         this.organizacion = organizacion;
     }
 
-    public OperacionEgreso registrarNuevaOperacionDeEgreso(){
-        return new OperacionEgreso(null, 0, null, null, null, null, null, null);
-    }
 
     @Override
     public Organizacion getOrganizacion() {
