@@ -3,7 +3,7 @@ package main.java.criterios;
 import java.util.Collections;
 import java.util.Comparator;
 import java.util.List;
-import java.util.stream.Collectors;
+
 
 import com.google.gson.Gson;
 
@@ -16,7 +16,7 @@ import main.java.dominio.RepositorioEgresos;
 import main.java.dominio.RepositorioIngresos;
 import main.java.dominio.RepositorioIngresosVinculados;
 
-public class criterioEjecucionFecha implements CriterioEjecucion {
+public class CriterioEjecucionFecha implements CriterioEjecucion {
 
 	@Override
 	public String  ejecutar(RepositorioIngresos repositorioIngresos, RepositorioEgresos repositorioEgresos)  {
@@ -38,14 +38,7 @@ public class criterioEjecucionFecha implements CriterioEjecucion {
 				    else return 1;
 				  }
 				};
-		
-		// ordena de menor a mayor los egresos por fecha
-		List<Egreso> egresosOrdenados=repositorioEgresos.getEgresos();
-		Collections.sort(egresosOrdenados, byfechaEgreso);			
-		
-		
-		
-		
+
 		
 		// ordena de menor a mayor los ingresos  por fecha
 		List<Ingreso> ingresosOrdenados= repositorioIngresos.getIngresos();
@@ -57,11 +50,13 @@ public class criterioEjecucionFecha implements CriterioEjecucion {
 		for(  Ingreso ingreso   : ingresosOrdenados) {
 			
 			//filtro los egresos con la condicion dada
-			List<Egreso> egrePreAsignar = new PeriodoAceptabilidad(repositorioEgresos,ingreso.getFecha()).getEgresos();
+			List<Egreso> egrePreAsignar = new PeriodoAceptabilidad(repositorioEgresos,ingreso.getFecha(),ingreso.getFecha_hasta()).getEgresos();
+			// ordena de menor a mayor los egresos por fecha
+			Collections.sort(egrePreAsignar, byfechaEgreso);	
 			
 			Double acumulador =0.0;
 			
-			IngresoVinculado ingresoVinculado = new IngresoVinculado (ingreso.getId_egreso(),ingreso.getDescripcion(),ingreso.getFecha());
+			IngresoVinculado ingresoVinculado = new IngresoVinculado (ingreso.getId_Ingreso(),ingreso.getDescripcion());
 		    
 			//asigno los egresos al ingreso hasta alcanzar un monto cercano al total
 				 for(  Egreso egreso   : egrePreAsignar

@@ -31,9 +31,9 @@ public class OperacionEgreso extends OperacionComercial {
 
     @OneToMany
     private List<Presupuesto> presupuestos;
-    //private OperacionIngreso ingresoAsociado;
 
-    // TODO descomentar todo cuando exista la clase OperacionIngreso
+    @ManyToOne
+    private OperacionIngreso ingresoAsociado;
 
     public OperacionEgreso(LocalDate fecha, float valorTotal, DocumentoComercial docComercial, List<DetalleEgreso> detalle, MedioDePago medio, String numIdMedioPago, Proveedor proveedor, Organizacion organizacion) {
         super(fecha, valorTotal, docComercial, detalle);
@@ -76,4 +76,7 @@ public class OperacionEgreso extends OperacionComercial {
     public void setProveedor(Proveedor proveedor) { this.proveedor = proveedor; }
     public void setOrganizacion(Organizacion organizacion) { this.organizacion = organizacion; }
     public void setPresupuestos(List<Presupuesto> presupuestos) { this.presupuestos = presupuestos; }
+    public void setIngresoAsociado(OperacionIngreso operacionIngreso){
+        this.ingresoAsociado = operacionIngreso;
+    }
 }

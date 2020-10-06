@@ -4,11 +4,12 @@ import java.time.LocalDate;
 
 public class Egreso {
 	String id_egreso;
-	private LocalDate fecha; //
+	LocalDate fecha; //
 	Double valorTotal; // decimal
 	String documentoComercial; // DocumentoComercial
 	String detalle; // 
-	Boolean asignado;
+	Boolean asignado=false;
+
 	public String getId_egreso() {
 		return id_egreso;
 	}

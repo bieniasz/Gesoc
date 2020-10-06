@@ -1,26 +1,23 @@
 package main.java.dominio;
 
 import java.time.LocalDate;
-
+import java.util.ArrayList;
 import java.util.List;
 
 public class IngresoVinculado {
 	
-	LocalDate fecha ; //fecha del ingreso
 	String id_ingreso;
 	String Descripcion; // descripcion del ingreso
-	List <String> egresos;// lista de id de egresos
+	List <String> egresos= new ArrayList<> ();// lista de id de egresos
 	
-	public IngresoVinculado(String id_ingreso,String Descripcion,LocalDate fecha )  {
+	public IngresoVinculado(String id_ingreso,String Descripcion )  {
+		this.id_ingreso=id_ingreso;
+		this.Descripcion=Descripcion;
+		
 		
 	}
 	
-	public LocalDate getFecha() {
-		return fecha;
-	}
-	public void setFecha(LocalDate fecha) {
-		this.fecha = fecha;
-	}
+	
 	public String getId_ingreso() {
 		return id_ingreso;
 	}
