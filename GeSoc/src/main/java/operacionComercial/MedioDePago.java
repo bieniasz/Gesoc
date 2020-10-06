@@ -19,6 +19,9 @@ public class MedioDePago extends EntidadPersistente {
     @Column(name="TipoMercardoPago")
     private String tipoMercadoPago;
 
+    @Column
+    private boolean activo;
+
     public void pagar(){}
     public void altaMedioDePago(){}
 }

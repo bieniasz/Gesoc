@@ -4,7 +4,7 @@ package organizacion.categoria;
 import javax.persistence.*;
 
 @Entity
-@DiscriminatorValue("SectorSocial")
+@DiscriminatorValue("OrganizacionSectorSocial")
 public class OrganizacionSectorSocial extends Categoria {
 
     @Column

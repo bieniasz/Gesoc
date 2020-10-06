@@ -34,4 +34,5 @@ public class OperacionIngreso extends EntidadPersistente {
     public void setMonto(Float monto) {
         this.monto = monto;
     }
+
 }

@@ -11,4 +11,7 @@ public class CriterioDeOperaciones extends EntidadPersistente{
 
 @OneToMany
     private List<CriterioDeOperaciones> CriteriosHijos;
+
+@Column
+    private boolean activo;
 }

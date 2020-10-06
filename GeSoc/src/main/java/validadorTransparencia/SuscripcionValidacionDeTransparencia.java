@@ -5,14 +5,26 @@ import usuario.Usuario;
 import usuario.UsuarioRevisor;
 import validacionEgresos.CriterioValidacionEgresosPresupuesto;
 
+import javax.persistence.*;
 import java.time.LocalDate;
 import java.util.ArrayList;
 import java.util.List;
-
+@Entity
+@DiscriminatorValue("Suscripcion")
 public class SuscripcionValidacionDeTransparencia extends ValidacionPendiente{
+
+    @OneToMany
+    @JoinColumn(name="Revisores",referencedColumnName = "id")
     private List<UsuarioRevisor> revisores = new ArrayList<UsuarioRevisor>();
+
+    @OneToOne
     private OperacionEgreso operacionEgreso;
+
+    @OneToMany
+    @JoinColumn(name="CriteriosDeseados",referencedColumnName = "id")
     private List<CriterioValidacionEgresosPresupuesto> criteriosDeseados = new ArrayList<CriterioValidacionEgresosPresupuesto>();
+
+    @OneToOne
     private ResultadoDeValidacion resultadoDeValidacion;
 
     @Override

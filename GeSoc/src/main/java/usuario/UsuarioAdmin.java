@@ -33,6 +33,8 @@ public class UsuarioAdmin extends Rol{
 
     }
 
+
+
     public void altaTipoComprobante(){
 
     }

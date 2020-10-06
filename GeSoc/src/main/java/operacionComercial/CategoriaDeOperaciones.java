@@ -11,4 +11,7 @@ public class CategoriaDeOperaciones extends EntidadPersistente {
 
 @ManyToOne
     private CriterioDeOperaciones criterioDeCategoria;
+
+@Column
+    private boolean activo;
 }

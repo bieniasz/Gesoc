@@ -12,6 +12,7 @@ public class Empresa extends Categoria{
 	@Column
 	private int cantidadDePersonal;
 	@ManyToOne
+	@JoinColumn(name="Actividad",referencedColumnName = "id")
 	private Actividad actividad;
 	@Column
 	private double promedioVentasAnuales;

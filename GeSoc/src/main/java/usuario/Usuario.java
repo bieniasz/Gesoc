@@ -18,7 +18,11 @@ public class Usuario extends EntidadPersistente {
     protected String usuario;
 
     @ManyToOne
+    @JoinColumn(name="rol",referencedColumnName = "id")
     protected Rol rol;
+
+    @Column
+    private boolean activo;
 
     public Usuario(String usuario) {
       this.usuario = usuario;
@@ -34,5 +38,9 @@ public class Usuario extends EntidadPersistente {
 
     public void setRol(Rol rol) {
         this.rol = rol;
+    }
+
+    public void setActivo(boolean activo) {
+        this.activo = activo;
     }
 }

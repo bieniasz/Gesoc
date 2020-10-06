@@ -15,5 +15,8 @@ public class Item extends EntidadPersistente { //TODO evaluar nombre mas descrip
     @ManyToMany
     private List<Proveedor> proveedores;
 
+    @Column
+    private boolean activo;
+
     public void altaItem() {}
 }

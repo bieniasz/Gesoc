@@ -31,6 +31,7 @@ public class EntidadJuridica extends Organizacion {
     private Categoria categoria;
 
     @OneToMany
+    @JoinColumn(name="listaUsuarios",referencedColumnName = "id")
     private List<Usuario> listaUsuarios;
 
 }

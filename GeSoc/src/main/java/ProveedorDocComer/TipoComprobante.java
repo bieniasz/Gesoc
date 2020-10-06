@@ -12,6 +12,9 @@ public class TipoComprobante extends EntidadPersistente {
     @Column
     private String descripcion;
 
+    @Column
+    private boolean activo;
+
 public void altaTipoComprobante(String descripcionComprobante){
     TipoComprobante TipoNuevoComprobante = new  TipoComprobante();
     TipoNuevoComprobante.descripcion=descripcionComprobante;

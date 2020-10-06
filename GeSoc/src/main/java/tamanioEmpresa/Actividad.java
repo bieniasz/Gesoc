@@ -41,6 +41,9 @@ public class Actividad extends EntidadPersistente {
 	@Column
 	private int topeCantPersonalMedianaTramo2;
 
+	@Column
+	private boolean activo;
+
 
 	public double getTopePromVentasMicro() { return topeMicro; }
 	public double getTopePromVentasPequenia() { return topePequenia; }
