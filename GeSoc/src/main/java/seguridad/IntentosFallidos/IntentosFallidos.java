@@ -1,4 +1,4 @@
-package seguridad;
+package seguridad.IntentosFallidos;
 
 import operacionComercial.EntidadPersistente;
 
@@ -15,9 +15,12 @@ import java.time.LocalTime;
 public class IntentosFallidos extends EntidadPersistente {
 
     @Column
+    private Integer usuarioId;
+    @Column
     private int intentosRealizados;
     @Column(columnDefinition = "DATE")
     private LocalDateTime horaDelIntentoMaximo;
+
 
     public IntentosFallidos(){
         this.intentosRealizados = 0;
@@ -27,8 +30,9 @@ public class IntentosFallidos extends EntidadPersistente {
     public int getCantidadIntentos() {
         return intentosRealizados;
     }
-
-
+    public LocalDateTime getHoraDelIntentoMaximo() {
+        return horaDelIntentoMaximo;
+    }
 
     public void nuevoIntentoFallido(){
         this.intentosRealizados ++;
@@ -39,13 +43,9 @@ public class IntentosFallidos extends EntidadPersistente {
         this.horaDelIntentoMaximo = null;
     }
 
-
-    public LocalDateTime getHoraDelIntentoMaximo() {
-        return horaDelIntentoMaximo;
-    }
-
     public void setHoraDelIntentoMaximo() {
         this.horaDelIntentoMaximo = LocalDateTime.now();
     }
+    public void setUsuarioId(Integer id) { this.usuarioId = id; }
 
 }

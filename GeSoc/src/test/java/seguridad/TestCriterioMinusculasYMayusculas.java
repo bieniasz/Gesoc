@@ -12,18 +12,20 @@ public class TestCriterioMinusculasYMayusculas {
 
     private CriterioMinusculasYMayusculas criterio;
     private List<String> errorMessages;
+    private Usuario user;
 
     @Before
     public void init(){
 
         this.criterio = new CriterioMinusculasYMayusculas();
         this.errorMessages = new ArrayList<String>();
+        this.user = new Usuario();
     }
 
     @Test
     public void contraseniaNoTieneMayusculas(){
 
-        this.criterio.validar("testUser","nnnnnnnnnnnn", errorMessages);
+        this.criterio.validar(this.user,"nnnnnnnnnnnn", errorMessages);
 
         Assert.assertEquals(1, this.errorMessages.size());
     }
@@ -31,7 +33,7 @@ public class TestCriterioMinusculasYMayusculas {
     @Test
     public void contraseniaNoTieneMayusculasMensajeDeError(){
 
-        this.criterio.validar("testUser", "nnnnnnnnnnnn", errorMessages);
+        this.criterio.validar(this.user, "nnnnnnnnnnnn", errorMessages);
 
         Assert.assertEquals("Faltan letras mayusculas a la contrasenia", this.errorMessages.get(0));
     }
@@ -39,7 +41,7 @@ public class TestCriterioMinusculasYMayusculas {
     @Test
     public void contraseniaNoTieneMinusculas(){
 
-        this.criterio.validar("testUser", "NNNNNN", errorMessages);
+        this.criterio.validar(this.user, "NNNNNN", errorMessages);
 
         Assert.assertEquals(1, this.errorMessages.size());
     }
@@ -47,7 +49,7 @@ public class TestCriterioMinusculasYMayusculas {
     @Test
     public void contraseniaNoTieneMinusculasMensajeDeError(){
 
-        this.criterio.validar("testUser", "NNNNNN", errorMessages);
+        this.criterio.validar(this.user, "NNNNNN", errorMessages);
 
         Assert.assertEquals("Faltan letras minusculas a la contrasenia", this.errorMessages.get(0));
     }
@@ -55,7 +57,7 @@ public class TestCriterioMinusculasYMayusculas {
     @Test
     public void contraseniaNoTieneMinuscuYMayusculasOrdenadas1(){
 
-        this.criterio.validar("testUser", "nnnnnnNNNNNN", errorMessages);
+        this.criterio.validar(this.user, "nnnnnnNNNNNN", errorMessages);
 ;
         Assert.assertEquals(0, this.errorMessages.size());
     }
@@ -63,7 +65,7 @@ public class TestCriterioMinusculasYMayusculas {
     @Test
     public void contraseniaNoTieneMinuscuYMayusculasOrdenadas2(){
 
-        this.criterio.validar("testUser", "NNNnnnnn", errorMessages);
+        this.criterio.validar(this.user, "NNNnnnnn", errorMessages);
 
         Assert.assertEquals(0, this.errorMessages.size());
     }
@@ -71,7 +73,7 @@ public class TestCriterioMinusculasYMayusculas {
     @Test
     public void contraseniaNoTieneMinuscuYMayusculasMixeadas(){
 
-        this.criterio.validar("testUser", "nNnNn", errorMessages);
+        this.criterio.validar(this.user, "nNnNn", errorMessages);
 
         Assert.assertEquals(0, this.errorMessages.size());
     }

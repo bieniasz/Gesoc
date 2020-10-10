@@ -1,94 +1,76 @@
 package seguridad;
 
 import operacionComercial.EntidadPersistente;
+import seguridad.ContraseniasPrevias.ContraseniasPrevias;
+import seguridad.ContraseniasPrevias.ContraseniasPreviasDAO;
+import seguridad.IntentosFallidos.IntentosFallidos;
+import seguridad.IntentosFallidos.IntentosFallidosDAO;
+import usuario.Usuario;
 
-import javax.persistence.Column;
-import javax.persistence.JoinColumn;
-import javax.persistence.OneToMany;
-import java.util.ArrayList;
-import java.util.HashMap;
-import java.util.List;
-import java.util.Map;
+import java.util.*;
 
 public class AlmacenContrasenias extends EntidadPersistente {
-    //TODO Clase ValidadorDeContrasenia, cuando veamos db vamos a remodelar la clase para que no tenga los
-    // datos en memoria y valla a buscar los datos que necesita en la base
 
-    // TODO justificar porque usamos un Map de listas, y tener en cuenta los posibles problemas a futuro
-    //  de esta decision.
-    @OneToMany
-    @JoinColumn(name="ContraseniasPrevias",referencedColumnName = "id")
-    private List <ContraseniasPrevias> contraseniasPrevias;
+    private Integer periodosDeRotacion = 3;
 
-    @Column
-    private Integer periodosDeRotacion;
+    private ContraseniasPreviasDAO contraseniasPreviasDAO;
+    private IntentosFallidosDAO intentosFallidosDAO;
 
-    @OneToMany
-    @JoinColumn(name="IntentosFallidos",referencedColumnName = "id")
-    private List<IntentosFallidos> intentosFallidos;
-
-    /*private AlmacenContrasenias() {
-        this.contraseniasPrevias = new HashMap<String, List<String>>();
-        this.intentosFallidos = new HashMap<String, IntentosFallidos>();
-    }*/
-
-    /*public static AlmacenContrasenias Instancia() {
-        if (instancia == null) {
-            instancia = new AlmacenContrasenias();
-        }
-        return instancia;
-    }*/
-
-/*
-    public void eliminarContraseniasAlmacenadas() {
-        this.contraseniasPrevias.clear();
+    public void setContraseniasPreviasDAO(ContraseniasPreviasDAO contraseniasPreviasDAO) {
+        this.contraseniasPreviasDAO = contraseniasPreviasDAO;
     }
 
-    public synchronized void eliminarIntentosFallidosAlmacenados(){
-        this.intentosFallidos.clear();
+    public void setIntentosFallidosDAO(IntentosFallidosDAO intentosFallidosDAO) {
+        this.intentosFallidosDAO = intentosFallidosDAO;
     }
 
-    public synchronized void registrarContrasenia(String usuario, String contrasenia) {
-        final List<String> contrasenias = this.contraseniasPrevias.get(usuario);
+    public void registrarContrasenia(Usuario usuario, String contrasenia) {
+        //ver que excepcion tira el dao si no encuentra una entrada.
         try {
-            contrasenias.add(contrasenia);
-            if (contrasenias.size() > this.periodosDeRotacion) {
-                contrasenias.remove(0);
+            ContraseniasPrevias contraseniasPrevias = this.contraseniasPreviasDAO.getContraseniasPrevias(usuario);
+            contraseniasPrevias.agregarContrasenia(contrasenia);
+            if (contraseniasPrevias.getContrasenias().size() > this.periodosDeRotacion) {
+                contraseniasPrevias.removerContrseniaVieja();
             }
 
-        } catch (NullPointerException e) {
-            this.contraseniasPrevias.put(usuario, new ArrayList<String>());
-            this.contraseniasPrevias.get(usuario).add(contrasenia);
-        }
+            this.contraseniasPreviasDAO.persistirContraseniaPrevia(contraseniasPrevias);
 
+        }
+        catch (Exception exception) {
+            ContraseniasPrevias contraseniasPrevias = new ContraseniasPrevias();
+            contraseniasPrevias.setUsuarioId(usuario.getid());
+            contraseniasPrevias.setContrasenia(new ArrayList<String>());
+            contraseniasPrevias.agregarContrasenia(contrasenia);
+
+            this.contraseniasPreviasDAO.persistirContraseniaPrevia(contraseniasPrevias);
+        }
     }
-/*
- */
-    /*
-    //TODO ojo con estos metodos que son de un singleton, deben ser synchronized para evitar problemas de manejo de threads
-    //TODO java no garantiza safe-thread.
-    public synchronized boolean contraseniaRepiteContraseniasViejas(String usuario, String contrasenia) {
-        final List<String> contrasenias = this.contraseniasPrevias.get(usuario);
+
+    public boolean contraseniaRepiteContraseniasViejas(Usuario usuario, String contrasenia) {
+        ContraseniasPrevias contraseniasPrevias = this.contraseniasPreviasDAO.getContraseniasPrevias(usuario);
 
         try {
-            return contrasenias.contains(contrasenia);
+            return contraseniasPrevias.getContrasenias().contains(contrasenia);
         } catch (Exception e) {
             return false;
         }
     }
 
-    public synchronized void setPeriodosDeRotacion(Integer cantPeriodos){
+    public void setPeriodosDeRotacion(Integer cantPeriodos){
         this.periodosDeRotacion = cantPeriodos;
     }
 
-    public synchronized List<String> getContraseniasPreviasDeUsuario(String usuario) {
-        return contraseniasPrevias.get(usuario);
+    public List<String> getContraseniasPreviasDeUsuario(Usuario usuario) {
+        ContraseniasPrevias contraseniasPrevias = this.contraseniasPreviasDAO.getContraseniasPrevias(usuario);
+
+        return contraseniasPrevias.getContrasenias();
     }
 
-    public synchronized boolean compararContrasenia(String usuario,String contrasenia) {
+    public boolean compararContrasenia(Usuario usuario,String contrasenia) {
         try {
             List<String> contraseniasPrevias = getContraseniasPreviasDeUsuario(usuario);
-            if (contraseniasPrevias.get(contraseniasPrevias.size()-1) == contrasenia) {
+            Integer posicionUltimaContrasenia = contraseniasPrevias.size()-1;
+            if (contraseniasPrevias.get(posicionUltimaContrasenia) == contrasenia) {
                 return true;
             } else {
                 return false;
@@ -98,7 +80,7 @@ public class AlmacenContrasenias extends EntidadPersistente {
         }
     }
 
-    public synchronized boolean existeUsuario(String usuario){
+    public boolean existeUsuario(Usuario usuario){
         try {
             List<String> contraseniasPreviasDeUsuario = getContraseniasPreviasDeUsuario(usuario);
             if (contraseniasPreviasDeUsuario.size() > 0){
@@ -112,36 +94,41 @@ public class AlmacenContrasenias extends EntidadPersistente {
         }
     }
 
-    public synchronized void agregarIntentoFallido(String usuario) {
-        final IntentosFallidos intentosFallidos = this.intentosFallidos.get(usuario);
+    public void agregarIntentoFallido(Usuario usuario) {
+        // TODO si no hay intento fallido tengo que crear uno nuevo, primero ver que error tira hibernate
+        IntentosFallidos intentosFallidos = this.intentosFallidosDAO.getIntentosFallidos(usuario);
 
         try {
             intentosFallidos.nuevoIntentoFallido();
+            this.intentosFallidosDAO.persistirIntentoFallido(intentosFallidos);
+
         } catch (NullPointerException n) {
-            this.intentosFallidos.put(usuario, new IntentosFallidos());
-            this.intentosFallidos.get(usuario).nuevoIntentoFallido();
+
+            IntentosFallidos intento = new IntentosFallidos();
+            intento.setUsuarioId(usuario.getid());
+            intento.nuevoIntentoFallido();
+
+            this.intentosFallidosDAO.persistirIntentoFallido(intento);
         }
     }
 
 
-        public synchronized IntentosFallidos getIntentosFallidosDeUsuario(String usuario){
-        return this.intentosFallidos.get(usuario);
+    public IntentosFallidos getIntentosFallidosDeUsuario(Usuario usuario){
+        return this.intentosFallidosDAO.getIntentosFallidos(usuario);
     }
 
-    public synchronized void reiniciarIntentosFallidos(String usuario){
-        this.intentosFallidos.get(usuario).reiniciarIntentos();
+    public void reiniciarIntentosFallidos(Usuario usuario){
+        this.intentosFallidosDAO.getIntentosFallidos(usuario).reiniciarIntentos();
     }
 
-    public synchronized void setHoraDelIntentoMaximo(String usuario){
-        this.intentosFallidos.get(usuario).setHoraDelIntentoMaximo();
+    public void setHoraDelIntentoMaximo(Usuario usuario){
+        this.intentosFallidosDAO.getIntentosFallidos(usuario).setHoraDelIntentoMaximo();
     }
 
-    public synchronized void crearIntentoFallidoSiAplica(String usuario){
-        if (this.existeUsuario(usuario) && !this.intentosFallidos.containsKey(usuario)){
+    public void crearIntentoFallidoSiAplica(Usuario usuario){
+        // TODO fijarse que error retorna el DAO
+        /*if (this.existeUsuario(usuario) && !this.intentosFallidos.containsKey(usuario)){
             this.intentosFallidos.put(usuario, new IntentosFallidos());
-        }
+        }*/
     }
-    */
-
-
 }

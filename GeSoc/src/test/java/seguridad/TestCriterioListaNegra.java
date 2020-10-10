@@ -12,18 +12,21 @@ public class TestCriterioListaNegra {
 
     private CriterioFueraListaNegra criterio;
     private List<String> errorMessages;
+    private Usuario usuario;
 
     @Before
     public void init(){
 
         this.criterio = new CriterioFueraListaNegra();
         this.errorMessages = new ArrayList<String>();
+        this.usuario = new Usuario();
+        this.usuario.setUsuarioId("testUser");
     }
 
     @Test
     public void contraseniaEnListaNegra(){
 
-        this.criterio.validar("testUser","123456" , errorMessages);
+        this.criterio.validar(this.usuario,"123456" , errorMessages);
 
         Assert.assertEquals(1, this.errorMessages.size());
     }
@@ -31,7 +34,7 @@ public class TestCriterioListaNegra {
     @Test
     public void contraseniaNOestaEnListaNegra(){
 
-        this.criterio.validar("testUser", "ContrS3ni$°Segur1s1m4", errorMessages);;
+        this.criterio.validar(this.usuario, "ContrS3ni$°Segur1s1m4", errorMessages);;
 
         Assert.assertEquals(0, this.errorMessages.size());
     }
@@ -39,7 +42,7 @@ public class TestCriterioListaNegra {
     @Test
     public void criterioListaNegraMensajeDeError(){
 
-        this.criterio.validar("testUser", "123456", errorMessages);;
+        this.criterio.validar(this.usuario, "123456", errorMessages);;
 
         Assert.assertEquals("Contrasenia pertenece a lista negra", this.errorMessages.get(0));
     }

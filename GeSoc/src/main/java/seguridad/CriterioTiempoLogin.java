@@ -1,5 +1,8 @@
 package seguridad;
 
+import seguridad.IntentosFallidos.IntentosFallidos;
+import usuario.Usuario;
+
 import java.time.Duration;
 import java.time.LocalDateTime;
 import java.util.List;
@@ -9,18 +12,19 @@ public class CriterioTiempoLogin implements CriterioValidacion {
 
     private final Integer tiempoDeEspera;
     private final Integer cantidadMaximaDeIntentos;
+    private final AlmacenContrasenias almacen;
 
-    public CriterioTiempoLogin() {
+    public CriterioTiempoLogin(AlmacenContrasenias almacen) {
 
         this.tiempoDeEspera = 5; // va a ser considerado en segundos
-
         this.cantidadMaximaDeIntentos = 3;
+        this.almacen = almacen;
     }
 
     @Override
-    public void validar(String usuario, String contrasenia, List<String> mensajesDeError) {
+    public void validar(Usuario usuario, String contrasenia, List<String> mensajesDeError) {
         LocalDateTime horaActual = LocalDateTime.now();  //.compareTo();
-        /*IntentosFallidos intentosFallidos = AlmacenContrasenias.Instancia().getIntentosFallidosDeUsuario(usuario);
+        IntentosFallidos intentosFallidos = almacen.getIntentosFallidosDeUsuario(usuario);
 
         if (intentosFallidos.getCantidadIntentos() >= cantidadMaximaDeIntentos) {
             LocalDateTime horaDelIntentoMaximo = intentosFallidos.getHoraDelIntentoMaximo();
@@ -28,24 +32,24 @@ public class CriterioTiempoLogin implements CriterioValidacion {
             if (this.cumpleCondicionDeEspera(usuario, tiempoEntreLoginsMaximo) == false) {
                 mensajesDeError.add("Debe esperar " + (tiempoDeEspera - tiempoEntreLoginsMaximo) + " segundos para volver loguearse.");
                 } else {
-                    AlmacenContrasenias.Instancia().reiniciarIntentosFallidos(usuario);
+                    this.almacen.reiniciarIntentosFallidos(usuario);
             }
-        }*/
+        }
 
 
     }
 
 
-    public void errorAlLogear(String usuario) {
-       /* IntentosFallidos intentosFallidos = AlmacenContrasenias.Instancia().getIntentosFallidosDeUsuario(usuario);
+    public void errorAlLogear(Usuario usuario) {
+        IntentosFallidos intentosFallidos = this.almacen.getIntentosFallidosDeUsuario(usuario);
 
         if (intentosFallidos != null){
-            AlmacenContrasenias.Instancia().agregarIntentoFallido(usuario);
+            almacen.agregarIntentoFallido(usuario);
 
             if (intentosFallidos.getCantidadIntentos() == this.cantidadMaximaDeIntentos) {
-                AlmacenContrasenias.Instancia().setHoraDelIntentoMaximo(usuario);
+                almacen.setHoraDelIntentoMaximo(usuario);
             }
-        }*/
+        }
     }
 
     private int distanciaEnSegundosEntreTiempos(LocalDateTime desde, LocalDateTime hasta){
@@ -59,7 +63,8 @@ public class CriterioTiempoLogin implements CriterioValidacion {
 
     }
 
-    private boolean cumpleCondicionDeEspera(String usuario, int tiempoEntreLogins){
+    //TODO: para que un usuario en este metodo?
+    private boolean cumpleCondicionDeEspera(Usuario usuario, int tiempoEntreLogins){
         if (tiempoEntreLogins >= this.tiempoDeEspera){
 
             return true;

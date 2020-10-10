@@ -28,6 +28,7 @@ public class OperacionEgreso extends OperacionComercial {
     @JoinColumn(name = "Organizacion",referencedColumnName = "id")
     private Organizacion organizacion;
 
+    @Column
     private Integer cantidadEsperadaPresupuestos;
 
     @OneToMany

@@ -12,76 +12,88 @@ public class TestCriterioRotacionContrasenia {
 
     private CriterioRotacionContrasenia criterio;
     private List<String> errorMessages;
+    private AlmacenContrasenias almacen;
+    private Usuario usuario;
 
     @Before
     public void init(){
 
-        this.criterio = new CriterioRotacionContrasenia();
+        this.almacen = new AlmacenContrasenias();
+        this.criterio = new CriterioRotacionContrasenia(this.almacen);
         this.errorMessages = new ArrayList<String>();
-       // AlmacenContrasenias.Instancia().eliminarContraseniasAlmacenadas();
-       // AlmacenContrasenias.Instancia().setPeriodosDeRotacion(3);
+        this.almacen.setPeriodosDeRotacion(3);
+        this.usuario = new Usuario();
+        usuario.setUsuarioId("testUser");
     }
 
     @Test
     public void contraseniaEsNueva(){
+        Usuario usuario = new Usuario();
+        usuario.setUsuarioId("testUser");
 
-        this.criterio.validar("testUser", "1234", errorMessages);
-
+        this.criterio.validar(usuario,"1234", errorMessages);
+        //TODO: si algun criterio falla que no gurde la contrasenia.
         Assert.assertEquals(0, this.errorMessages.size());
     }
 
     @Test
     public void contraseniaEsRepetida(){
+        Usuario usuario = new Usuario();
+        usuario.setUsuarioId("testUser");
 
-       // AlmacenContrasenias.Instancia().registrarContrasenia("testUser", "1234");
-       // AlmacenContrasenias.Instancia().registrarContrasenia("testUser", "hola");
+        this.almacen.registrarContrasenia(usuario, "1234");
+        this.almacen.registrarContrasenia(usuario, "hola");
 
-        this.criterio.validar("testUser", "1234", errorMessages);
+        this.criterio.validar(usuario, "1234", errorMessages);
 
         Assert.assertEquals(1, this.errorMessages.size());
     }
 
     @Test
     public void criterioRotacionContraseniaMensajeError(){
+        Usuario usuario = new Usuario();
+        usuario.setUsuarioId("testUser");
 
-       // AlmacenContrasenias.Instancia().registrarContrasenia("testUser", "1234");
-       // AlmacenContrasenias.Instancia().registrarContrasenia("testUser", "hola");
+        this.almacen.registrarContrasenia(usuario, "1234");
+        this.almacen.registrarContrasenia(usuario, "hola");
 
-        this.criterio.validar("testUser", "1234", errorMessages);
+        this.criterio.validar(usuario, "1234", errorMessages);
 
         Assert.assertEquals("La contrasenia repite contrasenias viejas", this.errorMessages.get(0));
     }
 
     @Test
     public void seBorranLasContraseniasMuyViejas(){
-       // AlmacenContrasenias.Instancia().registrarContrasenia("testUser", "1234");
-       // AlmacenContrasenias.Instancia().registrarContrasenia("testUser", "hola");
-       // AlmacenContrasenias.Instancia().registrarContrasenia("testUser", "admin");
-       // AlmacenContrasenias.Instancia().registrarContrasenia("testUser", "nombreFamiliarCercano");
+        this.almacen.registrarContrasenia(usuario, "1234");
+        this.almacen.registrarContrasenia(usuario, "hola");
+        this.almacen.registrarContrasenia(usuario, "admin");
+        this.almacen.registrarContrasenia(usuario, "nombreFamiliarCercano");
 
-        this.criterio.validar("testUser", "1234", errorMessages);
+        this.criterio.validar(usuario, "1234", errorMessages);
 
         Assert.assertEquals(0, this.errorMessages.size());
     }
 
     @Test
     public void lasContraseniasNoViejasValidan(){
-       /* AlmacenContrasenias.Instancia().registrarContrasenia("testUser", "1234");
-        AlmacenContrasenias.Instancia().registrarContrasenia("testUser", "hola");
-        AlmacenContrasenias.Instancia().registrarContrasenia("testUser", "admin");
-        AlmacenContrasenias.Instancia().registrarContrasenia("testUser", "nombreFamiliarCercano");*/
+        this.almacen.registrarContrasenia(this.usuario, "1234");
+        this.almacen.registrarContrasenia(this.usuario, "hola");
+        this.almacen.registrarContrasenia(this.usuario, "admin");
+        this.almacen.registrarContrasenia(this.usuario, "nombreFamiliarCercano");
 
-        this.criterio.validar("testUser", "admin", errorMessages);
+        this.criterio.validar(this.usuario, "admin", errorMessages);
 
         Assert.assertEquals(1, this.errorMessages.size());
     }
 
     @Test
     public void seDiferencianContraseniasDeDistintosUsuarios(){
-     /*   AlmacenContrasenias.Instancia().registrarContrasenia("testUserAlfa", "1234");
-        AlmacenContrasenias.Instancia().registrarContrasenia("testUserBeta", "hola");*/
+        Usuario otroUsuario = new Usuario();
+        otroUsuario.setUsuarioId("otroUsuario");
+        this.almacen.registrarContrasenia(this.usuario, "1234");
+        this.almacen.registrarContrasenia(otroUsuario, "hola");
 
-        this.criterio.validar("testUserBeta", "1234", errorMessages);
+        this.criterio.validar(otroUsuario, "1234", errorMessages);
 
         Assert.assertEquals(0, this.errorMessages.size());
     }

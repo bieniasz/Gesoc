@@ -3,27 +3,37 @@ package seguridad;
 import org.junit.Assert;
 import org.junit.Before;
 import org.junit.Test;
+import seguridad.ContraseniasPrevias.ContraseniasPreviasMySQL;
+import seguridad.IntentosFallidos.IntentosFallidosMySQL;
 import usuario.Usuario;
 
 import java.util.List;
 
 public class TestValidadorDeUsuario {
     private ValidadorDeUsuario validador;
+    private AlmacenContrasenias almancen;
 
     @Before
     public void init(){
         this.validador = new ValidadorDeUsuario();
-       // AlmacenContrasenias.Instancia().eliminarContraseniasAlmacenadas();
-       // AlmacenContrasenias.Instancia().eliminarIntentosFallidosAlmacenados();
+        // TODO la posta es usar unos DAO que no vallan a la DB
+        // TODO setear el Almacen en el validador
+        this.almancen.setContraseniasPreviasDAO(new ContraseniasPreviasMySQL());
+        this.almancen.setIntentosFallidosDAO(new IntentosFallidosMySQL());
     }
+
+            /*this.criteriosCreacionContrasenia.add(new CriterioCaracteresEspeciales());
+        this.criteriosCreacionContrasenia.add(new CriterioFueraListaNegra());
+        this.criteriosCreacionContrasenia.add(new CriterioLongitud());
+        this.criteriosCreacionContrasenia.add(new CriterioMinusculasYMayusculas());
+        this.criteriosCreacionContrasenia.add(new CriterioRotacionContrasenia(this.almacenContrasenias));*/
 
 
     @Test
     public void contraseniaNORompeCriterios(){
 
        List<String> mensajesDeError = this.validador.validarCreacionContrasenia("testUser", "nnKKKKK6456/(%nn");
-
-        Assert.assertEquals(0, mensajesDeError.size());
+       Assert.assertEquals(0, mensajesDeError.size());
     }
 
     @Test
@@ -42,11 +52,9 @@ public class TestValidadorDeUsuario {
 
     @Test
     public void validaElAlmacenContrasenias() {
-       // AlmacenContrasenias.Instancia().eliminarContraseniasAlmacenadas();
 
         List<String> mensajesDeError = this.validador.validarCreacionContrasenia("testUser","nnKKKKK6456/(%nn");
         mensajesDeError = this.validador.validarCreacionContrasenia("testUser","nnKKKKK6456/(%nn");
-
         Assert.assertEquals(1, mensajesDeError.size());
     }
 
@@ -54,16 +62,13 @@ public class TestValidadorDeUsuario {
     public void validarMetodoContraseniaLoginConError(){
 
         List<String> errores = this.validador.validarContraseniaLogin("user","password");
-
         Assert.assertEquals(1,errores.size());
-
     }
 
     @Test
     public void validarMetodoContraseniaLoginSinError(){
       //  AlmacenContrasenias.Instancia().registrarContrasenia("user","password");
         List<String> errores = this.validador.validarContraseniaLogin("user","password");
-
         Assert.assertEquals(0,errores.size());
     }
 
@@ -100,7 +105,6 @@ public class TestValidadorDeUsuario {
     @Test
     public void validarMetodoCreacionDeUsuario() throws Exception {
         Usuario usuario = validador.crearUsuario("usuario123","Contraseña1234@");
-
         Assert.assertTrue(usuario instanceof Usuario);
     }
 

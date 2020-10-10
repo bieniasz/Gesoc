@@ -11,16 +11,19 @@ import java.util.List;
 
 public class TestUsuarioAdmin {
 
-    private Usuario usuarioAdmin = new Usuario("admin12345");
+    private Usuario usuarioAdmin;
+    private AlmacenContrasenias almacen;
 
     public TestUsuarioAdmin() throws Exception {
     }
 
     @Before
     public void init(){
-        usuarioAdmin.setRol(new UsuarioAdmin());
-       // AlmacenContrasenias.Instancia().eliminarContraseniasAlmacenadas();
-       // AlmacenContrasenias.Instancia().setPeriodosDeRotacion(3);
+        this.usuarioAdmin = new Usuario();
+        this.usuarioAdmin.setUsuarioId("admin12345");
+        this.usuarioAdmin.setContrasenia("nn");
+        this.usuarioAdmin.setRol(new UsuarioAdmin());
+        this.almacen = new AlmacenContrasenias();
     }
 
     @Test
@@ -47,11 +50,11 @@ public class TestUsuarioAdmin {
 
         Assert.assertTrue(usuarioEstandar.getRol().getOrganizacion() instanceof Organizacion);
     }
-
- /*   @Test
+/*
+    @Test
     public void cambioDeContraseniaEnUsuarioYAlmacen() throws Exception {
         Assert.assertTrue("Admin@12345"== usuarioAdmin.getContrasenia());
-        usuarioAdmin.cambiarContrasenia("Admin@54321");
+        this.usuarioAdmin.getRol().cambiarContrasenia("Admin@54321");
         Assert.assertTrue("Admin@54321" == usuarioAdmin.getContrasenia());
 
         //Ahora testear si cambió en el usuario del almacen
@@ -59,6 +62,6 @@ public class TestUsuarioAdmin {
         String contraseniaNueva = contraseniasPrevias.get(contraseniasPrevias.size()-1);
 
         Assert.assertTrue(contraseniaNueva == "Admin@54321");
-    }
- */
+    }*/
+
 }

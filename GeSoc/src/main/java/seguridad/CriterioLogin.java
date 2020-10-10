@@ -1,17 +1,26 @@
 package seguridad;
 
+import usuario.Usuario;
+
 import java.util.List;
 
 public class CriterioLogin implements CriterioValidacion{
 
-    public void validar(String usuario, String contrasenia, List<String> mensajesDeError) {
-        /*try{
-        if (false == AlmacenContrasenias.Instancia().compararContrasenia(usuario,contrasenia)) {
+    // TODO: no poner todos los criterios en el constructor si no en metodos seter
+    private AlmacenContrasenias almacen;
+
+    public CriterioLogin(AlmacenContrasenias almancen) {
+        this.almacen = almancen;
+    }
+
+    public void validar(Usuario usuario, String contrasenia, List<String> mensajesDeError) {
+        try{
+        if (false == almacen.compararContrasenia(usuario,contrasenia)) {
                 mensajesDeError.add("El usuario y/o contraseña invalido");
             }
         } catch (Exception e){}
 
-        AlmacenContrasenias.Instancia().crearIntentoFallidoSiAplica(usuario);*/
+        almacen.crearIntentoFallidoSiAplica(usuario);
     }
 
 

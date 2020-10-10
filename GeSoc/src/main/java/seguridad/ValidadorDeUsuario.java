@@ -1,5 +1,6 @@
 package seguridad;
 
+import db.UserDAO;
 import usuario.Usuario;
 
 import java.util.ArrayList;
@@ -7,36 +8,34 @@ import java.util.List;
 
 public class ValidadorDeUsuario implements iValidadorDeUsuario{
 
-    private final List<CriterioValidacion> criteriosCreacionContrasenia;
+    //TODO: cuidado con los DAO y el almacen, todo debe ir con su set, nada por contructor.
+    private List<CriterioValidacion> criteriosCreacionContrasenia = new ArrayList<>();
+    private AlmacenContrasenias almacenContrasenias = new AlmacenContrasenias();
+    private UserDAO usuarioDao;
 
-    public ValidadorDeUsuario() {
-
-        this.criteriosCreacionContrasenia = new ArrayList<CriterioValidacion>();
-        this.criteriosCreacionContrasenia.add(new CriterioCaracteresEspeciales());
-        this.criteriosCreacionContrasenia.add(new CriterioFueraListaNegra());
-        this.criteriosCreacionContrasenia.add(new CriterioLongitud());
-        this.criteriosCreacionContrasenia.add(new CriterioMinusculasYMayusculas());
-        this.criteriosCreacionContrasenia.add(new CriterioRotacionContrasenia());
+    public void setUsuarioDao(UserDAO usuarioDao) {
+        this.usuarioDao = usuarioDao;
+    }
+    public void agregarCriterioDeCreacionDeContrasenia(CriterioValidacion criterio) {
+        this.criteriosCreacionContrasenia.add(criterio);
     }
 
-    public List<String> validarCreacionContrasenia(String usuario, String contrasenia) {
 
-        final List<String> errores = new ArrayList<String>(); /*
-        this.criteriosCreacionContrasenia.forEach(criterio -> criterio.validar(usuario,contrasenia,errores));
+    public List<String> validarCreacionContrasenia(String usuarioId, String contrasenia) {
+
+        Usuario user = this.getUsuario(usuarioId);
+        //TODO sacar esta lista de errores y manejarlo por try catch
+        final List<String> errores = new ArrayList<String>();
+        this.criteriosCreacionContrasenia.forEach(criterio -> criterio.validar(user, contrasenia, errores));
 
         if (errores.size() == 0) {
-            AlmacenContrasenias.Instancia().registrarContrasenia(usuario, contrasenia);
-        }*/
+            // TODO
+           this.almacenContrasenias.registrarContrasenia(user, contrasenia);
+        }
 
         return errores;
     }
 
-    /**
-     * 1- los metodos en java comienzan con minuscula.
-     * 2- si un metodo no se utiliza en el codigo no debe existir.
-     * @param usuario
-     * @return
-     */
 
     public Usuario crearUsuario(String usuario, String contrasenia) throws Exception{
         List<String> mensajesDeError = this.validarCreacionContrasenia(usuario,contrasenia);
@@ -45,7 +44,7 @@ public class ValidadorDeUsuario implements iValidadorDeUsuario{
             if (mensajesDeError.size() > 0){
                 throw new Exception();
             } else {
-                return new Usuario(usuario);
+                // TODO return new Usuario(usuario);
             }
         } catch (Exception e) {
             //TODO cambiar para que no haga print por pantalla.
@@ -53,13 +52,20 @@ public class ValidadorDeUsuario implements iValidadorDeUsuario{
             System.out.println(mensajesDeError);
             throw e;
         }
+
+        Usuario user = new Usuario();
+        user.setUsuarioId(usuario);
+        user.setContrasenia(contrasenia);
+        return user;
     }
 
-    public List<String> validarContraseniaLogin(String usuario, String contrasenia) {
+    public List<String> validarContraseniaLogin(String usuarioId, String contrasenia) {
+        Usuario usuario = this.getUsuario(usuarioId);
+        List<String> mensajesDeError = new ArrayList<>();
 
-        List<String> mensajesDeError = new ArrayList<>();/*
-        CriterioLogin criterioLogin = new CriterioLogin();
-        CriterioTiempoLogin criterioTiempoLogin = new CriterioTiempoLogin();
+        //TODO: esto tambien por seter, no tener los criterios ahi tan harcodeados.
+        CriterioLogin criterioLogin = new CriterioLogin(this.almacenContrasenias);
+        CriterioTiempoLogin criterioTiempoLogin = new CriterioTiempoLogin(this.almacenContrasenias);
 
         criterioLogin.validar(usuario, contrasenia, mensajesDeError);
 
@@ -67,8 +73,12 @@ public class ValidadorDeUsuario implements iValidadorDeUsuario{
             criterioTiempoLogin.errorAlLogear(usuario);
         } else{
             criterioTiempoLogin.validar(usuario,contrasenia,mensajesDeError);
-        }*/
+        }
 
         return mensajesDeError;
+    }
+
+    private Usuario getUsuario(String usuarioId) {
+        return this.usuarioDao.getUsuario(usuarioId);
     }
 }

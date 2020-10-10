@@ -1,9 +1,11 @@
 package seguridad;
 
+import com.sun.media.sound.AlawCodec;
 import org.junit.Assert;
 import org.junit.Before;
 import org.junit.Test;
 //import sun.font.TrueTypeFont;
+import seguridad.IntentosFallidos.IntentosFallidos;
 import usuario.Usuario;
 
 import java.time.Duration;
@@ -16,90 +18,96 @@ public class TestCriterioTiempoLogin {
 
     private CriterioTiempoLogin criterio;
     private List<String> errorMessages;
+    private AlmacenContrasenias almacen;
 
     @Before
     public void init() {
 
-        this.criterio = new CriterioTiempoLogin();
+        //TODO configurar el almacen con los DAO dummy
         this.errorMessages = new ArrayList<String>();
-       /* AlmacenContrasenias.Instancia().eliminarContraseniasAlmacenadas();
-        AlmacenContrasenias.Instancia().eliminarIntentosFallidosAlmacenados();*/
+        this.almacen = new AlmacenContrasenias();
+        this.criterio = new CriterioTiempoLogin(this.almacen);
     }
 
     @Test
     public void primerErrorAlLogearConUsuarioExistente() {
-        String usuarioQueExiste = "user";
-      //  AlmacenContrasenias.Instancia().registrarContrasenia(usuarioQueExiste,"password");
-        new CriterioLogin().validar(usuarioQueExiste,"password",new ArrayList<String>());
-        criterio.errorAlLogear(usuarioQueExiste);
-       // IntentosFallidos intentosFallidos = AlmacenContrasenias.Instancia().getIntentosFallidosDeUsuario(usuarioQueExiste);
-       // Assert.assertEquals(intentosFallidos.getCantidadIntentos(), 1);
+        Usuario usuarioQueExiste = new Usuario();
+        usuarioQueExiste.setUsuarioId("user");
+
+        this.almacen.registrarContrasenia(usuarioQueExiste,"password");
+        new CriterioLogin(this.almacen).validar(usuarioQueExiste,"password",new ArrayList<String>());
+        this.criterio.errorAlLogear(usuarioQueExiste);
+        IntentosFallidos intentosFallidos = this.almacen.getIntentosFallidosDeUsuario(usuarioQueExiste);
+        Assert.assertEquals(intentosFallidos.getCantidadIntentos(), 1);
     }
 
     @Test
     public void primerErrorAlLogearConUsuarioNoExistente() {
+        Usuario usuarioQueNoExiste = new Usuario();
+        usuarioQueNoExiste.setUsuarioId("usuarioNoExiste");
 
-        String usuarioQueNoExiste = "usuarioNoExiste";
-        criterio.errorAlLogear(usuarioQueNoExiste);
-      //  IntentosFallidos intentosFallidos = AlmacenContrasenias.Instancia().getIntentosFallidosDeUsuario(usuarioQueNoExiste);
+        this.criterio.errorAlLogear(usuarioQueNoExiste);
+        IntentosFallidos intentosFallidos = this.almacen.getIntentosFallidosDeUsuario(usuarioQueNoExiste);
 
-       // if (intentosFallidos == null){
+        if (intentosFallidos == null){
             Assert.assertTrue(true);
-       // } else {
-       //     Assert.fail();
-       // }
+        } else {
+            Assert.fail();
+        }
     }
 
     @Test
     public void errorAlLogearMultiple() throws InterruptedException {
-        String usuarioQueExiste = "user";
-       // AlmacenContrasenias.Instancia().registrarContrasenia(usuarioQueExiste,"password");
-        new CriterioLogin().validar(usuarioQueExiste,"password",new ArrayList<String>());
+        Usuario usuarioQueExiste = new Usuario();
+        usuarioQueExiste.setUsuarioId("user");
+        this.almacen.registrarContrasenia(usuarioQueExiste,"password");
+        new CriterioLogin(this.almacen).validar(usuarioQueExiste,"password",new ArrayList<String>());
         // INTENTO 1
 
         criterio.errorAlLogear(usuarioQueExiste);
         LocalDateTime horaPrimerItento = LocalDateTime.now();
 
-       // IntentosFallidos intentosFallidos1 = AlmacenContrasenias.Instancia().getIntentosFallidosDeUsuario(usuarioQueExiste);
-       // Assert.assertEquals(intentosFallidos1.getCantidadIntentos(), 1);
-      //  Assert.assertTrue(intentosFallidos1.getHoraDelIntentoMaximo() == null);
+        IntentosFallidos intentosFallidos1 = this.almacen.getIntentosFallidosDeUsuario(usuarioQueExiste);
+        Assert.assertEquals(intentosFallidos1.getCantidadIntentos(), 1);
+        Assert.assertTrue(intentosFallidos1.getHoraDelIntentoMaximo() == null);
 
         // INTENTO 2
         Thread.sleep(1000);
         criterio.errorAlLogear(usuarioQueExiste);
         LocalDateTime horaSegundoItento = LocalDateTime.now();
 
-        //IntentosFallidos intentosFallidos2 = AlmacenContrasenias.Instancia().getIntentosFallidosDeUsuario(usuarioQueExiste);
-       // Assert.assertEquals(intentosFallidos2.getCantidadIntentos(), 2);
-       // Assert.assertTrue(intentosFallidos2.getHoraDelIntentoMaximo() == null);
+        IntentosFallidos intentosFallidos2 = this.almacen.getIntentosFallidosDeUsuario(usuarioQueExiste);
+        Assert.assertEquals(intentosFallidos2.getCantidadIntentos(), 2);
+        Assert.assertTrue(intentosFallidos2.getHoraDelIntentoMaximo() == null);
 
         // INTENTO 3 debe guardar el tiempo en horaDeIntentoMaximo
         Thread.sleep(1000);
         criterio.errorAlLogear(usuarioQueExiste);
         LocalDateTime horaTercerItento = LocalDateTime.now();
 
-       // IntentosFallidos intentosFallidos3 = AlmacenContrasenias.Instancia().getIntentosFallidosDeUsuario(usuarioQueExiste);
-        //Assert.assertEquals(intentosFallidos3.getCantidadIntentos(), 3);
-       // Assert.assertTrue(Duration.between(intentosFallidos3.getHoraDelIntentoMaximo(),horaTercerItento).getSeconds() == 0);
+        IntentosFallidos intentosFallidos3 = this.almacen.getIntentosFallidosDeUsuario(usuarioQueExiste);
+        Assert.assertEquals(intentosFallidos3.getCantidadIntentos(), 3);
+        Assert.assertTrue(Duration.between(intentosFallidos3.getHoraDelIntentoMaximo(),horaTercerItento).getSeconds() == 0);
 
-        // INTENTO 4: A partir de acá no debería guardar más el tiempo en la horaDeIntentoMaximo
+        //INTENTO 4: A partir de acá no debería guardar más el tiempo en la horaDeIntentoMaximo
         Thread.sleep(1000);
         criterio.errorAlLogear(usuarioQueExiste);
         LocalDateTime horaCuartoItento = LocalDateTime.now();
 
-        //IntentosFallidos intentosFallidos4 = AlmacenContrasenias.Instancia().getIntentosFallidosDeUsuario(usuarioQueExiste);
-       // Assert.assertEquals(intentosFallidos4.getCantidadIntentos(), 4);
-        //Assert.assertTrue(Duration.between(intentosFallidos4.getHoraDelIntentoMaximo(),horaCuartoItento).getSeconds() == 1);
+        IntentosFallidos intentosFallidos4 = this.almacen.getIntentosFallidosDeUsuario(usuarioQueExiste);
+        Assert.assertEquals(intentosFallidos4.getCantidadIntentos(), 4);
+        Assert.assertTrue(Duration.between(intentosFallidos4.getHoraDelIntentoMaximo(),horaCuartoItento).getSeconds() == 1);
     }
 
     @Test
     public void cumpleCondicionDeEspera() throws InterruptedException {
-        String usuarioQueExiste = "user";
+        Usuario usuarioQueExiste = new Usuario();
+        usuarioQueExiste.setUsuarioId("user");
 
-       // AlmacenContrasenias.Instancia().registrarContrasenia(usuarioQueExiste,"password");
-        new CriterioLogin().validar(usuarioQueExiste,"password",new ArrayList<String>());
+        this.almacen.registrarContrasenia(usuarioQueExiste,"password");
+        new CriterioLogin(this.almacen).validar(usuarioQueExiste,"password",new ArrayList<String>());
 
-       // IntentosFallidos intentosFallidos = AlmacenContrasenias.Instancia().getIntentosFallidosDeUsuario(usuarioQueExiste);
+        IntentosFallidos intentosFallidos = this.almacen.getIntentosFallidosDeUsuario(usuarioQueExiste);
 
         criterio.validar(usuarioQueExiste,"", this.errorMessages);
 
@@ -108,10 +116,11 @@ public class TestCriterioTiempoLogin {
 
     @Test
     public void cumpleCondicionDeEsperaParaUnIntentoContinuo(){
-        String usuarioQueExiste = "user";
+        Usuario usuarioQueExiste = new Usuario();
+        usuarioQueExiste.setUsuarioId("user");
 
-       // AlmacenContrasenias.Instancia().registrarContrasenia(usuarioQueExiste,"password");
-        new CriterioLogin().validar(usuarioQueExiste,"password",new ArrayList<String>());
+        this.almacen.registrarContrasenia(usuarioQueExiste,"password");
+        new CriterioLogin(this.almacen).validar(usuarioQueExiste,"password",new ArrayList<String>());
 
         // INTENTO 1
         criterio.errorAlLogear(usuarioQueExiste);
@@ -121,10 +130,11 @@ public class TestCriterioTiempoLogin {
 
     @Test
     public void cumpleCondicionDeEsperaParaDosIntentosContinuos(){
-        String usuarioQueExiste = "user";
+        Usuario usuarioQueExiste = new Usuario();
+        usuarioQueExiste.setUsuarioId("user");
 
-       // AlmacenContrasenias.Instancia().registrarContrasenia(usuarioQueExiste,"password");
-        new CriterioLogin().validar(usuarioQueExiste,"password",new ArrayList<String>());
+        this.almacen.registrarContrasenia(usuarioQueExiste,"password");
+        new CriterioLogin(this.almacen).validar(usuarioQueExiste,"password",new ArrayList<String>());
 
         // INTENTO 1
         criterio.errorAlLogear(usuarioQueExiste);
@@ -138,10 +148,11 @@ public class TestCriterioTiempoLogin {
 
     @Test
     public void cumpleCondicionDeEsperaParaTresIntentosContinuos(){
-        String usuarioQueExiste = "user";
+        Usuario usuarioQueExiste = new Usuario();
+        usuarioQueExiste.setUsuarioId("user");
 
-       // AlmacenContrasenias.Instancia().registrarContrasenia(usuarioQueExiste,"password");
-        new CriterioLogin().validar(usuarioQueExiste,"password",new ArrayList<String>());
+        this.almacen.registrarContrasenia(usuarioQueExiste,"password");
+        new CriterioLogin(this.almacen).validar(usuarioQueExiste,"password",new ArrayList<String>());
 
         // INTENTO 1
         criterio.errorAlLogear(usuarioQueExiste);
@@ -158,10 +169,11 @@ public class TestCriterioTiempoLogin {
 
     @Test
     public void cumpleCondicionDeEsperaParaCuatroIntentosContinuosSinEspera(){
-        String usuarioQueExiste = "user";
+        Usuario usuarioQueExiste = new Usuario();
+        usuarioQueExiste.setUsuarioId("user");
 
-        //AlmacenContrasenias.Instancia().registrarContrasenia(usuarioQueExiste,"password");
-        new CriterioLogin().validar(usuarioQueExiste,"password",new ArrayList<String>());
+        this.almacen.registrarContrasenia(usuarioQueExiste,"password");
+        new CriterioLogin(this.almacen).validar(usuarioQueExiste,"password",new ArrayList<String>());
 
         // INTENTO 1
         criterio.errorAlLogear(usuarioQueExiste);
@@ -181,10 +193,11 @@ public class TestCriterioTiempoLogin {
 
     @Test
     public void cumpleCondicionDeEsperaParaCuatroIntentosContinuosConEspera() throws InterruptedException {
-        String usuarioQueExiste = "user";
+        Usuario usuarioQueExiste = new Usuario();
+        usuarioQueExiste.setUsuarioId("user");;
 
-       // AlmacenContrasenias.Instancia().registrarContrasenia(usuarioQueExiste,"password");
-        new CriterioLogin().validar(usuarioQueExiste,"password",new ArrayList<String>());
+       this.almacen.registrarContrasenia(usuarioQueExiste,"password");
+        new CriterioLogin(this.almacen).validar(usuarioQueExiste,"password",new ArrayList<String>());
 
         // INTENTO 1
         criterio.errorAlLogear(usuarioQueExiste);

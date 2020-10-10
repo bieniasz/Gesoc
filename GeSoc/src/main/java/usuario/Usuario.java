@@ -15,19 +15,19 @@ import javax.persistence.*;
 public class Usuario extends EntidadPersistente {
 
     @Column
-    protected String usuario;
+    private String usuarioId;
+
+    //TODO cifrar contrasenia
+    @Column
+    private String contrasenia;
 
     @ManyToOne
-    protected Rol rol;
-
-    public Usuario(String usuario) {
-      this.usuario = usuario;
-    }
+    private Rol rol;
 
     public String getUsuario() {
-        return usuario;
+        return this.usuarioId;
     }
-
+    public String getContrasenia() {return this.contrasenia; }
     public Rol getRol() {
         return rol;
     }
@@ -35,4 +35,6 @@ public class Usuario extends EntidadPersistente {
     public void setRol(Rol rol) {
         this.rol = rol;
     }
+    public void setUsuarioId(String usuarioId) { this.usuarioId = usuarioId; }
+    public void setContrasenia(String contrasenia) { this.contrasenia = contrasenia; }
 }
