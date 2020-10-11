@@ -1,6 +1,8 @@
 package seguridad;
 
 import db.UserDAO;
+import seguridad.CriteriosLogin.CriterioLogin;
+import seguridad.CriteriosLogin.CriterioTiempoLogin;
 import usuario.Usuario;
 
 import java.util.ArrayList;

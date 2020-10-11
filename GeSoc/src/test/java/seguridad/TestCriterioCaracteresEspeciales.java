@@ -2,6 +2,7 @@ package seguridad;
 import org.junit.Assert;
 import org.junit.Before;
 import org.junit.Test;
+import seguridad.CriteriosContrasenia.CriterioCaracteresEspeciales;
 import usuario.Usuario;
 
 import java.util.ArrayList;

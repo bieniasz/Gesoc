@@ -1,6 +1,7 @@
 package seguridad.IntentosFallidos;
 
 import operacionComercial.EntidadPersistente;
+import usuario.Usuario;
 
 import javax.persistence.Column;
 import javax.persistence.Entity;
@@ -24,7 +25,7 @@ public class IntentosFallidos extends EntidadPersistente {
 
     public IntentosFallidos(){
         this.intentosRealizados = 0;
-        horaDelIntentoMaximo = null;
+        this.horaDelIntentoMaximo = null;
     }
 
     public int getCantidadIntentos() {

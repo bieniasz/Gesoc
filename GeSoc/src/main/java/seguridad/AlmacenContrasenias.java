@@ -127,8 +127,14 @@ public class AlmacenContrasenias extends EntidadPersistente {
 
     public void crearIntentoFallidoSiAplica(Usuario usuario){
         // TODO fijarse que error retorna el DAO
-        /*if (this.existeUsuario(usuario) && !this.intentosFallidos.containsKey(usuario)){
-            this.intentosFallidos.put(usuario, new IntentosFallidos());
-        }*/
+        // si existe un intento fallido no hacer nada, si no, crearlo1
+
+        Boolean esElPrimerIntento = this.getIntentosFallidosDeUsuario(usuario) == null;
+        if (this.existeUsuario(usuario) && esElPrimerIntento){
+            IntentosFallidos intento = new IntentosFallidos();
+            intento.setUsuarioId(usuario.getid());
+
+            this.intentosFallidosDAO.persistirIntentoFallido(intento);
+        }
     }
 }

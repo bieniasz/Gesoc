@@ -1,5 +1,7 @@
-package seguridad;
+package seguridad.CriteriosLogin;
 
+import seguridad.AlmacenContrasenias;
+import seguridad.CriterioValidacion;
 import seguridad.IntentosFallidos.IntentosFallidos;
 import usuario.Usuario;
 
@@ -35,8 +37,6 @@ public class CriterioTiempoLogin implements CriterioValidacion {
                     this.almacen.reiniciarIntentosFallidos(usuario);
             }
         }
-
-
     }
 
 

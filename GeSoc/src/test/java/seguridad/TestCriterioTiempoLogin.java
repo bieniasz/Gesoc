@@ -1,11 +1,14 @@
 package seguridad;
 
-import com.sun.media.sound.AlawCodec;
 import org.junit.Assert;
 import org.junit.Before;
 import org.junit.Test;
 //import sun.font.TrueTypeFont;
+import seguridad.ContraseniasPrevias.ContraseniasPreviasDAOMemoria;
+import seguridad.CriteriosLogin.CriterioLogin;
+import seguridad.CriteriosLogin.CriterioTiempoLogin;
 import seguridad.IntentosFallidos.IntentosFallidos;
+import seguridad.IntentosFallidos.IntentosFallidosDAOMemoria;
 import usuario.Usuario;
 
 import java.time.Duration;
@@ -23,9 +26,10 @@ public class TestCriterioTiempoLogin {
     @Before
     public void init() {
 
-        //TODO configurar el almacen con los DAO dummy
         this.errorMessages = new ArrayList<String>();
         this.almacen = new AlmacenContrasenias();
+        this.almacen.setIntentosFallidosDAO(new IntentosFallidosDAOMemoria());
+        this.almacen.setContraseniasPreviasDAO(new ContraseniasPreviasDAOMemoria());
         this.criterio = new CriterioTiempoLogin(this.almacen);
     }
 
@@ -35,7 +39,8 @@ public class TestCriterioTiempoLogin {
         usuarioQueExiste.setUsuarioId("user");
 
         this.almacen.registrarContrasenia(usuarioQueExiste,"password");
-        new CriterioLogin(this.almacen).validar(usuarioQueExiste,"password",new ArrayList<String>());
+        new CriterioLogin(this.almacen).validar(usuarioQueExiste,"password1",new ArrayList<String>());
+
         this.criterio.errorAlLogear(usuarioQueExiste);
         IntentosFallidos intentosFallidos = this.almacen.getIntentosFallidosDeUsuario(usuarioQueExiste);
         Assert.assertEquals(intentosFallidos.getCantidadIntentos(), 1);
@@ -61,7 +66,7 @@ public class TestCriterioTiempoLogin {
         Usuario usuarioQueExiste = new Usuario();
         usuarioQueExiste.setUsuarioId("user");
         this.almacen.registrarContrasenia(usuarioQueExiste,"password");
-        new CriterioLogin(this.almacen).validar(usuarioQueExiste,"password",new ArrayList<String>());
+        new CriterioLogin(this.almacen).validar(usuarioQueExiste,"password1",new ArrayList<String>());
         // INTENTO 1
 
         criterio.errorAlLogear(usuarioQueExiste);
@@ -105,7 +110,7 @@ public class TestCriterioTiempoLogin {
         usuarioQueExiste.setUsuarioId("user");
 
         this.almacen.registrarContrasenia(usuarioQueExiste,"password");
-        new CriterioLogin(this.almacen).validar(usuarioQueExiste,"password",new ArrayList<String>());
+        new CriterioLogin(this.almacen).validar(usuarioQueExiste,"password1",new ArrayList<String>());
 
         IntentosFallidos intentosFallidos = this.almacen.getIntentosFallidosDeUsuario(usuarioQueExiste);
 
@@ -120,7 +125,7 @@ public class TestCriterioTiempoLogin {
         usuarioQueExiste.setUsuarioId("user");
 
         this.almacen.registrarContrasenia(usuarioQueExiste,"password");
-        new CriterioLogin(this.almacen).validar(usuarioQueExiste,"password",new ArrayList<String>());
+        new CriterioLogin(this.almacen).validar(usuarioQueExiste,"password1",new ArrayList<String>());
 
         // INTENTO 1
         criterio.errorAlLogear(usuarioQueExiste);
@@ -134,7 +139,7 @@ public class TestCriterioTiempoLogin {
         usuarioQueExiste.setUsuarioId("user");
 
         this.almacen.registrarContrasenia(usuarioQueExiste,"password");
-        new CriterioLogin(this.almacen).validar(usuarioQueExiste,"password",new ArrayList<String>());
+        new CriterioLogin(this.almacen).validar(usuarioQueExiste,"password1",new ArrayList<String>());
 
         // INTENTO 1
         criterio.errorAlLogear(usuarioQueExiste);
@@ -152,7 +157,7 @@ public class TestCriterioTiempoLogin {
         usuarioQueExiste.setUsuarioId("user");
 
         this.almacen.registrarContrasenia(usuarioQueExiste,"password");
-        new CriterioLogin(this.almacen).validar(usuarioQueExiste,"password",new ArrayList<String>());
+        new CriterioLogin(this.almacen).validar(usuarioQueExiste,"password1",new ArrayList<String>());
 
         // INTENTO 1
         criterio.errorAlLogear(usuarioQueExiste);
@@ -173,7 +178,7 @@ public class TestCriterioTiempoLogin {
         usuarioQueExiste.setUsuarioId("user");
 
         this.almacen.registrarContrasenia(usuarioQueExiste,"password");
-        new CriterioLogin(this.almacen).validar(usuarioQueExiste,"password",new ArrayList<String>());
+        new CriterioLogin(this.almacen).validar(usuarioQueExiste,"password1",new ArrayList<String>());
 
         // INTENTO 1
         criterio.errorAlLogear(usuarioQueExiste);
@@ -197,7 +202,7 @@ public class TestCriterioTiempoLogin {
         usuarioQueExiste.setUsuarioId("user");;
 
        this.almacen.registrarContrasenia(usuarioQueExiste,"password");
-        new CriterioLogin(this.almacen).validar(usuarioQueExiste,"password",new ArrayList<String>());
+        new CriterioLogin(this.almacen).validar(usuarioQueExiste,"password1",new ArrayList<String>());
 
         // INTENTO 1
         criterio.errorAlLogear(usuarioQueExiste);

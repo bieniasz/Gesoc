@@ -3,8 +3,8 @@ package seguridad;
 import org.junit.Assert;
 import org.junit.Before;
 import org.junit.Test;
-import seguridad.ContraseniasPrevias.ContraseniasPreviasMySQL;
-import seguridad.IntentosFallidos.IntentosFallidosMySQL;
+import db.ContraseniasPreviasDAOMySQL;
+import db.IntentosFallidosDAOMySQL;
 import usuario.Usuario;
 
 import java.util.List;
@@ -18,8 +18,8 @@ public class TestValidadorDeUsuario {
         this.validador = new ValidadorDeUsuario();
         // TODO la posta es usar unos DAO que no vallan a la DB
         // TODO setear el Almacen en el validador
-        this.almancen.setContraseniasPreviasDAO(new ContraseniasPreviasMySQL());
-        this.almancen.setIntentosFallidosDAO(new IntentosFallidosMySQL());
+        this.almancen.setContraseniasPreviasDAO(new ContraseniasPreviasDAOMySQL());
+        this.almancen.setIntentosFallidosDAO(new IntentosFallidosDAOMySQL());
     }
 
             /*this.criteriosCreacionContrasenia.add(new CriterioCaracteresEspeciales());

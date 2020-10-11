@@ -3,6 +3,8 @@ package seguridad;
 import org.junit.Assert;
 import org.junit.Before;
 import org.junit.Test;
+import seguridad.ContraseniasPrevias.ContraseniasPreviasDAOMemoria;
+import seguridad.CriteriosLogin.CriterioLogin;
 import usuario.Usuario;
 
 import java.util.ArrayList;
@@ -18,6 +20,7 @@ public class TestCriterioLogin {
     public void init() {
         //TODO: setear DAOs dummy
         this.almacen = new AlmacenContrasenias();
+        this.almacen.setContraseniasPreviasDAO(new ContraseniasPreviasDAOMemoria());
         this.criterio = new CriterioLogin(this.almacen);
         this.errorMessages = new ArrayList<String>();
     }
@@ -25,6 +28,7 @@ public class TestCriterioLogin {
     @Test
     public void usuarioYcontraseniaCoincidenConElALmacen(){
         //TODO: tengo que asegurarme solo con la contrasenia actual y no una vieja
+        //TODO: debugear para ver que no se me este pasando nada
         Usuario user = new Usuario();
         user.setUsuarioId("user");
         this.almacen.registrarContrasenia(user,"password");

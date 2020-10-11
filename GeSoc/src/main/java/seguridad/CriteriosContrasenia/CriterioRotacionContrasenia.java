@@ -1,5 +1,7 @@
-package seguridad;
+package seguridad.CriteriosContrasenia;
 
+import seguridad.AlmacenContrasenias;
+import seguridad.CriterioValidacion;
 import usuario.Usuario;
 
 import java.util.List;

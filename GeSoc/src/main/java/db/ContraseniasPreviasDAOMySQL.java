@@ -1,13 +1,15 @@
-package seguridad.ContraseniasPrevias;
+package db;
 
 import db.EntityManagerHelper;
+import seguridad.ContraseniasPrevias.ContraseniasPrevias;
+import seguridad.ContraseniasPrevias.ContraseniasPreviasDAO;
 import usuario.Usuario;
 
 import javax.persistence.Query;
 import java.util.List;
 
 
-public class ContraseniasPreviasMySQL implements ContraseniasPreviasDAO{
+public class ContraseniasPreviasDAOMySQL implements ContraseniasPreviasDAO {
 
 
     @Override
