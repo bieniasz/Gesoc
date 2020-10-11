@@ -33,7 +33,7 @@ public class TestUsuarioAdmin {
         Assert.assertTrue(entidadJuridica instanceof EntidadJuridica);
     }
 
-    @Test
+  /*  @Test
     public void creacionDeUsuarioEstandar() throws Exception {
         Organizacion entidadJuridica = usuarioAdmin.getRol().altaOrganizacionJuridica();
         Usuario usuarioEstandar = usuarioAdmin.getRol().
@@ -49,7 +49,7 @@ public class TestUsuarioAdmin {
                 nuevoUsuarioEstandar("estandar123","Estandar@123", entidadJuridica);
 
         Assert.assertTrue(usuarioEstandar.getRol().getOrganizacion() instanceof Organizacion);
-    }
+    }*/
 /*
     @Test
     public void cambioDeContraseniaEnUsuarioYAlmacen() throws Exception {

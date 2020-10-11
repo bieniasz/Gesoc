@@ -12,16 +12,16 @@ import javax.persistence.Table;
 @DiscriminatorValue("Administrador")
 public class UsuarioAdmin extends Rol{
 
-    public UsuarioAdmin() {
-
-    }
-
+    //TODO: crear metodo para crear usuarios? los vamos a estar insertando directo en la db
+    //TODO: reveer toda esta herencia
     @Override
     public Usuario nuevoUsuarioEstandar(String usuario, String contrasenia, Organizacion organizacion) throws Exception {
-        ValidadorDeUsuario validadorDeUsuario = new ValidadorDeUsuario();
+        /*ValidadorDeUsuario validadorDeUsuario = new ValidadorDeUsuario();
+
         Usuario usuarioNuevo = validadorDeUsuario.crearUsuario(usuario,contrasenia);
         usuarioNuevo.setRol(new UsuarioEstandar(organizacion));
-        return usuarioNuevo;
+        return usuarioNuevo;*/
+        return new Usuario();
     }
 
     @Override

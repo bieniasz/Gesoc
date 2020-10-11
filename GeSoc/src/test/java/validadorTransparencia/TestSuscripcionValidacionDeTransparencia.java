@@ -1,5 +1,6 @@
 package validadorTransparencia;
 
+import operacionComercial.DetalleEgreso;
 import operacionComercial.OperacionEgreso;
 import operacionComercial.Presupuesto;
 import org.junit.Assert;
@@ -19,8 +20,14 @@ public class TestSuscripcionValidacionDeTransparencia {
 
     @Before
     public void init(){
-       // this.operacionEgreso = new OperacionEgreso(null,2,null,null,null,null,null,null);
-       // Presupuesto presupuesto = new Presupuesto(null,2,null,null, operacionEgreso,true);
+        this.operacionEgreso = new OperacionEgreso();
+        DetalleEgreso detalle = new DetalleEgreso();
+        detalle.valorTotal = 2.0;
+        Presupuesto presupuesto = new Presupuesto();
+        presupuesto.registrarDetalle(detalle);
+        presupuesto.setElegido(true);
+        presupuesto.setEgreso(this.operacionEgreso);
+
         CantidadIndicada criterioCantidad = new CantidadIndicada();
         criterioCantidad.setCantidadPresupuestos(1);
         this.revisor1 = new UsuarioRevisor(new EntidadBase());
@@ -54,7 +61,12 @@ public class TestSuscripcionValidacionDeTransparencia {
 
     @Test
     public void TestSuscripcionConErrorGenera1SoloResultado() {
-      //  Presupuesto otroPresupuesto = new Presupuesto(null,1,null,null, this.operacionEgreso,false);
+        DetalleEgreso detalle = new DetalleEgreso();
+        detalle.valorTotal = 1.0;
+        Presupuesto otroPresupuesto = new Presupuesto();
+        otroPresupuesto.registrarDetalle(detalle);
+        otroPresupuesto.setEgreso(this.operacionEgreso);
+
         MenorValor criterioMenorValor = new MenorValor();
         this.suscripcion.agregarCriterio(criterioMenorValor);
         this.suscripcion.validar();
@@ -65,7 +77,12 @@ public class TestSuscripcionValidacionDeTransparencia {
 
     @Test
     public void TestSuscripcionConErrorGeneraCantidadDeMensajes() {
-       // Presupuesto otroPresupuesto = new Presupuesto(null,1,null,null, this.operacionEgreso,false);
+        DetalleEgreso detalle = new DetalleEgreso();
+        detalle.valorTotal = 1.0;
+        Presupuesto otroPresupuesto = new Presupuesto();
+        otroPresupuesto.registrarDetalle(detalle);
+        otroPresupuesto.setEgreso(this.operacionEgreso);
+
         MenorValor criterioMenorValor = new MenorValor();
         this.suscripcion.agregarCriterio(criterioMenorValor);
         this.suscripcion.validar();
@@ -76,7 +93,13 @@ public class TestSuscripcionValidacionDeTransparencia {
 
     @Test
     public void TestSuscripcionConErrorMensaje() {
-      //  Presupuesto otroPresupuesto = new Presupuesto(null,1,null,null, this.operacionEgreso,false);
+        DetalleEgreso detalle = new DetalleEgreso();
+        detalle.valorTotal = 1.0;
+        Presupuesto otroPresupuesto = new Presupuesto();
+        otroPresupuesto.registrarDetalle(detalle);
+        otroPresupuesto.setElegido(false);
+        otroPresupuesto.setEgreso(this.operacionEgreso);
+
         MenorValor criterioMenorValor = new MenorValor();
         this.suscripcion.agregarCriterio(criterioMenorValor);
         this.suscripcion.validar();

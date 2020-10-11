@@ -28,13 +28,15 @@ public class CriterioTiempoLogin implements CriterioValidacion {
         LocalDateTime horaActual = LocalDateTime.now();  //.compareTo();
         IntentosFallidos intentosFallidos = almacen.getIntentosFallidosDeUsuario(usuario);
 
-        if (intentosFallidos.getCantidadIntentos() >= cantidadMaximaDeIntentos) {
-            LocalDateTime horaDelIntentoMaximo = intentosFallidos.getHoraDelIntentoMaximo();
-            int tiempoEntreLoginsMaximo = distanciaEnSegundosEntreTiempos(horaDelIntentoMaximo, horaActual);
-            if (this.cumpleCondicionDeEspera(usuario, tiempoEntreLoginsMaximo) == false) {
-                mensajesDeError.add("Debe esperar " + (tiempoDeEspera - tiempoEntreLoginsMaximo) + " segundos para volver loguearse.");
-                } else {
-                    this.almacen.reiniciarIntentosFallidos(usuario);
+        if (intentosFallidos != null) {
+            if (intentosFallidos.getCantidadIntentos() >= cantidadMaximaDeIntentos) {
+                LocalDateTime horaDelIntentoMaximo = intentosFallidos.getHoraDelIntentoMaximo();
+                int tiempoEntreLoginsMaximo = distanciaEnSegundosEntreTiempos(horaDelIntentoMaximo, horaActual);
+                if (this.cumpleCondicionDeEspera(usuario, tiempoEntreLoginsMaximo) == false) {
+                    mensajesDeError.add("Debe esperar " + (tiempoDeEspera - tiempoEntreLoginsMaximo) + " segundos para volver loguearse.");
+                    } else {
+                        this.almacen.reiniciarIntentosFallidos(usuario);
+                }
             }
         }
     }

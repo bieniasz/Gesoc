@@ -1,6 +1,6 @@
 package seguridad;
 
-import db.UserDAO;
+import usuario.UserDAO;
 import seguridad.CriteriosLogin.CriterioLogin;
 import seguridad.CriteriosLogin.CriterioTiempoLogin;
 import usuario.Usuario;
@@ -10,11 +10,12 @@ import java.util.List;
 
 public class ValidadorDeUsuario implements iValidadorDeUsuario{
 
-    //TODO: cuidado con los DAO y el almacen, todo debe ir con su set, nada por contructor.
+    //TODO: armar builder para tener todos los criterios seteados
     private List<CriterioValidacion> criteriosCreacionContrasenia = new ArrayList<>();
-    private AlmacenContrasenias almacenContrasenias = new AlmacenContrasenias();
+    private AlmacenContrasenias almacenContrasenias;
     private UserDAO usuarioDao;
 
+    public void setAlmacenContrasenias(AlmacenContrasenias almacenContrasenias) { this.almacenContrasenias = almacenContrasenias; }
     public void setUsuarioDao(UserDAO usuarioDao) {
         this.usuarioDao = usuarioDao;
     }
@@ -38,28 +39,6 @@ public class ValidadorDeUsuario implements iValidadorDeUsuario{
         return errores;
     }
 
-
-    public Usuario crearUsuario(String usuario, String contrasenia) throws Exception{
-        List<String> mensajesDeError = this.validarCreacionContrasenia(usuario,contrasenia);
-
-        try {
-            if (mensajesDeError.size() > 0){
-                throw new Exception();
-            } else {
-                // TODO return new Usuario(usuario);
-            }
-        } catch (Exception e) {
-            //TODO cambiar para que no haga print por pantalla.
-            System.out.println("El usuario " + "\"" + usuario + "\"" + " no pudo ser creado porque se presentaron los siguientes errores:");
-            System.out.println(mensajesDeError);
-            throw e;
-        }
-
-        Usuario user = new Usuario();
-        user.setUsuarioId(usuario);
-        user.setContrasenia(contrasenia);
-        return user;
-    }
 
     public List<String> validarContraseniaLogin(String usuarioId, String contrasenia) {
         Usuario usuario = this.getUsuario(usuarioId);

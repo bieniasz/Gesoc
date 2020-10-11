@@ -5,6 +5,11 @@ import org.junit.Before;
 import org.junit.Test;
 import db.ContraseniasPreviasDAOMySQL;
 import db.IntentosFallidosDAOMySQL;
+import seguridad.ContraseniasPrevias.ContraseniasPreviasDAOMemoria;
+import seguridad.CriteriosContrasenia.*;
+import seguridad.IntentosFallidos.IntentosFallidosDAOMemoria;
+import usuario.UserDAO;
+import usuario.UserDAOMemoria;
 import usuario.Usuario;
 
 import java.util.List;
@@ -12,32 +17,35 @@ import java.util.List;
 public class TestValidadorDeUsuario {
     private ValidadorDeUsuario validador;
     private AlmacenContrasenias almancen;
+    private Usuario usuario;
 
     @Before
     public void init(){
-        this.validador = new ValidadorDeUsuario();
-        // TODO la posta es usar unos DAO que no vallan a la DB
-        // TODO setear el Almacen en el validador
-        this.almancen.setContraseniasPreviasDAO(new ContraseniasPreviasDAOMySQL());
-        this.almancen.setIntentosFallidosDAO(new IntentosFallidosDAOMySQL());
-    }
+        this.almancen = new AlmacenContrasenias();
+        this.almancen.setContraseniasPreviasDAO(new ContraseniasPreviasDAOMemoria());
+        this.almancen.setIntentosFallidosDAO(new IntentosFallidosDAOMemoria());
 
-            /*this.criteriosCreacionContrasenia.add(new CriterioCaracteresEspeciales());
-        this.criteriosCreacionContrasenia.add(new CriterioFueraListaNegra());
-        this.criteriosCreacionContrasenia.add(new CriterioLongitud());
-        this.criteriosCreacionContrasenia.add(new CriterioMinusculasYMayusculas());
-        this.criteriosCreacionContrasenia.add(new CriterioRotacionContrasenia(this.almacenContrasenias));*/
+        this.usuario = new Usuario();
+        this.usuario.setUsuarioId("testUser");
+        UserDAO usuarioDao = new UserDAOMemoria();
+        usuarioDao.persistirUsuario(this.usuario);
+        this.validador = new ValidadorDeUsuario();
+        this.validador.setUsuarioDao(usuarioDao);
+        this.validador.setAlmacenContrasenias(this.almancen);
+    }
 
 
     @Test
     public void contraseniaNORompeCriterios(){
-
-       List<String> mensajesDeError = this.validador.validarCreacionContrasenia("testUser", "nnKKKKK6456/(%nn");
-       Assert.assertEquals(0, mensajesDeError.size());
+        this.validador.agregarCriterioDeCreacionDeContrasenia(new CriterioCaracteresEspeciales());
+        List<String> mensajesDeError = this.validador.validarCreacionContrasenia("testUser", "nnKKKKK6456/(%nn");
+        Assert.assertEquals(0, mensajesDeError.size());
     }
 
     @Test
     public void contraseniaRompeUnSoloCriterio(){
+        this.validador.agregarCriterioDeCreacionDeContrasenia(new CriterioCaracteresEspeciales());
+        this.validador.agregarCriterioDeCreacionDeContrasenia(new CriterioMinusculasYMayusculas());
 
         List<String> mensajesDeError = this.validador.validarCreacionContrasenia("testUser", "nnnnnnnnnnnnnnnn&#");
         Assert.assertEquals(1, mensajesDeError.size());
@@ -45,6 +53,9 @@ public class TestValidadorDeUsuario {
 
     @Test
     public void contraseniaRompeMultiplesCriterios() {
+        this.validador.agregarCriterioDeCreacionDeContrasenia(new CriterioCaracteresEspeciales());
+        this.validador.agregarCriterioDeCreacionDeContrasenia(new CriterioLongitud());
+        this.validador.agregarCriterioDeCreacionDeContrasenia(new CriterioMinusculasYMayusculas());
 
         List<String> mensajesDeError = this.validador.validarCreacionContrasenia("testUser", "nnnn");
         Assert.assertEquals(3, mensajesDeError.size());
@@ -52,71 +63,55 @@ public class TestValidadorDeUsuario {
 
     @Test
     public void validaElAlmacenContrasenias() {
+        this.validador.agregarCriterioDeCreacionDeContrasenia(new CriterioRotacionContrasenia(this.almancen));
+        this.almancen.registrarContrasenia(this.usuario, "nnKKKKK6456/(%nn");
 
         List<String> mensajesDeError = this.validador.validarCreacionContrasenia("testUser","nnKKKKK6456/(%nn");
-        mensajesDeError = this.validador.validarCreacionContrasenia("testUser","nnKKKKK6456/(%nn");
         Assert.assertEquals(1, mensajesDeError.size());
     }
 
     @Test
     public void validarMetodoContraseniaLoginConError(){
-
+        //TODO: los criterios de login todavia los tengo harcodeados, los tengo que mover a setters
         List<String> errores = this.validador.validarContraseniaLogin("user","password");
         Assert.assertEquals(1,errores.size());
     }
 
     @Test
     public void validarMetodoContraseniaLoginSinError(){
-      //  AlmacenContrasenias.Instancia().registrarContrasenia("user","password");
-        List<String> errores = this.validador.validarContraseniaLogin("user","password");
+        this.almancen.registrarContrasenia(this.usuario,"password");
+        List<String> errores = this.validador.validarContraseniaLogin("testUser","password");
         Assert.assertEquals(0,errores.size());
     }
 
     @Test
     public void validarMetodoContraseniaLoginMultiple() throws InterruptedException {
-       // AlmacenContrasenias.Instancia().registrarContrasenia("user","password");
+        this.almancen.registrarContrasenia(this.usuario,"password");
         List<String> errores;
 
         //Intento 1 fallido
-        errores = this.validador.validarContraseniaLogin("user","Incorrecta");
+        errores = this.validador.validarContraseniaLogin("testUser","Incorrecta");
         Assert.assertEquals(1,errores.size());
-       // Assert.assertTrue(AlmacenContrasenias.Instancia().getIntentosFallidosDeUsuario("user") != null);
+        Assert.assertTrue(this.almancen.getIntentosFallidosDeUsuario(this.usuario) != null);
 
         //Intento 2 fallido
-        errores = this.validador.validarContraseniaLogin("user","Incorrecta");
+        errores = this.validador.validarContraseniaLogin("testUser","Incorrecta");
         Assert.assertEquals(1,errores.size());
 
         //Intento 3 fallido
-        errores = this.validador.validarContraseniaLogin("user","Incorrecta");
+        errores = this.validador.validarContraseniaLogin("testUser","Incorrecta");
         Assert.assertEquals(1,errores.size());
-       // Assert.assertEquals(3,AlmacenContrasenias.Instancia().getIntentosFallidosDeUsuario("user").getCantidadIntentos());
+        Assert.assertEquals(3,this.almancen.getIntentosFallidosDeUsuario(usuario).getCantidadIntentos());
 
         //Intento 4 correcto sin tiempo de espera
-        errores = this.validador.validarContraseniaLogin("user","password");
+        errores = this.validador.validarContraseniaLogin("testUser","password");
         Assert.assertEquals(1,errores.size());
-        //System.out.println(errores);
+        System.out.println(errores);
 
         //Intento 4 correcto con tiempo de espera
         Thread.sleep(5000);
-        errores = this.validador.validarContraseniaLogin("user","password");
+        errores = this.validador.validarContraseniaLogin("testUser","password");
         Assert.assertEquals(0,errores.size());
-    }
-
-    @Test
-    public void validarMetodoCreacionDeUsuario() throws Exception {
-        Usuario usuario = validador.crearUsuario("usuario123","Contraseña1234@");
-        Assert.assertTrue(usuario instanceof Usuario);
-    }
-
-    @Test
-    public void metodoCreacionDeusuarioConError() throws Exception {
-        try {
-            Usuario usuario = validador.crearUsuario("usuario123","contraseña1234@");
-        } catch (Exception e) {
-            Assert.assertTrue(true);
-            return;
-        }
-        Assert.assertTrue(false);
     }
 }
 

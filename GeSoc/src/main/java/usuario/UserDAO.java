@@ -1,4 +1,4 @@
-package db;
+package usuario;
 
 import usuario.Usuario;
 
