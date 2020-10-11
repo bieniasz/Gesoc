@@ -21,6 +21,9 @@ public class DocumentoComercial extends EntidadPersistente {
     @Column
     private String content;
 
+    @Column
+    private boolean activo;
+
 
     public void guardarDocumentoFisico(TipoComprobante tipo,Long numeroDocumento,String contenido){
 

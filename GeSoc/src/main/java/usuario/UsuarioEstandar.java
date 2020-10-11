@@ -5,6 +5,7 @@ import organizacion.Organizacion;
 
 import javax.persistence.DiscriminatorValue;
 import javax.persistence.Entity;
+import javax.persistence.JoinColumn;
 import javax.persistence.ManyToOne;
 
 @Entity
@@ -12,6 +13,7 @@ import javax.persistence.ManyToOne;
 public class UsuarioEstandar extends Rol{
 
     @ManyToOne
+    @JoinColumn(name="organizacion",referencedColumnName = "id")
     protected Organizacion organizacion;
 
     public UsuarioEstandar(Organizacion organizacion) {

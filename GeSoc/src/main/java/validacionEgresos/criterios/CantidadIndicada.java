@@ -16,7 +16,7 @@ public class CantidadIndicada extends CriterioValidacionEgresosPresupuesto {
 
 	@Column
 	public int cantidadPresupuestos;
-	
+
 	@Override
 	public void validar  (OperacionEgreso operacion) throws Exception{
 		int cantidad =operacion.getPresupuestos().size();

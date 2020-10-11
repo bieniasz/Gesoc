@@ -17,7 +17,6 @@ public class UsuarioAdmin extends Rol{
     @Override
     public Usuario nuevoUsuarioEstandar(String usuario, String contrasenia, Organizacion organizacion) throws Exception {
         /*ValidadorDeUsuario validadorDeUsuario = new ValidadorDeUsuario();
-
         Usuario usuarioNuevo = validadorDeUsuario.crearUsuario(usuario,contrasenia);
         usuarioNuevo.setRol(new UsuarioEstandar(organizacion));
         return usuarioNuevo;*/
@@ -39,7 +38,7 @@ public class UsuarioAdmin extends Rol{
 
     @Override
     public Organizacion altaOrganizacionJuridica(){
-    return new EntidadJuridica();
+        return new EntidadJuridica();
     }
 
 }

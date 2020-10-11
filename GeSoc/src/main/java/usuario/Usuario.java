@@ -19,7 +19,7 @@ public class Usuario extends EntidadPersistente {
 
     //TODO cifrar contrasenia
     @Column
-    private String contrasenia;
+    private String contrasenias;
 
     @ManyToOne
     private Rol rol;
@@ -27,7 +27,7 @@ public class Usuario extends EntidadPersistente {
     public String getUsuario() {
         return this.usuarioId;
     }
-    public String getContrasenia() {return this.contrasenia; }
+    public String getContrasenia() {return this.contrasenias; }
     public Rol getRol() {
         return rol;
     }
@@ -36,5 +36,5 @@ public class Usuario extends EntidadPersistente {
         this.rol = rol;
     }
     public void setUsuarioId(String usuarioId) { this.usuarioId = usuarioId; }
-    public void setContrasenia(String contrasenia) { this.contrasenia = contrasenia; }
+    public void setContrasenia(String contrasenia) { this.contrasenias = contrasenia; }
 }

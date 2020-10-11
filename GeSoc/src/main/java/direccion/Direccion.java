@@ -27,6 +27,9 @@ public class Direccion extends EntidadPersistente{
     @ManyToOne
     public Pais pais;
 
-    @Transient
+    @Column
+    private boolean activo;
+
+    @OneToOne
     public Moneda monedaLocal;
 }

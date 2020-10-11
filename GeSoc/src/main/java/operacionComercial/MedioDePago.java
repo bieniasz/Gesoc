@@ -1,9 +1,9 @@
 package operacionComercial;
 
 
-import org.hibernate.annotations.IndexColumn;
-
-import javax.persistence.*;
+import javax.persistence.Column;
+import javax.persistence.Entity;
+import javax.persistence.Table;
 
 @Entity
 @Table(name="MedioDePago")
@@ -18,6 +18,9 @@ public class MedioDePago extends EntidadPersistente {
 
     @Column(name="TipoMercardoPago")
     private String tipoMercadoPago;
+
+    @Column
+    private boolean activo;
 
     public void pagar(){}
     public void altaMedioDePago(){}

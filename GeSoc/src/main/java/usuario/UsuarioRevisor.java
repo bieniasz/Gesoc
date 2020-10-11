@@ -15,7 +15,7 @@ public class UsuarioRevisor extends Rol{
     @ManyToOne
     private Organizacion organizacion;
 
-    @OneToMany
+    @OneToOne
     public BandejaDeResultado bandejaDeResultado = new BandejaDeResultado();
 
     public UsuarioRevisor(Organizacion organizacion){

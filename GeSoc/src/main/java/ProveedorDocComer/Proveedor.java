@@ -23,7 +23,8 @@ public class Proveedor extends EntidadPersistente {
 
     @Column
     private String estado;
-
+    @Column
+    private boolean activo;
 
 public void altaProveedor(String nomApRazonSocial,String tipoIdentificador,Long numeroIdenti,Direccion direccionPost,String estado){
 

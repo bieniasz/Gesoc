@@ -2,11 +2,24 @@ package operacionComercial;
 
 import ProveedorDocComer.Proveedor;
 
+import javax.persistence.Column;
+import javax.persistence.Entity;
+import javax.persistence.ManyToMany;
+import javax.persistence.Table;
 import java.util.List;
 
-public class Item { //TODO evaluar nombre mas descriptivo como "ItemOperacionComercial"
+
+@Entity
+@Table(name="Item")
+public class Item extends EntidadPersistente{ //TODO evaluar nombre mas descriptivo como "ItemOperacionComercial"
+
+    @Column
     private String descripcion;
+    @ManyToMany
     private List<Proveedor> proveedores;
+
+    @Column
+    private boolean activo;
 
     public void altaItem() {}
 

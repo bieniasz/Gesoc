@@ -31,13 +31,13 @@ public abstract class OperacionComercial extends EntidadPersistente {
     @OneToOne(fetch = FetchType.LAZY, cascade=CascadeType.ALL)
     private DocumentoComercial documentoComercial;
 
-    @OneToMany
+    @OneToMany(fetch = FetchType.LAZY, cascade=CascadeType.ALL)
     @JoinColumn(name="DetalleEgreso",referencedColumnName = "id")
-    private List<DetalleEgreso> detalle = new ArrayList<>();
+    private List<DetalleEgreso> detalle;
 
-    @OneToMany
+    @OneToMany(fetch = FetchType.LAZY, cascade=CascadeType.ALL)
     @JoinColumn(name="CategoriaDeOperaciones",referencedColumnName = "id")
-    private List<CategoriaDeOperaciones> categoriasAsociadas = new ArrayList<>();
+    private List<CategoriaDeOperaciones> categoriasAsociadas;
 
     public LocalDate getFecha() { return fecha; }
     public Double getValorTotal() { return valorTotal; }

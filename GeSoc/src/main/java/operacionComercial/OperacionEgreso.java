@@ -16,6 +16,7 @@ import java.util.List;
 public class OperacionEgreso extends OperacionComercial {
 
     @ManyToOne
+    @JoinColumn(name="medioDePago",referencedColumnName = "id")
     private MedioDePago medioDePago;
 
     @Column
@@ -25,7 +26,7 @@ public class OperacionEgreso extends OperacionComercial {
     private Proveedor proveedor;
 
     @ManyToOne
-    @JoinColumn(name = "Organizacion",referencedColumnName = "id")
+    @JoinColumn(name = "organizacion",referencedColumnName = "id")
     private Organizacion organizacion;
 
     @Column

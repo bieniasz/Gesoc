@@ -9,12 +9,16 @@ import java.util.List;
 import java.util.Map;
 
  @Entity
+ @Table
 public abstract class Organizacion extends EntidadPersistente {
 
      @OneToMany
     protected List<OperacionEgreso> operacionesDeEgreso;
 
-    public Map<String, String> getDatos(){
+     @Column
+     private boolean activo;
+
+     public Map<String, String> getDatos(){
         return new HashMap<String, String>();
     }
 }
