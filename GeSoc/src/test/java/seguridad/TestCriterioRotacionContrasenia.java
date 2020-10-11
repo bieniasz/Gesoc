@@ -3,7 +3,9 @@ package seguridad;
 import org.junit.Assert;
 import org.junit.Before;
 import org.junit.Test;
+import seguridad.ContraseniasPrevias.ContraseniasPreviasDAOMemoria;
 import seguridad.CriteriosContrasenia.CriterioRotacionContrasenia;
+import seguridad.IntentosFallidos.IntentosFallidosDAOMemoria;
 import usuario.Usuario;
 
 import java.util.ArrayList;
@@ -20,6 +22,8 @@ public class TestCriterioRotacionContrasenia {
     public void init(){
 
         this.almacen = new AlmacenContrasenias();
+        this.almacen.setContraseniasPreviasDAO(new ContraseniasPreviasDAOMemoria());
+        this.almacen.setIntentosFallidosDAO(new IntentosFallidosDAOMemoria());
         this.criterio = new CriterioRotacionContrasenia(this.almacen);
         this.errorMessages = new ArrayList<String>();
         this.almacen.setPeriodosDeRotacion(3);
