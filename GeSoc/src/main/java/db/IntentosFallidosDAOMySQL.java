@@ -1,8 +1,8 @@
 package db;
 
-import seguridad.IntentosFallidos.IntentosFallidos;
-import seguridad.IntentosFallidos.IntentosFallidosDAO;
-import usuario.Usuario;
+import domain.entities.seguridad.IntentosFallidos.IntentosFallidos;
+import domain.entities.seguridad.IntentosFallidos.IntentosFallidosDAO;
+import domain.entities.usuario.Usuario;
 
 public class IntentosFallidosDAOMySQL implements IntentosFallidosDAO {
     @Override

@@ -1,6 +1,6 @@
 package server;
 
-import controllers.OperacionEgresoController;
+import domain.controllers.OperacionEgresoController;
 import spark.Spark;
 import spark.template.handlebars.HandlebarsTemplateEngine;
 import spark.utils.BooleanHelper;
@@ -30,6 +30,7 @@ public class Router {
         Spark.get("/saludo", (request, response) -> "hola " + request.queryParams("nombre"));
         Spark.get("/otroSaludo/:nombre", (request, response) -> "hola " + request.params("nombre"));
         Spark.get("/saludoMaquina", controller::saluda);
+        Spark.get("/mostrarEgresos", controller::mostrarEgresos);
 
     }
 }

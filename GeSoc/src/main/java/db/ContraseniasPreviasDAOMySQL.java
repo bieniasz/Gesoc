@@ -1,9 +1,8 @@
 package db;
 
-import db.EntityManagerHelper;
-import seguridad.ContraseniasPrevias.ContraseniasPrevias;
-import seguridad.ContraseniasPrevias.ContraseniasPreviasDAO;
-import usuario.Usuario;
+import domain.entities.seguridad.ContraseniasPrevias.ContraseniasPrevias;
+import domain.entities.seguridad.ContraseniasPrevias.ContraseniasPreviasDAO;
+import domain.entities.usuario.Usuario;
 
 import javax.persistence.Query;
 import java.util.List;
