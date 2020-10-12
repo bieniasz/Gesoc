@@ -30,7 +30,7 @@ public class Router {
         Spark.get("/saludo", (request, response) -> "hola " + request.queryParams("nombre"));
         Spark.get("/otroSaludo/:nombre", (request, response) -> "hola " + request.params("nombre"));
         Spark.get("/saludoMaquina", controller::saluda);
-        Spark.get("/mostrarEgresos", controller::mostrarEgresos);
+        Spark.get("/mostrarEgresos", controller::mostrarEgresos, Router.engine);
 
     }
 }

@@ -12,6 +12,6 @@ public class OperacionEgresoController {
 
     public ModelAndView mostrarEgresos(Request request, Response response) {
 
-        return new ModelAndView(null, "pagina1.hbs");
+        return new ModelAndView(null, "operacionEgresoNuevo.hbs");
     }
 }
