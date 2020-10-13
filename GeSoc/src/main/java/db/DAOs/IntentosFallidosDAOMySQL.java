@@ -1,7 +1,6 @@
-package db;
+package db.DAOs;
 
 import domain.entities.seguridad.IntentosFallidos.IntentosFallidos;
-import domain.entities.seguridad.IntentosFallidos.IntentosFallidosDAO;
 import domain.entities.usuario.Usuario;
 
 public class IntentosFallidosDAOMySQL implements IntentosFallidosDAO {

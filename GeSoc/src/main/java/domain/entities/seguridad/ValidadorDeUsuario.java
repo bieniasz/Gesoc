@@ -1,6 +1,6 @@
 package domain.entities.seguridad;
 
-import domain.entities.usuario.UserDAO;
+import db.DAOs.UserDAO;
 import domain.entities.seguridad.CriteriosLogin.CriterioLogin;
 import domain.entities.seguridad.CriteriosLogin.CriterioTiempoLogin;
 import domain.entities.usuario.Usuario;

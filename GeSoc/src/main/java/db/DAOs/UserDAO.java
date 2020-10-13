@@ -1,4 +1,6 @@
-package domain.entities.usuario;
+package db.DAOs;
+
+import domain.entities.usuario.Usuario;
 
 public interface UserDAO {
     public Usuario getUsuario(String userId);

@@ -3,11 +3,11 @@ package domain.entities.seguridad;
 import org.junit.Assert;
 import org.junit.Before;
 import org.junit.Test;
-import domain.entities.seguridad.ContraseniasPrevias.ContraseniasPreviasDAOMemoria;
+import db.DAOs.ContraseniasPreviasDAOMemoria;
 import domain.entities.seguridad.CriteriosContrasenia.*;
-import domain.entities.seguridad.IntentosFallidos.IntentosFallidosDAOMemoria;
-import domain.entities.usuario.UserDAO;
-import domain.entities.usuario.UserDAOMemoria;
+import db.DAOs.IntentosFallidosDAOMemoria;
+import db.DAOs.UserDAO;
+import db.DAOs.UserDAOMemoria;
 import domain.entities.usuario.Usuario;
 
 import java.util.List;

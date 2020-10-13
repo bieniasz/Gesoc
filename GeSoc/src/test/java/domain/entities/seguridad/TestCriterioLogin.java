@@ -3,7 +3,7 @@ package domain.entities.seguridad;
 import org.junit.Assert;
 import org.junit.Before;
 import org.junit.Test;
-import domain.entities.seguridad.ContraseniasPrevias.ContraseniasPreviasDAOMemoria;
+import db.DAOs.ContraseniasPreviasDAOMemoria;
 import domain.entities.seguridad.CriteriosLogin.CriterioLogin;
 import domain.entities.usuario.Usuario;
 

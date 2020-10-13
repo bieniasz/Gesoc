@@ -2,9 +2,9 @@ package domain.entities.seguridad;
 
 import domain.entities.operacionComercial.EntidadPersistente;
 import domain.entities.seguridad.ContraseniasPrevias.ContraseniasPrevias;
-import domain.entities.seguridad.ContraseniasPrevias.ContraseniasPreviasDAO;
+import db.DAOs.ContraseniasPreviasDAO;
 import domain.entities.seguridad.IntentosFallidos.IntentosFallidos;
-import domain.entities.seguridad.IntentosFallidos.IntentosFallidosDAO;
+import db.DAOs.IntentosFallidosDAO;
 import domain.entities.usuario.Usuario;
 
 import java.util.*;

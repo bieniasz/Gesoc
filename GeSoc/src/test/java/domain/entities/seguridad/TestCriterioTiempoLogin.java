@@ -4,11 +4,11 @@ import org.junit.Assert;
 import org.junit.Before;
 import org.junit.Test;
 //import sun.font.TrueTypeFont;
-import domain.entities.seguridad.ContraseniasPrevias.ContraseniasPreviasDAOMemoria;
+import db.DAOs.ContraseniasPreviasDAOMemoria;
 import domain.entities.seguridad.CriteriosLogin.CriterioLogin;
 import domain.entities.seguridad.CriteriosLogin.CriterioTiempoLogin;
 import domain.entities.seguridad.IntentosFallidos.IntentosFallidos;
-import domain.entities.seguridad.IntentosFallidos.IntentosFallidosDAOMemoria;
+import db.DAOs.IntentosFallidosDAOMemoria;
 import domain.entities.usuario.Usuario;
 
 import java.time.Duration;

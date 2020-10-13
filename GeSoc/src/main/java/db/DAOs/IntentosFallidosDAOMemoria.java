@@ -1,5 +1,6 @@
-package domain.entities.seguridad.IntentosFallidos;
+package db.DAOs;
 
+import domain.entities.seguridad.IntentosFallidos.IntentosFallidos;
 import domain.entities.usuario.Usuario;
 
 import java.util.HashMap;

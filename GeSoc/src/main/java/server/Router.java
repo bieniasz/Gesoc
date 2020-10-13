@@ -27,9 +27,12 @@ public class Router {
     private static void configure(){
         OperacionEgresoController controller = new OperacionEgresoController();
 
+        //TODO: borrar acciones de ejemplo
         Spark.get("/saludo", (request, response) -> "hola " + request.queryParams("nombre"));
         Spark.get("/otroSaludo/:nombre", (request, response) -> "hola " + request.params("nombre"));
         Spark.get("/saludoMaquina", controller::saluda);
+
+
         Spark.get("/mostrarEgresos", controller::mostrarEgresos, Router.engine);
 
     }

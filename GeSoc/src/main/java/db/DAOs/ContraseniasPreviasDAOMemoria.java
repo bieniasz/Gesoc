@@ -1,5 +1,7 @@
-package domain.entities.seguridad.ContraseniasPrevias;
+package db.DAOs;
 
+import db.DAOs.ContraseniasPreviasDAO;
+import domain.entities.seguridad.ContraseniasPrevias.ContraseniasPrevias;
 import domain.entities.usuario.Usuario;
 
 import java.util.*;
