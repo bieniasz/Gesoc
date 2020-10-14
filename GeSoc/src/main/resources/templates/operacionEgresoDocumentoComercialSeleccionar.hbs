@@ -1,0 +1,114 @@
+<!DOCTYPE html>
+<html>
+<title>Gesoc09 - Selección de documento comercial</title>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<link rel="stylesheet" href="css/w3.css">
+<link rel="stylesheet" href="https://fonts.googleapis.com/css?family=Raleway">
+<link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/4.7.0/css/font-awesome.min.css">
+<link rel="stylesheet" href="css/reset.css">
+<link rel="stylesheet" href="css/home.css">
+    <script src="https://kit.fontawesome.com/27517fada0.js"></script>
+    <link href="https://fonts.googleapis.com/css?family=Lexend+Deca&display=swap" rel="stylesheet">
+    <script src="https://code.jquery.com/jquery-3.4.1.min.js" integrity="sha256-CSXorXvZcTkaix6Yvo6HppcZGetbYMGWSFlBw8HfCJo=" crossorigin="anonymous"></script>
+    <script src="js/generales.js"></script>
+
+<style>
+html,body,h1,h2,h3,h4,h5 {font-family: "Raleway", sans-serif}
+</style>
+<body class="w3-light-grey">
+
+<!-- Top container -->
+<div class="w3-bar w3-top w3-black w3-large" style="z-index:4">
+  <!--<button class="w3-bar-item w3-button w3-hide-large w3-hover-none w3-hover-text-light-grey" onclick="w3_open();"><i class="fa fa-bars"></i>&nbsp;Menu</button> -->
+  <span class="w3-bar-item w3-right">
+    Gesoc 09&nbsp;
+
+    <img src="img/bandera.svg" class="w3-circle w3-margin-right" style="width:55px">
+  </span>
+</div>
+
+<!-- !PAGE CONTENT! -->
+<div class="w3-main" style="margin-left:50px;margin-top:43px;">
+
+  <!-- Header -->
+  <header class="titulo" style="padding-top:22px">
+    <b><i class="fa fa-bank fa-fw"></i>Operación de Egreso - Seleccionar Documento Comercial</b>
+  </header>
+
+      <!-- !Documentos comerciales! -->
+      <div>
+        <h3 style="margin-bottom: 5px;margin-left: 10px">Buscar Documentos Comerciales
+          <form action="index.html" method="post">
+            <input type="text" id="buscarTipoDocComer" placeholder="Tipo de Doc..." title="Tipo de Documento Comercial" class="form-control">
+            <input type="text" id="buscarNroDocComer" placeholder="Numero de Doc..." title="Número de Documento Comercial" class="form-control">
+            <button type="submit" title="Seleccionar"><i class="fa fa-search"></i></button>
+          </form>
+          <div class="scroll-formularios-seleccion">
+          <table class="tabla" id="documentosComerciales" name="Documentos Comerciales">
+            <thead>
+              <th><i class=""></i> Id </th>
+              <th><i class=""></i> Tipo de Documento </th>
+              <th><i class=""></i> Nro. de Documento </th>
+              <th><i class="fas fa-tools"></i> Acciones</th>
+            </thead>
+            <tbody>
+              <tr>
+                <td>1</td>
+                <td>Categoria1</td>
+                <td>150</td>
+                <td>
+                  <button type="button" name="seleccionar" value="Seleccionar" class="btn" onclick="seleccionarDocumentoComercial('{{Id}}')"><i class="fas fa-check"></i></button>
+                </td>
+              </tr>
+          </table>
+          <br>
+        </div>
+      </div>
+      <!-- !FIN Documentos Comerciales! -->
+      <br><br>
+
+    <!-- Footer -->
+
+<head>
+ <style type ="text/css" >
+   .footer{
+       position: fixed;
+       text-align: center;
+       bottom: 0px;
+       width: 100%;
+   }
+</style>
+</head>
+<body>
+    <div class="footer">GESOC - Grupo 09</div>
+</body>
+
+
+<script>
+// Get the Sidebar
+var mySidebar = document.getElementById("mySidebar");
+
+// Get the DIV with overlay effect
+var overlayBg = document.getElementById("myOverlay");
+
+// Toggle between showing and hiding the sidebar, and add overlay effect
+function w3_open() {
+  if (mySidebar.style.display === 'block') {
+    mySidebar.style.display = 'none';
+    overlayBg.style.display = "none";
+  } else {
+    mySidebar.style.display = 'block';
+    overlayBg.style.display = "block";
+  }
+}
+
+// Close the sidebar with the close button
+function w3_close() {
+  mySidebar.style.display = "none";
+  overlayBg.style.display = "none";
+}
+</script>
+
+</body>
+</html>
