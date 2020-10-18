@@ -14,7 +14,11 @@ public class Moneda extends EntidadPersistente {
     @Column
     public String nombre;
 
-    public Moneda(String nombre){
+    public String getNombre() {
+        return nombre;
+    }
+
+    public void setNombre(String nombre) {
         this.nombre = nombre;
     }
 }

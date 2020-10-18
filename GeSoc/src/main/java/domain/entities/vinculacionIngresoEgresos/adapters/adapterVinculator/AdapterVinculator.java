@@ -48,7 +48,7 @@ public class AdapterVinculator implements IAdapterVinculacion {
             String strIdIngreso = ingresoVinculadoObject.getString("id_ingreso");
 
             OperacionIngreso operacionIngresoVinculado = operacionesIngreso.stream().filter(op ->
-                op.getid() == Integer.parseInt(strIdIngreso)
+                op.getId() == Integer.parseInt(strIdIngreso)
             ).findFirst().get();
 
             JSONArray arrayEgresosVinculados = ingresoVinculadoObject.getJSONArray("egresos");
@@ -56,7 +56,7 @@ public class AdapterVinculator implements IAdapterVinculacion {
                 String idEgreso = arrayIngresosVinculados.getString(i);
 
                 OperacionEgreso operacionEgresoVinculado = operacionesEgreso.stream().filter(op ->
-                        op.getid() == Integer.parseInt(idEgreso)
+                        op.getId() == Integer.parseInt(idEgreso)
                 ).findFirst().get();
 
                 mapIngresosEgresos.put(operacionEgresoVinculado, operacionIngresoVinculado);
@@ -91,10 +91,10 @@ public class AdapterVinculator implements IAdapterVinculacion {
         JSONArray jsonEgresosArray = new JSONArray();
         for (OperacionEgreso egreso : operacionesEgreso) {
             JSONObject jsonEgresoObj = new JSONObject()
-                    .put("id_egreso", String.valueOf(egreso.getid()))
+                    .put("id_egreso", String.valueOf(egreso.getId()))
                     .put("fecha", egreso.getFecha())
                     .put("valorTotal", Double.valueOf(egreso.getValorTotal()))
-                    .put("documentoComercial", String.valueOf(egreso.getDocumentoComercial().getid()))
+                    .put("documentoComercial", String.valueOf(egreso.getDocumentoComercial().getId()))
                     .put("detalle", egreso.getDetalle().toString());
             jsonEgresosArray.put(jsonEgresoObj);
         }
@@ -105,7 +105,7 @@ public class AdapterVinculator implements IAdapterVinculacion {
         JSONArray jsonIngresosArray = new JSONArray();
         for (OperacionIngreso ingreso : operacionesIngreso) {
             JSONObject jsonIngresoObj = new JSONObject()
-                    .put("id_ingreso", String.valueOf(ingreso.getid()))
+                    .put("id_ingreso", String.valueOf(ingreso.getId()))
                     .put("fecha", ingreso.getFecha())
                     .put("fecha_hasta", fechaHastaAceptable)
                     .put("valorTotal", Double.valueOf(ingreso.getMonto()))

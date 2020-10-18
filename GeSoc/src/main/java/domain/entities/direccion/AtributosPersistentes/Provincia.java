@@ -13,7 +13,11 @@ public class Provincia extends EntidadPersistente {
     @Column
     public String nombre;
 
-    public Provincia(String nombre){
+    public String getNombre() {
+        return nombre;
+    }
+
+    public void setNombre(String nombre) {
         this.nombre = nombre;
     }
 }

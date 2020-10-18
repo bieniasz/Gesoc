@@ -32,7 +32,8 @@ public class DireccionBuilder {
         if( !paisesDisponibles.contains(paisElegioPorUsuario) )
             throw new LocacionNoValidaException("Pais", paisElegioPorUsuario);
 
-        this.pais = new Pais(paisElegioPorUsuario);
+        this.pais = new Pais();
+        this.pais.setNombre(paisElegioPorUsuario);
 
         return this;
     }
@@ -45,7 +46,8 @@ public class DireccionBuilder {
         if( !moneda.contains(monedaLocal) )
             throw new LocacionNoValidaException("Moneda", monedaLocal);
 
-        this.monedaLocal = new Moneda(monedaLocal);
+        this.monedaLocal = new Moneda();
+        this.monedaLocal.setNombre(monedaLocal);
 
         return this;
     }
@@ -58,7 +60,8 @@ public class DireccionBuilder {
         if( !provinciasDisponibles.contains(provincia) )
             throw new LocacionNoValidaException("Provincia", provincia);
 
-        this.provincia = new Provincia(provincia);
+        this.provincia = new Provincia();
+        this.provincia.setNombre(provincia);
 
         return this;
     }
@@ -74,7 +77,8 @@ public class DireccionBuilder {
         if( !ciudadesDisponibles.contains(ciudad) )
             throw new LocacionNoValidaException("Ciudad", ciudad);
 
-        this.ciudad = new Ciudad(ciudad);
+        this.ciudad = new Ciudad();
+        this.ciudad.setNombre(ciudad);
 
         return this;
     }
