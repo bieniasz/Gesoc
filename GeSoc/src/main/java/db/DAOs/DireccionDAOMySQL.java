@@ -8,9 +8,14 @@ import domain.entities.direccion.AtributosPersistentes.Provincia;
 import domain.entities.direccion.Direccion;
 
 public class DireccionDAOMySQL implements  DireccionDao{
-
+    //TODO: hibernate cuando no encuentra algo no falla, retorna null
+    //TODO: mejorar todo los dao de direccion para evitar duplicar informacion que viene de ML
     public void guardarDireccion(Direccion direccion) {
         EntityManagerHelper.beginTransaction();
+        EntityManagerHelper.getEntityManager().persist(direccion.getCiudad());
+        EntityManagerHelper.getEntityManager().persist(direccion.getProvincia());
+        EntityManagerHelper.getEntityManager().persist(direccion.getPais());
+        EntityManagerHelper.getEntityManager().persist(direccion.getMonedaLocal());
         EntityManagerHelper.getEntityManager().persist(direccion);
         EntityManagerHelper.commit();
     }

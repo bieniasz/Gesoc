@@ -8,9 +8,15 @@ import domain.entities.direccion.AtributosPersistentes.Moneda;
 import domain.entities.direccion.AtributosPersistentes.Pais;
 import domain.entities.direccion.AtributosPersistentes.Provincia;
 import domain.entities.direccion.Direccion;
+import domain.entities.direccion.DireccionBuilder;
+import domain.entities.direccion.ExcepcionesDireccion.LocacionNoValidaException;
+import domain.entities.direccion.MLDireccionesService;
 import org.junit.Assert;
 import org.junit.Before;
 import org.junit.Test;
+
+import java.io.IOException;
+import java.lang.reflect.Executable;
 
 public class TestDireccionDAO {
     private DireccionDao dao;
@@ -108,4 +114,24 @@ public class TestDireccionDAO {
         Assert.assertEquals(direccion.getPais().getNombre(), "Argentina");
         Assert.assertEquals(direccion.getMonedaLocal().getNombre(), "USD");
     }
+
+    @Test
+    public void TestGuardarDireccionContruidaPorBuilder() throws Exception {
+        DireccionBuilder builder = new DireccionBuilder();
+        builder.setProveedorDatosDirecciones(new MLDireccionesService());
+
+        Direccion direccionConstruidaPorBuilder = builder
+                .setPais("Argentina")
+                .setProvincia("Corrientes")
+                .setCiudad("Bella Vista")
+                .setCalle("Maipu")
+                .setAltura("768")
+                .setMonedaLocal("ARS")
+                .build();
+
+        dao.guardarDireccion(direccionConstruidaPorBuilder);
+    }
+
+
+
 }
