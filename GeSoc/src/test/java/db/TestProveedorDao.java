@@ -16,7 +16,7 @@ import org.junit.Test;
 import java.io.IOException;
 
 public class TestProveedorDao {
-    private ProveedorDAO proveedorDAO = new ProveedorDAOMySQL();
+    private ProveedorDAOMySQL proveedorDAO = new ProveedorDAOMySQL();
 
 
     @Test
@@ -52,5 +52,29 @@ public class TestProveedorDao {
         Assert.assertEquals(proveedor.getTipoIdentificacion(), "CUIT");
         Assert.assertEquals((long) proveedor.getNumeroIdentificacion(), (long) 11234511);
         Assert.assertEquals(proveedor.getEstado(), "Soltera");
+    }
+
+    @Test
+    public void TestRecuperarProveedorPorQuery() {
+        Proveedor proveedor = proveedorDAO.buscarProveedorPorNombre("Coca cola SRL");
+
+        Assert.assertEquals(proveedor.getNombreApellido_RazonSocial(), "Coca cola SRL");
+        Assert.assertEquals(proveedor.getTipoIdentificacion(), "CUIT");
+        Assert.assertEquals((long) proveedor.getNumeroIdentificacion(), (long) 11234511);
+        Assert.assertEquals(proveedor.getEstado(), "Soltera");
+        Assert.assertEquals(proveedor.getId(), 1);
+    }
+
+    @Test
+    public void TestModificarProveedor() {
+        Proveedor proveedor = proveedorDAO.getProveedor(1);
+        proveedor.setEstado("fffffff");
+        proveedorDAO.updateProveedor(proveedor);
+
+        proveedor = proveedorDAO.getProveedor(1);
+        Assert.assertEquals(proveedor.getNombreApellido_RazonSocial(), "Coca cola SRL");
+        Assert.assertEquals(proveedor.getTipoIdentificacion(), "CUIT");
+        Assert.assertEquals((long) proveedor.getNumeroIdentificacion(), (long) 11234511);
+        Assert.assertEquals(proveedor.getEstado(), "fffffff");
     }
 }

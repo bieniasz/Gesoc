@@ -5,6 +5,7 @@ import domain.entities.operacionComercial.CategoriaDeOperaciones;
 import domain.entities.operacionComercial.DetalleEgreso;
 import domain.entities.operacionComercial.OperacionComercial;
 import domain.entities.operacionComercial.builder.Exception.FaltaDetalleException;
+import domain.entities.operacionComercial.builder.Exception.FaltaFechaException;
 
 import java.time.LocalDate;
 import java.util.ArrayList;
@@ -15,6 +16,7 @@ public abstract class OperacionComercialBuilder {
     private DocumentoComercial documentoComercial;
     private List<DetalleEgreso> detalle = new ArrayList<DetalleEgreso>();
     private List<CategoriaDeOperaciones> categoriasAsociadas = new ArrayList<CategoriaDeOperaciones>();
+    private LocalDate fecha;
     private OperacionComercial operacion;
 
     public OperacionComercialBuilder setOperacion(OperacionComercial operacion) {
@@ -33,6 +35,10 @@ public abstract class OperacionComercialBuilder {
         this.categoriasAsociadas = categoriasAsociadas;
         return this;
     }
+    public OperacionComercialBuilder setFecha(LocalDate fecha) {
+        this.fecha = fecha;
+        return this;
+    }
 
     public OperacionComercial build() throws Exception {
         if( this.categoriasAsociadas.size() != 0)
@@ -44,9 +50,12 @@ public abstract class OperacionComercialBuilder {
         if( this.detalle.size() == 0 )
             throw new FaltaDetalleException();
 
+        if( this.fecha == null )
+            throw new FaltaFechaException();
+
         this.operacion.setDetalle(this.detalle);
         this.operacion.actualizarValorTotal();
-        this.operacion.setFecha(LocalDate.now());
+        this.operacion.setFecha(this.fecha);
 
 
         return this.operacion;

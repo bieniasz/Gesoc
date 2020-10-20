@@ -38,6 +38,7 @@ public class TestOperacionEgreso {
         builder.setProveedor(new Proveedor());
         builder.setOrganizacion(new EntidadJuridica());
         builder.setCantEsperadaPresupuestos(0);
+        builder.setFecha(LocalDate.now());
         OperacionEgreso operacion = builder.build();
 
         Assert.assertEquals("domain.entities.operacionComercial.OperacionEgreso", operacion.getClass().getName());
@@ -53,6 +54,7 @@ public class TestOperacionEgreso {
         builder.setProveedor(new Proveedor());
         builder.setOrganizacion(new EntidadJuridica());
         builder.setCantEsperadaPresupuestos(0);
+        builder.setFecha(LocalDate.now());
         OperacionEgreso operacion = builder.build();
 
         Double valorTotal = operacion.getValorTotal();
@@ -69,6 +71,7 @@ public class TestOperacionEgreso {
         builder.setProveedor(new Proveedor());
         builder.setOrganizacion(new EntidadJuridica());
         builder.setCantEsperadaPresupuestos(0);
+        builder.setFecha(LocalDate.now());
         OperacionEgreso operacion = builder.build();
 
         LocalDate fechaOperacion = operacion.getFecha();
@@ -84,6 +87,7 @@ public class TestOperacionEgreso {
         builder.setProveedor(new Proveedor());
         builder.setOrganizacion(new EntidadJuridica());
         builder.setCantEsperadaPresupuestos(0);
+        builder.setFecha(LocalDate.now());
         builder.build();
     }
 
@@ -96,6 +100,7 @@ public class TestOperacionEgreso {
         builder.setProveedor(new Proveedor());
         builder.setOrganizacion(new EntidadJuridica());
         builder.setCantEsperadaPresupuestos(0);
+        builder.setFecha(LocalDate.now());
         builder.build();
     }
 
@@ -108,6 +113,7 @@ public class TestOperacionEgreso {
         builder.setProveedor(new Proveedor());
         builder.setOrganizacion(new EntidadJuridica());
         builder.setCantEsperadaPresupuestos(0);
+        builder.setFecha(LocalDate.now());
         builder.build();
     }
 
@@ -120,6 +126,7 @@ public class TestOperacionEgreso {
         builder.setNumeroIdentificadorMedioPago("AAAAAAAA");
         builder.setOrganizacion(new EntidadJuridica());
         builder.setCantEsperadaPresupuestos(0);
+        builder.setFecha(LocalDate.now());
         builder.build();
     }
 
@@ -132,6 +139,7 @@ public class TestOperacionEgreso {
         builder.setNumeroIdentificadorMedioPago("AAAAAAAA");
         builder.setProveedor(new Proveedor());
         builder.setCantEsperadaPresupuestos(0);
+        builder.setFecha(LocalDate.now());
         builder.build();
     }
 
@@ -144,6 +152,7 @@ public class TestOperacionEgreso {
         builder.setNumeroIdentificadorMedioPago("AAAAAAAA");
         builder.setProveedor(new Proveedor());
         builder.setOrganizacion(new EntidadJuridica());
+        builder.setFecha(LocalDate.now());
         builder.build();
     }
 
@@ -158,6 +167,7 @@ public class TestOperacionEgreso {
         builder.setProveedor(new Proveedor());
         builder.setOrganizacion(new EntidadJuridica());
         builder.setCantEsperadaPresupuestos(0);
+        builder.setFecha(LocalDate.now());
         OperacionEgreso operacion = builder.build();
 
         DetalleEgreso otroDetalleMas = new DetalleEgreso();
@@ -178,6 +188,7 @@ public class TestOperacionEgreso {
         builder.setProveedor(new Proveedor());
         builder.setOrganizacion(new EntidadJuridica());
         builder.setCantEsperadaPresupuestos(0);
+        builder.setFecha(LocalDate.now());
         OperacionEgreso operacion = builder.build();
 
         operacion.quitarDetalle(this.unDetalle);

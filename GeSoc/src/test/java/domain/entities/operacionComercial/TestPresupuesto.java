@@ -39,6 +39,7 @@ public class TestPresupuesto {
         builder.setProveedor(new Proveedor());
         builder.setOrganizacion(new EntidadJuridica());
         builder.setCantEsperadaPresupuestos(0);
+        builder.setFecha(LocalDate.now());
         this.operacionEgreso = builder.build();
 
         /* Configuro el detalle del presupuesto */
@@ -58,6 +59,7 @@ public class TestPresupuesto {
         PresupuestoBuilder presupuestoBuilder = new PresupuestoBuilder();
         presupuestoBuilder.setEgreso(this.operacionEgreso);
         presupuestoBuilder.setDetalle(this.listDetallesPresupuesto);
+        presupuestoBuilder.setFecha(LocalDate.now());
         presupuestoBuilder.setEsElElegido(true);
 
         Presupuesto presupuesto = presupuestoBuilder.build();
@@ -71,6 +73,7 @@ public class TestPresupuesto {
         PresupuestoBuilder presupuestoBuilder = new PresupuestoBuilder();
         presupuestoBuilder.setEgreso(this.operacionEgreso);
         presupuestoBuilder.setDetalle(this.listDetallesPresupuesto);
+        presupuestoBuilder.setFecha(LocalDate.now());
         presupuestoBuilder.setEsElElegido(true);
 
         Presupuesto presupuesto = presupuestoBuilder.build();
@@ -85,6 +88,7 @@ public class TestPresupuesto {
         PresupuestoBuilder presupuestoBuilder = new PresupuestoBuilder();
         presupuestoBuilder.setDetalle(this.listDetallesPresupuesto);
         presupuestoBuilder.setEgreso(this.operacionEgreso);
+        presupuestoBuilder.setFecha(LocalDate.now());
         presupuestoBuilder.setEsElElegido(true);
 
         Presupuesto presupuesto = presupuestoBuilder.build();
@@ -97,6 +101,7 @@ public class TestPresupuesto {
     public void PresupuestoSinEgresoBuilderFalla() throws Exception {
         PresupuestoBuilder presupuestoBuilder = new PresupuestoBuilder();
         presupuestoBuilder.setEsElElegido(true);
+        presupuestoBuilder.setFecha(LocalDate.now());
 
         presupuestoBuilder.build();
     }
@@ -108,6 +113,7 @@ public class TestPresupuesto {
         presupuestoBuilder.setDetalle(this.listDetallesPresupuesto);
         presupuestoBuilder.setEgreso(this.operacionEgreso);
         presupuestoBuilder.setEsElElegido(true);
+        presupuestoBuilder.setFecha(LocalDate.now());
         Presupuesto presupuesto = presupuestoBuilder.build();
 
         DetalleEgreso otroDetalleMas = new DetalleEgreso();
@@ -125,6 +131,7 @@ public class TestPresupuesto {
         presupuestoBuilder.setDetalle(this.listDetallesPresupuesto);
         presupuestoBuilder.setEgreso(this.operacionEgreso);
         presupuestoBuilder.setEsElElegido(true);
+        presupuestoBuilder.setFecha(LocalDate.now());
         Presupuesto presupuesto = presupuestoBuilder.build();
 
         presupuesto.quitarDetalle(this.detPresupuesto1);
