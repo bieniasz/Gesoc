@@ -38,7 +38,7 @@ public class AlmacenContrasenias extends EntidadPersistente {
         }
         catch (Exception exception) {
             ContraseniasPrevias contraseniasPrevias = new ContraseniasPrevias();
-            contraseniasPrevias.setUsuarioId(usuario.getid());
+            contraseniasPrevias.setUsuarioId(usuario.getId());
             contraseniasPrevias.setContrasenia(new ArrayList<String>());
             contraseniasPrevias.agregarContrasenia(contrasenia);
 
@@ -105,7 +105,7 @@ public class AlmacenContrasenias extends EntidadPersistente {
         } catch (NullPointerException n) {
 
             IntentosFallidos intento = new IntentosFallidos();
-            intento.setUsuarioId(usuario.getid());
+            intento.setUsuarioId(usuario.getId());
             intento.nuevoIntentoFallido();
 
             this.intentosFallidosDAO.persistirIntentoFallido(intento);
@@ -132,7 +132,7 @@ public class AlmacenContrasenias extends EntidadPersistente {
         Boolean esElPrimerIntento = this.getIntentosFallidosDeUsuario(usuario) == null;
         if (this.existeUsuario(usuario) && esElPrimerIntento){
             IntentosFallidos intento = new IntentosFallidos();
-            intento.setUsuarioId(usuario.getid());
+            intento.setUsuarioId(usuario.getId());
 
             this.intentosFallidosDAO.persistirIntentoFallido(intento);
         }

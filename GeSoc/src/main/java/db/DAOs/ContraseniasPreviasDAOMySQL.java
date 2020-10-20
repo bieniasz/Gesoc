@@ -16,7 +16,7 @@ public class ContraseniasPreviasDAOMySQL implements ContraseniasPreviasDAO {
         EntityManagerHelper.beginTransaction();
         //EntityManager em = EntityManagerHelper.getEntityManager();
         Query query = EntityManagerHelper.createQuery("SELECT cp FROM ContraseniasPrevias cp WHERE cp.usuarioId = :user");
-        query.setParameter("user", usuario.getid());
+        query.setParameter("user", usuario.getId());
         List<ContraseniasPrevias> contrasenias = query.getResultList();
         EntityManagerHelper.closeEntityManager();
         return new ContraseniasPrevias();

@@ -6,3 +6,7 @@ function filterFunction() {
     x.style.display = "none";
   }
 }
+
+function agregarItem() {
+    document.getElementById("modalAgregarDetalle").style.display = 'block';
+}

@@ -43,7 +43,7 @@ public class AdapterVinculator implements IAdapterVinculacion {
 
             OperacionIngreso operacionIngresoVinculado = operacionesIngreso
                     .stream()
-                    .filter(op -> op.getid() == Integer.parseInt(strIdIngreso))
+                    .filter(op -> op.getId() == Integer.parseInt(strIdIngreso))
                     .findFirst()
                     .get();
 
@@ -54,7 +54,7 @@ public class AdapterVinculator implements IAdapterVinculacion {
 
                 OperacionEgreso operacionEgresoVinculado = operacionesEgreso
                         .stream()
-                        .filter(op -> op.getid() == Integer.parseInt(idEgreso))
+                        .filter(op -> op.getId() == Integer.parseInt(idEgreso))
                         .findFirst()
                         .get();
 
@@ -103,10 +103,10 @@ public class AdapterVinculator implements IAdapterVinculacion {
         JSONArray jsonEgresosArray = new JSONArray();
         for (OperacionEgreso egreso : operacionesEgreso) {
             JSONObject jsonEgresoObj = new JSONObject();
-            jsonEgresoObj.put("id_egreso", String.valueOf(egreso.getid()));
+            jsonEgresoObj.put("id_egreso", String.valueOf(egreso.getId()));
             jsonEgresoObj.put("fecha", egreso.getFecha());
             jsonEgresoObj.put("valorTotal", Double.valueOf(egreso.getValorTotal()));
-            jsonEgresoObj.put("documentoComercial", String.valueOf(egreso.getDocumentoComercial().getid()));
+            jsonEgresoObj.put("documentoComercial", String.valueOf(egreso.getDocumentoComercial().getId()));
             jsonEgresoObj.put("detalle", egreso.getDetalle().toString());
             jsonEgresosArray.put(jsonEgresoObj);
         }
@@ -116,7 +116,7 @@ public class AdapterVinculator implements IAdapterVinculacion {
         JSONArray jsonIngresosArray = new JSONArray();
         for (OperacionIngreso ingreso : operacionesIngreso) {
             JSONObject jsonIngresoObj = new JSONObject()
-                    .put("id_ingreso", String.valueOf(ingreso.getid()))
+                    .put("id_ingreso", String.valueOf(ingreso.getId()))
                     .put("fecha", ingreso.getFecha())
                     .put("fecha_hasta", fechaHastaAceptable)
                     .put("valorTotal", Double.valueOf(ingreso.getMonto()))

@@ -13,7 +13,11 @@ public class Pais extends EntidadPersistente {
     @Column
     public String nombre;
 
-    public Pais(String nombre){
+    public String getNombre() {
+        return nombre;
+    }
+
+    public void setNombre(String nombre) {
         this.nombre = nombre;
     }
 }
