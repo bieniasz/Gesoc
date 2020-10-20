@@ -24,7 +24,8 @@ public class OperacionEgreso extends OperacionComercial {
     private Proveedor proveedor;
 
     @ManyToOne
-    @JoinColumn(name = "domain/entities/organizacion",referencedColumnName = "id")
+    //@JoinColumn(name = "domain/entities/organizacion",referencedColumnName = "id")
+    @JoinColumn(name = "organizacion",referencedColumnName = "id")
     private Organizacion organizacion;
 
     @Column
@@ -32,6 +33,7 @@ public class OperacionEgreso extends OperacionComercial {
 
     @OneToMany
     private List<Presupuesto> presupuestos = new ArrayList<Presupuesto>();
+
 
     @ManyToOne
     private OperacionIngreso ingresoAsociado;
@@ -43,6 +45,7 @@ public class OperacionEgreso extends OperacionComercial {
     public Organizacion getOrganizacion() { return organizacion; }
     public Integer getCantidadEsperadaPresupuestos() { return cantidadEsperadaPresupuestos; }
     public List<Presupuesto> getPresupuestos() { return presupuestos; }
+    public OperacionIngreso getIngresoAsociado() { return ingresoAsociado; }
 
     public void asociarPresupuesto(Presupuesto presupuesto) {
         this.presupuestos.add(presupuesto);

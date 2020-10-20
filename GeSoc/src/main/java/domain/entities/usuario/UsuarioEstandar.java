@@ -12,7 +12,8 @@ import javax.persistence.ManyToOne;
 public class UsuarioEstandar extends Rol{
 
     @ManyToOne
-    @JoinColumn(name= "domain/entities/organizacion",referencedColumnName = "id")
+    //@JoinColumn(name= "domain/entities/organizacion",referencedColumnName = "id")
+    @JoinColumn(name = "organizacion",referencedColumnName = "id")
     protected Organizacion organizacion;
 
     public UsuarioEstandar(Organizacion organizacion) {

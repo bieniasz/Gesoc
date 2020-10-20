@@ -1,9 +1,6 @@
 package server;
 
-import domain.controllers.BandejaDeMensajesController;
-import domain.controllers.LoginController;
-import domain.controllers.OperacionEgresoController;
-import domain.controllers.OperacionesController;
+import domain.controllers.*;
 import spark.Spark;
 import spark.template.handlebars.HandlebarsTemplateEngine;
 import spark.utils.BooleanHelper;
@@ -32,7 +29,7 @@ public class Router {
         OperacionesController controllerOperaciones = new OperacionesController();
         BandejaDeMensajesController controllerBandejaDeMensajes = new BandejaDeMensajesController();
         OperacionEgresoController controllerOperacionEgreso = new OperacionEgresoController();
-
+        OperacionIngresoController ingresoController = new OperacionIngresoController();
 
         //TODO: borrar acciones de ejemplo
         Spark.get("/saludo", (request, response) -> "hola " + request.queryParams("nombre"));
@@ -44,6 +41,7 @@ public class Router {
         Spark.get("/operaciones", controllerOperaciones::mostrarOperaciones, Router.engine);
         Spark.get("/bandejaDeMensajes", controllerBandejaDeMensajes::mostrarBandejaDeMensajes, Router.engine);
         Spark.get("/mostrarEgresos", controllerOperacionEgreso::mostrarEgresos, Router.engine);
+        Spark.get("/ingresos", ingresoController::mostrarIngresos, Router.engine);
 
     }
 }

@@ -6,6 +6,7 @@ import org.apache.http.HttpEntity;
 import org.apache.http.client.ClientProtocolException;
 import org.apache.http.client.ResponseHandler;
 import org.apache.http.client.methods.HttpPut;
+import org.apache.http.entity.ByteArrayEntity;
 import org.apache.http.entity.StringEntity;
 import org.apache.http.impl.client.CloseableHttpClient;
 import org.apache.http.impl.client.HttpClients;
@@ -15,63 +16,64 @@ import org.json.JSONObject;
 import domain.entities.vinculacionIngresoEgresos.adapters.IAdapterVinculacion;
 
 import java.io.IOException;
+import java.nio.charset.StandardCharsets;
 import java.time.LocalDate;
 import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
 
 public class AdapterVinculator implements IAdapterVinculacion {
-    private JSONObject resultadoVinculacionObject;
 
     @Override
-    public Map<OperacionEgreso, OperacionIngreso> obtenerEgresosVinculados(List<OperacionIngreso> operacionesIngreso, List<OperacionEgreso> operacionesEgreso, LocalDate fechaHastaAceptable) throws IOException {
-        JSONObject jsonRepoEgresosObject = new JSONObject().put("egresos", parsearEgresos(operacionesEgreso));
-        JSONObject jsonRepoIngresosObject = new JSONObject().put("ingresos", parsearIngresos(operacionesIngreso, fechaHastaAceptable));
+    public Map<OperacionEgreso, OperacionIngreso> obtenerVinculaciones(List<OperacionIngreso> operacionesIngreso, List<OperacionEgreso> operacionesEgreso, LocalDate fechaHastaAceptable) throws IOException {
+        Map<OperacionEgreso, OperacionIngreso> mapVinculaciones = new HashMap<>();
 
-        JSONObject jsonGeneralObject = new JSONObject()
-                .put("repositorioEgresos", jsonRepoEgresosObject)
-                .put("repositorioIngresos", jsonRepoIngresosObject);
+        //Hago la llamada al servicio y obtengo el string con el resultado
+        String strJSONBody = generarPutJsonBody(operacionesEgreso, operacionesIngreso, fechaHastaAceptable);
+        String strIngresosVinculados = makeHTTPPutRequest("http://localhost:9000/vincular", strJSONBody);
+        JSONObject jsonResultadoVinculacion = new JSONObject(strIngresosVinculados);
 
-        String strIngresosVinculados = this.makeHTTPPutRequest("localhost:9000/vincular", jsonGeneralObject.toString());
-        this.resultadoVinculacionObject = new JSONObject(strIngresosVinculados);
+        //Hago la vinculacion en memoria
 
-        return obtenerVinculaciones(operacionesIngreso, operacionesEgreso, this.resultadoVinculacionObject);
-    }
-
-    private Map<OperacionEgreso, OperacionIngreso> obtenerVinculaciones(List<OperacionIngreso> operacionesIngreso, List<OperacionEgreso> operacionesEgreso, JSONObject resultadoVinculacionObject) {
-        JSONArray arrayIngresosVinculados = resultadoVinculacionObject.getJSONArray("ingresosVinculados");
-        Map<OperacionEgreso, OperacionIngreso> mapIngresosEgresos = new HashMap<>();
-
+        JSONArray arrayIngresosVinculados = jsonResultadoVinculacion.getJSONArray("ingresosVinculados");
+        //Recorro los ingresos
         for (int i = 0; i < arrayIngresosVinculados.length(); i++) {
+            JSONObject jsonIngresoVinculado = arrayIngresosVinculados.getJSONObject(i);
+            String strIdIngreso = jsonIngresoVinculado.getString("id_ingreso");
 
-            JSONObject ingresoVinculadoObject = arrayIngresosVinculados.getJSONObject(i);
-            String strIdIngreso = ingresoVinculadoObject.getString("id_ingreso");
+            OperacionIngreso operacionIngresoVinculado = operacionesIngreso
+                    .stream()
+                    .filter(op -> op.getid() == Integer.parseInt(strIdIngreso))
+                    .findFirst()
+                    .get();
 
-            OperacionIngreso operacionIngresoVinculado = operacionesIngreso.stream().filter(op ->
-                op.getid() == Integer.parseInt(strIdIngreso)
-            ).findFirst().get();
-
-            JSONArray arrayEgresosVinculados = ingresoVinculadoObject.getJSONArray("egresos");
+            //Obtengo sus egresos vinculados
+            JSONArray arrayEgresosVinculados = jsonIngresoVinculado.getJSONArray("egresos");
             for (int j = 0; j < arrayEgresosVinculados.length(); j++){
-                String idEgreso = arrayIngresosVinculados.getString(i);
+                String idEgreso = arrayEgresosVinculados.getString(j);
 
-                OperacionEgreso operacionEgresoVinculado = operacionesEgreso.stream().filter(op ->
-                        op.getid() == Integer.parseInt(idEgreso)
-                ).findFirst().get();
+                OperacionEgreso operacionEgresoVinculado = operacionesEgreso
+                        .stream()
+                        .filter(op -> op.getid() == Integer.parseInt(idEgreso))
+                        .findFirst()
+                        .get();
 
-                mapIngresosEgresos.put(operacionEgresoVinculado, operacionIngresoVinculado);
+                mapVinculaciones.put(operacionEgresoVinculado, operacionIngresoVinculado);
             }
         }
 
-        return mapIngresosEgresos;
+        return mapVinculaciones;
     }
 
-    private String makeHTTPPutRequest(String url, String body) throws IOException {
+    public String makeHTTPPutRequest(String url, String content) throws IOException {
         CloseableHttpClient httpclient = HttpClients.createDefault();
         HttpPut httpPut = new HttpPut(url);
 
-        StringEntity jsonData = new StringEntity(body, "UTF-8");
-        httpPut.setEntity(jsonData);
+        if (null != content) {
+            HttpEntity httpEntity = new ByteArrayEntity(content.getBytes(StandardCharsets.UTF_8));
+            httpPut.setHeader("Content-Type", "application/json");
+            httpPut.setEntity(httpEntity);
+        }
 
         ResponseHandler< String > responseHandler = response -> {
             int status = response.getStatusLine().getStatusCode();
@@ -82,25 +84,34 @@ public class AdapterVinculator implements IAdapterVinculacion {
                 throw new ClientProtocolException("Unexpected response status: " + status);
             }
         };
-        String responseBody = httpclient.execute(httpPut, responseHandler);
 
+        String responseBody = httpclient.execute(httpPut, responseHandler);
         return responseBody;
     }
 
+    public String generarPutJsonBody(List<OperacionEgreso> operacionesEgreso, List<OperacionIngreso> operacionesIngreso, LocalDate fechaHastaAceptable) {
+        JSONObject jsonRepoEgresosObject = new JSONObject().put("egresos", parsearEgresos(operacionesEgreso));
+        JSONObject jsonRepoIngresosObject = new JSONObject().put("ingresos", parsearIngresos(operacionesIngreso, fechaHastaAceptable));
+
+        JSONObject jsonGeneralObject = new JSONObject();
+        jsonGeneralObject.put("repositorioEgresos", jsonRepoEgresosObject);
+        jsonGeneralObject.put("repositorioIngresos", jsonRepoIngresosObject);
+
+        return jsonGeneralObject.toString();
+    }
     private JSONArray parsearEgresos(List<OperacionEgreso> operacionesEgreso) {
         JSONArray jsonEgresosArray = new JSONArray();
         for (OperacionEgreso egreso : operacionesEgreso) {
-            JSONObject jsonEgresoObj = new JSONObject()
-                    .put("id_egreso", String.valueOf(egreso.getid()))
-                    .put("fecha", egreso.getFecha())
-                    .put("valorTotal", Double.valueOf(egreso.getValorTotal()))
-                    .put("documentoComercial", String.valueOf(egreso.getDocumentoComercial().getid()))
-                    .put("detalle", egreso.getDetalle().toString());
+            JSONObject jsonEgresoObj = new JSONObject();
+            jsonEgresoObj.put("id_egreso", String.valueOf(egreso.getid()));
+            jsonEgresoObj.put("fecha", egreso.getFecha());
+            jsonEgresoObj.put("valorTotal", Double.valueOf(egreso.getValorTotal()));
+            jsonEgresoObj.put("documentoComercial", String.valueOf(egreso.getDocumentoComercial().getid()));
+            jsonEgresoObj.put("detalle", egreso.getDetalle().toString());
             jsonEgresosArray.put(jsonEgresoObj);
         }
         return jsonEgresosArray;
     }
-
     private JSONArray parsearIngresos(List<OperacionIngreso> operacionesIngreso, LocalDate fechaHastaAceptable) {
         JSONArray jsonIngresosArray = new JSONArray();
         for (OperacionIngreso ingreso : operacionesIngreso) {

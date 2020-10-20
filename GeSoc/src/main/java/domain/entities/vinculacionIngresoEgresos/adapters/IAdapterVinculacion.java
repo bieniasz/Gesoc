@@ -9,5 +9,5 @@ import java.util.List;
 import java.util.Map;
 
 public interface IAdapterVinculacion {
-    Map<OperacionEgreso, OperacionIngreso> obtenerEgresosVinculados(List<OperacionIngreso> operacionesIngreso, List<OperacionEgreso> operacionesEgreso, LocalDate fechaHastaAceptable) throws IOException;
+    Map<OperacionEgreso, OperacionIngreso> obtenerVinculaciones(List<OperacionIngreso> operacionesIngreso, List<OperacionEgreso> operacionesEgreso, LocalDate fechaHastaAceptable) throws IOException;
 }

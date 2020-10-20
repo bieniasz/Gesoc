@@ -12,12 +12,12 @@ import java.util.List;
 @Entity
 @Table(name="OperacionComercial")
 @Inheritance(strategy = InheritanceType.SINGLE_TABLE)
-@DiscriminatorColumn(name = "<<TipoOperacion>>")
+@DiscriminatorColumn(name = "TipoOperacion")
 public abstract class OperacionComercial extends EntidadPersistente {
-
+    /*
     @Column
     private String TipoOperacion;
-
+*/
     @Column(columnDefinition = "DATE")
     private LocalDate fecha;
 

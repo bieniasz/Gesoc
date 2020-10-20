@@ -2,9 +2,11 @@
 # Edit at https://www.gitignore.io/?templates=osx,java,linux,macos,windows,eclipse,netbeans,intellij
 
 #Agregado manual
+GeSoc/src/main/resources/META-INF/persistence.xml
 *.iml
 *.ipr
-target/ #La carpeta target se genera compilando
+target/
+#La carpeta target se genera compilando
 
 ### Eclipse ###
 .metadata
