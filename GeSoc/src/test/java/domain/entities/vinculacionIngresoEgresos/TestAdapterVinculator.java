@@ -78,7 +78,7 @@ public class TestAdapterVinculator {
     class OperacionEgresoTest extends OperacionEgreso {
         public int id_Egreso;
 
-        @Override
+
         public int getid() {
             return id_Egreso;
         }
@@ -95,7 +95,7 @@ public class TestAdapterVinculator {
             this.id_Ingreso = id_Ingreso;
         }
 
-        @Override
+
         public int getid() {
             return id_Ingreso;
         }

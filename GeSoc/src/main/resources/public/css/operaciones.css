@@ -154,7 +154,7 @@ body{
 }
 
 
-#modalEliminar{
+#modalAgregarDetalle{
   display: none; /* Hidden by default */
   position: fixed; /* Stay in place */
   z-index: 1; /* Sit on top */
@@ -170,8 +170,8 @@ body{
   background-color: #fefefe;
   margin: 15% auto; /* 15% from the top and centered */
   padding: 20px;
-  border: 1px solid #888;
-  width: 80%;
+  border: 3px solid #888;
+  width: 50%;
 }
 .btn-close-modal {
   cursor:pointer;
@@ -263,3 +263,4 @@ label{
   height: 1000px;
   width: 90%;
 }
+

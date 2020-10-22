@@ -73,7 +73,7 @@ public class TestVinculadorIngresos {
     class OperacionEgresoTest extends OperacionEgreso {
         public int id_Egreso;
 
-        @Override
+
         public int getid() {
             return id_Egreso;
         }
@@ -91,7 +91,6 @@ public class TestVinculadorIngresos {
             this.id_Ingreso = id_Ingreso;
         }
 
-        @Override
         public int getid() {
             return id_Ingreso;
         }

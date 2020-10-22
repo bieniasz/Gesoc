@@ -1,31 +1,86 @@
 package domain.controllers;
 
 import db.DAOs.ProveedorDAOMySQL;
+import db.EntityManagerHelper;
 import domain.entities.ProveedorDocComer.Proveedor;
+import domain.entities.operacionComercial.DetalleEgreso;
+import domain.entities.operacionComercial.Item;
 import domain.entities.operacionComercial.MedioDePago;
 import domain.entities.operacionComercial.OperacionEgreso;
 import domain.entities.operacionComercial.builder.OperacionEgresoBuilder;
 import domain.entities.organizacion.EntidadJuridica;
+import domain.entities.organizacion.Organizacion;
 import spark.ModelAndView;
 import spark.Request;
 import spark.Response;
 
 import java.time.LocalDate;
+import java.util.ArrayList;
+import java.util.HashMap;
+import java.util.List;
+import java.util.Map;
 
 public class OperacionEgresoController {
+    private List<Proveedor> proveedores = new ArrayList<>();
 
     public String saluda(Request request, Response response) {
         return "Saludos humano";
     }
 
-    public ModelAndView mostrarEgresos(Request request, Response response) {
+    public ModelAndView mostrarEgresos(Request request, Response response) throws Exception {
+        DetalleEgreso unDetalle = new DetalleEgreso();
+        Item item = new Item();
+        item.setDescripcion("Coca");
+        unDetalle.setItem(item);
+        unDetalle.valorTotal = 5.0;
+        unDetalle.cantidad = 2;
 
-        return new ModelAndView(null, "operacionEgresoNuevo.hbs");
+        DetalleEgreso otroDetalle = new DetalleEgreso();
+        Item otroitem = new Item();
+        otroitem.setDescripcion("Papitas");
+        otroDetalle.valorTotal = 6.0;
+        unDetalle.cantidad = 3;
+
+        List<DetalleEgreso> detalles = new ArrayList<>();
+        detalles.add(unDetalle);
+        detalles.add(otroDetalle);
+
+        EntidadJuridica organizacion = new EntidadJuridica();
+        organizacion.setNombreFicticio("Alfombritas SRL");
+
+        OperacionEgresoBuilder builder = new OperacionEgresoBuilder();
+        builder.setDetalle(detalles);
+        builder.setMedioDePago(new MedioDePago());
+        builder.setNumeroIdentificadorMedioPago("AAAAAAAA");
+        builder.setProveedor(new Proveedor());
+        builder.setOrganizacion(organizacion);
+        builder.setCantEsperadaPresupuestos(0);
+        builder.setFecha(LocalDate.now());
+        OperacionEgreso operacion = builder.build();
+
+
+        Proveedor proveedor1 = new Proveedor();
+        proveedor1.setNombreApellido_RazonSocial("Alfred SA");
+        proveedor1.setId(1);
+        Proveedor proveedor2 = new Proveedor();
+        proveedor2.setNombreApellido_RazonSocial("Doritos SRL");
+        proveedor2.setId(2);
+        this.proveedores.add(proveedor1);
+        this.proveedores.add(proveedor2);
+
+        //TODO: guardar en parametros la lista completa de proveedores
+        Map<String, Object> parametros = new HashMap<>();
+        parametros.put("operacion", operacion);
+        parametros.put("provedoores", this.proveedores);
+
+        return new ModelAndView(parametros, "operacionEgresoNuevo.hbs");
     }
 
     public ModelAndView guardar(Request request, Response response) throws Exception {
 
-        Proveedor proveedor = new ProveedorDAOMySQL().buscarProveedorPorNombre(request.queryParams("proveedor"));
+        String nombreProveedor = request.queryParams("proveedor");
+        //Proveedor proveedor = new ProveedorDAOMySQL().getProveedor(request.queryParams("proveedorId");
+        Proveedor proveedor = this.proveedores.stream().filter( (Proveedor prov) -> prov.getNombreApellido_RazonSocial() == nombreProveedor).findFirst().get();
         LocalDate fecha = LocalDate.parse(request.queryParams("fecha"));
 
         OperacionEgresoBuilder builder = new OperacionEgresoBuilder();
@@ -43,5 +98,12 @@ public class OperacionEgresoController {
         OperacionEgreso operacion = builder.build();
 
         return new ModelAndView(null, "operacionEgresoNuevo.hbs");
+    }
+
+    public Response guardarItem(Request request, Response response) {
+        DetalleEgreso detalleNuevo = new DetalleEgreso();
+        detalleNuevo.setCantidad(new Integer(request.params("")));
+
+        return  response;
     }
 }

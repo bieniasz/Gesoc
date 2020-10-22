@@ -43,5 +43,6 @@ public class Router {
         Spark.get("/mostrarEgresos", controllerOperacionEgreso::mostrarEgresos, Router.engine);
         Spark.get("/ingresos", ingresoController::mostrarIngresos, Router.engine);
         Spark.post("/egreso", controllerOperacionEgreso::guardar, Router.engine);
+        Spark.post("/item", controllerOperacionEgreso::guardarItem);
     }
 }
