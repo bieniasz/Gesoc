@@ -33,4 +33,23 @@ public class EntidadJuridica extends Organizacion {
     @OneToMany
     @JoinColumn(name="listaUsuarios",referencedColumnName = "id")
     private List<Usuario> listaUsuarios;
+
+    // ACCESORES
+    public String getRazonSocial() { return razonSocial; }
+    public String getNombreFicticio() { return nombreFicticio; }
+    public Integer getCuit() { return cuit; }
+    public Direccion getDireccionPostal() { return direccionPostal; }
+    public List<EntidadBase> getEntidadesBase() { return entidadesBase; }
+    public String getCodigoIGJ() { return codigoIGJ; }
+    public Categoria getCategoria() { return categoria; }
+    public List<Usuario> getListaUsuarios() { return listaUsuarios; }
+
+    public void setRazonSocial(String razonSocial) { this.razonSocial = razonSocial; }
+    public void setNombreFicticio(String nombreFicticio) { this.nombreFicticio = nombreFicticio; }
+    public void setCuit(Integer cuit) { this.cuit = cuit; }
+    public void setDireccionPostal(Direccion direccionPostal) { this.direccionPostal = direccionPostal; }
+    public void setEntidadesBase(List<EntidadBase> entidadesBase) { this.entidadesBase = entidadesBase; }
+    public void setCodigoIGJ(String codigoIGJ) { this.codigoIGJ = codigoIGJ; }
+    public void setCategoria(Categoria categoria) { this.categoria = categoria; }
+    public void setListaUsuarios(List<Usuario> listaUsuarios) { this.listaUsuarios = listaUsuarios; }
 }
