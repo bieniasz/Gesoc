@@ -40,9 +40,13 @@ public class Router {
         Spark.get("/login", controllerLogin::mostrarLogin, Router.engine);
         Spark.get("/operaciones", controllerOperaciones::mostrarOperaciones, Router.engine);
         Spark.get("/bandejaDeMensajes", controllerBandejaDeMensajes::mostrarBandejaDeMensajes, Router.engine);
-        Spark.get("/mostrarEgresos", controllerOperacionEgreso::mostrarEgresos, Router.engine);
         Spark.get("/ingresos", ingresoController::mostrarIngresos, Router.engine);
-        Spark.post("/egreso", controllerOperacionEgreso::guardar, Router.engine);
+
         Spark.post("/item", controllerOperacionEgreso::guardarItem);
+
+
+        Spark.get("/mostrarEgresos", controllerOperacionEgreso::mostrarEgresos, Router.engine);
+        Spark.get("/egreso", controllerOperacionEgreso::crear, Router.engine);
+        //Spark.post("/egreso/:id", controllerOperacionEgreso::modificar, Router.engine);
     }
 }

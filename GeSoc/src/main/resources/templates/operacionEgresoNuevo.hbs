@@ -87,11 +87,6 @@ html,body,h1,h2,h3,h4,h5 {font-family: "Raleway", sans-serif}
         <input id="fecha" name="fecha" type="date"  class="input-formulario">
         <br><br>
 
-        <label for="documentoComercial">Documento Comercial</label>
-        <input id="documentoComercial" name="documentoComercial" type="number" class="input-formulario">
-        <!--<a href="#" name="searchDocumentoComercial" class=" btn btn-search"><i class="fas fa-search"></i></a>-->
-        <br><br>
-
             <label for="Proveedor">Proveedor</label>
             <input id="proveedor" name="proveedor" type="text" class="input-formulario">
             <a href="#" name="searchProveedor" class=" btn btn-search" onclick="mostrarBuscarProveedor()"><i class="fas fa-search"></i></a>
@@ -100,7 +95,7 @@ html,body,h1,h2,h3,h4,h5 {font-family: "Raleway", sans-serif}
                 <div id="buscarProveedor" class="dropdown-content">
                     <input type="text" placeholder="Search.." id="inputBuscarProveedor" onkeyup="filterFunction()">
                     {{#each provedoores}}
-                        <a onClick="llenarProveedor('{{nombreApellido_RazonSocial}}', {{id}})">{{nombreApellido_RazonSocial}}</a>
+                        <a onClick="llenarProveedor('{{nombreApellido_RazonSocial}}')">{{nombreApellido_RazonSocial}}</a>
                     {{/each}}
                 </div>
             </div>
@@ -121,11 +116,23 @@ html,body,h1,h2,h3,h4,h5 {font-family: "Raleway", sans-serif}
         <br><br> -->
 
 
+        <h3 for="documentoComercial">Documento Comercial</h3>
+        <label for="documentoComercialTipo">Tipo</label>
+        <input id="documentoComercialTipo" name="documentoComercialTipo" type="text" class="input-formulario">
+        <br><br>
+        <label for="documentoComercialNumero">Numero</label>
+        <input id="documentoComercialNumero" name="documentoComercialNumero" type="number" class="input-formulario">
+        <br><br>
+        <label for="documentoComercialAdjunto">Adjunto</label>
+        <input id="documentoComercialAdjunto" name="documentoComercialAdjunto" type="file" class="input-formulario">
+        <br><br>
+
+
         <!-- !Categorias de Operacion! -->
       <div>
         <h3 style="margin-bottom: 5px;margin-left: 10px">Categorias
           <a href="#" class="btn-border-blue fuente"><i class="fa fa-plus-circle" style="margin-bottom:25px;"></i> Agregar Categoria</a></h3>
-        <div class="scroll-formularios"">
+        <div class="scroll-formularios">
           <table class="tabla" id="categorias" name="categorias">
             <thead>
               <th><i class=""></i> Id </th>
@@ -152,7 +159,7 @@ html,body,h1,h2,h3,h4,h5 {font-family: "Raleway", sans-serif}
       <div>
         <h3 style="margin-bottom: 5px;margin-left: 10px">Presupuestos
           <a href="" class="btn-border-blue fuente"><i class="fa fa-plus-circle" style="margin-bottom:25px;"></i> Agregar Presupuesto</a></h3>
-        <div class="scroll-formularios"">
+        <div class="scroll-formularios">
           <table class="tabla" id="presupuestos" name="presupuestos">
             <thead>
               <th><i class=""></i> Id </th>
@@ -181,7 +188,7 @@ html,body,h1,h2,h3,h4,h5 {font-family: "Raleway", sans-serif}
         <h3 style="margin-bottom: 5px;margin-left: 10px">Detalle Egreso
             <button type="button" name="buttonAgregarItem" class="btn-border-blue fuente" onclick="agregarItem()"><i class="fa fa-plus-circle" style="margin-bottom:25px;"></i></button></h3>
 
-        <div class="scroll-formularios"">
+        <div class="scroll-formularios">
           <table class="tabla" id="detalleEgresos" name="detalleEgresos">
             <thead>
               <th><i class=""></i> Id </th>

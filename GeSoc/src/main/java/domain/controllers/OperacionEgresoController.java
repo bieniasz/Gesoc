@@ -1,5 +1,7 @@
 package domain.controllers;
 
+import db.DAOs.ProveedorDAO;
+import db.DAOs.ProveedorDAOMemoria;
 import db.DAOs.ProveedorDAOMySQL;
 import db.EntityManagerHelper;
 import domain.entities.ProveedorDocComer.Proveedor;
@@ -21,14 +23,57 @@ import java.util.List;
 import java.util.Map;
 
 public class OperacionEgresoController {
-    private List<Proveedor> proveedores = new ArrayList<>();
+
+    private ProveedorDAO proveedorDAO = new ProveedorDAOMemoria();
 
     public String saluda(Request request, Response response) {
         return "Saludos humano";
     }
 
+
+
+    public ModelAndView crear(Request request, Response response) throws Exception {
+
+        List<Proveedor> proveedores = this.proveedorDAO.getTodosLosProveedores();
+        //TODO: los medios de pago son genericos o son de cada organizacion?
+        //TODO traerme todas las categorias de la empresa del flaco
+        //TODO: las categorias de cada organizacion o generales de la plataforma?
+        //TODO: dos operaciones pueden estar asociadas al mismo presupuesto?
+
+        //Integer idUsuario = new Integer(request.queryParams("usuarioId"));
+        //List<Categorias>
+        Map<String, Object> parametros = new HashMap<>();
+        parametros.put("provedoores", proveedores);
+
+        return new ModelAndView( parametros, "operacionEgresoNuevo.hbs");
+    }
+
+    public ModelAndView guardar(Request request, Response response) throws Exception {
+
+        String nombreProveedor = request.queryParams("proveedor");
+        //Proveedor proveedor = new ProveedorDAOMySQL().getProveedor(request.queryParams("proveedorId");
+
+        LocalDate fecha = LocalDate.parse(request.queryParams("fecha"));
+
+        OperacionEgresoBuilder builder = new OperacionEgresoBuilder();
+
+       // builder.setProveedor(proveedor);
+        builder.setCantEsperadaPresupuestos(Integer.parseInt(request.queryParams("cantidadEsperadaPresupuestos")));
+        builder.setFecha(fecha);
+        builder.setNumeroIdentificadorMedioPago(request.queryParams("numeroIdentificadorMedioPago"));/*
+        builder.setDetalle(this.detalles);
+        builder.setMedioDePago(new MedioDePago());
+        ;
+        //TODO: para la organizacion necesito la organizacion del usuario que ya esta logueado
+        builder.setOrganizacion(new EntidadJuridica());
+        */
+        OperacionEgreso operacion = builder.build();
+
+        return new ModelAndView(null, "operacionEgresoNuevo.hbs");
+    }
+
     public ModelAndView mostrarEgresos(Request request, Response response) throws Exception {
-        DetalleEgreso unDetalle = new DetalleEgreso();
+        /*DetalleEgreso unDetalle = new DetalleEgreso();
         Item item = new Item();
         item.setDescripcion("Coca");
         unDetalle.setItem(item);
@@ -71,34 +116,12 @@ public class OperacionEgresoController {
         //TODO: guardar en parametros la lista completa de proveedores
         Map<String, Object> parametros = new HashMap<>();
         parametros.put("operacion", operacion);
-        parametros.put("provedoores", this.proveedores);
-
-        return new ModelAndView(parametros, "operacionEgresoNuevo.hbs");
-    }
-
-    public ModelAndView guardar(Request request, Response response) throws Exception {
-
-        String nombreProveedor = request.queryParams("proveedor");
-        //Proveedor proveedor = new ProveedorDAOMySQL().getProveedor(request.queryParams("proveedorId");
-        Proveedor proveedor = this.proveedores.stream().filter( (Proveedor prov) -> prov.getNombreApellido_RazonSocial() == nombreProveedor).findFirst().get();
-        LocalDate fecha = LocalDate.parse(request.queryParams("fecha"));
-
-        OperacionEgresoBuilder builder = new OperacionEgresoBuilder();
-
-        builder.setProveedor(proveedor);
-        builder.setCantEsperadaPresupuestos(Integer.parseInt(request.queryParams("cantidadEsperadaPresupuestos")));
-        builder.setFecha(fecha);
-        builder.setNumeroIdentificadorMedioPago(request.queryParams("numeroIdentificadorMedioPago"));/*
-        builder.setDetalle(this.detalles);
-        builder.setMedioDePago(new MedioDePago());
-        ;
-        //TODO: para la organizacion necesito la organizacion del usuario que ya esta logueado
-        builder.setOrganizacion(new EntidadJuridica());
-        */
-        OperacionEgreso operacion = builder.build();
+        parametros.put("provedoores", this.proveedores);*/
 
         return new ModelAndView(null, "operacionEgresoNuevo.hbs");
     }
+
+
 
     public Response guardarItem(Request request, Response response) {
         DetalleEgreso detalleNuevo = new DetalleEgreso();

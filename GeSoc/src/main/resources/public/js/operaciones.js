@@ -18,9 +18,8 @@ function filterFunction() {
   }
 }
 
-function llenarProveedor(proveedor, id) {
+function llenarProveedor(proveedor) {
     document.getElementById("proveedor").value = proveedor;
-    document.getElementById("proveedorId").value = id;
     document.getElementById("buscarProveedor").classList.toggle("show");
 }
 
