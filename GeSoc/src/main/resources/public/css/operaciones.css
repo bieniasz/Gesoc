@@ -156,7 +156,7 @@ body{
 
 #modalAgregarDetalle{
   display: none; /* Hidden by default */
-  position: absolute; /* Stay in place */
+  position: fixed; /* Stay in place */
   z-index: 1; /* Sit on top */
   left: 50%;
   top: 50%;
@@ -169,7 +169,7 @@ body{
 }
 .modalContent{
   background-color: #fefefe;
-  position: absolute; 
+  position: fixed; 
   left: 50%;
   top: 50%;
   padding: 20px;
