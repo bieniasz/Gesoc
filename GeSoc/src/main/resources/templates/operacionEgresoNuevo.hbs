@@ -115,24 +115,29 @@ html,body,h1,h2,h3,h4,h5 {font-family: "Raleway", sans-serif}
         <input id="valorTotal" name="valorTotal" type="number" step="0.01" class="input-formulario">
         <br><br> -->
 
-
+<!-- !DOCUMENTO COMERCIAL! -->
         <h3 for="documentoComercial">Documento Comercial</h3>
         <label for="documentoComercialTipo">Tipo</label>
-        <input id="documentoComercialTipo" name="documentoComercialTipo" type="text" class="input-formulario">
+        <select id="documentoComercialTipo" name="documentoComercialTipo" class="input-formulario">
+            <option value="Fisico">Fisico</option>
+            <option value="Digital">Digital</option>
+        </select>
         <br><br>
         <label for="documentoComercialNumero">Numero</label>
         <input id="documentoComercialNumero" name="documentoComercialNumero" type="number" class="input-formulario">
         <br><br>
+        <label for="documentoComercialClase">Clase de documento</label>
+        <input id="documentoComercialClase" name="documentoComercialClase" type="text" class="input-formulario">
+        <br><br>
         <label for="documentoComercialAdjunto">Adjunto</label>
         <input id="documentoComercialAdjunto" name="documentoComercialAdjunto" type="file" class="input-formulario">
         <br><br>
-
+<!-- !FIN DOCUMENTO COMERCIAL! -->
 
         <!-- !Categorias de Operacion! -->
-      <div>
         <h3 style="margin-bottom: 5px;margin-left: 10px">Categorias
           <a href="#" class="btn-border-blue fuente"><i class="fa fa-plus-circle" style="margin-bottom:25px;"></i> Agregar Categoria</a></h3>
-        <div class="scroll-formularios">
+        <!--<div class="scroll-formularios">-->
           <table class="tabla" id="categorias" name="categorias">
             <thead>
               <th><i class=""></i> Id </th>
@@ -151,69 +156,37 @@ html,body,h1,h2,h3,h4,h5 {font-family: "Raleway", sans-serif}
               </tr>
           </table>
           <br>
-        </div>
-      </div>
+
       <!-- !FIN Categorias! -->
       <br><br>
-      <!-- !Presupuestos! -->
-      <div>
-        <h3 style="margin-bottom: 5px;margin-left: 10px">Presupuestos
-          <a href="" class="btn-border-blue fuente"><i class="fa fa-plus-circle" style="margin-bottom:25px;"></i> Agregar Presupuesto</a></h3>
-        <div class="scroll-formularios">
-          <table class="tabla" id="presupuestos" name="presupuestos">
-            <thead>
-              <th><i class=""></i> Id </th>
-              <th><i class=""></i> Proveedor </th>
-              <th><i class=""></i> Valor Total </th>
-              <th><i class="fas fa-tools"></i> Acciones</th>
-            </thead>
-            <tbody>
-              <tr>
-                <td>Presupuesto 4214123</td>
-                <td>Prove1</td>
-                <td>100,00</td>
-                <td>
-                  <!--<a href="/usuario/{{id}}" name="button" style="margin:0px;" class="btn btn-border btn-border-blue" ><i class="far fa-eye"></i></a>-->
-                  <a href="/usuario/{{id}}" name="button" class=" btn btn-edit"><i class="fas fa-edit"></i></a>
-                  <button type="button" name="button" class="btn" onclick="confirmarEliminacion('{{id}}')"><i class="fas fa-trash"></i></button>
-                </td>
-              </tr>
-          </table>
-          <br>
-        </div>
-      </div>
-      <!-- !FIN Presupuestos! -->
       <!-- !Detalle del Egreso! -->
-      <div>
         <h3 style="margin-bottom: 5px;margin-left: 10px">Detalle Egreso
             <button type="button" name="buttonAgregarItem" class="btn-border-blue fuente" onclick="agregarItem()"><i class="fa fa-plus-circle" style="margin-bottom:25px;"></i></button></h3>
 
-        <div class="scroll-formularios">
-          <table class="tabla" id="detalleEgresos" name="detalleEgresos">
-            <thead>
-              <th><i class=""></i> Id </th>
-              <th><i class=""></i> Item </th>
-              <th><i class=""></i> Cantidad </th>
-              <th><i class=""></i> Valor Total </th>
-              <th><i class="fas fa-tools"></i> Acciones</th>
-            </thead>
-            <tbody>
-              <tr>
-                <td>1</td>
-                <td>Item1</td>
-                <td>2</td>
-                <td>100,00</td>
-                <td>
-                  <!--<a href="" name="button" style="margin:0px;" class="btn btn-border btn-border-blue" ><i class="far fa-eye"></i></a>-->
-                  <!--<a href="" name="button" class=" btn btn-edit"><i class="fas fa-edit"></i></a>-->
-                  <button type="button" name="buttonAgregarItem" class="btn btn-edit" onclick="agregarItem()"><i class="fas fa-edit"></i></button>
-                  <button type="button" name="button" class="btn" onclick="confirmarEliminacion('{{id}}')"><i class="fas fa-trash"></i></button>
-                </td>
-              </tr>
-            </table>
-            <br>
-        </div>
-      </div>
+      <table class="tabla" id="detalleEgresos" name="detalleEgresos">
+        <thead>
+          <th><i class=""></i> Id </th>
+          <th><i class=""></i> Item </th>
+          <th><i class=""></i> Cantidad </th>
+          <th><i class=""></i> Valor Total </th>
+          <th><i class="fas fa-tools"></i> Acciones</th>
+        </thead>
+        <tbody>
+          <tr>
+            <td>1</td>
+            <td>Item1</td>
+            <td>2</td>
+            <td>100,00</td>
+            <td>
+              <!--<a href="" name="button" style="margin:0px;" class="btn btn-border btn-border-blue" ><i class="far fa-eye"></i></a>-->
+              <!--<a href="" name="button" class=" btn btn-edit"><i class="fas fa-edit"></i></a>-->
+              <button type="button" name="buttonAgregarItem" class="btn btn-edit" onclick="agregarItem()"><i class="fas fa-edit"></i></button>
+              <button type="button" name="button" class="btn" onclick="confirmarEliminacion('{{id}}')"><i class="fas fa-trash"></i></button>
+            </td>
+          </tr>
+        </table>
+        <br>
+
       <!-- !FIN Detalle del Egreso! -->
       <br>
       <div align="left" width="90%">

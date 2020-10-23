@@ -4,7 +4,9 @@ import db.DAOs.ProveedorDAO;
 import db.DAOs.ProveedorDAOMemoria;
 import db.DAOs.ProveedorDAOMySQL;
 import db.EntityManagerHelper;
+import domain.entities.ProveedorDocComer.DocumentoComercial;
 import domain.entities.ProveedorDocComer.Proveedor;
+import domain.entities.ProveedorDocComer.TipoComprobante;
 import domain.entities.operacionComercial.DetalleEgreso;
 import domain.entities.operacionComercial.Item;
 import domain.entities.operacionComercial.MedioDePago;
@@ -57,6 +59,11 @@ public class OperacionEgresoController {
 
         OperacionEgresoBuilder builder = new OperacionEgresoBuilder();
 
+        DocumentoComercial documentoComercial = this.crearDocumentoComercial(request);
+
+
+
+
        // builder.setProveedor(proveedor);
         builder.setCantEsperadaPresupuestos(Integer.parseInt(request.queryParams("cantidadEsperadaPresupuestos")));
         builder.setFecha(fecha);
@@ -70,6 +77,25 @@ public class OperacionEgresoController {
         OperacionEgreso operacion = builder.build();
 
         return new ModelAndView(null, "operacionEgresoNuevo.hbs");
+    }
+
+    private DocumentoComercial crearDocumentoComercial(Request request) {
+        DocumentoComercial documentoComercial = new DocumentoComercial();
+
+        switch (request.queryParams("documentoComercialTipo")) {
+            case "Fisico":
+                TipoComprobante tipoComprobante = new TipoComprobante();
+                tipoComprobante.setDescripcion(request.queryParams("documentoComercialClase"));
+                Long numeroDocumento = new Long(request.params("documentoComercialNumero"));
+                documentoComercial.guardarDocumentoFisico(tipoComprobante, numeroDocumento,null);
+                break;
+            case "Digital":
+                //TODO: completar
+                //documento.altaDocumentoComercial();
+                break;
+        }
+
+        return documentoComercial;
     }
 
     public ModelAndView mostrarEgresos(Request request, Response response) throws Exception {
