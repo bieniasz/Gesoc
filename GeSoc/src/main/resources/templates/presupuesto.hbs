@@ -6,8 +6,9 @@
 <link rel="stylesheet" href="css/w3.css">
 <link rel="stylesheet" href="https://fonts.googleapis.com/css?family=Raleway">
 <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/4.7.0/css/font-awesome.min.css">
+<link rel="stylesheet" href="css/reset.css">
+<link rel="stylesheet" href="css/home.css">
 <link rel="stylesheet" href="css/operaciones.css">
-<link rel="stylesheet" href="css/search.bar.css">
     <script src="https://kit.fontawesome.com/27517fada0.js"></script>
     <link href="https://fonts.googleapis.com/css?family=Lexend+Deca&display=swap" rel="stylesheet">
     <script src="https://code.jquery.com/jquery-3.4.1.min.js" integrity="sha256-CSXorXvZcTkaix6Yvo6HppcZGetbYMGWSFlBw8HfCJo=" crossorigin="anonymous"></script>
@@ -79,27 +80,20 @@ html,body,h1,h2,h3,h4,h5 {font-family: "Raleway", sans-serif}
     <form class="" action="index.html" method="post">
         <!-- <label for="IDEgreso">ID de Egreso</label>
         <input id="IDEgreso" name="IDEgreso" type="number"  class="input-formulario-readonly" readonly>
-        <br><br>
+        <br><br> -->
         <label for="organizacion">Organización</label>
         <input id="organizacion" name="organizacion" type="number" class="input-formulario">
-        <br><br> -->
+        <br><br>
         <label for="fecha">Fecha</label>
         <input id="fecha" name="fecha" type="date"  class="input-formulario">
         <br><br>
-
-            <label for="Proveedor">Proveedor</label>
-            <input id="proveedor" name="proveedor" type="text" class="input-formulario">
-            <a href="#" name="searchProveedor" class=" btn btn-search" onclick="mostrarBuscarProveedor()"><i class="fas fa-search"></i></a>
-
-            <div class="dropdown">
-                <div id="buscarProveedor" class="dropdown-content">
-                    <input type="text" placeholder="Search.." id="inputBuscarProveedor" onkeyup="filterFunction()">
-                    {{#each provedoores}}
-                        <a onClick="llenarProveedor('{{nombreApellido_RazonSocial}}')">{{nombreApellido_RazonSocial}}</a>
-                    {{/each}}
-                </div>
-            </div>
-
+        <label for="documentoComercial">Documento Comercial</label>
+        <input id="documentoComercial" name="documentoComercial" type="number" class="input-formulario">
+        <a href="#" name="searchDocumentoComercial" class=" btn btn-search"><i class="fas fa-search"></i></a>
+        <br><br>
+        <label for="Proveedor">Proveedor</label>
+        <input id="proveedor" name="proveedor" type="number" class="input-formulario">
+        <a href="#" name="searchProveedor" class=" btn btn-search"><i class="fas fa-search"></i></a>
         <br><br>
         <label for="cantidadEsperadaPresupuestos">Cant. Presupuestos Req.</label>
         <input id="cantidadEsperadaPresupuestos" name="cantidadEsperadaPresupuestos" type="number" class="input-formulario">
@@ -111,28 +105,14 @@ html,body,h1,h2,h3,h4,h5 {font-family: "Raleway", sans-serif}
         <label>Nro. Identif. Medio de Pago</label>
         <input id="numeroIdentificadorMedioPago" name="numeroIdentificadorMedioPago" type="number" class="input-formulario">
         <br><br>
-        <!-- <label for="valorTotal">Valor Total</label>
+        <label for="valorTotal">Valor Total</label>
         <input id="valorTotal" name="valorTotal" type="number" step="0.01" class="input-formulario">
-        <br><br> -->
-
-
-        <h3 for="documentoComercial">Documento Comercial</h3>
-        <label for="documentoComercialTipo">Tipo</label>
-        <input id="documentoComercialTipo" name="documentoComercialTipo" type="text" class="input-formulario">
         <br><br>
-        <label for="documentoComercialNumero">Numero</label>
-        <input id="documentoComercialNumero" name="documentoComercialNumero" type="number" class="input-formulario">
-        <br><br>
-        <label for="documentoComercialAdjunto">Adjunto</label>
-        <input id="documentoComercialAdjunto" name="documentoComercialAdjunto" type="file" class="input-formulario">
-        <br><br>
-
-
         <!-- !Categorias de Operacion! -->
       <div>
         <h3 style="margin-bottom: 5px;margin-left: 10px">Categorias
           <a href="#" class="btn-border-blue fuente"><i class="fa fa-plus-circle" style="margin-bottom:25px;"></i> Agregar Categoria</a></h3>
-        <div class="scroll-formularios">
+        <div class="scroll-formularios"">
           <table class="tabla" id="categorias" name="categorias">
             <thead>
               <th><i class=""></i> Id </th>
@@ -159,7 +139,7 @@ html,body,h1,h2,h3,h4,h5 {font-family: "Raleway", sans-serif}
       <div>
         <h3 style="margin-bottom: 5px;margin-left: 10px">Presupuestos
           <a href="" class="btn-border-blue fuente"><i class="fa fa-plus-circle" style="margin-bottom:25px;"></i> Agregar Presupuesto</a></h3>
-        <div class="scroll-formularios">
+        <div class="scroll-formularios"">
           <table class="tabla" id="presupuestos" name="presupuestos">
             <thead>
               <th><i class=""></i> Id </th>
@@ -186,9 +166,9 @@ html,body,h1,h2,h3,h4,h5 {font-family: "Raleway", sans-serif}
       <!-- !Detalle del Egreso! -->
       <div>
         <h3 style="margin-bottom: 5px;margin-left: 10px">Detalle Egreso
-            <button type="button" name="buttonAgregarItem" class="btn-border-blue fuente" onclick="agregarItem()"><i class="fa fa-plus-circle" style="margin-bottom:25px;"></i></button></h3>
+        <a href="" class="btn-border-blue fuente"><i class="fa fa-plus-circle" style="margin-bottom:25px;"></i> Agregar Item</a></h3>
 
-        <div class="scroll-formularios">
+        <div class="scroll-formularios"">
           <table class="tabla" id="detalleEgresos" name="detalleEgresos">
             <thead>
               <th><i class=""></i> Id </th>
@@ -240,17 +220,14 @@ html,body,h1,h2,h3,h4,h5 {font-family: "Raleway", sans-serif}
 </body>
 
 <!-- ================= MODAL AGREGAR DETALLE ================== -->
-<div class="modalAgregarDetalle modal" id="modalAgregarDetalle">
+<div class="modal" id="modalAgregarDetalle">
     <div class="modalContent">
-        <h3>Agregar nuevo detalle</h3>
-        <form>
-            <input class="" type="text" name="name" placeholder="Descripcion">
-            <input class="" type="text" name="name" placeholder="Cantidad">
-            <input class="" type="text" name="name" placeholder="Valor total">
-        </form>
+        <input id="userId" type="hidden" value="">
+        <p>¿Desea eliminar el usuario?</p>
+        <button type="button" name="button" class="btn-close-modal" onclick="cerrarModal()" ><i class="fas fa-times-circle"></i></button>
         <br>
         <div class="">
-            <button type="button" name="button" class="btn-verde" onclick="guardarNuevoItem()">Agregar</button>
+            <button type="button" name="button" class="btn-rojo" onclick="eliminarUsuario()">Eliminar</button>
             <button type="button" name="button" class="btn-cancelar" onclick="cerrarModal()">Cancelar</button>
         </div>
     </div>

@@ -26,6 +26,11 @@ public class ProveedorDAOMySQL implements ProveedorDAO{
         return EntityManagerHelper.getEntityManager().find(Proveedor.class, id);
     }
 
+    @Override
+    public List<Proveedor> getTodosLosProveedores() {
+        return null;
+    }
+
     public Proveedor buscarProveedorPorNombre(String nombreProveedor) {
         Proveedor proveedor = (Proveedor) EntityManagerHelper.createQuery(
                 "from Proveedor where nombreApellido_RazonSocial = '"+nombreProveedor+"'").getSingleResult();

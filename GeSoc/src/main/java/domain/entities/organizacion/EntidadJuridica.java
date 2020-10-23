@@ -52,4 +52,5 @@ public class EntidadJuridica extends Organizacion {
     public void setCodigoIGJ(String codigoIGJ) { this.codigoIGJ = codigoIGJ; }
     public void setCategoria(Categoria categoria) { this.categoria = categoria; }
     public void setListaUsuarios(List<Usuario> listaUsuarios) { this.listaUsuarios = listaUsuarios; }
+
 }
