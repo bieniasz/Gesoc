@@ -36,6 +36,7 @@ public class OperacionEgreso extends OperacionComercial {
 
 
     @ManyToOne
+    @JoinColumn(name = "OperacionIngreso",referencedColumnName = "id")
     private OperacionIngreso ingresoAsociado;
 
 

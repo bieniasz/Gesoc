@@ -3,6 +3,7 @@ package domain.entities.vinculacionIngresoEgresos;
 import domain.entities.ProveedorDocComer.DocumentoComercial;
 import domain.entities.operacionComercial.OperacionEgreso;
 import domain.entities.operacionComercial.OperacionIngreso;
+import domain.entities.organizacion.Organizacion;
 import domain.entities.vinculacionIngresoEgresos.adapters.adapterVinculator.AdapterVinculator;
 import org.junit.Assert;
 import org.junit.Before;
@@ -54,8 +55,8 @@ public class TestAdapterVinculator {
         this.operacionesEgreso.add(egreso2);
         this.operacionesEgreso.add(egreso3);
 
-        OperacionIngresoTest ingreso1 = new OperacionIngresoTest(1, "Un ingreso", LocalDate.of(2020, 10, 13), 1200f);
-        OperacionIngresoTest ingreso2 = new OperacionIngresoTest(2, "Otro ingreso", LocalDate.of(2020, 10, 12), 500f);
+        OperacionIngresoTest ingreso1 = new OperacionIngresoTest(1, "Un ingreso", LocalDate.of(2020, 10, 13), 1200f, null);
+        OperacionIngresoTest ingreso2 = new OperacionIngresoTest(2, "Otro ingreso", LocalDate.of(2020, 10, 12), 500f, null);
 
         this.operacionesIngreso.add(ingreso1);
         this.operacionesIngreso.add(ingreso2);
@@ -78,8 +79,8 @@ public class TestAdapterVinculator {
     class OperacionEgresoTest extends OperacionEgreso {
         public int id_Egreso;
 
-
-        public int getid() {
+        @Override
+        public int getId() {
             return id_Egreso;
         }
 
@@ -90,13 +91,16 @@ public class TestAdapterVinculator {
     class OperacionIngresoTest extends OperacionIngreso {
         public int id_Ingreso;
 
-        public OperacionIngresoTest(int id_Ingreso, String descripcion, LocalDate fecha, float monto) {
-            super(descripcion, fecha, monto);
+        public OperacionIngresoTest(int id_Ingreso, String descripcion, LocalDate fecha, float monto, Organizacion organizacion) {
+            super.setDescripcion(descripcion);
+            super.setFecha(fecha);
+            super.setMonto(monto);
+            super.setOrganizacion(organizacion);
             this.id_Ingreso = id_Ingreso;
         }
 
-
-        public int getid() {
+        @Override
+        public int getId() {
             return id_Ingreso;
         }
     }

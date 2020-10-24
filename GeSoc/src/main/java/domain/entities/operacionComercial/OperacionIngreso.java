@@ -2,29 +2,31 @@ package domain.entities.operacionComercial;
 
 //import jdk.vm.ci.meta.Local;
 
-import javax.persistence.Column;
-import javax.persistence.Entity;
-import javax.persistence.Table;
+import domain.entities.organizacion.Organizacion;
+
+import javax.persistence.*;
 import java.time.LocalDate;
+import java.util.List;
 
 @Entity
 @Table
 public class OperacionIngreso extends EntidadPersistente {
 
+    @ManyToOne
+    @JoinColumn(name = "organizacion",referencedColumnName = "id")
+    private Organizacion organizacion;
+
     @Column
-    String descripcion;
+    private String descripcion;
 
     @Column(columnDefinition = "DATE")
     private LocalDate fecha;
 
     @Column
-    Float monto;
+    private Float monto;
 
-    public OperacionIngreso(String descripcion, LocalDate fecha, float monto){
-        this.descripcion = descripcion;
-        this.fecha = fecha;
-        this.monto = monto;
-    }
+    @OneToMany
+    private List<OperacionEgreso> egresosAsociados;
 
     /* GETTERS & SETTERS */
     public String getDescripcion() {
@@ -36,6 +38,8 @@ public class OperacionIngreso extends EntidadPersistente {
     public LocalDate getFecha() {
         return fecha;
     }
+    public Organizacion getOrganizacion() { return organizacion; }
+    public List<OperacionEgreso> getEgresosAsociados() { return egresosAsociados; }
 
     public void setDescripcion(String descripcion) {
         this.descripcion = descripcion;
@@ -46,4 +50,6 @@ public class OperacionIngreso extends EntidadPersistente {
     public void setFecha(LocalDate fecha) {
         this.fecha = fecha;
     }
+    public void setOrganizacion(Organizacion organizacion) { this.organizacion = organizacion; }
+    public void setEgresosAsociados(List<OperacionEgreso> egresosAsociados) { this.egresosAsociados = egresosAsociados; }
 }
