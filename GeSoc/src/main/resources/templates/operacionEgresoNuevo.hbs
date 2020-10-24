@@ -86,21 +86,6 @@ html,body,h1,h2,h3,h4,h5 {font-family: "Raleway", sans-serif}
         <label for="fecha">Fecha</label>
         <input id="fecha" name="fecha" type="date"  class="input-formulario">
         <br><br>
-
-            <label for="Proveedor">Proveedor</label>
-            <input id="proveedor" name="proveedor" type="text" class="input-formulario">
-            <a href="#" name="searchProveedor" class=" btn btn-search" onclick="mostrarBuscarProveedor()"><i class="fas fa-search"></i></a>
-
-            <div class="dropdown">
-                <div id="buscarProveedor" class="dropdown-content">
-                    <input type="text" placeholder="Search.." id="inputBuscarProveedor" onkeyup="filterFunction()">
-                    {{#each provedoores}}
-                        <a onClick="llenarProveedor('{{nombreApellido_RazonSocial}}')">{{nombreApellido_RazonSocial}}</a>
-                    {{/each}}
-                </div>
-            </div>
-
-        <br><br>
         <label for="cantidadEsperadaPresupuestos">Cant. Presupuestos Req.</label>
         <input id="cantidadEsperadaPresupuestos" name="cantidadEsperadaPresupuestos" type="number" class="input-formulario">
         <br><br>
@@ -115,6 +100,22 @@ html,body,h1,h2,h3,h4,h5 {font-family: "Raleway", sans-serif}
         <input id="valorTotal" name="valorTotal" type="number" step="0.01" class="input-formulario">
         <br><br> -->
 
+<!-- !PROVEEDOR! -->
+        <label for="Proveedor">Proveedor</label>
+        <input id="proveedor" name="proveedor" type="text" class="input-formulario">
+        <a href="#" name="searchProveedor" class=" btn btn-search" onclick="mostrarBuscarProveedor()"><i class="fas fa-search"></i></a>
+        <input type="hidden" id="proveedorId" name="proveedorId">
+
+        <div class="dropdown">
+            <div id="buscarProveedor" class="dropdown-content">
+                <input type="text" placeholder="Search.." id="inputBuscarProveedor" onkeyup="filterFunction()">
+                {{#each provedoores}}
+                    <a onClick="llenarProveedor('{{nombreApellido_RazonSocial}}', '{{id}}')">{{nombreApellido_RazonSocial}}</a>
+                {{/each}}
+            </div>
+        </div>
+
+        <br><br>
 <!-- !DOCUMENTO COMERCIAL! -->
         <h3 for="documentoComercial">Documento Comercial</h3>
         <label for="documentoComercialTipo">Tipo</label>
@@ -159,9 +160,10 @@ html,body,h1,h2,h3,h4,h5 {font-family: "Raleway", sans-serif}
 
       <!-- !FIN Categorias! -->
       <br><br>
-      <!-- !Detalle del Egreso! -->
-        <h3 style="margin-bottom: 5px;margin-left: 10px">Detalle Egreso
-            <button type="button" name="buttonAgregarItem" class="btn-border-blue fuente" onclick="agregarItem()"><i class="fa fa-plus-circle" style="margin-bottom:25px;"></i></button></h3>
+
+<!-- !DETALLE EGRESO! -->
+      <h3 style="margin-bottom: 5px;margin-left: 10px">Detalle Egreso
+          <button type="button" name="buttonAgregarItem" class="btn-border-blue fuente" onclick="agregarItem()"><i class="fa fa-plus-circle" style="margin-bottom:25px;"></i></button></h3>
 
       <table class="tabla" id="detalleEgresos" name="detalleEgresos">
         <thead>
@@ -172,18 +174,18 @@ html,body,h1,h2,h3,h4,h5 {font-family: "Raleway", sans-serif}
           <th><i class="fas fa-tools"></i> Acciones</th>
         </thead>
         <tbody>
-          <tr>
+         <!-- <tr>
             <td>1</td>
             <td>Item1</td>
             <td>2</td>
             <td>100,00</td>
-            <td>
+            <td> -->
               <!--<a href="" name="button" style="margin:0px;" class="btn btn-border btn-border-blue" ><i class="far fa-eye"></i></a>-->
               <!--<a href="" name="button" class=" btn btn-edit"><i class="fas fa-edit"></i></a>-->
-              <button type="button" name="buttonAgregarItem" class="btn btn-edit" onclick="agregarItem()"><i class="fas fa-edit"></i></button>
+             <!-- <button type="button" name="buttonAgregarItem" class="btn btn-edit" onclick="agregarItem()"><i class="fas fa-edit"></i></button>
               <button type="button" name="button" class="btn" onclick="confirmarEliminacion('{{id}}')"><i class="fas fa-trash"></i></button>
             </td>
-          </tr>
+          </tr>-->
         </table>
         <br>
 
@@ -217,14 +219,14 @@ html,body,h1,h2,h3,h4,h5 {font-family: "Raleway", sans-serif}
     <div class="modalContent">
         <h3>Agregar nuevo detalle</h3>
         <form>
-            <input class="" type="text" name="name" placeholder="Descripcion">
-            <input class="" type="text" name="name" placeholder="Cantidad">
-            <input class="" type="text" name="name" placeholder="Valor total">
+            <input type="text" name="descripcionItem" id="descripcionItem" placeholder="Descripcion">
+            <input type="text" name="cantidadItem" id="cantidadItem" placeholder="Cantidad">
+            <input type="text" name="valorItem" id="valorItem" placeholder="Valor total">
         </form>
         <br>
         <div class="">
             <button type="button" name="button" class="btn-verde" onclick="guardarNuevoItem()">Agregar</button>
-            <button type="button" name="button" class="btn-cancelar" onclick="cerrarModal()">Cancelar</button>
+            <button type="button" name="button" class="btn-cancelar" onclick="cerrarModal()">Cerrar</button>
         </div>
     </div>
 </div>

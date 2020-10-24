@@ -1,8 +1,6 @@
 package domain.controllers;
 
-import db.DAOs.ProveedorDAO;
-import db.DAOs.ProveedorDAOMemoria;
-import db.DAOs.ProveedorDAOMySQL;
+import db.DAOs.*;
 import db.EntityManagerHelper;
 import domain.entities.ProveedorDocComer.DocumentoComercial;
 import domain.entities.ProveedorDocComer.Proveedor;
@@ -27,12 +25,11 @@ import java.util.Map;
 public class OperacionEgresoController {
 
     private ProveedorDAO proveedorDAO = new ProveedorDAOMemoria();
+    private OrganizacionDAO organizacionDao = new OrganizacionDAOMemoria();
 
     public String saluda(Request request, Response response) {
         return "Saludos humano";
     }
-
-
 
     public ModelAndView crear(Request request, Response response) throws Exception {
 
@@ -41,8 +38,6 @@ public class OperacionEgresoController {
         //TODO traerme todas las categorias de la empresa del flaco
         //TODO: las categorias de cada organizacion o generales de la plataforma?
         //TODO: dos operaciones pueden estar asociadas al mismo presupuesto?
-
-        //Integer idUsuario = new Integer(request.queryParams("usuarioId"));
         //List<Categorias>
         Map<String, Object> parametros = new HashMap<>();
         parametros.put("provedoores", proveedores);
@@ -52,29 +47,26 @@ public class OperacionEgresoController {
 
     public ModelAndView guardar(Request request, Response response) throws Exception {
 
-        String nombreProveedor = request.queryParams("proveedor");
-        //Proveedor proveedor = new ProveedorDAOMySQL().getProveedor(request.queryParams("proveedorId");
+        //TODO: para los detalles de egreso puedo agarrar toda la tabla por javascript, parsearla en un json y recibirla de este lado en el request.body()
 
+        Proveedor proveedor = proveedorDAO.getProveedor(new Integer(request.queryParams("proveedorId")));
         LocalDate fecha = LocalDate.parse(request.queryParams("fecha"));
+        DocumentoComercial documentoComercial = this.crearDocumentoComercial(request);
+        Integer cantidadPresupuestos = Integer.parseInt(request.queryParams("cantidadEsperadaPresupuestos"));
+        Organizacion organizacion = organizacionDao.getOrganizacionPorUsuarioId(new Integer(request.queryParams("usuarioId")));
 
         OperacionEgresoBuilder builder = new OperacionEgresoBuilder();
-
-        DocumentoComercial documentoComercial = this.crearDocumentoComercial(request);
-
-
-
-
-       // builder.setProveedor(proveedor);
-        builder.setCantEsperadaPresupuestos(Integer.parseInt(request.queryParams("cantidadEsperadaPresupuestos")));
+        builder.setProveedor(proveedor);
+        builder.setCantEsperadaPresupuestos(cantidadPresupuestos);
         builder.setFecha(fecha);
-        builder.setNumeroIdentificadorMedioPago(request.queryParams("numeroIdentificadorMedioPago"));/*
+        builder.setNumeroIdentificadorMedioPago(request.queryParams("numeroIdentificadorMedioPago"));
+        builder.setDocumentoComercial(documentoComercial);
+        builder.setOrganizacion(organizacion);
+        /*
         builder.setDetalle(this.detalles);
         builder.setMedioDePago(new MedioDePago());
-        ;
-        //TODO: para la organizacion necesito la organizacion del usuario que ya esta logueado
-        builder.setOrganizacion(new EntidadJuridica());
         */
-        OperacionEgreso operacion = builder.build();
+        //OperacionEgreso operacion = builder.build();
 
         return new ModelAndView(null, "operacionEgresoNuevo.hbs");
     }
@@ -150,8 +142,13 @@ public class OperacionEgresoController {
 
 
     public Response guardarItem(Request request, Response response) {
+        Item item = new Item();
+        item.setDescripcion(request.queryParams("descripcion"));
+
         DetalleEgreso detalleNuevo = new DetalleEgreso();
-        detalleNuevo.setCantidad(new Integer(request.params("")));
+        detalleNuevo.setItem(item);
+        detalleNuevo.setCantidad(new Integer(request.queryParams("cantidad")));
+        detalleNuevo.setValorTotal(new Double(request.queryParams("valor")));
 
         return  response;
     }

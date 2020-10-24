@@ -18,8 +18,9 @@ function filterFunction() {
   }
 }
 
-function llenarProveedor(proveedor) {
+function llenarProveedor(proveedor, id) {
     document.getElementById("proveedor").value = proveedor;
+    document.getElementById("proveedorId").value = id;
     document.getElementById("buscarProveedor").classList.toggle("show");
 }
 
@@ -29,11 +30,25 @@ function agregarItem() {
 }
 
 function guardarNuevoItem() {
-    $.ajax({
-        type: "post",
-        url: "item",
-        success: function(resultado){
-            location.reload(true);
-        }
-    });
+    var table = document.getElementById("detalleEgresos");
+    var row = table.insertRow(1);
+    row.insertCell(0)
+    var descripcion = row.insertCell(1);
+    var cantidad = row.insertCell(2);
+    var valor = row.insertCell(3);
+    row.insertCell(4);
+    descripcion.innerHTML = document.getElementById("descripcionItem").value;
+    cantidad.innerHTML = document.getElementById("cantidadItem").value;
+    valor.innerHTML = document.getElementById("valorItem").value;
+       // var descripcion = document.getElementById("descripcionItem").value;
+    //var cantidad = document.getElementById("cantidadItem").value;
+    //var valor = document.getElementById("valorItem").value;
+    //$.ajax({
+      //  type: "post",
+       // url: "item?descripcion=" + descripcion + "&cantidad=" + cantidad + "&valor=" +valor,
+        //success: function(resultado){
+          //  location.reload(true);
+        //}
+    //});
+    document.getElementById("modalAgregarDetalle").style.display = 'block';
 }
