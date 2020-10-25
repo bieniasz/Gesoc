@@ -60,6 +60,6 @@ public class ValidadorDeUsuario implements iValidadorDeUsuario{
     }
 
     private Usuario getUsuario(String usuarioId) {
-        return this.usuarioDao.getUsuario(usuarioId);
+        return this.usuarioDao.buscarUsuarioPoruserId(usuarioId);
     }
 }

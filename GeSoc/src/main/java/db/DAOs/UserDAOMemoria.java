@@ -10,12 +10,15 @@ public class UserDAOMemoria implements UserDAO {
     private Map<String, Usuario> usuarioMap = new HashMap<>();
 
     @Override
-    public Usuario getUsuario(String userId) {
+    public Usuario buscarUsuarioPoruserId(String userId) {
         return this.usuarioMap.get(userId);
     }
 
     @Override
-    public void persistirUsuario(Usuario usuario) {
+    public Usuario buscarUsuario(Integer id){return null;};
+
+    @Override
+    public void guardarUsuario(Usuario usuario) {
         this.usuarioMap.put(usuario.getUsuario(),usuario);
     }
 }

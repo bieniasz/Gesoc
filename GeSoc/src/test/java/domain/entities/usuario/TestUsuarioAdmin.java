@@ -56,7 +56,7 @@ public class TestUsuarioAdmin {
         Assert.assertTrue("Admin@54321" == usuarioAdmin.getContrasenia());
 
         //Ahora testear si cambió en el domain.entities.usuario del almacen
-        List<String> contraseniasPrevias = AlmacenContrasenias.Instancia().getContraseniasPreviasDeUsuario(usuarioAdmin.getUsuario());
+        List<String> contraseniasPrevias = AlmacenContrasenias.Instancia().getContraseniasPreviasDeUsuario(usuarioAdmin.buscarUsuario());
         String contraseniaNueva = contraseniasPrevias.get(contraseniasPrevias.size()-1);
 
         Assert.assertTrue(contraseniaNueva == "Admin@54321");

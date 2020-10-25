@@ -1,4 +1,4 @@
-package domain.entities.usuario;
+    package domain.entities.usuario;
 
 import domain.entities.operacionComercial.EntidadPersistente;
 

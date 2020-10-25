@@ -26,7 +26,7 @@ public class TestValidadorDeUsuario {
         this.usuario = new Usuario();
         this.usuario.setUsuarioId("testUser");
         UserDAO usuarioDao = new UserDAOMemoria();
-        usuarioDao.persistirUsuario(this.usuario);
+        usuarioDao.guardarUsuario(this.usuario);
         this.validador = new ValidadorDeUsuario();
         this.validador.setUsuarioDao(usuarioDao);
         this.validador.setAlmacenContrasenias(this.almancen);
