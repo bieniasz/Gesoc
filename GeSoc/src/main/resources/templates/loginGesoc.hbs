@@ -7,6 +7,7 @@
 	<link href="https://fonts.googleapis.com/css?family=Poppins:600&display=swap" rel="stylesheet">
 	<script src="https://kit.fontawesome.com/a81368914c.js"></script>
 	<meta name="viewport" content="width=device-width, initial-scale=1">
+	<script src="http://ajax.googleapis.com/ajax/libs/jquery/1.11.1/jquery.min.js"></script>
 </head>
 <body>
 	<img class="wave" src="img/blueWave.png">
@@ -15,7 +16,7 @@
 			<img src="img/project-management.png">
 		</div>
 		<div class="login-content">
-			<form action="login.html">
+			<div class="form">
 				<img src="img/bandera.svg">
 				<h2 class="title">Bienvenido</h2>
            		<div class="input-div one">
@@ -24,7 +25,7 @@
            		   </div>
            		   <div class="div">
            		   		<h5>Usuario</h5>
-           		   		<input type="text" class="input">
+           		   		<input type="text" id ="usuario" class="input" name="usuario" spellcheck="false">
            		   </div>
            		</div>
            		<div class="input-div pass">
@@ -33,14 +34,92 @@
            		   </div>
            		   <div class="div">
            		    	<h5>Contraseña</h5>
-           		    	<input type="password" class="input">
+           		    	<input type="password" id="contrasenia" class="input" name="contrasenia" spellcheck="false">
             	   </div>
             	</div>
-            	<a href="#">Olvidó su contraseña?</a>
-            	<input type="submit" class="btn" value="Ingresar">
-            </form>
+
+            	 <!-- <a href="#">Olvidó su contraseña?</a> -->
+
+            	<button type="submit" id="btn-submit" class="btn">Ingresar</button>
+
+
+                <ul id="erroresLogin"></ul>
+
+
+            </div>
+
         </div>
     </div>
+
+        <script>
+            const form = {
+                usuario: document.getElementById('usuario'),
+                contrasenia: document.getElementById('contrasenia'),
+                submit: document.getElementById('btn-submit'),
+                erroresLogin: document.getElementById('erroresLogin')
+            };
+
+
+
+            form.submit.addEventListener('click', () => {
+                 usuario = document.getElementById("usuario").value;
+                 contrasenia = document.getElementById("contrasenia").value;
+                 console.log(usuario,contrasenia);
+
+                $.ajax({
+                        url: "/validarLogin",
+                        type: "Post",
+                        data: {usuario: document.getElementById("usuario").value,
+                               contrasenia: document.getElementById("contrasenia").value },
+
+                        dataType: 'json',
+                        success: function(jsonResponse){
+
+                            console.log(jsonResponse);
+                            console.log(jsonResponse.error);
+                            console.log(jsonResponse.errores);
+
+
+
+                            if (jsonResponse == "") {
+                                console.error('No hubo respuesta del servidor');
+
+                            }else {
+                                    handleResponse(jsonResponse);
+                            }
+
+                        }
+                });
+
+                function handleResponse (responseObject) {
+
+                            if (responseObject.error == 0) {
+                                location.href = "/otroSaludo/igna";
+                            } else {
+                                while (form.erroresLogin.firstChild) {
+                                    form.erroresLogin.removeChild(form.erroresLogin.firstChild);
+                                }
+
+                                responseObject.errores.forEach((error) => {
+                                    const li = document.createElement('li');
+                                    li.textContent = error;
+                                    form.erroresLogin.appendChild(li);
+                                });
+
+                                form.erroresLogin.style.display = "block";
+                            }
+                }
+
+
+            })
+
+        </script>
+
+
+
     <script type="text/javascript" src="js/login.js"></script>
+
+
+
 </body>
 </html>
