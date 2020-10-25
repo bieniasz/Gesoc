@@ -24,4 +24,36 @@ public class MedioDePago extends EntidadPersistente {
 
     public void pagar(){}
     public void altaMedioDePago(){}
+
+    public String getIdMercadoPago() {
+        return idMercadoPago;
+    }
+
+    public void setIdMercadoPago(String idMercadoPago) {
+        this.idMercadoPago = idMercadoPago;
+    }
+
+    public String getDescMercadoPago() {
+        return descMercadoPago;
+    }
+
+    public void setDescMercadoPago(String descMercadoPago) {
+        this.descMercadoPago = descMercadoPago;
+    }
+
+    public String getTipoMercadoPago() {
+        return tipoMercadoPago;
+    }
+
+    public void setTipoMercadoPago(String tipoMercadoPago) {
+        this.tipoMercadoPago = tipoMercadoPago;
+    }
+
+    public boolean isActivo() {
+        return activo;
+    }
+
+    public void setActivo(boolean activo) {
+        this.activo = activo;
+    }
 }
