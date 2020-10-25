@@ -31,19 +31,15 @@ public class Router {
         OperacionEgresoController controllerOperacionEgreso = new OperacionEgresoController();
         OperacionIngresoController ingresoController = new OperacionIngresoController();
 
-        //TODO: borrar acciones de ejemplo
-        Spark.get("/saludo", (request, response) -> "hola " + request.queryParams("nombre") + " " + request.queryParams("apellido"));
-        Spark.get("/otroSaludo/:nombre", (request, response) -> "hola " + request.params("nombre"));
-        Spark.get("/saludoMaquina", controllerOperacionEgreso::saluda);
-
 
         Spark.get("/login", controllerLogin::mostrarLogin, Router.engine);
         Spark.post("/validarLogin", controllerLogin::ingresar);
+
         Spark.get("/operaciones", controllerOperaciones::mostrarOperaciones, Router.engine);
+
         Spark.get("/bandejaDeMensajes", controllerBandejaDeMensajes::mostrarBandejaDeMensajes, Router.engine);
         Spark.get("/ingresos", ingresoController::mostrarIngresos, Router.engine);
 
-        Spark.get("/mostrarEgresos", controllerOperacionEgreso::mostrarEgresos, Router.engine);
         Spark.get("/egreso", controllerOperacionEgreso::nuevoEgreso, Router.engine);
         Spark.post("/egreso", controllerOperacionEgreso::guardar, Router.engine);
         //Spark.post("/egreso/:id", controllerOperacionEgreso::modificar, Router.engine);

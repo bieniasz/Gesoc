@@ -32,9 +32,6 @@ public class OperacionEgresoController {
     private OrganizacionDAO organizacionDao = new OrganizacionDAOMemoria();
     private OperacionEgresoDAO operacionEgresoDAO = new OperacionEgresoDAOMemoria();
 
-    public String saluda(Request request, Response response) {
-        return "Saludos humano";
-    }
 
     public ModelAndView nuevoEgreso(Request request, Response response) throws Exception {
 
@@ -59,11 +56,7 @@ public class OperacionEgresoController {
 
     public ModelAndView guardar(Request request, Response response) throws Exception {
 
-        //TODO: categorias, guardar, redireccionar a la vista principal
-        System.out.println();
-        System.out.println();
-
-
+        //TODO: categorias, redireccionar a la vista principal
         Proveedor proveedor = proveedorDAO.getProveedor(new Integer(request.queryParams("proveedorId"))); //OK
         LocalDate fecha = LocalDate.parse(request.queryParams("fecha")); //OK
         DocumentoComercial documentoComercial = this.crearDocumentoComercial(request); //OK
@@ -89,11 +82,11 @@ public class OperacionEgresoController {
 
         this.operacionEgresoDAO.guardarOperacionEgreso(operacion);
 
-        return new ModelAndView(null, "operacionEgresoNuevo.hbs");
+        //TODO: redirect y pasar el id del usuario logueado
+        return new ModelAndView(null, "operaciones.hbs");
     }
 
     private List<DetalleEgreso> getListaDeDetalle(Request request) {
-
         //TODO: controlar que la cantidad de egresos no sea nula, va en la vista
         Integer cantidadDeEgresos = new Integer(request.queryParams("cantidadDetalles"));
 
