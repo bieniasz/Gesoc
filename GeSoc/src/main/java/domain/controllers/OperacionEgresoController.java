@@ -54,14 +54,14 @@ public class OperacionEgresoController {
         return new ModelAndView( parametros, "operacionEgresoNuevo.hbs");
     }
 
-    public ModelAndView guardar(Request request, Response response) throws Exception {
+    public Response guardar(Request request, Response response) throws Exception {
 
         //TODO: categorias, redireccionar a la vista principal
-        Proveedor proveedor = proveedorDAO.getProveedor(new Integer(request.queryParams("proveedorId"))); //OK
-        LocalDate fecha = LocalDate.parse(request.queryParams("fecha")); //OK
-        DocumentoComercial documentoComercial = this.crearDocumentoComercial(request); //OK
-        Integer cantidadPresupuestos = Integer.parseInt(request.queryParams("cantidadEsperadaPresupuestos")); //OK
-        Organizacion organizacion = organizacionDao.getOrganizacionPorUsuarioId(new Integer(request.queryParams("usuarioId"))); //OK
+        Proveedor proveedor = proveedorDAO.getProveedor(new Integer(request.queryParams("proveedorId")));
+        LocalDate fecha = LocalDate.parse(request.queryParams("fecha"));
+        DocumentoComercial documentoComercial = this.crearDocumentoComercial(request);
+        Integer cantidadPresupuestos = Integer.parseInt(request.queryParams("cantidadEsperadaPresupuestos"));
+        Organizacion organizacion = organizacionDao.getOrganizacionPorUsuarioId(new Integer(request.queryParams("usuarioId")));
 
         List<DetalleEgreso> detallesEgresos = this.getListaDeDetalle(request);
         MedioDePago medioDePago = new MedioDePago();
@@ -82,8 +82,9 @@ public class OperacionEgresoController {
 
         this.operacionEgresoDAO.guardarOperacionEgreso(operacion);
 
-        //TODO: redirect y pasar el id del usuario logueado
-        return new ModelAndView(null, "operaciones.hbs");
+        ///egreso?usuarioId=5
+        response.redirect("/operaciones?usuarioId=" + request.queryParams("usuarioId"));
+        return response;
     }
 
     private List<DetalleEgreso> getListaDeDetalle(Request request) {
