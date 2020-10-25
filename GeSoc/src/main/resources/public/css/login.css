@@ -39,12 +39,24 @@ body{
 	text-align: center;
 }
 
+#erroresLogin{
+background-color: rgb(255,232,232);
+border: 1px solid red;
+color: red;
+display: none;
+margin-top: 10px;
+padding: 10px 25px;
+}
+
 .img img{
 	width: 500px;
 }
 
 form{
 	width: 360px;
+}
+.form{
+    width: 360px;
 }
 
 .login-content img{
@@ -180,6 +192,36 @@ a:hover{
 .btn:hover{
 	background-position: right;
 }
+
+.modalContent{
+  background-color: #fefefe;
+  margin: 15% auto; /* 15% from the top and centered */
+  padding: 20px;
+  border: 1px solid #888;
+  width: 80%;
+}
+.btn-close-modal {
+  cursor:pointer;
+  float:right;
+  background-color: grey;
+  border:0px;
+  color:white;
+  padding: 7px;
+  border-radius: 5px;
+  font-size:16px;
+}
+.btn-cancelar{
+  border:0px;
+  padding: 10px;
+  font-size: 16px;
+  background-color: grey;
+  border-radius: 5px;
+  color:white;
+  cursor:pointer;
+
+}
+
+
 
 @media screen and (max-width: 1050px){
 	.container{
