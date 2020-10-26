@@ -18,19 +18,19 @@ public class Direccion extends EntidadPersistente{
     @Column
     public String altura;
 
-    @ManyToOne
+    @ManyToOne(fetch = FetchType.LAZY, cascade=CascadeType.ALL)
     public Ciudad ciudad;
 
-    @ManyToOne
+    @ManyToOne(fetch = FetchType.LAZY, cascade=CascadeType.ALL)
     public Provincia provincia;
 
-    @ManyToOne
+    @ManyToOne(fetch = FetchType.LAZY, cascade=CascadeType.ALL)
     public Pais pais;
 
     @Column
     private boolean activo;
 
-    @OneToOne
+    @OneToOne(fetch = FetchType.LAZY, cascade=CascadeType.ALL)
     public Moneda monedaLocal;
 
     public String getCalle() {

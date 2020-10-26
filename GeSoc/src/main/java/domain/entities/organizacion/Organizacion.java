@@ -12,7 +12,7 @@ import java.util.Map;
  @Table
 public abstract class Organizacion extends EntidadPersistente {
 
-     @OneToMany
+     @OneToMany(fetch = FetchType.LAZY, cascade=CascadeType.ALL)
     protected List<OperacionEgreso> operacionesDeEgreso;
 
      @Column

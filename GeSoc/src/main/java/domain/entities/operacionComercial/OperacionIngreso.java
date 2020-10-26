@@ -12,7 +12,7 @@ import java.util.List;
 @Table
 public class OperacionIngreso extends EntidadPersistente {
 
-    @ManyToOne
+    @ManyToOne(fetch = FetchType.LAZY, cascade=CascadeType.ALL)
     @JoinColumn(name = "organizacion",referencedColumnName = "id")
     private Organizacion organizacion;
 
@@ -25,7 +25,7 @@ public class OperacionIngreso extends EntidadPersistente {
     @Column
     private Float monto;
 
-    @OneToMany
+    @OneToMany(fetch = FetchType.LAZY, cascade=CascadeType.ALL)
     private List<OperacionEgreso> egresosAsociados;
 
     /* GETTERS & SETTERS */

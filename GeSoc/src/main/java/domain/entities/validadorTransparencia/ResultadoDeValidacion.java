@@ -11,7 +11,7 @@ import java.util.List;
 @Table
 public class ResultadoDeValidacion  extends EntidadPersistente {
 
-    @OneToOne
+    @OneToOne(fetch = FetchType.LAZY, cascade=CascadeType.ALL)
     private OperacionEgreso operacionEgreso;
     @ElementCollection
     private List<String> resultados;

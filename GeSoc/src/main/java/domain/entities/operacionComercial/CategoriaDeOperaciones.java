@@ -12,6 +12,6 @@ public class CategoriaDeOperaciones extends EntidadPersistente {
 @Column
 private boolean activo;
 
-@ManyToOne
+@ManyToOne(fetch = FetchType.LAZY, cascade=CascadeType.ALL)
     private CriterioDeOperaciones criterioDeCategoria;
 }

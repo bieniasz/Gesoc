@@ -24,7 +24,7 @@ public class TestIngresoDAO {
 
     @Test
     public void TestRecuperarIngreso() {
-        OperacionIngreso ingresoRecuperado = ingresoDAO.buscarIngreso(3);
+        OperacionIngreso ingresoRecuperado = ingresoDAO.buscarIngreso(1);
 
         Assert.assertNotNull(ingresoRecuperado);
         Assert.assertEquals("Donacion de ANSES", ingresoRecuperado.getDescripcion());

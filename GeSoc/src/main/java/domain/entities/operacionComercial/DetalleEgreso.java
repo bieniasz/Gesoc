@@ -1,15 +1,12 @@
 package domain.entities.operacionComercial;
 
-import javax.persistence.Column;
-import javax.persistence.Entity;
-import javax.persistence.OneToOne;
-import javax.persistence.Table;
+import javax.persistence.*;
 
 @Entity
 @Table(name="DetalleEgreso")
 public class DetalleEgreso extends EntidadPersistente {
 
-    @OneToOne
+    @OneToOne(fetch = FetchType.LAZY, cascade=CascadeType.ALL)
     public Item item;
 
     @Column

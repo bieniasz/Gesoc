@@ -18,7 +18,7 @@ public class Proveedor extends EntidadPersistente {
     @Column
     private Long numeroIdentificacion;
 
-    @OneToOne
+    @OneToOne(fetch = FetchType.LAZY, cascade=CascadeType.ALL)
     private Direccion direccionPostal ;
 
     @Column

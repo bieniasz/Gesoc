@@ -19,8 +19,8 @@ public class UserDAOMemoria implements UserDAO {
         usuario1.setUsuarioId("juanpa");
         usuario1.setContrasenia("juanpa");
 
-        this.persistirUsuario(usuario1);
-        this.persistirUsuario(usuario2);
+        this.guardarUsuario(usuario1);
+        this.guardarUsuario(usuario2);
     }
 
     @Override
