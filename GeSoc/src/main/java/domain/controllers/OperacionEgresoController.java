@@ -5,13 +5,11 @@ import db.EntityManagerHelper;
 import domain.entities.ProveedorDocComer.DocumentoComercial;
 import domain.entities.ProveedorDocComer.Proveedor;
 import domain.entities.ProveedorDocComer.TipoComprobante;
-import domain.entities.operacionComercial.DetalleEgreso;
-import domain.entities.operacionComercial.Item;
-import domain.entities.operacionComercial.MedioDePago;
-import domain.entities.operacionComercial.OperacionEgreso;
+import domain.entities.operacionComercial.*;
 import domain.entities.operacionComercial.builder.OperacionEgresoBuilder;
 import domain.entities.organizacion.EntidadJuridica;
 import domain.entities.organizacion.Organizacion;
+import domain.entities.organizacion.categoria.Categoria;
 import spark.ModelAndView;
 import spark.Request;
 import spark.Response;
@@ -31,24 +29,29 @@ public class OperacionEgresoController {
     private ProveedorDAO proveedorDAO = new ProveedorDAOMemoria();
     private OrganizacionDAO organizacionDao = new OrganizacionDAOMemoria();
     private OperacionEgresoDAO operacionEgresoDAO = new OperacionEgresoDAOMemoria();
+    private CategoriaDAO categoriaDAO = new CategoriaDAOMemoria();
 
 
     public ModelAndView nuevoEgreso(Request request, Response response) throws Exception {
 
-        List<Proveedor> proveedores = this.proveedorDAO.getTodosLosProveedores();
+
         //TODO: los medios de pago son genericos o son de cada organizacion?
         //TODO traerme todas las categorias de la empresa del flaco
         //TODO: las categorias de cada organizacion o generales de la plataforma?
-        //TODO: dos operaciones pueden estar asociadas al mismo presupuesto?
+        //TODO: alidar que no haya dos ingresos asociados al mismo egreso
         //TODO: para el tipo le tengo que enviar los de ML
         //TODO: validacion por FE para no hacer guardar con campos vacios
+        //TODO: borrar categorias he items
+        //TODO: no poder agregar la misma categoria dos veces.
 
         //TODO: en la vista, cuando el documento es fisico no tengo que mostrar el campo de archivo adjunto
 
 
-        //tengo en query params el id, lo tengo que metar en los parametros para usarlo desde la vista en el /egreso
+        List<Proveedor> proveedores = this.proveedorDAO.getTodosLosProveedores();
+        List<CategoriaDeOperaciones> categorias = this.categoriaDAO.getTodasLasCategorias();
         Map<String, Object> parametros = new HashMap<>();
         parametros.put("provedoores", proveedores);
+        parametros.put("categorias", categorias);
         parametros.put("usuarioId", request.queryParams("usuarioId"));
 
         return new ModelAndView( parametros, "operacionEgresoNuevo.hbs");
