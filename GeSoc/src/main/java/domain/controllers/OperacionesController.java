@@ -29,6 +29,7 @@ public class OperacionesController {
 
         Map<String, Object> parametros = new HashMap<>();
         parametros.put("proveedores", proveedores);
+        parametros.put("usuarioId", request.queryParams("usuarioId"));
 
         return new ModelAndView(parametros, "operaciones.hbs");
     }

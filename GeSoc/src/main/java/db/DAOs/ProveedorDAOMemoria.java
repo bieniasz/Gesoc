@@ -6,7 +6,7 @@ import java.util.ArrayList;
 import java.util.List;
 
 public class ProveedorDAOMemoria implements ProveedorDAO{
-
+    private List<Proveedor> proveedors = new ArrayList<>();
 
     @Override
     public void guardarProveedor(Proveedor proveedor) {
@@ -15,7 +15,11 @@ public class ProveedorDAOMemoria implements ProveedorDAO{
 
     @Override
     public Proveedor getProveedor(Integer id) {
-        return null;
+        Proveedor proveedor1 = new Proveedor();
+        proveedor1.setNombreApellido_RazonSocial("Alfred SA");
+        proveedor1.setId(1);
+
+        return proveedor1;
     }
 
     @Override
@@ -30,7 +34,7 @@ public class ProveedorDAOMemoria implements ProveedorDAO{
         proveedor3.setNombreApellido_RazonSocial("Almirante Brown SA");
         proveedor3.setId(3);
 
-        List<Proveedor> proveedors = new ArrayList<>();
+
         proveedors.add(proveedor1);
         proveedors.add(proveedor2);
         proveedors.add(proveedor3);
