@@ -60,6 +60,7 @@ public class OperacionEgresoController {
     public Response guardar(Request request, Response response) throws Exception {
 
         //TODO: categorias, redireccionar a la vista principal
+        //TODO: verificar las categorias anden
         Proveedor proveedor = proveedorDAO.getProveedor(new Integer(request.queryParams("proveedorId")));
         LocalDate fecha = LocalDate.parse(request.queryParams("fecha"));
         DocumentoComercial documentoComercial = this.crearDocumentoComercial(request);

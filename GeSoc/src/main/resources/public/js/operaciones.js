@@ -37,6 +37,7 @@ function agregarCategoria(descripcion, id) {
         categoria.setAttribute("name", "categoria" + cantidadDeCategorias);
         categoria.setAttribute("type", "text");
         categoria.setAttribute("value", descripcion);
+        categoria.setAttribute("class", "w3-tag w3-padding w3-large w3-center w3-yellow");
         div.appendChild(categoria);
 
     cantidadDeCategorias = cantidadDeCategorias + 1;
