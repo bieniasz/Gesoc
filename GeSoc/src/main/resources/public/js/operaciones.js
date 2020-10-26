@@ -32,16 +32,38 @@ var cantidadDeCategorias = 0;
 function agregarCategoria(descripcion, id) {
     var div = document.getElementById("seccionCategorias");
 
+    var divCategoriaNueva = document.createElement("DIV");
+        div.appendChild(divCategoriaNueva);
+
     var categoria = document.createElement("INPUT");
         categoria.setAttribute("id", "categoria" + cantidadDeCategorias);
         categoria.setAttribute("name", "categoria" + cantidadDeCategorias);
         categoria.setAttribute("type", "text");
         categoria.setAttribute("value", descripcion);
-        categoria.setAttribute("class", "w3-tag w3-padding w3-large w3-center w3-yellow");
-        div.appendChild(categoria);
+        categoria.setAttribute("class", "w3-tag w3-padding w3-small w3-center w3-yellow");
+
+    var iconoBorrar = document.createElement("I");
+        iconoBorrar.setAttribute("class", "fas fa-close");
+
+    var aBorrar = document.createElement("A");
+        aBorrar.setAttribute("class", "btn btn-search");
+        aBorrar.setAttribute("id", "eliminarCategoria"  + cantidadDeCategorias);
+        aBorrar.setAttribute("onclick", "eliminarCategoria(" + cantidadDeCategorias  + ")");
+        aBorrar.appendChild(iconoBorrar);
+
+        divCategoriaNueva.appendChild(categoria);
+        divCategoriaNueva.appendChild(aBorrar);
 
     cantidadDeCategorias = cantidadDeCategorias + 1;
     document.getElementById("buscarCategoria").classList.toggle("show");
+}
+
+function eliminarCategoria(idCategoria) {
+    var categoria = document.getElementById('categoria' + idCategoria);
+    categoria.remove();
+
+    var cruzCategoria = document.getElementById('eliminarCategoria' + idCategoria);
+        cruzCategoria.remove();
 }
 
 
