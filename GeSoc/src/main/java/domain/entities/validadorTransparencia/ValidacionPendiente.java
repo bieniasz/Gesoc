@@ -12,7 +12,7 @@ import javax.persistence.*;
 @DiscriminatorColumn(name="TipoSuscripcion")
 public abstract class ValidacionPendiente extends EntidadPersistente {
 
-    @OneToOne
+    @OneToOne(fetch = FetchType.LAZY, cascade=CascadeType.ALL)
     private OperacionComercial operacionComercial;
 
 

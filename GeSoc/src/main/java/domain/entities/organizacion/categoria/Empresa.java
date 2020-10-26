@@ -11,7 +11,8 @@ public class Empresa extends Categoria{
 
 	@Column
 	private int cantidadDePersonal;
-	@ManyToOne
+
+	@ManyToOne(fetch = FetchType.LAZY, cascade=CascadeType.ALL)
 	@JoinColumn(name="Actividad",referencedColumnName = "id")
 	private Actividad actividad;
 

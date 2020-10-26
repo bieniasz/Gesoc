@@ -13,7 +13,7 @@ public class EntidadBase extends Organizacion {
     private String descripcion;
 
 
-    @ManyToOne
+    @ManyToOne(fetch = FetchType.LAZY, cascade=CascadeType.ALL)
     @JoinColumn(name="entidadJuridica",referencedColumnName = "id")
     private EntidadJuridica entidadJuridica;
 

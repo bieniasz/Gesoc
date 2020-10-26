@@ -9,7 +9,7 @@ import javax.persistence.*;
 @Table
 public class DocumentoComercial extends EntidadPersistente {
 
-    @ManyToOne
+    @ManyToOne(fetch = FetchType.LAZY, cascade=CascadeType.ALL)
     private TipoComprobante tipoDocumentoComercial;
 
     @Column

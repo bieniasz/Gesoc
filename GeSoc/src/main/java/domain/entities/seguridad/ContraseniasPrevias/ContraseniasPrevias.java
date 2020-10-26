@@ -2,10 +2,7 @@ package domain.entities.seguridad.ContraseniasPrevias;
 
 import domain.entities.operacionComercial.EntidadPersistente;
 
-import javax.persistence.Column;
-import javax.persistence.ElementCollection;
-import javax.persistence.Entity;
-import javax.persistence.Table;
+import javax.persistence.*;
 import java.util.List;
 
 @Entity

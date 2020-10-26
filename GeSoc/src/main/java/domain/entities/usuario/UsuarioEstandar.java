@@ -2,16 +2,13 @@ package domain.entities.usuario;
 
 import domain.entities.organizacion.Organizacion;
 
-import javax.persistence.DiscriminatorValue;
-import javax.persistence.Entity;
-import javax.persistence.JoinColumn;
-import javax.persistence.ManyToOne;
+import javax.persistence.*;
 
 @Entity
 @DiscriminatorValue("Estandar")
 public class UsuarioEstandar extends Rol{
 
-    @ManyToOne
+    @ManyToOne(fetch = FetchType.LAZY, cascade=CascadeType.ALL)
     //@JoinColumn(name= "domain/entities/organizacion",referencedColumnName = "id")
     @JoinColumn(name = "organizacion",referencedColumnName = "id")
     protected Organizacion organizacion;

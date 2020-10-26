@@ -30,12 +30,13 @@ public class Router {
         BandejaDeMensajesController controllerBandejaDeMensajes = new BandejaDeMensajesController();
         OperacionEgresoController controllerOperacionEgreso = new OperacionEgresoController();
         OperacionIngresoController ingresoController = new OperacionIngresoController();
-
+        OperacionesIngresoController ingresosController = new OperacionesIngresoController();
 
         Spark.get("/login", controllerLogin::mostrarLogin, Router.engine);
         Spark.post("/validarLogin", controllerLogin::ingresar);
 
         Spark.get("/operaciones", controllerOperaciones::mostrarOperaciones, Router.engine);
+        Spark.get("/operacionesIngreso", ingresosController::mostrarIngresos, Router.engine);
 
         Spark.get("/bandejaDeMensajes", controllerBandejaDeMensajes::mostrarBandejaDeMensajes, Router.engine);
         Spark.get("/ingresos", ingresoController::mostrarIngresos, Router.engine);

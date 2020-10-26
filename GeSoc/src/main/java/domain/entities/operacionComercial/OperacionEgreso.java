@@ -13,17 +13,17 @@ import java.util.List;
 @DiscriminatorValue("Egreso")
 public class OperacionEgreso extends OperacionComercial {
 
-    @ManyToOne
+    @ManyToOne(fetch = FetchType.LAZY, cascade=CascadeType.ALL)
     @JoinColumn(name="medioDePago",referencedColumnName = "id")
     private MedioDePago medioDePago;
 
     @Column
     private String numeroIdentificadorMedioPago;
 
-    @ManyToOne
+    @ManyToOne(fetch = FetchType.LAZY, cascade=CascadeType.ALL)
     private Proveedor proveedor;
 
-    @ManyToOne
+    @ManyToOne(fetch = FetchType.LAZY, cascade=CascadeType.ALL)
     //@JoinColumn(name = "domain/entities/organizacion",referencedColumnName = "id")
     @JoinColumn(name = "organizacion",referencedColumnName = "id")
     private Organizacion organizacion;
@@ -31,11 +31,11 @@ public class OperacionEgreso extends OperacionComercial {
     @Column
     private Integer cantidadEsperadaPresupuestos;
 
-    @OneToMany
+    @OneToMany(fetch = FetchType.LAZY, cascade=CascadeType.ALL)
     private List<Presupuesto> presupuestos = new ArrayList<Presupuesto>();
 
 
-    @ManyToOne
+    @ManyToOne(fetch = FetchType.LAZY, cascade=CascadeType.ALL)
     @JoinColumn(name = "OperacionIngreso",referencedColumnName = "id")
     private OperacionIngreso ingresoAsociado;
 

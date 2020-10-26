@@ -2,10 +2,7 @@ package domain.entities.operacionComercial;
 
 import domain.entities.ProveedorDocComer.Proveedor;
 
-import javax.persistence.Column;
-import javax.persistence.Entity;
-import javax.persistence.ManyToMany;
-import javax.persistence.Table;
+import javax.persistence.*;
 import java.util.List;
 
 
@@ -15,7 +12,8 @@ public class Item extends EntidadPersistente{ //TODO evaluar nombre mas descript
 
     @Column
     private String descripcion;
-    @ManyToMany
+
+    @ManyToMany(fetch = FetchType.LAZY, cascade=CascadeType.ALL)
     private List<Proveedor> proveedores;
 
     @Column

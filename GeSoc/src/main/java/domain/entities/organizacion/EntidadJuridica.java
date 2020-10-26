@@ -18,10 +18,10 @@ public class EntidadJuridica extends Organizacion {
     @Column
     private Integer cuit;
 
-    @OneToOne
+    @OneToOne(fetch = FetchType.LAZY, cascade=CascadeType.ALL)
     private Direccion direccionPostal;
 
-    @OneToMany
+    @OneToMany(fetch = FetchType.LAZY, cascade=CascadeType.ALL)
     private List<EntidadBase> entidadesBase;
 
     @Column
@@ -30,8 +30,8 @@ public class EntidadJuridica extends Organizacion {
     @OneToOne
     private Categoria categoria;
 
-    @OneToMany
-    @JoinColumn(name="listaUsuarios",referencedColumnName = "id")
+    @OneToMany(fetch = FetchType.LAZY, cascade=CascadeType.ALL)
+    @JoinColumn(name="organizacion",referencedColumnName = "id")
     private List<Usuario> listaUsuarios;
 
     // ACCESORES

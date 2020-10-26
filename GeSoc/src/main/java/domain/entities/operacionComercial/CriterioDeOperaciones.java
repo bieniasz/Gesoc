@@ -6,12 +6,12 @@ import java.util.List;
 @Table
 public class CriterioDeOperaciones extends EntidadPersistente{
 
-@OneToMany
+@OneToMany(fetch = FetchType.LAZY, cascade=CascadeType.ALL)
     private List<CategoriaDeOperaciones> Categorias;
 
 @Column
     private boolean activo;
 
-@OneToMany
+@OneToMany(fetch = FetchType.LAZY, cascade=CascadeType.ALL)
     private List<CriterioDeOperaciones> CriteriosHijos;
 }

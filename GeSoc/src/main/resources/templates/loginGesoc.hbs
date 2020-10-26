@@ -94,7 +94,8 @@
                 function handleResponse (responseObject) {
 
                             if (responseObject.error == 0) {
-                                location.href = "/otroSaludo/igna";
+                                var id = responseObject.usuarioID;
+                                location.href = "/operaciones?usuarioId=" + id;
                             } else {
                                 while (form.erroresLogin.firstChild) {
                                     form.erroresLogin.removeChild(form.erroresLogin.firstChild);

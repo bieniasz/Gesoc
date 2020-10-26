@@ -12,8 +12,8 @@ import java.util.List;
 @Table
 public class BandejaDeResultado extends EntidadPersistente {
 
-    @OneToMany
-    @JoinColumn(name="ResultadoDeValidacion",referencedColumnName = "id")
+    @OneToMany(fetch = FetchType.LAZY, cascade=CascadeType.ALL)
+    @JoinColumn(name="BandejaDeResultado",referencedColumnName = "id")
     private List<ResultadoDeValidacion> resultadosDeValidacion;
 
     @Transient

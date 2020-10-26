@@ -12,10 +12,10 @@ import javax.persistence.*;
 @DiscriminatorValue("Revisor")
 public class UsuarioRevisor extends Rol{
 
-    @ManyToOne
+    @ManyToOne(fetch = FetchType.LAZY, cascade=CascadeType.ALL)
     private Organizacion organizacion;
 
-    @OneToOne
+    @OneToOne(fetch = FetchType.LAZY, cascade=CascadeType.ALL)
     public BandejaDeResultado bandejaDeResultado = new BandejaDeResultado();
 
     public UsuarioRevisor(Organizacion organizacion){
