@@ -35,26 +35,26 @@ public class OperacionEgresoController {
     public ModelAndView nuevoEgreso(Request request, Response response) throws Exception {
 
 
-        //TODO: los medios de pago son genericos o son de cada organizacion?
-        //TODO traerme todas las categorias de la empresa del flaco
-        //TODO: las categorias de cada organizacion o generales de la plataforma?
-        //TODO: alidar que no haya dos ingresos asociados al mismo egreso
-        //TODO: para el tipo le tengo que enviar los de ML
-        //TODO: validacion por FE para no hacer guardar con campos vacios
-        //TODO: borrar categorias he items
-        //TODO: no poder agregar la misma categoria dos veces.
+            //TODO: los medios de pago son genericos o son de cada organizacion?
+            //TODO traerme todas las categorias de la empresa del flaco
+            //TODO: las categorias de cada organizacion o generales de la plataforma?
+            //TODO: alidar que no haya dos ingresos asociados al mismo egreso
+            //TODO: para el tipo le tengo que enviar los de ML
+            //TODO: validacion por FE para no hacer guardar con campos vacios
+            //TODO: borrar categorias he items
+            //TODO: no poder agregar la misma categoria dos veces.
 
-        //TODO: en la vista, cuando el documento es fisico no tengo que mostrar el campo de archivo adjunto
+            //TODO: en la vista, cuando el documento es fisico no tengo que mostrar el campo de archivo adjunto
 
 
-        List<Proveedor> proveedores = this.proveedorDAO.getTodosLosProveedores();
-        List<CategoriaDeOperaciones> categorias = this.categoriaDAO.getTodasLasCategorias();
-        Map<String, Object> parametros = new HashMap<>();
-        parametros.put("provedoores", proveedores);
-        parametros.put("categorias", categorias);
-        parametros.put("usuarioId", request.queryParams("usuarioId"));
+            List<Proveedor> proveedores = this.proveedorDAO.getTodosLosProveedores();
+            List<CategoriaDeOperaciones> categorias = this.categoriaDAO.getTodasLasCategorias();
+            Map<String, Object> parametros = new HashMap<>();
+            parametros.put("provedoores", proveedores);
+            parametros.put("categorias", categorias);
+            parametros.put("usuarioId", request.queryParams("usuarioId"));
 
-        return new ModelAndView( parametros, "operacionEgresoNuevo.hbs");
+            return new ModelAndView( parametros, "operacionEgresoNuevo.hbs");
     }
 
     public Response guardar(Request request, Response response) throws Exception {
