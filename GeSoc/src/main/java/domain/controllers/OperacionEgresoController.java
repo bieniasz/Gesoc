@@ -58,9 +58,8 @@ public class OperacionEgresoController {
     }
 
     public Response guardar(Request request, Response response) throws Exception {
-
-        //TODO: categorias, redireccionar a la vista principal
         //TODO: verificar las categorias anden
+        //TODO: categorias borradas cuidado
         Proveedor proveedor = proveedorDAO.getProveedor(new Integer(request.queryParams("proveedorId")));
         LocalDate fecha = LocalDate.parse(request.queryParams("fecha"));
         DocumentoComercial documentoComercial = this.crearDocumentoComercial(request);
@@ -86,7 +85,6 @@ public class OperacionEgresoController {
 
         this.operacionEgresoDAO.guardarOperacionEgreso(operacion);
 
-        ///egreso?usuarioId=5
         response.redirect("/operaciones?usuarioId=" + request.queryParams("usuarioId"));
         return response;
     }
