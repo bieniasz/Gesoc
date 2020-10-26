@@ -43,8 +43,8 @@ public class LoginController {
 
         //Todo cambiar la prueba con errores oficiales y no hardcodeados.
         List<String> errores = new ArrayList<>();
-        errores.add("Falla de prueba");
-        errores.add("segunda falla");
+        //errores.add("Falla de prueba");
+        //errores.add("segunda falla");
 
 
         LoginRespuesta loginRespuesta = new LoginRespuesta();
@@ -55,8 +55,8 @@ public class LoginController {
 
 
         if (errores.size() == 0){
-            //response.redirect("/otroSaludo/igna");
             loginRespuesta.setError(0);
+            loginRespuesta.setUsuarioID(5);
             String jsonLoginRespuesta = gson.toJson(loginRespuesta);
             return jsonLoginRespuesta;
 
@@ -99,6 +99,7 @@ public class LoginController {
 class LoginRespuesta{
     int error;
     List<String> errores = new ArrayList<>();
+    int usuarioID;
 
 
     public void setError(int flag){
@@ -106,5 +107,8 @@ class LoginRespuesta{
     }
     public void setErrores(List<String> errores){
         this.errores = errores;
+    }
+    public void setUsuarioID(int id){
+        this.usuarioID = id;
     }
 }
