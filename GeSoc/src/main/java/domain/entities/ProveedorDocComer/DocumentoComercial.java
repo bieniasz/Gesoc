@@ -42,4 +42,9 @@ public class DocumentoComercial extends EntidadPersistente {
         Documento.tipoDeAdjunto = tipoDeAdjunto;
         Documento.content=contenido;
     }
+
+	public void setContent(String contenido) {
+		 this.content=contenido;
+		
+	}
 }

@@ -125,7 +125,7 @@ html,body,h1,h2,h3,h4,h5 {font-family: "Raleway", sans-serif}
 <!-- !DOCUMENTO COMERCIAL! -->
         <h3 for="documentoComercial">Documento Comercial</h3>
         <label for="documentoComercialTipo">Tipo</label>
-        <select id="documentoComercialTipo" name="documentoComercialTipo" class="input-formulario">
+        <select id="documentoComercialTipo" name="documentoComercialTipo" class="input-formulario" >
             <option value="Fisico">Fisico</option>
             <option value="Digital">Digital</option>
         </select>
@@ -137,7 +137,7 @@ html,body,h1,h2,h3,h4,h5 {font-family: "Raleway", sans-serif}
         <input id="documentoComercialClase" name="documentoComercialClase" type="text" class="input-formulario">
         <br><br>
         <label for="documentoComercialAdjunto">Adjunto</label>
-        <input id="documentoComercialAdjunto" name="documentoComercialAdjunto" type="file" class="input-formulario">
+        <input id="documentoComercialAdjunto" name="documentoComercialAdjunto" type="file" onsubmit="serializarArchivo()" class="input-formulario">
         <br><br>
 
 

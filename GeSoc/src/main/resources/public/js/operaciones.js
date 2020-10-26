@@ -121,3 +121,11 @@ function guardarNuevoItem() {
           //  location.reload(true);
         //}
     //});
+
+
+function serializarArchivo() {
+    var archivoSerializado = getElementById("documentoComercialAdjunto").serialize();
+    return archivoSerializado;
+
+  }
+ 
