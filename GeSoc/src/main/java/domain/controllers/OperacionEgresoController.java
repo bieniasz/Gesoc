@@ -119,6 +119,7 @@ public class OperacionEgresoController {
                 tipoComprobante.setDescripcion(request.queryParams("documentoComercialClase"));
                 Long numeroDocumento = new Long(request.queryParams("documentoComercialNumero"));
                 documentoComercial.guardarDocumentoFisico(tipoComprobante, numeroDocumento,null);
+                documentoComercial.setContent(request.queryParams("documentoComercialAdjunto"));
                 break;
             case "Digital":
                 //TODO: completar
