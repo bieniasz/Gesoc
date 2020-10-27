@@ -32,6 +32,21 @@ public class OperacionEgresoController {
     private CategoriaDAO categoriaDAO = new CategoriaDAOMemoria();
 
 
+
+    public ModelAndView editarEgreso(Request request, Response response) {
+
+        System.out.println(request.queryParams("egresoId"));
+
+        List<Proveedor> proveedores = this.proveedorDAO.getTodosLosProveedores();
+        List<CategoriaDeOperaciones> categorias = this.categoriaDAO.getTodasLasCategorias();
+        Map<String, Object> parametros = new HashMap<>();
+        parametros.put("provedoores", proveedores);
+        parametros.put("categorias", categorias);
+        parametros.put("usuarioId", request.queryParams("usuarioId"));
+
+        return new ModelAndView( parametros, "operacionEgresoNuevo.hbs");
+    }
+
     public ModelAndView nuevoEgreso(Request request, Response response) throws Exception {
 
 
@@ -93,24 +108,22 @@ public class OperacionEgresoController {
 
     private List<CategoriaDeOperaciones> getListaDeCategorias(Request request) {
 
-        Integer cantidadDeCategorias = new Integer(request.queryParams("cantidadDeCategorias"));
-        System.out.println("Cantidad de categorias: " + cantidadDeCategorias);
-
         List<CategoriaDeOperaciones> categorias = new ArrayList<>();
 
-        IntStream.range(0,cantidadDeCategorias).forEach( i -> {
+        try {
+            Integer cantidadDeCategorias = new Integer(request.queryParams("cantidadDeCategorias"));
+            IntStream.range(0,cantidadDeCategorias).forEach( i -> {
 
-            //TODO: NO OLVIDAR EL TRY CATCH
-            try {
-                int idDeLaCategoria = new Integer(request.queryParams("categoriaId" + i));
-                CategoriaDeOperaciones categoria = this.categoriaDAO.buscarCategoriaPorId(idDeLaCategoria);
-                System.out.println("Descripcion de categorias: " + categoria.getDescripcion());
-                categorias.add(categoria);
-            } catch (Exception e) {}
-        });
+                try {
+                    int idDeLaCategoria = new Integer(request.queryParams("categoriaId" + i));
+                    CategoriaDeOperaciones categoria = this.categoriaDAO.buscarCategoriaPorId(idDeLaCategoria);
+                    categorias.add(categoria);
+                } catch (Exception e) {}
+            });
+
+        } catch (Exception e) {}
 
         return  categorias;
-
     }
 
     private List<DetalleEgreso> getListaDeDetalle(Request request) {
@@ -155,7 +168,18 @@ public class OperacionEgresoController {
         return documentoComercial;
     }
 
-    public ModelAndView mostrarEgresos(Request request, Response response) throws Exception {
+    public ModelAndView mostrarEgreso(Request request, Response response) throws Exception {
+
+        Integer idEgreso = new Integer(request.params("id"));
+
+        List<Proveedor> proveedores = this.proveedorDAO.getTodosLosProveedores();
+        List<CategoriaDeOperaciones> categorias = this.categoriaDAO.getTodasLasCategorias();
+        Map<String, Object> parametros = new HashMap<>();
+        parametros.put("provedoores", proveedores);
+        parametros.put("categorias", categorias);
+        parametros.put("usuarioId", request.queryParams("usuarioId"));
+
+        return new ModelAndView( parametros, "operacionEgresoNuevo.hbs");
         /*DetalleEgreso unDetalle = new DetalleEgreso();
         Item item = new Item();
         item.setDescripcion("Coca");
@@ -201,6 +225,6 @@ public class OperacionEgresoController {
         parametros.put("operacion", operacion);
         parametros.put("provedoores", this.proveedores);*/
 
-        return new ModelAndView(null, "operacionEgresoNuevo.hbs");
+
     }
 }

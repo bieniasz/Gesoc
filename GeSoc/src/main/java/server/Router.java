@@ -44,7 +44,7 @@ public class Router {
         Spark.get("/ingreso", ingresoController::mostrarIngreso, Router.engine);
 
         Spark.get("/egreso", controllerOperacionEgreso::nuevoEgreso, Router.engine);
+        Spark.get("/egresoEditar", controllerOperacionEgreso::editarEgreso, Router.engine);
         Spark.post("/egreso", controllerOperacionEgreso::guardar);
-        //Spark.post("/egreso/:id", controllerOperacionEgreso::modificar, Router.engine);
     }
 }
