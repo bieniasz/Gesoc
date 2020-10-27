@@ -12,11 +12,11 @@ public class ProveedorDAOMySQL implements ProveedorDAO{
     @Override
     public void guardarProveedor(Proveedor proveedor) {
         EntityManagerHelper.beginTransaction();
-        EntityManagerHelper.getEntityManager().persist(proveedor.getDireccionPostal().getCiudad());
+        /*EntityManagerHelper.getEntityManager().persist(proveedor.getDireccionPostal().getCiudad());
         EntityManagerHelper.getEntityManager().persist(proveedor.getDireccionPostal().getProvincia());
         EntityManagerHelper.getEntityManager().persist(proveedor.getDireccionPostal().getPais());
         EntityManagerHelper.getEntityManager().persist(proveedor.getDireccionPostal().getMonedaLocal());
-        EntityManagerHelper.getEntityManager().persist(proveedor.getDireccionPostal());
+        EntityManagerHelper.getEntityManager().persist(proveedor.getDireccionPostal());*/
         EntityManagerHelper.getEntityManager().persist(proveedor);
         EntityManagerHelper.commit();
     }
