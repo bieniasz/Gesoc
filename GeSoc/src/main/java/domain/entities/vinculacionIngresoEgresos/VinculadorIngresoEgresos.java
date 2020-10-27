@@ -1,8 +1,13 @@
 package domain.entities.vinculacionIngresoEgresos;
 
+import db.DAOs.OperacionEgresoDAO;
+import db.DAOs.OperacionEgresoDAOMemoria;
+import db.DAOs.OperacionIngresoDAO;
+import db.DAOs.OperacionIngresoDAOMySQL;
 import domain.entities.operacionComercial.OperacionEgreso;
 import domain.entities.operacionComercial.OperacionIngreso;
 import domain.entities.vinculacionIngresoEgresos.adapters.IAdapterVinculacion;
+import domain.entities.vinculacionIngresoEgresos.adapters.adapterVinculator.AdapterVinculator;
 
 import java.io.IOException;
 import java.time.LocalDate;
@@ -15,13 +20,20 @@ public class VinculadorIngresoEgresos {
     private LocalDate fechaHastaAceptable;
     private IAdapterVinculacion adapterVinculador;
 
+    public VinculadorIngresoEgresos(){ this.adapterVinculador = new AdapterVinculator(); }
+
     public void vincularOperaciones() throws IOException {
+        OperacionEgresoDAO egresoDAO = new OperacionEgresoDAOMemoria();
+        OperacionIngresoDAO ingresoDAO = new OperacionIngresoDAOMySQL();
+
         Map<OperacionEgreso, OperacionIngreso> mapIngresosEgresos = this.adapterVinculador.obtenerVinculaciones(this.operacionIngresoList, this.operacionEgresoList, fechaHastaAceptable);
 
         for (OperacionEgreso egreso : mapIngresosEgresos.keySet()) {
             OperacionIngreso ingreso = mapIngresosEgresos.get(egreso);
             egreso.setIngresoAsociado(ingreso);
-            //TODO PERSISTIR
+
+            egresoDAO.guardarOperacionEgreso(egreso);
+            ingresoDAO.guardarIngreso(ingreso);
         }
     }
 

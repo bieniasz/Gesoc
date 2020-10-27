@@ -40,7 +40,7 @@ public class ProveedorDAOMySQL implements ProveedorDAO{
 
     public void updateProveedor(Proveedor proveedor) {
         EntityManagerHelper.beginTransaction();
-        EntityManagerHelper.getEntityManager().persist(proveedor);
+        EntityManagerHelper.getEntityManager().merge(proveedor);
         EntityManagerHelper.commit();
     }
 }

@@ -28,6 +28,8 @@ public class OperacionIngreso extends EntidadPersistente {
     @OneToMany(fetch = FetchType.LAZY, cascade=CascadeType.ALL)
     private List<OperacionEgreso> egresosAsociados;
 
+    public void agregarEgresoAsociado(OperacionEgreso egreso) { this.egresosAsociados.add(egreso); }
+
     /* GETTERS & SETTERS */
     public String getDescripcion() {
         return descripcion;

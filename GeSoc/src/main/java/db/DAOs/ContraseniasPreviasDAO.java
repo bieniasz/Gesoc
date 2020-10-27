@@ -5,6 +5,7 @@ import domain.entities.usuario.Usuario;
 
 public interface ContraseniasPreviasDAO {
 
-    public ContraseniasPrevias getContraseniasPrevias(Usuario usuario);
-    public void persistirContraseniaPrevia(ContraseniasPrevias contraseniasPrevias);
+    ContraseniasPrevias getContraseniasPrevias(Usuario usuario);
+    void persistirContraseniaPrevia(ContraseniasPrevias contraseniasPrevias);
+    void actualizarContraseniasPrevias(ContraseniasPrevias contraseniasPrevias);
 }
