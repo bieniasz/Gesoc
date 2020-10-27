@@ -65,8 +65,9 @@ public class OperacionEgresoController {
         DocumentoComercial documentoComercial = this.crearDocumentoComercial(request);
         Integer cantidadPresupuestos = Integer.parseInt(request.queryParams("cantidadEsperadaPresupuestos"));
         Organizacion organizacion = organizacionDao.getOrganizacionPorUsuarioId(new Integer(request.queryParams("usuarioId")));
-
         List<DetalleEgreso> detallesEgresos = this.getListaDeDetalle(request);
+        List<CategoriaDeOperaciones> categoriasDeOperaciones = this.getListaDeCategorias(request);
+
         MedioDePago medioDePago = new MedioDePago();
         medioDePago.setDescMercadoPago(request.queryParams("descripcionDelPago"));
         medioDePago.setIdMercadoPago(request.queryParams("medioDePagoId"));
@@ -81,16 +82,40 @@ public class OperacionEgresoController {
         builder.setOrganizacion(organizacion);
         builder.setDetalle(detallesEgresos);
         builder.setMedioDePago(new MedioDePago());
+        builder.setCategoriasAsociadas(categoriasDeOperaciones);
         OperacionEgreso operacion = builder.build();
 
         this.operacionEgresoDAO.guardarOperacionEgreso(operacion);
 
-        response.redirect("/operaciones?usuarioId=" + request.queryParams("usuarioId"));
+        response.redirect("/operacionesEgreso?usuarioId=" + request.queryParams("usuarioId"));
         return response;
+    }
+
+    private List<CategoriaDeOperaciones> getListaDeCategorias(Request request) {
+
+        Integer cantidadDeCategorias = new Integer(request.queryParams("cantidadDeCategorias"));
+        System.out.println("Cantidad de categorias: " + cantidadDeCategorias);
+
+        List<CategoriaDeOperaciones> categorias = new ArrayList<>();
+
+        IntStream.range(0,cantidadDeCategorias).forEach( i -> {
+
+            //TODO: NO OLVIDAR EL TRY CATCH
+            try {
+                int idDeLaCategoria = new Integer(request.queryParams("categoriaId" + i));
+                CategoriaDeOperaciones categoria = this.categoriaDAO.buscarCategoriaPorId(idDeLaCategoria);
+                System.out.println("Descripcion de categorias: " + categoria.getDescripcion());
+                categorias.add(categoria);
+            } catch (Exception e) {}
+        });
+
+        return  categorias;
+
     }
 
     private List<DetalleEgreso> getListaDeDetalle(Request request) {
         //TODO: controlar que la cantidad de egresos no sea nula, va en la vista
+        //TODO: eliminar detalles
         Integer cantidadDeEgresos = new Integer(request.queryParams("cantidadDetalles"));
 
         List<DetalleEgreso> detallesEgresos = new ArrayList<>();

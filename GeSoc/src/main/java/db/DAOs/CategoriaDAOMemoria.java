@@ -34,4 +34,13 @@ public class CategoriaDAOMemoria implements CategoriaDAO {
 
         return categorias;
     }
+
+    @Override
+    public CategoriaDeOperaciones buscarCategoriaPorId(int idDeLaCategoria) {
+        CategoriaDeOperaciones categoriaDeOperaciones = new CategoriaDeOperaciones();
+        categoriaDeOperaciones.setDescripcion("Alimentos");
+        categoriaDeOperaciones.setId(1);
+
+        return categoriaDeOperaciones;
+    }
 }
