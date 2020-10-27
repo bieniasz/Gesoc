@@ -30,17 +30,16 @@ public class ResultadoDeValidacion  extends EntidadPersistente {
     }
 
     public void marcarLeido(){
-        this.leido = true;
-    }
-    public void marcarNoLeido(){
-        this.leido = false;
+        setLeido(true);
     }
 
-    public Boolean leido() {
+    public void setLeido(Boolean leido) { this.leido = leido; }
+
+    public Boolean getLeido() {
         return leido;
     }
 
-    public LocalDate fecha() {
+    public LocalDate getFecha() {
         return fecha;
     }
 
@@ -51,5 +50,7 @@ public class ResultadoDeValidacion  extends EntidadPersistente {
     public List<String> getResultados(){
         return  this.resultados;
     }
+
+    public void setResultados(List<String> resultados) { this.resultados = resultados; }
 
 }

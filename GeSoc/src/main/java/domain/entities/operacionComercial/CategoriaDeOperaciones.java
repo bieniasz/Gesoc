@@ -6,15 +6,17 @@ import javax.persistence.*;
 @Table
 public class CategoriaDeOperaciones extends EntidadPersistente {
 
-@Column
+    @Column
     private String descripcion;
 
-@Column
-private boolean activo;
+    @Column
+    private boolean activo;
 
-@ManyToOne(fetch = FetchType.LAZY, cascade=CascadeType.ALL)
+    @ManyToOne(fetch = FetchType.LAZY, cascade=CascadeType.ALL)
     private CriterioDeOperaciones criterioDeCategoria;
 
+
+    //ACCESORES
     public String getDescripcion() {
         return descripcion;
     }

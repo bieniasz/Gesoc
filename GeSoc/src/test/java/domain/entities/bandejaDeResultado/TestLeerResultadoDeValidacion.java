@@ -29,6 +29,6 @@ public class TestLeerResultadoDeValidacion {
     @Test
     public void leerResultado() {
        bandeja.leerResultado(this.resultadoALeer);
-       Assert.assertTrue(resultado1.leido());
+       Assert.assertTrue(resultado1.getLeido());
     }
 }
