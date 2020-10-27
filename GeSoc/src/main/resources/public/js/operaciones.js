@@ -6,11 +6,11 @@ function mostrarBuscarCategorias() {
   document.getElementById("buscarCategoria").classList.toggle("show");
 }
 
-function filterFunction(input, div) {
+function filterFunction(div, input) {
   var input, filter, ul, li, a, i;
-  input = document.getElementById("inputBuscarProveedor");
+  input = document.getElementById(input);
   filter = input.value.toUpperCase();
-  div = document.getElementById("buscarProveedor");
+  div = document.getElementById(div);
   a = div.getElementsByTagName("a");
   for (i = 0; i < a.length; i++) {
     txtValue = a[i].textContent || a[i].innerText;
@@ -41,6 +41,7 @@ function agregarCategoria(descripcion, id) {
         categoria.setAttribute("type", "text");
         categoria.setAttribute("value", descripcion);
         categoria.setAttribute("class", "w3-tag w3-padding w3-small w3-center w3-yellow");
+        categoria.readOnly = true;
 
     var iconoBorrar = document.createElement("I");
         iconoBorrar.setAttribute("class", "fas fa-close");

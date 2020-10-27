@@ -95,7 +95,7 @@
 
                             if (responseObject.error == 0) {
                                 var id = responseObject.usuarioID;
-                                location.href = "/operaciones?usuarioId=" + id;
+                                location.href = "/operacionesEgreso?usuarioId=" + id;
                             } else {
                                 while (form.erroresLogin.firstChild) {
                                     form.erroresLogin.removeChild(form.erroresLogin.firstChild);
