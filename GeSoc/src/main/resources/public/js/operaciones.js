@@ -43,6 +43,12 @@ function agregarCategoria(descripcion, id) {
         categoria.setAttribute("class", "w3-tag w3-padding w3-small w3-center w3-yellow");
         categoria.readOnly = true;
 
+     var categoriaId = document.createElement("INPUT");
+         categoriaId.setAttribute("id", "categoriaId" + cantidadDeCategorias);
+         categoriaId.setAttribute("name", "categoriaId" + cantidadDeCategorias);
+         categoriaId.setAttribute("type", "hidden");
+         categoriaId.setAttribute("value", id);
+
     var iconoBorrar = document.createElement("I");
         iconoBorrar.setAttribute("class", "fas fa-close");
 
@@ -54,8 +60,10 @@ function agregarCategoria(descripcion, id) {
 
         divCategoriaNueva.appendChild(categoria);
         divCategoriaNueva.appendChild(aBorrar);
+        divCategoriaNueva.appendChild(categoriaId);
 
     cantidadDeCategorias = cantidadDeCategorias + 1;
+    document.getElementById("cantidadDeCategorias").value = cantidadDeCategorias
     document.getElementById("buscarCategoria").classList.toggle("show");
 }
 
@@ -65,6 +73,9 @@ function eliminarCategoria(idCategoria) {
 
     var cruzCategoria = document.getElementById('eliminarCategoria' + idCategoria);
         cruzCategoria.remove();
+
+    var categoriaId = document.getElementById('categoriaId' + idCategoria);
+        categoriaId.remove();
 }
 
 
