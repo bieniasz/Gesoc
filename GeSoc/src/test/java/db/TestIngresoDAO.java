@@ -9,7 +9,7 @@ import org.junit.Test;
 import java.time.LocalDate;
 
 public class TestIngresoDAO {
-    private OperacionIngresoDAOMySQL ingresoDAO = new OperacionIngresoDAOMySQL();
+    private final OperacionIngresoDAOMySQL ingresoDAO = new OperacionIngresoDAOMySQL();
 
     @Test
     public void TestPersistirIngreso() {

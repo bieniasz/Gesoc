@@ -12,7 +12,7 @@ public class FiltroLeido implements FiltroDeResultado{
         List<ResultadoDeValidacion> resultadosFiltrados;
 
         resultadosFiltrados = resultados.stream()
-                .filter(res -> res.leido())
+                .filter(res -> res.getLeido())
                 .collect(Collectors.toList());
 
         return resultadosFiltrados;

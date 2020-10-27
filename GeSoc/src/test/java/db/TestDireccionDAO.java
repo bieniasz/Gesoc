@@ -29,7 +29,7 @@ public class TestDireccionDAO {
     @Test
     public void TestPersistirCiudad(){
         Ciudad ciudad = new Ciudad();
-        ciudad.setNombre("Cordoba");
+        ciudad.setNombre("CABA");
 
         dao.guardarCiudad(ciudad);
     }
