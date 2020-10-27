@@ -21,7 +21,7 @@ public class FiltroFecha implements FiltroDeResultado{
         List<ResultadoDeValidacion> resultadosFiltrados;
 
         resultadosFiltrados = resultados.stream()
-                .filter(res -> this.estaDentroDelIntervaloDesdeHasta(res.fecha()))
+                .filter(res -> this.estaDentroDelIntervaloDesdeHasta(res.getFecha()))
                 .collect(Collectors.toList());
 
         return resultadosFiltrados;
