@@ -15,7 +15,6 @@ public class TestEgresoDAO {
     @Test
     public void TestPersistirEgreso(){
         OperacionEgreso egreso = new OperacionEgreso();
-        egreso.setIngresoAsociado(new OperacionIngreso());
         egreso.setMedioDePago(new MedioDePago());
         egreso.setOrganizacion(new EntidadJuridica());
         egreso.setNumeroIdentificadorMedioPago("Numero 3");
@@ -27,7 +26,7 @@ public class TestEgresoDAO {
 
     @Test
     public void TestRecuperarEgreso() {
-        OperacionEgreso egresoRecuperado = egresoDAO.buscarEgreso(5);
+        OperacionEgreso egresoRecuperado = egresoDAO.buscarEgreso(1);
 
         Assert.assertNotNull(egresoRecuperado);
         Assert.assertEquals("Numero 3", egresoRecuperado.getNumeroIdentificadorMedioPago());
