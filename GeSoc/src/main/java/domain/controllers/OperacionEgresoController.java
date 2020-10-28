@@ -33,18 +33,54 @@ public class OperacionEgresoController {
 
 
 
-    public ModelAndView editarEgreso(Request request, Response response) {
+    public ModelAndView editarEgreso(Request request, Response response) throws Exception {
 
-        System.out.println(request.queryParams("egresoId"));
+        Integer id = new Integer(request.queryParams("egresoId"));
+        OperacionEgreso operacionEgreso = this.operacionEgresoDAO.buscarOperacionEgresoPorId(id);
 
         List<Proveedor> proveedores = this.proveedorDAO.getTodosLosProveedores();
         List<CategoriaDeOperaciones> categorias = this.categoriaDAO.getTodasLasCategorias();
         Map<String, Object> parametros = new HashMap<>();
+
         parametros.put("provedoores", proveedores);
         parametros.put("categorias", categorias);
         parametros.put("usuarioId", request.queryParams("usuarioId"));
+        parametros.put("egreso", operacionEgreso);
 
         return new ModelAndView( parametros, "operacionEgresoNuevo.hbs");
+    }
+
+    public Response guardarEditarEgreso(Request request, Response response) throws Exception {
+
+        OperacionEgreso egreso = this.operacionEgresoDAO.buscarOperacionEgresoPorId(new Integer(request.queryParams("egresoId")));
+
+        egreso.setFecha(LocalDate.parse(request.queryParams("fecha")));
+        egreso.setCantidadEsperadaPresupuestos(Integer.parseInt(request.queryParams("cantidadEsperadaPresupuestos")));
+        egreso.setProveedor(proveedorDAO.getProveedor(new Integer(request.queryParams("proveedorId"))));
+
+        egreso.getMedioDePago().setDescMercadoPago(request.queryParams("descripcionDelPago"));
+        egreso.getMedioDePago().setIdMercadoPago(request.queryParams("medioDePagoId"));
+        egreso.getMedioDePago().setTipoMercadoPago(request.queryParams("tipoDePago"));
+
+        //TODO: revisar documento comercial que es tipo y que es clase
+        egreso.getDocumentoComercial().setNumeroDocumentoComercial(new Long(request.queryParams("documentoComercialNumero")));
+        egreso.getDocumentoComercial().getTipoDocumentoComercial().setDescripcion(request.queryParams("documentoComercialClase"));
+
+        //Las categorias tengo que asignarle un name y un input en el html para que me lleguen
+        //Ademas pueden haber agregado y borrado
+
+        //Me encargo primero de las que ya existen
+        //En realidad no se pueden modificar, solo agregar o borrar
+
+        //Las que ya existen no las toco, tengo que sacar de la lista las que ya existen
+        //Para borrarlas tienen que usar una funcion de javascript.
+        //La funcion de javascript puede al borrarlas crear un input hidden con el id de la categoria que borro.
+        //El input puede tener de name y de id "categoriaBorrada + i" y otro input oculto "cantidadDeCategoriasBorradas"
+
+        //Las categorias que me agreguen las tengo que buscar con el dao, no me interesa su nombre
+
+        response.redirect("/operacionesEgreso?usuarioId=" + request.queryParams("usuarioId"));
+        return response;
     }
 
     public ModelAndView nuevoEgreso(Request request, Response response) throws Exception {
@@ -60,6 +96,8 @@ public class OperacionEgresoController {
             //TODO: no poder agregar la misma categoria dos veces.
 
             //TODO: en la vista, cuando el documento es fisico no tengo que mostrar el campo de archivo adjunto
+
+            //TODO: boton cancelar para volver a la vista anterior
 
 
             List<Proveedor> proveedores = this.proveedorDAO.getTodosLosProveedores();
@@ -111,11 +149,11 @@ public class OperacionEgresoController {
         List<CategoriaDeOperaciones> categorias = new ArrayList<>();
 
         try {
-            Integer cantidadDeCategorias = new Integer(request.queryParams("cantidadDeCategorias"));
+            Integer cantidadDeCategorias = new Integer(request.queryParams("cantidadDeCategoriasNuevas"));
             IntStream.range(0,cantidadDeCategorias).forEach( i -> {
 
                 try {
-                    int idDeLaCategoria = new Integer(request.queryParams("categoriaId" + i));
+                    int idDeLaCategoria = new Integer(request.queryParams("categoriaNuevaId" + i));
                     CategoriaDeOperaciones categoria = this.categoriaDAO.buscarCategoriaPorId(idDeLaCategoria);
                     categorias.add(categoria);
                 } catch (Exception e) {}
@@ -167,65 +205,5 @@ public class OperacionEgresoController {
         }
 
         return documentoComercial;
-    }
-
-    public ModelAndView mostrarEgreso(Request request, Response response) throws Exception {
-
-        Integer idEgreso = new Integer(request.params("id"));
-
-        List<Proveedor> proveedores = this.proveedorDAO.getTodosLosProveedores();
-        List<CategoriaDeOperaciones> categorias = this.categoriaDAO.getTodasLasCategorias();
-        Map<String, Object> parametros = new HashMap<>();
-        parametros.put("provedoores", proveedores);
-        parametros.put("categorias", categorias);
-        parametros.put("usuarioId", request.queryParams("usuarioId"));
-
-        return new ModelAndView( parametros, "operacionEgresoNuevo.hbs");
-        /*DetalleEgreso unDetalle = new DetalleEgreso();
-        Item item = new Item();
-        item.setDescripcion("Coca");
-        unDetalle.setItem(item);
-        unDetalle.valorTotal = 5.0;
-        unDetalle.cantidad = 2;
-
-        DetalleEgreso otroDetalle = new DetalleEgreso();
-        Item otroitem = new Item();
-        otroitem.setDescripcion("Papitas");
-        otroDetalle.valorTotal = 6.0;
-        unDetalle.cantidad = 3;
-
-        List<DetalleEgreso> detalles = new ArrayList<>();
-        detalles.add(unDetalle);
-        detalles.add(otroDetalle);
-
-        EntidadJuridica organizacion = new EntidadJuridica();
-        organizacion.setNombreFicticio("Alfombritas SRL");
-
-        OperacionEgresoBuilder builder = new OperacionEgresoBuilder();
-        builder.setDetalle(detalles);
-        builder.setMedioDePago(new MedioDePago());
-        builder.setNumeroIdentificadorMedioPago("AAAAAAAA");
-        builder.setProveedor(new Proveedor());
-        builder.setOrganizacion(organizacion);
-        builder.setCantEsperadaPresupuestos(0);
-        builder.setFecha(LocalDate.now());
-        OperacionEgreso operacion = builder.build();
-
-
-        Proveedor proveedor1 = new Proveedor();
-        proveedor1.setNombreApellido_RazonSocial("Alfred SA");
-        proveedor1.setId(1);
-        Proveedor proveedor2 = new Proveedor();
-        proveedor2.setNombreApellido_RazonSocial("Doritos SRL");
-        proveedor2.setId(2);
-        this.proveedores.add(proveedor1);
-        this.proveedores.add(proveedor2);
-
-        //TODO: guardar en parametros la lista completa de proveedores
-        Map<String, Object> parametros = new HashMap<>();
-        parametros.put("operacion", operacion);
-        parametros.put("provedoores", this.proveedores);*/
-
-
     }
 }

@@ -74,11 +74,11 @@ html,body,h1,h2,h3,h4,h5 {font-family: "Raleway", sans-serif}
 
   <!-- Header -->
   <header class="titulo" style="padding-top:22px">
-    <b><i class="fa fa-bank fa-fw"></i>Nueva Operacion de Egreso</b>
+      <b><i class="fa fa-bank fa-fw"></i>{{#if egreso}} Operacion de Egreso - Id {{egreso.id}} {{else}} Nueva Operacion de Egreso {{/if}}</b>
   </header>
 
    <!-- Formulario -->
-    <form class="" action="egreso?usuarioId={{usuarioId}}" method="post">
+    <form class="" {{#if egreso}} action="egresoEditar?usuarioId={{usuarioId}}&egresoId={{egreso.id}}" {{else}} action="egreso?usuarioId={{usuarioId}}" {{/if}} method="post">
         <!-- <label for="IDEgreso">ID de Egreso</label>
         <input id="IDEgreso" name="IDEgreso" type="number"  class="input-formulario-readonly" readonly>
         <br><br>
@@ -86,10 +86,10 @@ html,body,h1,h2,h3,h4,h5 {font-family: "Raleway", sans-serif}
         <input id="organizacion" name="organizacion" type="number" class="input-formulario">
         <br><br> -->
         <label for="fecha">Fecha</label>
-        <input id="fecha" name="fecha" type="date"  class="input-formulario">
+        <input id="fecha" name="fecha" type="date"  class="input-formulario" {{#if egreso}} value="{{egreso.fecha}}" {{/if}}>
         <br><br>
         <label for="cantidadEsperadaPresupuestos">Cant. Presupuestos Req.</label>
-        <input id="cantidadEsperadaPresupuestos" name="cantidadEsperadaPresupuestos" type="number" class="input-formulario">
+        <input id="cantidadEsperadaPresupuestos" name="cantidadEsperadaPresupuestos" type="number" class="input-formulario" {{#if egreso}} value="{{egreso.cantidadEsperadaPresupuestos}}" {{/if}}>
         <br><br>
         <!-- <label for="valorTotal">Valor Total</label>
         <input id="valorTotal" name="valorTotal" type="number" step="0.01" class="input-formulario">
@@ -97,9 +97,9 @@ html,body,h1,h2,h3,h4,h5 {font-family: "Raleway", sans-serif}
 
 <!-- !PROVEEDOR! -->
         <label for="Proveedor">Proveedor</label>
-        <input id="proveedor" name="proveedor" type="text" class="input-formulario">
+        <input id="proveedor" name="proveedor" type="text" class="input-formulario" {{#if egreso}} value="{{egreso.proveedor.nombreApellido_RazonSocial}}" {{/if}}>
         <a name="searchProveedor" class=" btn btn-search" onclick="mostrarBuscarProveedor()"><i class="fas fa-search"></i></a>
-        <input type="hidden" id="proveedorId" name="proveedorId">
+        <input type="hidden" id="proveedorId" name="proveedorId" {{#if egreso}} value="{{egreso.proveedor.id}}" {{/if}}>
 
         <div class="dropdown">
             <div id="buscarProveedor" class="dropdown-content">
@@ -109,19 +109,20 @@ html,body,h1,h2,h3,h4,h5 {font-family: "Raleway", sans-serif}
                 {{/each}}
             </div>
         </div>
-
         <br><br>
+
 <!-- !MEDIO DE PAGO! -->
         <h3 for="documentoComercial">Medio de pago</h3>
         <label>Id de pago</label>
-        <input id="medioDePagoId" name="medioDePagoId" type="number" class="input-formulario">
+        <input id="medioDePagoId" name="medioDePagoId" type="number" class="input-formulario" {{#if egreso}} value="{{egreso.medioDePago.idMercadoPago}}" {{/if}}>
         <br><br>
         <label>Descripcion del pago</label>
-        <input id="descripcionDelPago" name="descripcionDelPago" type="text" class="input-formulario">
+        <input id="descripcionDelPago" name="descripcionDelPago" type="text" class="input-formulario" {{#if egreso}} value="{{egreso.medioDePago.descMercadoPago}}" {{/if}}>
         <br><br>
         <label>Tipo de pago</label>
-        <input id="tipoDePago" name="tipoDePago" type="text" class="input-formulario">
+        <input id="tipoDePago" name="tipoDePago" type="text" class="input-formulario" {{#if egreso}} value="{{egreso.medioDePago.tipoMercadoPago}}" {{/if}}>
         <br><br>
+
 <!-- !DOCUMENTO COMERCIAL! -->
         <h3 for="documentoComercial">Documento Comercial</h3>
         <label for="documentoComercialTipo">Tipo</label>
@@ -131,10 +132,10 @@ html,body,h1,h2,h3,h4,h5 {font-family: "Raleway", sans-serif}
         </select>
         <br><br>
         <label for="documentoComercialNumero">Numero</label>
-        <input id="documentoComercialNumero" name="documentoComercialNumero" type="number" class="input-formulario">
+        <input id="documentoComercialNumero" name="documentoComercialNumero" type="number" class="input-formulario" {{#if egreso}} value="{{egreso.documentoComercial.numeroDocumentoComercial}}" {{/if}}>
         <br><br>
         <label for="documentoComercialClase">Clase de documento</label>
-        <input id="documentoComercialClase" name="documentoComercialClase" type="text" class="input-formulario">
+        <input id="documentoComercialClase" name="documentoComercialClase" type="text" class="input-formulario" {{#if egreso}} value="{{egreso.documentoComercial.tipoDocumentoComercial.descripcion}}" {{/if}}>
         <br><br>
         <label for="documentoComercialAdjunto">Adjunto</label>
         <input id="documentoComercialAdjunto" name="documentoComercialAdjunto" type="file" onsubmit="serializarArchivo()" class="input-formulario">
@@ -144,7 +145,7 @@ html,body,h1,h2,h3,h4,h5 {font-family: "Raleway", sans-serif}
 <!-- !CATEGORIAS! -->
         <h3 style="margin-bottom: 5px;margin-left: 10px">Categorias
             <a name="searchCategoria" class=" btn btn-search" onclick="mostrarBuscarCategorias()"><i class="fas fa-search"></i></a>
-            <input type="hidden" id="cantidadDeCategorias" name="cantidadDeCategorias">
+            <input type="hidden" id="cantidadDeCategoriasNuevas" name="cantidadDeCategorias">
         </h3>
 
         <div class="dropdown">
@@ -156,7 +157,16 @@ html,body,h1,h2,h3,h4,h5 {font-family: "Raleway", sans-serif}
             </div>
         </div>
 
-        <div id="seccionCategorias"></div>
+        <div id="seccionCategorias">
+            {{#if egreso}}
+                {{#each egreso.categoriasAsociadas}}
+                    <div>
+                        <input id="categoria{{id}}" name="categoria{{id}}" class="w3-tag w3-padding w3-small w3-center w3-yellow" type="text" readonly value="{{descripcion}}">
+                        <a class="btn btn-search" id="eliminarCategoria{{id}}" onclick="eliminarCategoria({{id}})"><i class="fas fa-close"></i></a>
+                    </div>
+                {{/each}}
+            {{/if}}
+        </div>
         <br><br>
 
 <!-- !DETALLE EGRESO! -->
@@ -173,18 +183,22 @@ html,body,h1,h2,h3,h4,h5 {font-family: "Raleway", sans-serif}
           <th><i class="fas fa-tools"></i> Acciones</th>
         </thead>
         <tbody>
-         <!-- <tr>
-            <td>1</td>
-            <td>Item1</td>
-            <td>2</td>
-            <td>100,00</td>
-            <td> -->
-              <!--<a href="" name="button" style="margin:0px;" class="btn btn-border btn-border-blue" ><i class="far fa-eye"></i></a>-->
-              <!--<a href="" name="button" class=" btn btn-edit"><i class="fas fa-edit"></i></a>-->
-             <!-- <button type="button" name="buttonAgregarItem" class="btn btn-edit" onclick="agregarItem()"><i class="fas fa-edit"></i></button>
-              <button type="button" name="button" class="btn" onclick="confirmarEliminacion('{{id}}')"><i class="fas fa-trash"></i></button>
-            </td>
-          </tr>-->
+        {{#if egreso}}
+            {{#each egreso.detalle}}
+                <tr>
+                    <td>{{id}}</td>
+                    <td>{{item.descripcion}}</td>
+                    <td>{{cantidad}}</td>
+                    <td>{{valorTotal}}</td>
+                    <td>
+                     <!-- <a href="" name="button" style="margin:0px;" class="btn btn-border btn-border-blue" ><i class="far fa-eye"></i></a>-->
+                     <!--  <a href="" name="button" class=" btn btn-edit"><i class="fas fa-edit"></i></a>-->
+                    <!--  <button type="button" name="buttonAgregarItem" class="btn btn-edit" onclick="agregarItem()"><i class="fas fa-edit"></i></button>
+                      <button type="button" name="button" class="btn" onclick="confirmarEliminacion('{{id}}')"><i class="fas fa-trash"></i></button> -->
+                    </td>
+                  </tr>
+            {{/each}}
+        {{/if}}
         </table>
         <br>
 

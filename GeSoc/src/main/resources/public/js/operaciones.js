@@ -36,16 +36,16 @@ function agregarCategoria(descripcion, id) {
         div.appendChild(divCategoriaNueva);
 
     var categoria = document.createElement("INPUT");
-        categoria.setAttribute("id", "categoria" + cantidadDeCategorias);
-        categoria.setAttribute("name", "categoria" + cantidadDeCategorias);
+        categoria.setAttribute("id", "categoriaNueva" + cantidadDeCategorias);
+        categoria.setAttribute("name", "categoriaNueva" + cantidadDeCategorias);
         categoria.setAttribute("type", "text");
         categoria.setAttribute("value", descripcion);
         categoria.setAttribute("class", "w3-tag w3-padding w3-small w3-center w3-yellow");
         categoria.readOnly = true;
 
      var categoriaId = document.createElement("INPUT");
-         categoriaId.setAttribute("id", "categoriaId" + cantidadDeCategorias);
-         categoriaId.setAttribute("name", "categoriaId" + cantidadDeCategorias);
+         categoriaId.setAttribute("id", "categoriaNuevaId" + cantidadDeCategorias);
+         categoriaId.setAttribute("name", "categoriaNuevaId" + cantidadDeCategorias);
          categoriaId.setAttribute("type", "hidden");
          categoriaId.setAttribute("value", id);
 
@@ -54,8 +54,8 @@ function agregarCategoria(descripcion, id) {
 
     var aBorrar = document.createElement("A");
         aBorrar.setAttribute("class", "btn btn-search");
-        aBorrar.setAttribute("id", "eliminarCategoria"  + cantidadDeCategorias);
-        aBorrar.setAttribute("onclick", "eliminarCategoria(" + cantidadDeCategorias  + ")");
+        aBorrar.setAttribute("id", "eliminarCategoriaNueva"  + cantidadDeCategorias);
+        aBorrar.setAttribute("onclick", "eliminarCategoriaNueva(" + cantidadDeCategorias  + ")");
         aBorrar.appendChild(iconoBorrar);
 
         divCategoriaNueva.appendChild(categoria);
@@ -63,8 +63,19 @@ function agregarCategoria(descripcion, id) {
         divCategoriaNueva.appendChild(categoriaId);
 
     cantidadDeCategorias = cantidadDeCategorias + 1;
-    document.getElementById("cantidadDeCategorias").value = cantidadDeCategorias
+    document.getElementById("cantidadDeCategoriasNuevas").value = cantidadDeCategorias
     document.getElementById("buscarCategoria").classList.toggle("show");
+}
+
+function eliminarCategoriaNueva(idCategoria) {
+    var categoria = document.getElementById('categoriaNueva' + idCategoria);
+    categoria.remove();
+
+    var cruzCategoria = document.getElementById('eliminarCategoriaNueva' + idCategoria);
+        cruzCategoria.remove();
+
+    var categoriaId = document.getElementById('categoriaNuevaId' + idCategoria);
+        categoriaId.remove();
 }
 
 function eliminarCategoria(idCategoria) {
@@ -73,9 +84,6 @@ function eliminarCategoria(idCategoria) {
 
     var cruzCategoria = document.getElementById('eliminarCategoria' + idCategoria);
         cruzCategoria.remove();
-
-    var categoriaId = document.getElementById('categoriaId' + idCategoria);
-        categoriaId.remove();
 }
 
 

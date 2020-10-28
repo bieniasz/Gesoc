@@ -47,4 +47,40 @@ public class DocumentoComercial extends EntidadPersistente {
 		 this.content=contenido;
 		
 	}
+
+    public TipoComprobante getTipoDocumentoComercial() {
+        return tipoDocumentoComercial;
+    }
+
+    public void setTipoDocumentoComercial(TipoComprobante tipoDocumentoComercial) {
+        this.tipoDocumentoComercial = tipoDocumentoComercial;
+    }
+
+    public Long getNumeroDocumentoComercial() {
+        return numeroDocumentoComercial;
+    }
+
+    public void setNumeroDocumentoComercial(Long numeroDocumentoComercial) {
+        this.numeroDocumentoComercial = numeroDocumentoComercial;
+    }
+
+    public String getTipoDeAdjunto() {
+        return tipoDeAdjunto;
+    }
+
+    public void setTipoDeAdjunto(String tipoDeAdjunto) {
+        this.tipoDeAdjunto = tipoDeAdjunto;
+    }
+
+    public String getContent() {
+        return content;
+    }
+
+    public boolean isActivo() {
+        return activo;
+    }
+
+    public void setActivo(boolean activo) {
+        this.activo = activo;
+    }
 }
