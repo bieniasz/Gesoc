@@ -9,4 +9,6 @@ public interface OperacionEgresoDAO {
 
     OperacionEgreso buscarOperacionEgresoPorId(Integer id) throws Exception;
 
+    public OperacionEgreso buscarEgreso(Integer id);
+
 }

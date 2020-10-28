@@ -23,7 +23,6 @@ public class UserDAOMySQL implements UserDAO {
     @Override
     public void guardarUsuario(Usuario usuario) {
         EntityManagerHelper.beginTransaction();
-        EntityManagerHelper.getEntityManager().persist(usuario.getRol());
         EntityManagerHelper.getEntityManager().persist(usuario);
         EntityManagerHelper.commit();
     }
