@@ -1,7 +1,9 @@
 package db.DAOs;
 
 import domain.entities.operacionComercial.OperacionEgreso;
+import domain.entities.operacionComercial.OperacionIngreso;
 
 public interface OperacionEgresoDAO {
-    void guardarOperacionEgreso(OperacionEgreso operacion);
+    OperacionEgreso buscarEgreso(Integer id);
+    void guardarOperacionEgreso(OperacionEgreso ingreso);
 }

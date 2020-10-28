@@ -13,6 +13,7 @@ public class CategoriaDeOperaciones extends EntidadPersistente {
     private boolean activo;
 
     @ManyToOne(fetch = FetchType.LAZY, cascade=CascadeType.ALL)
+    @JoinColumn(name="CriterioDeOperaciones",referencedColumnName = "id")
     private CriterioDeOperaciones criterioDeCategoria;
 
 
