@@ -20,4 +20,9 @@ public class ContraseniasPreviasDAOMemoria implements ContraseniasPreviasDAO {
     public void persistirContraseniaPrevia(ContraseniasPrevias contraseniasPrevias) {
         this.contraseniasPreviasList.put(this.usuarioEnUso, contraseniasPrevias);
     }
+
+    @Override
+    public void actualizarContraseniasPrevias(ContraseniasPrevias contraseniasPrevias) {
+        this.contraseniasPreviasList.replace(this.usuarioEnUso, contraseniasPrevias);
+    }
 }

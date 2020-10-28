@@ -4,6 +4,7 @@ import javax.persistence.*;
 
 @Entity
 @Table
+@DiscriminatorValue("EntidadBase")
 public class EntidadBase extends Organizacion {
 
     @Column

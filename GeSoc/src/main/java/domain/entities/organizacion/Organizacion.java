@@ -10,6 +10,8 @@ import java.util.Map;
 
  @Entity
  @Table
+ @Inheritance(strategy = InheritanceType.SINGLE_TABLE)
+ @DiscriminatorColumn(name = "TipoOrganizacion")
 public abstract class Organizacion extends EntidadPersistente {
 
      @OneToMany(fetch = FetchType.LAZY, cascade=CascadeType.ALL)

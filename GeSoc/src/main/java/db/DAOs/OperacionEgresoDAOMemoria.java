@@ -10,12 +10,21 @@ import domain.entities.organizacion.EntidadJuridica;
 import java.time.LocalDate;
 import java.util.ArrayList;
 import java.util.List;
+import db.EntityManagerHelper;
 
-public class OperacionEgresoDAOMemoria implements OperacionEgresoDAO{
+
+public class OperacionEgresoDAOMemoria implements OperacionEgresoDAO {
+    @Override
+    public OperacionEgreso buscarEgreso(Integer id) {
+        return EntityManagerHelper.getEntityManager().find(OperacionEgreso.class, id);
+    }
 
     @Override
-    public void guardarOperacionEgreso(OperacionEgreso operacion) {
-
+    public void guardarOperacionEgreso(OperacionEgreso egreso) {
+        EntityManagerHelper.beginTransaction();
+        EntityManagerHelper.getEntityManager().persist(egreso.getOrganizacion());
+        EntityManagerHelper.getEntityManager().persist(egreso);
+        EntityManagerHelper.commit();
     }
 
     @Override

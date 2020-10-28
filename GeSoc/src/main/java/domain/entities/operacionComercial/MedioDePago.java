@@ -13,7 +13,7 @@ public class MedioDePago extends EntidadPersistente {
     @Column(name="Nombre")
     private String idMercadoPago;
 
-    @Column(name="DescuentoMercadoPago")
+    @Column(name="DescripcionMercadoPago")
     private String descMercadoPago;
 
     @Column(name="TipoMercardoPago")

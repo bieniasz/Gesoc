@@ -61,5 +61,6 @@ public class OperacionEgreso extends OperacionComercial {
     public void setPresupuestos(List<Presupuesto> presupuestos) { this.presupuestos = presupuestos; }
     public void setIngresoAsociado(OperacionIngreso operacionIngreso){
         this.ingresoAsociado = operacionIngreso;
+        operacionIngreso.agregarEgresoAsociado(this);
     }
 }

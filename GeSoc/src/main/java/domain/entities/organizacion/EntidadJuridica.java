@@ -9,6 +9,7 @@ import java.util.List;
 
 @Entity
 @Table
+@DiscriminatorValue("EntidadJuridica")
 public class EntidadJuridica extends Organizacion {
 
     @Column

@@ -29,7 +29,7 @@ public abstract class OperacionComercial extends EntidadPersistente {
     private DocumentoComercial documentoComercial;
 
     @OneToMany(fetch = FetchType.LAZY, cascade=CascadeType.ALL)
-    @JoinColumn(name="DetalleEgreso",referencedColumnName = "id")
+    @JoinColumn(name="OperacionComercial",referencedColumnName = "id")
     private List<DetalleEgreso> detalle;
 
     @OneToMany(fetch = FetchType.LAZY, cascade=CascadeType.ALL)
