@@ -30,6 +30,7 @@ public class OperacionEgresoController {
     private OrganizacionDAO organizacionDao = new OrganizacionDAOMemoria();
     private OperacionEgresoDAO operacionEgresoDAO = new OperacionEgresoDAOMemoria();
     private CategoriaDAO categoriaDAO = new CategoriaDAOMemoria();
+    private UserDAO userDAO = new UserDAOMySQL();
 
 
 
