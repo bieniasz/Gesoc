@@ -7,6 +7,7 @@ import domain.entities.seguridad.IntentosFallidos.IntentosFallidos;
 import db.DAOs.IntentosFallidosDAO;
 import domain.entities.usuario.Usuario;
 
+import javax.persistence.NoResultException;
 import java.util.*;
 
 public class AlmacenContrasenias extends EntidadPersistente {
@@ -33,8 +34,7 @@ public class AlmacenContrasenias extends EntidadPersistente {
                 contraseniasPrevias.removerContrseniaVieja();
             }
 
-            this.contraseniasPreviasDAO.persistirContraseniaPrevia(contraseniasPrevias);
-
+            this.contraseniasPreviasDAO.actualizarContraseniasPrevias(contraseniasPrevias);
         }
         catch (Exception exception) {
             ContraseniasPrevias contraseniasPrevias = new ContraseniasPrevias();
@@ -83,31 +83,21 @@ public class AlmacenContrasenias extends EntidadPersistente {
     public boolean existeUsuario(Usuario usuario){
         try {
             List<String> contraseniasPreviasDeUsuario = getContraseniasPreviasDeUsuario(usuario);
-            if (contraseniasPreviasDeUsuario.size() > 0){
-
-                return true;
-            } else {
-                return false;
-            }
+            return contraseniasPreviasDeUsuario.size() > 0;
         } catch (Exception e) {
             return false;
         }
     }
 
     public void agregarIntentoFallido(Usuario usuario) {
-        // TODO si no hay intento fallido tengo que crear uno nuevo, primero ver que error tira hibernate
-        IntentosFallidos intentosFallidos = this.intentosFallidosDAO.getIntentosFallidos(usuario);
-
-        try {
+      try {
+            IntentosFallidos intentosFallidos = this.intentosFallidosDAO.getIntentosFallidos(usuario);
             intentosFallidos.nuevoIntentoFallido();
-            this.intentosFallidosDAO.persistirIntentoFallido(intentosFallidos);
-
-        } catch (NullPointerException n) {
-
+            this.intentosFallidosDAO.actualizarIntentoFallido(intentosFallidos);
+        } catch (NoResultException n) {
             IntentosFallidos intento = new IntentosFallidos();
             intento.setUsuarioId(usuario.getId());
             intento.nuevoIntentoFallido();
-
             this.intentosFallidosDAO.persistirIntentoFallido(intento);
         }
     }
@@ -126,10 +116,9 @@ public class AlmacenContrasenias extends EntidadPersistente {
     }
 
     public void crearIntentoFallidoSiAplica(Usuario usuario){
-        // TODO fijarse que error retorna el DAO
         // si existe un intento fallido no hacer nada, si no, crearlo1
 
-        Boolean esElPrimerIntento = this.getIntentosFallidosDeUsuario(usuario) == null;
+        boolean esElPrimerIntento = this.getIntentosFallidosDeUsuario(usuario) == null;
         if (this.existeUsuario(usuario) && esElPrimerIntento){
             IntentosFallidos intento = new IntentosFallidos();
             intento.setUsuarioId(usuario.getId());

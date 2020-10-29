@@ -1,7 +1,6 @@
 package db.DAOs;
 
 import db.EntityManagerHelper;
-import domain.entities.seguridad.ContraseniasPrevias.ContraseniasPrevias;
 import domain.entities.seguridad.IntentosFallidos.IntentosFallidos;
 import domain.entities.usuario.Usuario;
 
@@ -10,20 +9,29 @@ import javax.persistence.Query;
 
 public class IntentosFallidosDAOMySQL implements IntentosFallidosDAO {
     @Override
-    public IntentosFallidos getIntentosFallidos(Usuario usuario) throws NoResultException {
+    public IntentosFallidos getIntentosFallidos(Usuario usuario) {
         IntentosFallidos intentosFallidos;
         Query query = EntityManagerHelper.createQuery("from IntentosFallidos i where i.usuarioId = :user");
         query.setParameter("user", usuario.getId());
-        intentosFallidos = (IntentosFallidos) query.getSingleResult();
+        try {
+            intentosFallidos = (IntentosFallidos) query.getSingleResult();
+        } catch (NoResultException e){
+            intentosFallidos = null;
+        }
         return intentosFallidos;
     }
 
     @Override
     public void persistirIntentoFallido(IntentosFallidos intentoFallido) {
-
+        EntityManagerHelper.beginTransaction();
+        EntityManagerHelper.persist(intentoFallido);
+        EntityManagerHelper.commit();
     }
 
-    public IntentosFallidos buscarIntentosFallidosPorId(Integer id){
-        return EntityManagerHelper.getEntityManager().find(IntentosFallidos.class, id);
+    @Override
+    public void actualizarIntentoFallido(IntentosFallidos intentosFallidos) {
+        EntityManagerHelper.beginTransaction();
+        EntityManagerHelper.getEntityManager().merge(intentosFallidos);
+        EntityManagerHelper.commit();
     }
 }
