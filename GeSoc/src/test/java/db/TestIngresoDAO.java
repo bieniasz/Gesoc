@@ -19,12 +19,12 @@ public class TestIngresoDAO {
         ingreso.setMonto(400f);
         ingreso.setOrganizacion(new EntidadJuridica());
 
-        ingresoDAO.guardarIngreso(ingreso);
+        ingresoDAO.guardarOperacionIngreso(ingreso);
     }
 
     @Test
     public void TestRecuperarIngreso() {
-        OperacionIngreso ingresoRecuperado = ingresoDAO.buscarIngreso(1);
+        OperacionIngreso ingresoRecuperado = ingresoDAO.buscarOperacionIngreso(1);
 
         Assert.assertNotNull(ingresoRecuperado);
         Assert.assertEquals("Donacion de ANSES", ingresoRecuperado.getDescripcion());

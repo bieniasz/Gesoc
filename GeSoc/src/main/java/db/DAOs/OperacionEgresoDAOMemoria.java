@@ -89,4 +89,9 @@ public class OperacionEgresoDAOMemoria implements OperacionEgresoDAO {
 
         return operacion;
     }
+
+    @Override
+    public void modificarOperacionEgreso(OperacionEgreso egreso) {
+
+    }
 }

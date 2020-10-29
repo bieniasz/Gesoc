@@ -148,6 +148,7 @@ html,body,h1,h2,h3,h4,h5 {font-family: "Raleway", sans-serif}
         <h3 style="margin-bottom: 5px;margin-left: 10px">Categorias
             <a name="searchCategoria" class=" btn btn-search" onclick="mostrarBuscarCategorias()"><i class="fas fa-search"></i></a>
             <input type="hidden" id="cantidadDeCategoriasNuevas" name="cantidadDeCategorias">
+            <input type="hidden" id="categoriasExistentesEliminadas" name="categoriasExistentesEliminadas">
         </h3>
 
         <div class="dropdown">
@@ -187,16 +188,13 @@ html,body,h1,h2,h3,h4,h5 {font-family: "Raleway", sans-serif}
         <tbody>
         {{#if egreso}}
             {{#each egreso.detalle}}
-                <tr>
-                    <td>{{id}}</td>
-                    <td>{{item.descripcion}}</td>
-                    <td>{{cantidad}}</td>
-                    <td>{{valorTotal}}</td>
+                <tr id="rowItemExistente{{id}}" name="rowItemExistente{{id}}">
+                    <td><input id="valorItemExistenteId{{id}}" name="valorItemExistente{{id}}" type="number" readonly value="{{id}}"></td>
+                    <td><input id="valorItemExistenteDescripcion{{id}}" name="valorItemExistente{{id}}" type="text" value="{{item.descripcion}}"></td>
+                    <td><input id="valorItemExistenteCantidad{{id}}" name="valorItemExistente{{id}}" type="number" value="{{cantidad}}"></td>
+                    <td><input id="valorItemExistenteValor{{id}}" name="valorItemExistente{{id}}" type="number" value="{{valorTotal}}"></td>
                     <td>
-                     <!-- <a href="" name="button" style="margin:0px;" class="btn btn-border btn-border-blue" ><i class="far fa-eye"></i></a>-->
-                     <!--  <a href="" name="button" class=" btn btn-edit"><i class="fas fa-edit"></i></a>-->
-                    <!--  <button type="button" name="buttonAgregarItem" class="btn btn-edit" onclick="agregarItem()"><i class="fas fa-edit"></i></button>
-                      <button type="button" name="button" class="btn" onclick="confirmarEliminacion('{{id}}')"><i class="fas fa-trash"></i></button> -->
+                        <a class="btn btn-border btn-border-blue" id="botonBorrarItem{{id}}" onclick="borrarItem({{id}})"><i class="fas fa-close"></i></a>
                     </td>
                   </tr>
             {{/each}}

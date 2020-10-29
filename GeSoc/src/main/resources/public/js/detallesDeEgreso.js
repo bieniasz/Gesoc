@@ -33,11 +33,15 @@ function guardarNuevoItem() {
     valor.appendChild(valorInput);
     row.insertCell(4);
 
-    cantidadDeItemsDeEgreso = cantidadDeItemsDeEgreso + 1
-    document.getElementById("cantidadDetalles").value = cantidadDeItemsDeEgreso
+    cantidadDeItemsDeEgreso = cantidadDeItemsDeEgreso + 1;
+    document.getElementById("cantidadDetalles").value = cantidadDeItemsDeEgreso;
     //document.getElementById("modalAgregarDetalle").style.display = 'none';
 
     document.getElementById("descripcionItem").value = null;
     document.getElementById("cantidadItem").value = null;
     document.getElementById("valorItem").value = null;
+}
+
+function borrarItem(id) {
+    document.getElementById('rowItemExistente' + id).remove();
 }

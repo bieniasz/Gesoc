@@ -1,19 +1,12 @@
 package db;
 
-import db.DAOs.DireccionDAOMySQL;
-import db.DAOs.DireccionDao;
-import db.DAOs.ProveedorDAO;
 import db.DAOs.ProveedorDAOMySQL;
 import domain.entities.ProveedorDocComer.Proveedor;
-import domain.entities.direccion.AtributosPersistentes.Ciudad;
 import domain.entities.direccion.Direccion;
 import domain.entities.direccion.DireccionBuilder;
-import domain.entities.direccion.ExcepcionesDireccion.LocacionNoValidaException;
 import domain.entities.direccion.MLDireccionesService;
 import org.junit.Assert;
 import org.junit.Test;
-
-import java.io.IOException;
 
 public class TestProveedorDao {
     private ProveedorDAOMySQL proveedorDAO = new ProveedorDAOMySQL();
@@ -69,7 +62,7 @@ public class TestProveedorDao {
     public void TestModificarProveedor() {
         Proveedor proveedor = proveedorDAO.getProveedor(1);
         proveedor.setEstado("fffffff");
-        proveedorDAO.updateProveedor(proveedor);
+        proveedorDAO.actualizarProveedor(proveedor);
 
         proveedor = proveedorDAO.getProveedor(1);
         Assert.assertEquals(proveedor.getNombreApellido_RazonSocial(), "Coca cola SRL");

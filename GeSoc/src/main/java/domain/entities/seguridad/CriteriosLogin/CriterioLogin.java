@@ -18,7 +18,7 @@ public class CriterioLogin implements CriterioValidacion {
     public void validar(Usuario usuario, String contrasenia, List<String> mensajesDeError) {
         try{
         if (!almacen.compararContrasenia(usuario,contrasenia)) {
-                mensajesDeError.add("El domain.entities.usuario y/o contraseña invalido");
+                mensajesDeError.add("El usuario y/o contraseña invalido");
                 almacen.crearIntentoFallidoSiAplica(usuario);
             }
         } catch (Exception e){}

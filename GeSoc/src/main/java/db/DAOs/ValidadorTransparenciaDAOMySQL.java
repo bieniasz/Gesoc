@@ -18,7 +18,7 @@ public class ValidadorTransparenciaDAOMySQL implements ValidadorTransparenciaDAO
     }
 
     @Override
-    public void actualizarResultadoDeValidacion(ResultadoDeValidacion resultadoDeValidacion) {
+    public void modificarResultadoDeValidacion(ResultadoDeValidacion resultadoDeValidacion) {
         EntityManagerHelper.beginTransaction();
         EntityManagerHelper.getEntityManager().merge(resultadoDeValidacion);
         EntityManagerHelper.commit();

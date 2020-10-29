@@ -17,11 +17,11 @@ function agregarCategoria(descripcion, id) {
         categoria.setAttribute("class", "w3-tag w3-padding w3-small w3-center w3-yellow");
         categoria.readOnly = true;
 
-     var categoriaId = document.createElement("INPUT");
-         categoriaId.setAttribute("id", "categoriaNuevaId" + cantidadDeCategorias);
-         categoriaId.setAttribute("name", "categoriaNuevaId" + cantidadDeCategorias);
-         categoriaId.setAttribute("type", "hidden");
-         categoriaId.setAttribute("value", id);
+    var categoriaId = document.createElement("INPUT");
+        categoriaId.setAttribute("id", "categoriaNuevaId" + cantidadDeCategorias);
+        categoriaId.setAttribute("name", "categoriaNuevaId" + cantidadDeCategorias);
+        categoriaId.setAttribute("type", "hidden");
+        categoriaId.setAttribute("value", id);
 
     var iconoBorrar = document.createElement("I");
         iconoBorrar.setAttribute("class", "fas fa-close");
@@ -52,13 +52,28 @@ function eliminarCategoriaNueva(idCategoria) {
         categoriaId.remove();
 }
 
+
+//AL DAO Y SACARLO DE LA OPERACION
+var categoriasExistentesEliminadas = 0;
 function eliminarCategoria(idCategoria) {
     var categoria = document.getElementById('categoria' + idCategoria);
     categoria.remove();
-
     var cruzCategoria = document.getElementById('eliminarCategoria' + idCategoria);
         cruzCategoria.remove();
+
+    var div = document.getElementById("seccionCategorias");
+        var categoriaBorradaId = document.createElement("INPUT");
+            categoriaId.setAttribute("id", "categoriaBorradaId" + categoriasExistentesEliminadas);
+            categoriaId.setAttribute("name", "categoriaBorradaId" + categoriasExistentesEliminadas);
+            categoriaId.setAttribute("type", "hidden");
+            categoriaId.setAttribute("value", id);
+            div.appendChild(categoriaBorradaId);
+
+    categoriasExistentesEliminadas = categoriasExistentesEliminadas + 1;
+    document.getElementById("categoriasExistentesEliminadas").value = categoriasExistentesEliminadas;
 }
+
+
 
 
 // PUEDO USAR ESTO PARA ELIMINAR CATEGORIAS QUE YA FUERON GUARDADAS
