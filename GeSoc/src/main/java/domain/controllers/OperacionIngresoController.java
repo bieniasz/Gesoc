@@ -53,7 +53,7 @@ public class OperacionIngresoController {
         operacionIngreso.setMonto(monto);
         operacionIngreso.setOrganizacion(organizacion);
 
-        this.operacionIngresoDAO.guardarIngreso(operacionIngreso);
+        this.operacionIngresoDAO.guardarOperacionIngreso(operacionIngreso);
 
         response.redirect("/operacionIngreso?usuarioId=" + request.queryParams("usuarioId"));
         return response;
@@ -62,7 +62,7 @@ public class OperacionIngresoController {
     public ModelAndView editarIngreso(Request request, Response response) throws Exception {
 
         Integer id = new Integer(request.queryParams("id"));
-        OperacionIngreso operacionIngreso = this.operacionIngresoDAO.buscarIngreso(id);
+        OperacionIngreso operacionIngreso = this.operacionIngresoDAO.buscarOperacionIngreso(id);
 
         Map<String, Object> parametros = new HashMap<>();
 
@@ -71,7 +71,7 @@ public class OperacionIngresoController {
 
     public Response guardarEditarIngreso(Request request, Response response) throws Exception {
         Integer id = new Integer(request.queryParams("id"));
-        OperacionIngreso ingreso = this.operacionIngresoDAO.buscarIngreso(id);
+        OperacionIngreso ingreso = this.operacionIngresoDAO.buscarOperacionIngreso(id);
 
         ingreso.setFecha(LocalDate.parse(request.queryParams("fecha")));
         ingreso.setDescripcion(request.queryParams("descripcion"));

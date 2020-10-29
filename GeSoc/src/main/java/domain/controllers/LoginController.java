@@ -2,10 +2,7 @@ package domain.controllers;
 
 import com.google.gson.Gson;
 import com.google.gson.JsonObject;
-import db.DAOs.ContraseniasPreviasDAOMemoria;
-import db.DAOs.IntentosFallidosDAOMemoria;
-import db.DAOs.UserDAO;
-import db.DAOs.UserDAOMemoria;
+import db.DAOs.*;
 import domain.entities.seguridad.AlmacenContrasenias;
 import domain.entities.seguridad.ValidadorDeUsuario;
 import domain.entities.usuario.Usuario;
@@ -30,22 +27,16 @@ public class LoginController {
         System.out.println(nombreDeUsuario);
         System.out.println(contrasenia);
 
-        //Todo el validador no está funcionando porque siempre devuelve error. Se ve que hay que manejar el almacen. Por ahora hago la prueba forzada para tener la logica.
+        ValidadorDeUsuario validador = this.getValidador();
 
-//        ValidadorDeUsuario validador = this.getValidador();
-//
-//        List<String> errores = validador.validarContraseniaLogin("igna","igna");
-//
-//        String stringDeErrores=String.join(",",errores);
-//        System.out.println(stringDeErrores);
+        List<String> errores = validador.validarContraseniaLogin(nombreDeUsuario,contrasenia);
+        System.out.println(errores);
 
         //Todo probar tiempos login con los DAO mySQL
 
-        //Todo cambiar la prueba con errores oficiales y no hardcodeados.
-        List<String> errores = new ArrayList<>();
-        //errores.add("Falla de prueba");
-        //errores.add("segunda falla");
 
+        //Todo el id del userDao debería volver del validador si no tiene errores.
+        UserDAO usuarioDao = new UserDAOMySQL();
 
         LoginRespuesta loginRespuesta = new LoginRespuesta();
 
@@ -56,7 +47,8 @@ public class LoginController {
 
         if (errores.size() == 0){
             loginRespuesta.setError(0);
-            loginRespuesta.setUsuarioID(5);
+            Usuario usuario = usuarioDao.buscarUsuarioPoruserId(nombreDeUsuario);
+            loginRespuesta.setUsuarioID(usuario.getId());
             String jsonLoginRespuesta = gson.toJson(loginRespuesta);
             return jsonLoginRespuesta;
 
@@ -75,14 +67,16 @@ public class LoginController {
 
     private ValidadorDeUsuario getValidador(){
         AlmacenContrasenias almacen = new AlmacenContrasenias();
-        almacen.setContraseniasPreviasDAO(new ContraseniasPreviasDAOMemoria());
-        almacen.setIntentosFallidosDAO(new IntentosFallidosDAOMemoria());
 
-        //Todo cambiar por el dao Mysql
-        UserDAO usuariosDao = new UserDAOMemoria();
+
+        almacen.setContraseniasPreviasDAO(new ContraseniasPreviasDAOMySQL());
+        almacen.setIntentosFallidosDAO(new IntentosFallidosDAOMySQL());
+        UserDAO usuarioDao = new UserDAOMySQL();
+
+
 
         ValidadorDeUsuario validador = new ValidadorDeUsuario();
-        validador.setUsuarioDao(usuariosDao);
+        validador.setUsuarioDao(usuarioDao);
         validador.setAlmacenContrasenias(almacen);
 
         /* Hay que registar la contraseña en el almacen??
