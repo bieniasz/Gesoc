@@ -9,6 +9,8 @@ import javax.persistence.Table;
 @Table(name="MedioDePago")
 public class MedioDePago extends EntidadPersistente {
 
+    public MedioDePago() {
+    }
 
     @Column(name="Nombre")
     private String idMercadoPago;

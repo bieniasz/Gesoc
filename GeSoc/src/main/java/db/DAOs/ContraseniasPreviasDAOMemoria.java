@@ -22,7 +22,7 @@ public class ContraseniasPreviasDAOMemoria implements ContraseniasPreviasDAO {
     }
 
     @Override
-    public void actualizarContraseniasPrevias(ContraseniasPrevias contraseniasPrevias) {
+    public void modificarContraseniasPrevias(ContraseniasPrevias contraseniasPrevias) {
         this.contraseniasPreviasList.replace(this.usuarioEnUso, contraseniasPrevias);
     }
 }

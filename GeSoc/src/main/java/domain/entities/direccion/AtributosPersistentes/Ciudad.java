@@ -10,6 +10,9 @@ import javax.persistence.Table;
 @Table
 public class Ciudad extends EntidadPersistente {
 
+    public Ciudad() {
+    }
+
     @Column
     public String nombre;
 

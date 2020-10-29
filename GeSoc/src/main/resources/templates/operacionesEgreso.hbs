@@ -109,63 +109,31 @@ html,body,h1,h2,h3,h4,h5 {font-family: "Raleway", sans-serif}
 
       <table class="tabla" id="tabla3">
         <thead>
-          <th><i class=""></i> Tipo</th>
-          <th><i class=""></i> Id </th>
+
           <th><i class=""></i> Fecha </th>
+          <th><i class=""></i> Id </th>
+          <th><i class=""></i> Monto </th>
 
           <th><i class="fas fa-tools"></i> Acciones</th>
         </thead>
+
         <tbody>
+        {{#each egresos}}
         
         <tr>
-            <td>🢁</td>
-            <td>Ingreso 4214123</td>
-            <td>Fecha</td>
+            <td>{{fecha}}</td>
+            <td>Egreso {{id}}</td>
+            <td>{{valorTotal}}</td>
             
             
             <td>
                 <!--<a href="/usuario/{{id}}" name="button" style="margin:0px;" class="btn btn-border btn-border-blue" ><i class="far fa-eye"></i></a>-->
-                <a href="/usuario/{{id}}" name="button" class=" btn btn-edit"><i class="fas fa-edit"></i></a>
+                <a href="/egresoEditar?usuarioId{{usuarioId}}=5&egresoId={{id}}" name="button" class=" btn btn-edit"><i class="fas fa-edit"></i></a>
                  <button type="button" name="button" class="btn" onclick="confirmarEliminacion('{{id}}')"><i class="fas fa-trash"></i></button>
             </td>
         </tr>
-                <tr>
-            <td>🢁</td>
-            <td>Ingreso 4214123</td>
-            <td>Fecha</td>
-            
-            
-            <td>
-                <!--<a href="/usuario/{{id}}" name="button" style="margin:0px;" class="btn btn-border btn-border-blue" ><i class="far fa-eye"></i></a>-->
-                <a href="/usuario/{{id}}" name="button" class=" btn btn-edit"><i class="fas fa-edit"></i></a>
-                 <button type="button" name="button" class="btn" onclick="confirmarEliminacion('{{id}}')"><i class="fas fa-trash"></i></button>
-            </td>
-        </tr>
-                <tr>
-            <td>🢁</td>
-            <td>Ingreso 4214123</td>
-            <td>Fecha</td>
-            
-            
-            <td>
-                <!--<a href="/usuario/{{id}}" name="button" style="margin:0px;" class="btn btn-border btn-border-blue" ><i class="far fa-eye"></i></a>-->
-                <a href="/usuario/{{id}}" name="button" class=" btn btn-edit"><i class="fas fa-edit"></i></a>
-                 <button type="button" name="button" class="btn" onclick="confirmarEliminacion('{{id}}')"><i class="fas fa-trash"></i></button>
-            </td>
-        </tr>
-                <tr>
-            <td>🢁</td>
-            <td>Ingreso 4214123</td>
-            <td>Fecha</td>
-            
-            
-            <td>
-                <!--<a href="/usuario/{{id}}" name="button" style="margin:0px;" class="btn btn-border btn-border-blue" ><i class="far fa-eye"></i></a>-->
-                <a href="/usuario/{{id}}" name="button" class=" btn btn-edit"><i class="fas fa-edit"></i></a>
-                 <button type="button" name="button" class="btn" onclick="confirmarEliminacion('{{id}}')"><i class="fas fa-trash"></i></button>
-            </td>
-        </tr>
-       
+        {{/each}}
+
         </tbody>
       </table>
       </div>

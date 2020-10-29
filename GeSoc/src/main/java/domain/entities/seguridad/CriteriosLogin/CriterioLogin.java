@@ -8,6 +8,9 @@ import java.util.List;
 
 public class CriterioLogin implements CriterioValidacion {
 
+    public CriterioLogin() {
+    }
+
     // TODO: no poner todos los criterios en el constructor si no en metodos seter
     private AlmacenContrasenias almacen;
 
@@ -18,7 +21,7 @@ public class CriterioLogin implements CriterioValidacion {
     public void validar(Usuario usuario, String contrasenia, List<String> mensajesDeError) {
         try{
         if (!almacen.compararContrasenia(usuario,contrasenia)) {
-                mensajesDeError.add("El domain.entities.usuario y/o contraseña invalido");
+                mensajesDeError.add("El usuario y/o contraseña invalido");
                 almacen.crearIntentoFallidoSiAplica(usuario);
             }
         } catch (Exception e){}

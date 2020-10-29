@@ -10,6 +10,9 @@ import javax.persistence.Entity;
 @DiscriminatorValue("Administrador")
 public class UsuarioAdmin extends Rol{
 
+    public UsuarioAdmin() {
+    }
+
     //TODO: crear metodo para crear usuarios? los vamos a estar insertando directo en la db
     //TODO: reveer toda esta herencia
     @Override

@@ -11,6 +11,9 @@ import javax.persistence.*;
 @DiscriminatorColumn(name="TipoRol")
 public abstract class Rol extends EntidadPersistente { //La hicimos clase abstracta para poder persistir
 
+    public Rol() {
+    }
+
     @Column
     private boolean activo;
 

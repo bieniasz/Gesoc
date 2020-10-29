@@ -14,6 +14,9 @@ import javax.persistence.*;
 @Table
 public class Usuario extends EntidadPersistente {
 
+    public Usuario() {
+    }
+
     @Column
     private String usuarioId;
 

@@ -43,4 +43,9 @@ public class CategoriaDAOMemoria implements CategoriaDAO {
 
         return categoriaDeOperaciones;
     }
+
+    @Override
+    public void modificarCategoria(CategoriaDeOperaciones categoria) {
+
+    }
 }

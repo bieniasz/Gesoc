@@ -8,6 +8,9 @@ import javax.persistence.*;
 @DiscriminatorValue("Estandar")
 public class UsuarioEstandar extends Rol{
 
+    public UsuarioEstandar() {
+    }
+
     @ManyToOne(fetch = FetchType.LAZY, cascade=CascadeType.ALL)
     //@JoinColumn(name= "domain/entities/organizacion",referencedColumnName = "id")
     @JoinColumn(name = "organizacion",referencedColumnName = "id")

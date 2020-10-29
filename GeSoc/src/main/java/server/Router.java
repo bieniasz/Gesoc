@@ -30,8 +30,7 @@ public class Router {
         OperacionesEgresoController egresosController = new OperacionesEgresoController();
         BandejaDeMensajesController controllerBandejaDeMensajes = new BandejaDeMensajesController();
         OperacionEgresoController controllerOperacionEgreso = new OperacionEgresoController();
-        OperacionIngresoController ingresoController = new OperacionIngresoController();
-        OperacionesIngresoController ingresosController = new OperacionesIngresoController();
+        OperacionIngresoController controllerOperacionIngreso = new OperacionIngresoController();
         PresupustoController controllerPresupuesto = new PresupustoController();
 
         Spark.get("/login", controllerLogin::mostrarLogin, Router.engine);
@@ -39,28 +38,34 @@ public class Router {
 
         //Spark.get("/operaciones", controllerOperaciones::mostrarOperaciones, Router.engine); OLD VERSION
         Spark.get("/operacionesEgreso", egresosController::mostrarEgresos, Router.engine);
-        Spark.get("/operacionesIngreso", ingresosController::mostrarIngresos, Router.engine);
 
         Spark.get("/bandejaDeMensajes", controllerBandejaDeMensajes::mostrarBandejaDeMensajes, Router.engine);
-        Spark.get("/ingreso", ingresoController::mostrarIngreso, Router.engine);
 
         Spark.get("/egreso", controllerOperacionEgreso::nuevoEgreso, Router.engine);
         Spark.post("/egreso", controllerOperacionEgreso::guardar);
         Spark.get("/egresoEditar", controllerOperacionEgreso::editarEgreso, Router.engine);
         Spark.post("/egresoEditar", controllerOperacionEgreso::guardarEditarEgreso);
         
+        Spark.get("/ingreso", controllerOperacionIngreso::nuevoIngreso, Router.engine);
+        Spark.post("/ingreso", controllerOperacionIngreso::guardar);
+        Spark.get("/ingresoEditar", controllerOperacionIngreso::editarIngreso, Router.engine);
+        Spark.post("/ingresoEditar", controllerOperacionIngreso::guardarEditarIngreso);
+
      
-        
-        
-        
-        
-        
-        
-        
-        
-        
         
         Spark.get("/presupuesto", controllerPresupuesto::nuevoPresupuesto, Router.engine);
         //Spark.post("/presupuesto", controllerPresupuesto::guardar, Router.engine);
+
+        
+        
+        
+        
+        
+        
+        
+        
+   
+
+      
     }
 }

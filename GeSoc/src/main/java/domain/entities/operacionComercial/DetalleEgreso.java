@@ -6,6 +6,9 @@ import javax.persistence.*;
 @Table(name="DetalleEgreso")
 public class DetalleEgreso extends EntidadPersistente {
 
+    public DetalleEgreso() {
+    }
+
     @OneToOne(fetch = FetchType.LAZY, cascade=CascadeType.ALL)
     public Item item;
 

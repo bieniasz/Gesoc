@@ -36,5 +36,8 @@ public class UserDAOMemoria implements UserDAO {
         this.usuarioMap.put(usuario.getUsuario(),usuario);
     }
 
-
+    @Override
+    public void modificarUsuario(Usuario usuario) {
+        this.usuarioMap.replace(usuario.getUsuario(),usuario);
+    }
 }

@@ -10,6 +10,9 @@ import javax.persistence.Table;
 @Table
 public class Provincia extends EntidadPersistente {
 
+    public Provincia() {
+    }
+
     @Column
     public String nombre;
 

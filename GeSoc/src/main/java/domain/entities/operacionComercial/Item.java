@@ -10,6 +10,9 @@ import java.util.List;
 @Table(name="Item")
 public class Item extends EntidadPersistente{ //TODO evaluar nombre mas descriptivo como "ItemOperacionComercial"
 
+    public Item() {
+    }
+
     @Column
     private String descripcion;
 

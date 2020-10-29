@@ -9,6 +9,9 @@ import javax.persistence.*;
 @Table
 public class DocumentoComercial extends EntidadPersistente {
 
+    public DocumentoComercial() {
+    }
+
     @ManyToOne(fetch = FetchType.LAZY, cascade=CascadeType.ALL)
     private TipoComprobante tipoDocumentoComercial;
 

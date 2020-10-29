@@ -14,6 +14,9 @@ import java.util.Map;
  @DiscriminatorColumn(name = "TipoOrganizacion")
 public abstract class Organizacion extends EntidadPersistente {
 
+     public Organizacion() {
+     }
+
      @OneToMany(fetch = FetchType.LAZY, cascade=CascadeType.ALL)
     protected List<OperacionEgreso> operacionesDeEgreso;
 

@@ -12,6 +12,9 @@ import java.util.List;
 @DiscriminatorValue("EntidadJuridica")
 public class EntidadJuridica extends Organizacion {
 
+    public EntidadJuridica() {
+    }
+
     @Column
     private String razonSocial;
     @Column

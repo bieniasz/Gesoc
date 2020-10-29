@@ -7,6 +7,9 @@ import javax.persistence.*;
 @DiscriminatorValue("EntidadBase")
 public class EntidadBase extends Organizacion {
 
+    public EntidadBase() {
+    }
+
     @Column
     private String nombreFicticio;
 

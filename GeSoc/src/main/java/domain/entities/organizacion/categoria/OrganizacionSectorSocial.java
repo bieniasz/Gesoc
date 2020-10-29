@@ -7,6 +7,9 @@ import javax.persistence.*;
 @DiscriminatorValue("OrganizacionSectorSocial")
 public class OrganizacionSectorSocial extends Categoria {
 
+    public OrganizacionSectorSocial() {
+    }
+
     @Column
     private String areaDeTrabajo;
     @Column
