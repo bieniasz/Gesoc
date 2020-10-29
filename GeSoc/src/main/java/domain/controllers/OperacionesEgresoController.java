@@ -5,6 +5,7 @@ import db.DAOs.CategoriaDAOMemoria;
 import db.DAOs.OperacionEgresoDAO;
 import db.DAOs.OperacionEgresoDAOMemoria;
 import domain.entities.operacionComercial.CategoriaDeOperaciones;
+import domain.entities.operacionComercial.OperacionEgreso;
 import spark.ModelAndView;
 import spark.Request;
 import spark.Response;
@@ -19,11 +20,16 @@ public class OperacionesEgresoController {
 
     public ModelAndView mostrarEgresos(Request request, Response response)  throws Exception {
 
+        String usuarioID = request.queryParams("usuarioId");
+
+        List<OperacionEgreso> egresos = new OperacionEgresoDAOMemoria().getOperacionesEgreso();
+
         List<CategoriaDeOperaciones> categorias = this.categoriaDAO.getTodasLasCategorias();
 
         Map<String, Object> parametros = new HashMap<>();
         parametros.put("categorias", categorias);
-        parametros.put("usuarioId", request.queryParams("usuarioId"));
+        parametros.put("usuarioId", usuarioID);
+        parametros.put("egresos", egresos);
 
         return new ModelAndView(parametros, "operacionesEgreso.hbs");
     }
