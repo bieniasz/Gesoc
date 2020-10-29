@@ -5,7 +5,7 @@ import domain.entities.usuario.Usuario;
 
 public interface IntentosFallidosDAO {
 
-    public IntentosFallidos getIntentosFallidos(Usuario usuario);
-    public void persistirIntentoFallido(IntentosFallidos intentoFallido);
-    void actualizarIntentoFallido(IntentosFallidos intentosFallidos);
+    IntentosFallidos getIntentosFallidos(Usuario usuario);
+    void persistirIntentoFallido(IntentosFallidos intentoFallido);
+    void modificarIntentoFallido(IntentosFallidos intentosFallidos);
 }

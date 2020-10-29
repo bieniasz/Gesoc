@@ -131,7 +131,7 @@ public class OperacionEgresoDAOMemoria implements OperacionEgresoDAO {
         tipoComprobante.setDescripcion("Ticket");
         documentoComercial.setTipoDocumentoComercial(tipoComprobante);
         documentoComercial.setContent("sdaffag");
-        documentoComercial.setNumeroDocumentoComercial((long)45235);
+        documentoComercial.setNumeroDocumentoComercial((long) 45235);
 
         CategoriaDeOperaciones categoria = new CategoriaDeOperaciones();
         categoria.setDescripcion("Alimentos");
@@ -159,5 +159,11 @@ public class OperacionEgresoDAOMemoria implements OperacionEgresoDAO {
         egresos.add(operacion1);
 
         return egresos;
+    }
+
+    @Override
+    public void modificarOperacionEgreso(OperacionEgreso egreso){
+
+
     }
 }

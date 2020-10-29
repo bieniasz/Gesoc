@@ -34,7 +34,7 @@ public class AlmacenContrasenias extends EntidadPersistente {
                 contraseniasPrevias.removerContrseniaVieja();
             }
 
-            this.contraseniasPreviasDAO.actualizarContraseniasPrevias(contraseniasPrevias);
+            this.contraseniasPreviasDAO.modificarContraseniasPrevias(contraseniasPrevias);
         }
         catch (Exception exception) {
             ContraseniasPrevias contraseniasPrevias = new ContraseniasPrevias();
@@ -69,12 +69,8 @@ public class AlmacenContrasenias extends EntidadPersistente {
     public boolean compararContrasenia(Usuario usuario,String contrasenia) {
         try {
             List<String> contraseniasPrevias = getContraseniasPreviasDeUsuario(usuario);
-            Integer posicionUltimaContrasenia = contraseniasPrevias.size()-1;
-            if (contraseniasPrevias.get(posicionUltimaContrasenia) == contrasenia) {
-                return true;
-            } else {
-                return false;
-            }
+            int posicionUltimaContrasenia = contraseniasPrevias.size()-1;
+            return contraseniasPrevias.get(posicionUltimaContrasenia).equals(contrasenia);
         } catch (Exception e) {
             return false;
         }
@@ -93,7 +89,7 @@ public class AlmacenContrasenias extends EntidadPersistente {
       try {
             IntentosFallidos intentosFallidos = this.intentosFallidosDAO.getIntentosFallidos(usuario);
             intentosFallidos.nuevoIntentoFallido();
-            this.intentosFallidosDAO.actualizarIntentoFallido(intentosFallidos);
+            this.intentosFallidosDAO.modificarIntentoFallido(intentosFallidos);
         } catch (NoResultException n) {
             IntentosFallidos intento = new IntentosFallidos();
             intento.setUsuarioId(usuario.getId());

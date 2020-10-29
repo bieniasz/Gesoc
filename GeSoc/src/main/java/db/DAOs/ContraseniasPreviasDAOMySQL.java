@@ -34,7 +34,7 @@ public class ContraseniasPreviasDAOMySQL implements ContraseniasPreviasDAO {
         EntityManagerHelper.closeEntityManager();
     }
 
-    public void actualizarContraseniasPrevias(ContraseniasPrevias contraseniasPrevias){
+    public void modificarContraseniasPrevias(ContraseniasPrevias contraseniasPrevias){
         EntityManagerHelper.beginTransaction();
         EntityManagerHelper.getEntityManager().merge(contraseniasPrevias);
         EntityManagerHelper.commit();

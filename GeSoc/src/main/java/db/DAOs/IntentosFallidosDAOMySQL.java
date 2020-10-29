@@ -3,6 +3,7 @@ package db.DAOs;
 import db.EntityManagerHelper;
 import domain.entities.seguridad.IntentosFallidos.IntentosFallidos;
 import domain.entities.usuario.Usuario;
+import org.dom4j.util.UserDataAttribute;
 
 import javax.persistence.NoResultException;
 import javax.persistence.Query;
@@ -29,9 +30,23 @@ public class IntentosFallidosDAOMySQL implements IntentosFallidosDAO {
     }
 
     @Override
-    public void actualizarIntentoFallido(IntentosFallidos intentosFallidos) {
+    public void modificarIntentoFallido(IntentosFallidos intentosFallidos) {
         EntityManagerHelper.beginTransaction();
         EntityManagerHelper.getEntityManager().merge(intentosFallidos);
         EntityManagerHelper.commit();
+    }
+
+    public void eliminarIntentosFallidos(Usuario usuario){
+
+        Query query = EntityManagerHelper.createQuery("from IntentosFallidos i where i.usuarioId = :user");
+        query.setParameter("user", usuario.getId());
+        try{
+            IntentosFallidos intentosFallidos = (IntentosFallidos) query.getSingleResult();
+            EntityManagerHelper.beginTransaction();
+            EntityManagerHelper.getEntityManager().remove(intentosFallidos);
+            EntityManagerHelper.commit();
+        } catch (NoResultException e){
+
+        }
     }
 }

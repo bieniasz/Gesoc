@@ -17,4 +17,11 @@ public class PresupuestoDAOMySQL implements PresupuestoDAO {
         EntityManagerHelper.getEntityManager().persist(presupuesto);
         EntityManagerHelper.commit();
     }
+
+    @Override
+    public void modificarPresupuesto(Presupuesto presupuesto) {
+        EntityManagerHelper.beginTransaction();
+        EntityManagerHelper.getEntityManager().merge(presupuesto);
+        EntityManagerHelper.commit();
+    }
 }

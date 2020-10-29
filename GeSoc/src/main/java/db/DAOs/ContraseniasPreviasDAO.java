@@ -7,5 +7,5 @@ public interface ContraseniasPreviasDAO {
 
     ContraseniasPrevias getContraseniasPrevias(Usuario usuario);
     void persistirContraseniaPrevia(ContraseniasPrevias contraseniasPrevias);
-    void actualizarContraseniasPrevias(ContraseniasPrevias contraseniasPrevias);
+    void modificarContraseniasPrevias(ContraseniasPrevias contraseniasPrevias);
 }

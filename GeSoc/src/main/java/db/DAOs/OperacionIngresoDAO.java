@@ -3,7 +3,7 @@ package db.DAOs;
 import domain.entities.operacionComercial.OperacionIngreso;
 
 public interface OperacionIngresoDAO {
-    OperacionIngreso buscarIngreso(Integer id);
-    void guardarIngreso(OperacionIngreso ingreso);
-    void actualizarIngreso(OperacionIngreso ingreso);
+    OperacionIngreso buscarOperacionIngreso(Integer id);
+    void guardarOperacionIngreso(OperacionIngreso ingreso);
+    void modificarOperacionIngreso(OperacionIngreso ingreso);
 }

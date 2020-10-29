@@ -10,15 +10,16 @@ public class OperacionEgresoDAOMySQL implements OperacionEgresoDAO {
     }
 
     @Override
-    public void guardarOperacionEgreso(OperacionEgreso egreso) {
+    public void modificarOperacionEgreso(OperacionEgreso egreso) {
         EntityManagerHelper.beginTransaction();
-        EntityManagerHelper.persist(egreso);
+        EntityManagerHelper.getEntityManager().merge(egreso);
         EntityManagerHelper.commit();
     }
 
-    public void actualizarOperacionEgreso(OperacionEgreso egreso){
+    @Override
+    public void guardarOperacionEgreso(OperacionEgreso egreso) {
         EntityManagerHelper.beginTransaction();
-        EntityManagerHelper.getEntityManager().merge(egreso);
+        EntityManagerHelper.persist(egreso);
         EntityManagerHelper.commit();
     }
 }

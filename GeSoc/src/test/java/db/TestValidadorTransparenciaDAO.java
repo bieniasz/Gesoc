@@ -28,6 +28,6 @@ public class TestValidadorTransparenciaDAO {
         ResultadoDeValidacion resultadoDeValidacion = dao.buscarResultado(1);
         resultadoDeValidacion.setFecha(LocalDate.now());
         resultadoDeValidacion.marcarLeido();
-        dao.actualizarResultadoDeValidacion(resultadoDeValidacion);
+        dao.modificarResultadoDeValidacion(resultadoDeValidacion);
     }
 }
