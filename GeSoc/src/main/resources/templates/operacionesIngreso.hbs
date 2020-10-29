@@ -53,13 +53,15 @@ html,body,h1,h2,h3,h4,h5 {font-family: "Raleway", sans-serif}
   <div class="w3-bar-block">
     <a href="#" class="w3-bar-item w3-button w3-padding-16 w3-hide-large w3-dark-grey w3-hover-black" onclick="w3_close()" title="close menu"><i class="fa fa-remove fa-fw"></i>&nbsp;Close Menu</a>
 
-    <a href="#" class="w3-bar-item w3-button w3-padding"><i class="fa fa-bank fa-fw"></i>&nbsp;Operaciones</a>
-    <a href="#" class="w3-bar-item w3-button w3-padding"><i class="fa fa-book"></i>&nbsp;Documentos comerciales</a>
-    <a href="#" class="w3-bar-item w3-button"><i class="fa fa-envelope"></i>&nbsp;Bandeja de mensajes</a>
-    
+    <a href="/operacionesEgreso?usuarioId={{usuarioId}}" class="w3-bar-item w3-button w3-padding"><i class="fa fa-bank fa-fw"></i>&nbsp;Egresos</a>
+    <a href="/operacionesIngreso?usuarioId={{usuarioId}}" class="w3-bar-item w3-button w3-padding"><i class="fa fa-bank fa-fw"></i>&nbsp;Ingresos</a>
+    <!-- <a href="#" class="w3-bar-item w3-button w3-padding"><i class="fa fa-book"></i>&nbsp;Documentos comerciales</a> -->
+    <a href="/bandejaDeMensajes?usuarioId={{usuarioId}}" class="w3-bar-item w3-button"><i class="fa fa-envelope"></i>&nbsp;Bandeja de mensajes</a>
+
   </div>
   <div class="w3-bar-block" style="margin-top: 20px">
-  <a href="#" class="w3-bar-item w3-button"><i class="fa fa-power-off"></i>&nbsp;<b>Cerrar sesión</b></a>
+  <a href="/login" class="w3-bar-item w3-button"><i class="fa fa-power-off"></i>&nbsp;<b>Cerrar sesión</b></a>
+
 </div>
 </nav>
 
@@ -133,7 +135,7 @@ html,body,h1,h2,h3,h4,h5 {font-family: "Raleway", sans-serif}
 
     <div id="window2" class="window">
       
-      <h3 style="margin-bottom: 0px;margin-left: 10px">Listado de operaciones 
+      <h3 style="margin-bottom: 0px;margin-left: 10px">Listado de ingresos
         <a href="" class="btn-border-blue fuente"><i class="fa fa-plus-circle"></i> Nueva operacion</a>
         <button onclick="" class="btn-border-blue fuente"><i class="fa fa-filter"></i></button>
         

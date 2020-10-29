@@ -189,12 +189,14 @@ public class OperacionEgresoController {
                 tipoComprobante.setDescripcion(request.queryParams("documentoComercialClase"));
                 Long numeroDocumento = new Long(request.queryParams("documentoComercialNumero"));
                 documentoComercial.guardarDocumentoFisico(tipoComprobante, numeroDocumento,null);
-                System.out.println(request.queryParams("documentoComercialAdjunto"));
                 documentoComercial.setContent(request.queryParams("documentoComercialAdjunto"));
                 break;
             case "Digital":
-                //TODO: completar
-                //documento.altaDocumentoComercial();
+            	TipoComprobante tipoComprobanteDigital = new TipoComprobante();
+            	tipoComprobanteDigital.setDescripcion(request.queryParams("documentoComercialClase"));
+                Long numeroDocumentoDigital = new Long(request.queryParams("documentoComercialNumero"));
+                documentoComercial.altaDocumentoComercial(tipoComprobanteDigital, numeroDocumentoDigital,"Digital",request.queryParams("documentoComercialAdjunto"));
+                        
                 break;
         }
 

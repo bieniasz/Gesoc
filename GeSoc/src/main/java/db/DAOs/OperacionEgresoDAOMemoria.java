@@ -14,10 +14,6 @@ import db.EntityManagerHelper;
 
 
 public class OperacionEgresoDAOMemoria implements OperacionEgresoDAO {
-    @Override
-    public OperacionEgreso buscarEgreso(Integer id) {
-        return EntityManagerHelper.getEntityManager().find(OperacionEgreso.class, id);
-    }
 
     @Override
     public void guardarOperacionEgreso(OperacionEgreso egreso) {

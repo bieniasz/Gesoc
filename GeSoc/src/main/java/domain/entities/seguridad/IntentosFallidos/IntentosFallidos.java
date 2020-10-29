@@ -15,7 +15,7 @@ public class IntentosFallidos extends EntidadPersistente {
     private Integer usuarioId;
     @Column
     private int intentosRealizados;
-    @Column(columnDefinition = "DATE")
+    @Column
     private LocalDateTime horaDelIntentoMaximo;
 
 
@@ -32,7 +32,7 @@ public class IntentosFallidos extends EntidadPersistente {
     }
 
     public void nuevoIntentoFallido(){
-        this.intentosRealizados ++;
+        this.intentosRealizados++;
     }
 
     public void reiniciarIntentos(){
