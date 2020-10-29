@@ -28,6 +28,7 @@ public class Router {
         LoginController controllerLogin = new LoginController();
         //OperacionesController controllerOperaciones = new OperacionesController(); OLD VERSION
         OperacionesEgresoController egresosController = new OperacionesEgresoController();
+        OperacionesIngresoController ingresosController = new OperacionesIngresoController();
         BandejaDeMensajesController controllerBandejaDeMensajes = new BandejaDeMensajesController();
         OperacionEgresoController controllerOperacionEgreso = new OperacionEgresoController();
         OperacionIngresoController controllerOperacionIngreso = new OperacionIngresoController();
@@ -38,7 +39,7 @@ public class Router {
 
         //Spark.get("/operaciones", controllerOperaciones::mostrarOperaciones, Router.engine); OLD VERSION
         Spark.get("/operacionesEgreso", egresosController::mostrarEgresos, Router.engine);
-
+        Spark.get("/operacionesIngreso", ingresosController::mostrarIngresos, Router.engine);
         Spark.get("/bandejaDeMensajes", controllerBandejaDeMensajes::mostrarBandejaDeMensajes, Router.engine);
 
         Spark.get("/egreso", controllerOperacionEgreso::nuevoEgreso, Router.engine);
