@@ -11,6 +11,9 @@ import javax.persistence.Table;
 @Table
 public class Moneda extends EntidadPersistente {
 
+    public Moneda() {
+    }
+
     @Column
     public String nombre;
 
