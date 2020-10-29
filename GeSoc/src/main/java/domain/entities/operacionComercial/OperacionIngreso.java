@@ -12,6 +12,9 @@ import java.util.List;
 @Table
 public class OperacionIngreso extends EntidadPersistente {
 
+    public OperacionIngreso() {
+    }
+
     @ManyToOne(fetch = FetchType.LAZY, cascade=CascadeType.ALL)
     @JoinColumn(name = "organizacion",referencedColumnName = "id")
     private Organizacion organizacion;

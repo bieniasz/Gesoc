@@ -22,6 +22,9 @@ public class DireccionBuilder {
 
     private DireccionesService proveedorDatosDirecciones;
 
+    public DireccionBuilder() {
+    }
+
     public void setProveedorDatosDirecciones(DireccionesService proveedorDatosDirecciones) {
         this.proveedorDatosDirecciones = proveedorDatosDirecciones;
     }

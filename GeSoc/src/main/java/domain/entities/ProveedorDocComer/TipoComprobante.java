@@ -9,6 +9,10 @@ import javax.persistence.Table;
 @Entity
 @Table
 public class TipoComprobante extends EntidadPersistente {
+
+    public TipoComprobante() {
+    }
+
     @Column
     private String descripcion;
 

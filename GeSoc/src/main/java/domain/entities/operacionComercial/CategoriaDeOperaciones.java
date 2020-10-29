@@ -6,6 +6,9 @@ import javax.persistence.*;
 @Table
 public class CategoriaDeOperaciones extends EntidadPersistente {
 
+    public CategoriaDeOperaciones() {
+    }
+
     @Column
     private String descripcion;
 

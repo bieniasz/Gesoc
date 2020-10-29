@@ -12,6 +12,9 @@ import java.util.*;
 
 public class AlmacenContrasenias extends EntidadPersistente {
 
+    public AlmacenContrasenias() {
+    }
+
     private Integer periodosDeRotacion = 3;
 
     private ContraseniasPreviasDAO contraseniasPreviasDAO;

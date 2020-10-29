@@ -6,7 +6,10 @@ import java.util.List;
 @Table
 public class CriterioDeOperaciones extends EntidadPersistente{
 
-@OneToMany(fetch = FetchType.LAZY, cascade=CascadeType.ALL)
+    public CriterioDeOperaciones() {
+    }
+
+    @OneToMany(fetch = FetchType.LAZY, cascade=CascadeType.ALL)
 @JoinColumn(name="CategoriaDeOperaciones",referencedColumnName = "id")
     private List<CategoriaDeOperaciones> Categorias;
 

@@ -10,6 +10,9 @@ import java.util.List;
 
 public class ValidadorDeUsuario implements iValidadorDeUsuario{
 
+    public ValidadorDeUsuario() {
+    }
+
     //TODO: armar builder para tener todos los criterios seteados
     private List<CriterioValidacion> criteriosCreacionContrasenia = new ArrayList<>();
     private AlmacenContrasenias almacenContrasenias;

@@ -9,8 +9,11 @@ import domain.entities.tamanioEmpresa.criterioTamanio.*;
 //esta clase deberia ser un singleton?
 
 public class CalculadoraDeTamanio {
-	
-	static List<CriterioTamanioEmpresa> criterios;
+
+    public CalculadoraDeTamanio() {
+    }
+
+    static List<CriterioTamanioEmpresa> criterios;
 
 	static {
         criterios = new ArrayList<CriterioTamanioEmpresa>();

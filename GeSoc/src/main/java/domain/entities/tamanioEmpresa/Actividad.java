@@ -10,7 +10,11 @@ import javax.persistence.Table;
 @Entity
 @Table
 public class Actividad extends EntidadPersistente {
-/*
+
+	public Actividad() {
+	}
+
+	/*
 	AGROPECUARIO(12890000,48480000,345430000,547890000,
 			5, 10, 50, 215),
 	INDUSTRIA_Y_MINERIA(26540000,190410000,1190330000,1739590000,

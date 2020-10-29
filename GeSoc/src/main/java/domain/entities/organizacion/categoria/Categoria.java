@@ -14,6 +14,9 @@ import javax.persistence.*;
 @DiscriminatorColumn(name ="TipoCategoria")
 public abstract class Categoria extends EntidadPersistente {
 
+    public Categoria() {
+    }
+
     @Column
     private boolean activo;
     //TODO plantear cambiar nombre a TipoOrganizacion

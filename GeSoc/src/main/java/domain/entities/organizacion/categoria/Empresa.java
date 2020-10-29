@@ -9,6 +9,9 @@ import javax.persistence.*;
 @DiscriminatorValue("Empresa")
 public class Empresa extends Categoria{
 
+	public Empresa() {
+	}
+
 	@Column
 	private int cantidadDePersonal;
 

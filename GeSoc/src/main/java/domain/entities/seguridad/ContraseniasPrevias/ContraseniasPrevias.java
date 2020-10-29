@@ -9,6 +9,9 @@ import java.util.List;
 @Table
 public class ContraseniasPrevias extends EntidadPersistente {
 
+    public ContraseniasPrevias() {
+    }
+
     @Column
     private Integer usuarioId;
 

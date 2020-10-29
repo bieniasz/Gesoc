@@ -9,6 +9,9 @@ import javax.persistence.*;
 @Table
 public class Proveedor extends EntidadPersistente {
 
+    public Proveedor() {
+    }
+
     @Column
     private String nombreApellido_RazonSocial;
 

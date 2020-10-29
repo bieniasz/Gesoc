@@ -12,6 +12,9 @@ import javax.persistence.*;
 @Table
 public class Direccion extends EntidadPersistente{
 
+    public Direccion() {
+    }
+
     @Column
     public String calle;
 

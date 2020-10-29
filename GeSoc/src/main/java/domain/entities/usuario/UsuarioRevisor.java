@@ -11,6 +11,7 @@ import javax.persistence.*;
 @Entity
 @DiscriminatorValue("Revisor")
 public class UsuarioRevisor extends Rol{
+    
     public UsuarioRevisor() {
     }
 

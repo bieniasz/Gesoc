@@ -8,6 +8,9 @@ import java.util.List;
 
 public class CriterioLogin implements CriterioValidacion {
 
+    public CriterioLogin() {
+    }
+
     // TODO: no poner todos los criterios en el constructor si no en metodos seter
     private AlmacenContrasenias almacen;
 

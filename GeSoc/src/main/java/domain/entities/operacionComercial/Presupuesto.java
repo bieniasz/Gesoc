@@ -6,6 +6,9 @@ import javax.persistence.*;
 @DiscriminatorValue("Presupuesto")
 public class Presupuesto extends OperacionComercial{
 
+    public Presupuesto() {
+    }
+
     @ManyToOne(fetch = FetchType.LAZY, cascade=CascadeType.ALL)
     @JoinColumn(name="OperacionEgreso", referencedColumnName = "id")
     private OperacionEgreso egreso;
