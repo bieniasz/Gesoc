@@ -32,6 +32,7 @@ public class Router {
         OperacionEgresoController controllerOperacionEgreso = new OperacionEgresoController();
         OperacionIngresoController ingresoController = new OperacionIngresoController();
         OperacionesIngresoController ingresosController = new OperacionesIngresoController();
+        PresupustoController controllerPresupuesto = new PresupustoController();
 
         Spark.get("/login", controllerLogin::mostrarLogin, Router.engine);
         Spark.post("/validarLogin", controllerLogin::ingresar);
@@ -47,5 +48,8 @@ public class Router {
         Spark.post("/egreso", controllerOperacionEgreso::guardar);
         Spark.get("/egresoEditar", controllerOperacionEgreso::editarEgreso, Router.engine);
         Spark.post("/egresoEditar", controllerOperacionEgreso::guardarEditarEgreso);
+        
+        Spark.get("/presupuesto", controllerPresupuesto::nuevoPresupuesto, Router.engine);
+        //Spark.post("/presupuesto", controllerPresupuesto::guardar, Router.engine);
     }
 }
