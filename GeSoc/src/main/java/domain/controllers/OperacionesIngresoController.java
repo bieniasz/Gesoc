@@ -22,14 +22,14 @@ public class OperacionesIngresoController {
 
         String userId = request.queryParams("usuarioId");
         Usuario usuario = userDAO.buscarUsuarioPoruserId(userId);
-        Organizacion organizacion = usuario.getRol().getOrganizacion();
+        int organizacionId = usuario.getRol().getOrganizacion().getId();
 
-        //List<OperacionIngreso> ingresos = new ArrayList<>(); //me pincha pq dice que no es static corregir
-        //ingresos = OperacionIngresoDAO.getOperacionesIngreso(organizacion); //idem
+        List<OperacionIngreso> ingresos = new ArrayList<>();
+        ingresos = operacionIngresoDAO.getOperacionesIngresoPorOrganizacion(organizacionId);
 
         Map<String, Object> parametros = new HashMap<>();
         parametros.put("usuarioId", userId);
-        //parametros.put("ingresos", ingresos); corregir linea 27
+        parametros.put("ingresos", ingresos);
 
 
         return new ModelAndView(parametros, "operacionesIngreso.hbs");
