@@ -23,6 +23,7 @@ public class OperacionesIngresoController {
         String userId = request.queryParams("usuarioId");
         Usuario usuario = userDAO.buscarUsuarioPoruserId(userId);
         int organizacionId = usuario.getRol().getOrganizacion().getId();
+        String nombreFicticio = usuario.getRol().getOrganizacion().getNombreFicticio();
 
         List<OperacionIngreso> ingresos = new ArrayList<>();
         ingresos = operacionIngresoDAO.getOperacionesIngresoPorOrganizacion(organizacionId);
@@ -30,6 +31,7 @@ public class OperacionesIngresoController {
         Map<String, Object> parametros = new HashMap<>();
         parametros.put("usuarioId", userId);
         parametros.put("ingresos", ingresos);
+        parametros.put("nombreFicticio", nombreFicticio);
 
 
         return new ModelAndView(parametros, "operacionesIngreso.hbs");

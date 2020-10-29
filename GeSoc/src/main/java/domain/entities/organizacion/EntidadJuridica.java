@@ -40,6 +40,7 @@ public class EntidadJuridica extends Organizacion {
 
     // ACCESORES
     public String getRazonSocial() { return razonSocial; }
+    @Override
     public String getNombreFicticio() { return nombreFicticio; }
     public Integer getCuit() { return cuit; }
     public Direccion getDireccionPostal() { return direccionPostal; }

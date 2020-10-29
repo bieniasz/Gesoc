@@ -26,4 +26,6 @@ public abstract class Organizacion extends EntidadPersistente {
      public Map<String, String> getDatos(){
         return new HashMap<String, String>();
     }
-}
+
+     public abstract String getNombreFicticio();
+ }

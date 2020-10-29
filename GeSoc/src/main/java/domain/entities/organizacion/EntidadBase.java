@@ -11,7 +11,7 @@ public class EntidadBase extends Organizacion {
     }
 
     @Column
-    private String nombreFicticio;
+        private String nombreFicticio;
 
     @Column
     private String descripcion;
@@ -22,6 +22,7 @@ public class EntidadBase extends Organizacion {
     private EntidadJuridica entidadJuridica;
 
     //ACCESORES
+    @Override
     public String getNombreFicticio() {
         return nombreFicticio;
     }

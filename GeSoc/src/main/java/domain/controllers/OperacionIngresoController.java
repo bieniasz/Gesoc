@@ -31,9 +31,13 @@ public class OperacionIngresoController {
 
         //TODO: validacion por FE para no hacer guardar con campos vacios
         //TODO: boton cancelar para volver a la vista anterior
+        String userId = request.queryParams("usuarioId");
+        Usuario usuario = userDAO.buscarUsuarioPoruserId(userId);
+        String nombreFicticio = usuario.getRol().getOrganizacion().getNombreFicticio();
 
         Map<String, Object> parametros = new HashMap<>();
         parametros.put("usuarioId", request.queryParams("usuarioId"));
+        parametros.put("nombreFicticio", nombreFicticio);
 
         return new ModelAndView( parametros, "operacionIngresoNuevo.hbs");
     }
@@ -62,23 +66,24 @@ public class OperacionIngresoController {
 
     public ModelAndView editarIngreso(Request request, Response response) throws Exception {
 
-        Integer id = new Integer(request.queryParams("id"));
+        Integer id = new Integer(request.queryParams("ingresoId"));
         OperacionIngreso operacionIngreso = this.operacionIngresoDAO.buscarOperacionIngreso(id);
+        String userId = request.queryParams("usuarioId");
+        Usuario usuario = userDAO.buscarUsuarioPoruserId(userId);
+        String nombreFicticio = usuario.getRol().getOrganizacion().getNombreFicticio();
+
 
         Map<String, Object> parametros = new HashMap<>();
-        parametros.put("fecha", request.queryParams("fecha"));
-        parametros.put("descripcion", request.queryParams("descripcion"));
-        parametros.put("monto", request.queryParams("monto"));
-        /*solo para probar que funcione el guardar ya que no tengo el userId aca*/
-        String usuarioId = "aos123";
+        parametros.put("ingreso", operacionIngreso);
         parametros.put("usuarioId", request.queryParams("usuarioId"));
-        /*solo para probar que funcione el guardar ya que no tengo el userId aca*/
+        parametros.put("ingresoId", request.queryParams("ingresoId"));
+        parametros.put("nombreFicticio", nombreFicticio);
 
         return new ModelAndView( parametros, "operacionIngresoEditar.hbs");
     }
 
     public Response guardarEditarIngreso(Request request, Response response) throws Exception {
-        Integer id = new Integer(request.queryParams("id"));
+        Integer id = new Integer(request.queryParams("ingresoId"));
         OperacionIngreso operacionIngreso = this.operacionIngresoDAO.buscarOperacionIngreso(id);
 
         operacionIngreso.setFecha(LocalDate.parse(request.queryParams("fecha")));
