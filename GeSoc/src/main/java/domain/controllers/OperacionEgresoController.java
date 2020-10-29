@@ -51,7 +51,7 @@ public class OperacionEgresoController {
         LocalDate fecha = LocalDate.parse(request.queryParams("fecha"));
         DocumentoComercial documentoComercial = this.crearDocumentoComercial(request);
         Integer cantidadPresupuestos = Integer.parseInt(request.queryParams("cantidadEsperadaPresupuestos"));
-        Organizacion organizacion = this.userDAO.buscarUsuario(new Integer(request.queryParams("usuarioId"))).getRol().getOrganizacion();
+        Organizacion organizacion = this.userDAO.buscarUsuarioPoruserId(request.queryParams("usuarioId")).getRol().getOrganizacion();
         List<DetalleEgreso> detallesEgresos = this.getListaDeDetalle(request);
         List<CategoriaDeOperaciones> categoriasDeOperaciones = this.getListaDeCategorias(request);
 

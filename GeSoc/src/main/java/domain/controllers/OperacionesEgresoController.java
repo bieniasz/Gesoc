@@ -21,8 +21,7 @@ public class OperacionesEgresoController {
     public ModelAndView mostrarEgresos(Request request, Response response)  throws Exception {
 
         String usuarioID = request.queryParams("usuarioId");
-        //Usuario usuario = this.userDAO.buscarUsuarioPoruserId(usuarioID);
-        Usuario usuario = this.userDAO.buscarUsuario(new Integer(usuarioID));
+        Usuario usuario = this.userDAO.buscarUsuarioPoruserId(usuarioID);
         List<OperacionEgreso> egresos = this.operacionEgresoDAO.getOperacionesEgresoPorOrganizacion(usuario.getRol().getOrganizacion().getId());
         List<CategoriaDeOperaciones> categorias = this.categoriaDAO.getTodasLasCategorias();
 
