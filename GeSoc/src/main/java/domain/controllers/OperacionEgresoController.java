@@ -10,6 +10,7 @@ import domain.entities.operacionComercial.builder.OperacionEgresoBuilder;
 import domain.entities.organizacion.EntidadJuridica;
 import domain.entities.organizacion.Organizacion;
 import domain.entities.organizacion.categoria.Categoria;
+import domain.entities.usuario.Usuario;
 import spark.ModelAndView;
 import spark.Request;
 import spark.Response;
@@ -34,7 +35,7 @@ public class OperacionEgresoController {
 
 
     public ModelAndView editarEgreso(Request request, Response response) throws Exception {
-
+        //TODO: ordenar el controller y poner primero los metodos de egreso nuevo, dividirlo en 2 controllers
         Integer id = new Integer(request.queryParams("egresoId"));
         OperacionEgreso operacionEgreso = this.operacionEgresoDAO.buscarOperacionEgresoPorId(id);
 
@@ -66,21 +67,53 @@ public class OperacionEgresoController {
         egreso.getDocumentoComercial().setNumeroDocumentoComercial(new Long(request.queryParams("documentoComercialNumero")));
         egreso.getDocumentoComercial().getTipoDocumentoComercial().setDescripcion(request.queryParams("documentoComercialClase"));
 
-        //Las categorias tengo que asignarle un name y un input en el html para que me lleguen
-        //Ademas pueden haber agregado y borrado
+        this.removerCategoriasDeEgreso(egreso, request);
+        List<CategoriaDeOperaciones> categoriasAgregadas = this.getListaDeCategorias(request);
+        categoriasAgregadas.forEach( categoria -> egreso.asociarACategoria(categoria));
 
-        //Me encargo primero de las que ya existen
-        //En realidad no se pueden modificar, solo agregar o borrar
+        //TODO: agregar el boton de borrar a los items nuevos
+        this.actualizarDetallesDeEgreso(egreso,request);
+        egreso.registrarDetalles(this.getListaDeDetalle(request));
 
-        //Las que ya existen no las toco, tengo que sacar de la lista las que ya existen
-        //Para borrarlas tienen que usar una funcion de javascript.
-        //La funcion de javascript puede al borrarlas crear un input hidden con el id de la categoria que borro.
-        //El input puede tener de name y de id "categoriaBorrada + i" y otro input oculto "cantidadDeCategoriasBorradas"
-
-        //Las categorias que me agreguen las tengo que buscar con el dao, no me interesa su nombre
+        //TODO: DAO.guardarEdicion(egreso)
 
         response.redirect("/operacionesEgreso?usuarioId=" + request.queryParams("usuarioId"));
         return response;
+    }
+
+    private void actualizarDetallesDeEgreso(OperacionEgreso egreso, Request request) {
+        //TODO: checkear que valla al catch cuando borre un detalle
+        List<DetalleEgreso> detallesAEliminar = new ArrayList<>();
+
+        egreso.getDetalle().forEach( detalleEgreso -> {
+            try {
+                detalleEgreso.setValorTotal(new Double(request.queryParams("valorItemExistenteId" + detalleEgreso.getId())));
+                detalleEgreso.setCantidad(new Integer(request.queryParams("valorItemExistenteId" + detalleEgreso.getId())));
+                detalleEgreso.getItem().setDescripcion((request.queryParams("valorItemExistenteId" + detalleEgreso.getId())));
+            } catch (Exception e) {
+                detallesAEliminar.add(detalleEgreso);
+            }
+        });
+
+        egreso.quitarDetalles(detallesAEliminar);
+    }
+
+    private void removerCategoriasDeEgreso(OperacionEgreso egreso, Request request) {
+        try {
+            Integer cantidadCategoriasARemover = new Integer(request.queryParams("categoriasExistentesEliminadas"));
+            IntStream.range(0,cantidadCategoriasARemover).forEach( i -> {
+                try {
+                    int idDeLaCategoriaARemover = new Integer(request.queryParams("categoriaBorradaId" + i));
+                    //TODO: debuguear para probar este metodo
+                    egreso.quitarCategoriaPorId(idDeLaCategoriaARemover);
+
+                } catch (Exception e) {}
+            });
+
+        } catch (Exception e) {}
+
+
+
     }
 
     public ModelAndView nuevoEgreso(Request request, Response response) throws Exception {

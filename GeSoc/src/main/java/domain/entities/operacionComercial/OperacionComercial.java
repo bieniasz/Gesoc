@@ -65,8 +65,18 @@ public abstract class OperacionComercial extends EntidadPersistente {
         this.actualizarValorTotal();
     }
 
+    public void registrarDetalles(List<DetalleEgreso> detallesAAgregar) {
+        this.detalle.addAll(detallesAAgregar);
+        this.actualizarValorTotal();
+    }
+
     public void quitarDetalle(DetalleEgreso detalle) {
         this.detalle.remove(detalle);
+        this.actualizarValorTotal();
+    }
+
+    public void quitarDetalles(List<DetalleEgreso> detallesAQuitar) {
+        this.detalle.removeAll(detallesAQuitar);
         this.actualizarValorTotal();
     }
 
@@ -74,9 +84,7 @@ public abstract class OperacionComercial extends EntidadPersistente {
         this.categoriasAsociadas.add(categoriaOperacion);
     }
 
-
-
-         
-	
-
+    public void quitarCategoriaPorId(int idDeLaCategoriaARemover){
+        this.categoriasAsociadas.removeIf( categoria -> categoria.getId() == idDeLaCategoriaARemover);
+    }
 }
