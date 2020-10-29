@@ -25,4 +25,9 @@ public abstract class Rol extends EntidadPersistente { //La hicimos clase abstra
     abstract public Usuario nuevoUsuarioEstandar(String usuario, String contrasenia, Organizacion organizacion) throws Exception;
 
     abstract public Organizacion getOrganizacion();
+
+    public boolean isActivo() {
+        return activo;
+    }
+
 }

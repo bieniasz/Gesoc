@@ -44,5 +44,8 @@ public class IntentosFallidos extends EntidadPersistente {
         this.horaDelIntentoMaximo = LocalDateTime.now();
     }
     public void setUsuarioId(Integer id) { this.usuarioId = id; }
+    public Integer getUsuarioId() {
+        return usuarioId;
+    }
 
 }

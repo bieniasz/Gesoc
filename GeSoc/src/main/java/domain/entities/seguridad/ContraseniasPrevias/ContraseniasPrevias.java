@@ -9,8 +9,6 @@ import java.util.List;
 @Table
 public class ContraseniasPrevias extends EntidadPersistente {
 
-    public ContraseniasPrevias() {
-    }
 
     @Column
     private Integer usuarioId;
@@ -18,6 +16,8 @@ public class ContraseniasPrevias extends EntidadPersistente {
     @ElementCollection
     private List<String> contrasenias;
 
+    public ContraseniasPrevias() {
+    }
 
     public void setUsuarioId(Integer usuarioId) {
         this.usuarioId = usuarioId;
@@ -34,4 +34,9 @@ public class ContraseniasPrevias extends EntidadPersistente {
     public void agregarContrasenia(String contrasenia) { this.contrasenias.add(contrasenia); }
 
     public void removerContrseniaVieja() { this.contrasenias.remove(0);}
+
+    public Integer getUsuarioId() { return usuarioId; }
+
+    public void setContrasenias(List<String> contrasenias) { this.contrasenias = contrasenias; }
+
 }
