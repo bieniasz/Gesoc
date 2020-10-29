@@ -1,0 +1,224 @@
+<!DOCTYPE html>
+<html>
+<title>Gesoc09 - Nuevo Presupuesto</title>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<link rel="stylesheet" href="https://fonts.googleapis.com/css?family=Raleway">
+<link rel="stylesheet" href="https://fonts.googleapis.com/css?family=Lexend+Deca&display=swap" rel="stylesheet">
+<link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/4.7.0/css/font-awesome.min.css">
+<link rel="stylesheet" href="https://www.w3schools.com/w3css/4/w3.css">
+<link rel="stylesheet" href="css/w3.css">
+<link rel="stylesheet" href="css/operaciones.css">
+<link rel="stylesheet" href="css/search.bar.css">
+
+<script src="https://kit.fontawesome.com/27517fada0.js"></script>
+<script src="https://code.jquery.com/jquery-3.4.1.min.js" integrity="sha256-CSXorXvZcTkaix6Yvo6HppcZGetbYMGWSFlBw8HfCJo=" crossorigin="anonymous"></script>
+<script src="js/generales.js"></script>
+<script src="js/categoria.js"></script>
+<script src="js/detallesDeEgreso.js"></script>
+<script src="js/documentoComercial.js"></script>
+<script src="js/filtrarEnBarraDeBusqueda.js"></script>
+<script src="js/proveedor.js"></script>
+<script src="js/egreso.js"></script>
+
+<style>
+html,body,h1,h2,h3,h4,h5 {font-family: "Raleway", sans-serif}
+</style>
+<body class="w3-light-grey">
+
+<!-- Top container -->
+<div class="w3-bar w3-top w3-large" style="background:#1aa3cfff; color:white; z-index:4">
+  <button class="w3-bar-item w3-button w3-hide-large w3-hover-none w3-hover-text-light-grey" onclick="w3_open();"><i class="fa fa-bars"></i>&nbsp;Menu</button>
+  <span class="w3-bar-item w3-right">
+    Gesoc 09&nbsp;
+
+    <img src="img/bandera.svg" class="w3-circle w3-margin-right" style="width:55px">
+  </span>
+</div>
+
+<!-- Sidebar/menu -->
+<nav class="w3-sidebar w3-collapse w3-white w3-animate-left" style="z-index:3;width:300px;" id="mySidebar"><br>
+  <div class="w3-container w3-row">
+    <div class="w3-col s4">
+      <img src="img/img_avatar3.png" class="w3-circle w3-margin-right" style="width:46px">
+    </div>
+    <div class="w3-col s8 w3-bar">
+
+        <div id="nombreUsuario"><strong>Nombre</strong></div>
+        <div id="nombreEntidad"><strong>Entidad</strong></div>
+
+    </div>
+  </div>
+  <hr>
+  <div class="w3-container">
+    <h5>Menu</h5>
+  </div>
+  <div class="w3-bar-block">
+    <a href="#" class="w3-bar-item w3-button w3-padding-16 w3-hide-large w3-dark-grey w3-hover-black" onclick="w3_close()" title="close menu"><i class="fa fa-remove fa-fw"></i>&nbsp;Close Menu</a>
+
+    <a href="/operacionesEgreso?usuarioId={{usuarioId}}" class="w3-bar-item w3-button w3-padding"><i class="fa fa-bank fa-fw"></i>&nbsp;Egresos</a>
+    <a href="/operacionesIngreso?usuarioId={{usuarioId}}" class="w3-bar-item w3-button w3-padding"><i class="fa fa-bank fa-fw"></i>&nbsp;Ingresos</a>
+    <!-- <a href="#" class="w3-bar-item w3-button w3-padding"><i class="fa fa-book"></i>&nbsp;Documentos comerciales</a> -->
+    <a href="/bandejaDeMensajes?usuarioId={{usuarioId}}" class="w3-bar-item w3-button"><i class="fa fa-envelope"></i>&nbsp;Bandeja de mensajes</a>
+
+  </div>
+  <div class="w3-bar-block" style="margin-top: 20px">
+  <a href="/login" class="w3-bar-item w3-button"><i class="fa fa-power-off"></i>&nbsp;<b>Cerrar sesión</b></a>
+
+
+</nav>
+
+
+<!-- Overlay effect when opening sidebar on small screens -->
+<div class="w3-overlay w3-hide-large w3-animate-opacity" onclick="w3_close()" style="cursor:pointer" title="close side menu" id="myOverlay"></div>
+
+<!-- !PAGE CONTENT! -->
+<div class="w3-main" style="margin-left:310px;margin-top:43px;">
+
+  <!-- Header -->
+  <header class="titulo" style="padding-top:22px">
+      <b><i class="fa fa-bank fa-fw"></i>{{#if egreso}} Presupuesto - Id {{egreso.id}} {{else}} Nuevo Presupuesto {{/if}}</b>
+  </header>
+
+  
+<!-- !DOCUMENTO COMERCIAL! -->
+        <h3 for="documentoComercial">Documento Comercial</h3>
+        <label for="documentoComercialTipo">Tipo</label>
+        <select id="documentoComercialTipo" name="documentoComercialTipo" class="input-formulario" >
+            <option value="Fisico">Fisico</option>
+            <option value="Digital">Digital</option>
+        </select>
+        <br><br>
+        <label for="documentoComercialNumero">Numero</label>
+        <input id="documentoComercialNumero" name="documentoComercialNumero" type="number" class="input-formulario" {{#if egreso}} value="{{egreso.documentoComercial.numeroDocumentoComercial}}" {{/if}}>
+        <br><br>
+        <label for="documentoComercialClase">Clase de documento</label>
+        <input id="documentoComercialClase" name="documentoComercialClase" type="text" class="input-formulario" {{#if egreso}} value="{{egreso.documentoComercial.tipoDocumentoComercial.descripcion}}" {{/if}}>
+        <br><br>
+        <label for="documentoComercialAdjunto">Adjunto</label>
+        <input id="documentoComercialAdjunto" name="documentoComercialAdjunto" type="file" onsubmit="serializarArchivo()" class="input-formulario">
+        <br><br>
+        
+<!-- !EGRESO ASOCIADO! -->
+        <label for="Egreso">Egreso Asociado</label>
+        <input id="egreso" name="egreso" type="number" class="input-formulario" {{#if egreso}} value="{{egreso.detalle}}" {{/if}}>
+        <a name="searchEgreso" class=" btn btn-search" onclick="mostrarBuscarEgreso()"><i class="fas fa-search"></i></a>
+        <input type="hidden" id="egresoId" name="egresoId" {{#if egreso}} value="{{egreso.id}}" {{/if}}>
+
+        <div class="dropdown">
+            <div id="buscarEgreso" class="dropdown-content">
+                <input type="text" placeholder="Search.." id="inputBuscarEgreso" onkeyup="filterFunction('buscarEgreso','inputBuscarEgreso')">
+                {{#each egreso}}
+                    <a onClick="llenarEgreso('{{Detalle}}', '{{id}}')">{{Detalle}}</a>
+                {{/each}}
+            </div>
+        </div>
+        <br><br>
+<!-- !ES EL ELEGIDO! -->
+  		<br><br>
+        <label><input type="checkbox" id="prespuestoElegidoCheck" value="prespuestoElegidoCheck"> Es presupuesto elegido</label>
+        <br><br>
+<!-- !CATEGORIAS! -->
+        <h3 style="margin-bottom: 5px;margin-left: 10px">Categorias
+            <a name="searchCategoria" class=" btn btn-search" onclick="mostrarBuscarCategorias()"><i class="fas fa-search"></i></a>
+            <input type="hidden" id="cantidadDeCategoriasNuevas" name="cantidadDeCategorias">
+        </h3>
+
+        <div class="dropdown">
+            <div id="buscarCategoria" class="dropdown-content">
+                <input type="text" placeholder="Search.." id="inputBuscarCategoria" onkeyup="filterFunction('buscarCategoria','inputBuscarCategoria')">
+                {{#each categorias}}
+                    <a onClick="agregarCategoria('{{descripcion}}', '{{id}}')">{{descripcion}}</a>
+                {{/each}}
+            </div>
+        </div>
+
+        <div id="seccionCategorias">
+            {{#if egreso}}
+                {{#each egreso.categoriasAsociadas}}
+                    <div>
+                        <input id="categoria{{id}}" name="categoria{{id}}" class="w3-tag w3-padding w3-small w3-center w3-yellow" type="text" readonly value="{{descripcion}}">
+                        <a class="btn btn-search" id="eliminarCategoria{{id}}" onclick="eliminarCategoria({{id}})"><i class="fas fa-close"></i></a>
+                    </div>
+                {{/each}}
+            {{/if}}
+        </div>
+        <br><br>
+
+<!-- !DETALLE PRESUPUESTO! -->
+      <h3 style="margin-bottom: 5px;margin-left: 10px">Detalle Presupuesto
+          <button type="button" name="buttonAgregarItem" class="btn-border-blue fuente" onclick="agregarItem()"><i class="fa fa-plus-circle" style="margin-bottom:25px;"></i></button></h3>
+      <input type="hidden" id="cantidadDetalles" name="cantidadDetalles">
+
+      <table class="tabla" id="detalleEgresos" name="detalleEgresos">
+        <thead>
+          <th><i class=""></i> Id </th>
+          <th><i class=""></i> Item </th>
+          <th><i class=""></i> Cantidad </th>
+          <th><i class=""></i> Valor Total </th>
+          <th><i class="fas fa-tools"></i> Acciones</th>
+        </thead>
+        <tbody>
+        {{#if egreso}}
+            {{#each egreso.detalle}}
+                <tr>
+                    <td>{{id}}</td>
+                    <td>{{item.descripcion}}</td>
+                    <td>{{cantidad}}</td>
+                    <td>{{valorTotal}}</td>
+                    <td>
+                     <!-- <a href="" name="button" style="margin:0px;" class="btn btn-border btn-border-blue" ><i class="far fa-eye"></i></a>-->
+                     <!--  <a href="" name="button" class=" btn btn-edit"><i class="fas fa-edit"></i></a>-->
+                    <!--  <button type="button" name="buttonAgregarItem" class="btn btn-edit" onclick="agregarItem()"><i class="fas fa-edit"></i></button>
+                      <button type="button" name="button" class="btn" onclick="confirmarEliminacion('{{id}}')"><i class="fas fa-trash"></i></button> -->
+                    </td>
+                  </tr>
+            {{/each}}
+        {{/if}}
+        </table>
+        <br>
+
+      <!-- !FIN Detalle del Egreso! -->
+      <br>
+      <div align="left" width="90%">
+      <input class="btn-guardar" type="submit" value="Guardar">
+      </div>
+      <br>
+    </form>
+  <br><br><br>
+
+    <!-- Footer -->
+
+<head>
+ <style type ="text/css" >
+   .footer{
+       position: fixed;
+       text-align: center;
+       bottom: 0px;
+       width: 100%;
+   }
+</style>
+</head>
+<body>
+    <div class="footer">GESOC - Grupo 09</div>
+</body>
+
+<!-- ================= MODAL AGREGAR DETALLE ================== -->
+<div class="modalAgregarDetalle modal" id="modalAgregarDetalle">
+    <div class="modalContent">
+        <h3>Agregar nuevo detalle</h3>
+        <form>
+            <input type="text" name="descripcionItem" id="descripcionItem" placeholder="Descripcion">
+            <input type="text" name="cantidadItem" id="cantidadItem" placeholder="Cantidad">
+            <input type="text" name="valorItem" id="valorItem" placeholder="Valor total">
+        </form>
+        <br>
+        <div class="">
+            <button type="button" name="button" class="btn-verde" onclick="guardarNuevoItem()">Agregar</button>
+            <button type="button" name="button" class="btn-cancelar" onclick="cerrarModal()">Cerrar</button>
+        </div>
+    </div>
+</div>
+
+</body>
+</html>

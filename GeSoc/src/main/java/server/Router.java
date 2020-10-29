@@ -31,7 +31,7 @@ public class Router {
         BandejaDeMensajesController controllerBandejaDeMensajes = new BandejaDeMensajesController();
         OperacionEgresoController controllerOperacionEgreso = new OperacionEgresoController();
         OperacionIngresoController controllerOperacionIngreso = new OperacionIngresoController();
-
+        PresupustoController controllerPresupuesto = new PresupustoController();
 
         Spark.get("/login", controllerLogin::mostrarLogin, Router.engine);
         Spark.post("/validarLogin", controllerLogin::ingresar);
@@ -45,10 +45,27 @@ public class Router {
         Spark.post("/egreso", controllerOperacionEgreso::guardar);
         Spark.get("/egresoEditar", controllerOperacionEgreso::editarEgreso, Router.engine);
         Spark.post("/egresoEditar", controllerOperacionEgreso::guardarEditarEgreso);
-
+        
         Spark.get("/ingreso", controllerOperacionIngreso::nuevoIngreso, Router.engine);
         Spark.post("/ingreso", controllerOperacionIngreso::guardar);
         Spark.get("/ingresoEditar", controllerOperacionIngreso::editarIngreso, Router.engine);
         Spark.post("/ingresoEditar", controllerOperacionIngreso::guardarEditarIngreso);
+
+     
+        
+        Spark.get("/presupuesto", controllerPresupuesto::nuevoPresupuesto, Router.engine);
+        //Spark.post("/presupuesto", controllerPresupuesto::guardar, Router.engine);
+
+        
+        
+        
+        
+        
+        
+        
+        
+   
+
+      
     }
 }
