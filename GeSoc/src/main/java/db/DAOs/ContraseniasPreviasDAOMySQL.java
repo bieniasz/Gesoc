@@ -4,6 +4,7 @@ import db.EntityManagerHelper;
 import domain.entities.seguridad.ContraseniasPrevias.ContraseniasPrevias;
 import domain.entities.usuario.Usuario;
 
+import javax.persistence.NoResultException;
 import javax.persistence.Query;
 import java.util.ArrayList;
 import java.util.List;
@@ -14,12 +15,15 @@ public class ContraseniasPreviasDAOMySQL implements ContraseniasPreviasDAO {
 
     @Override
     public ContraseniasPrevias getContraseniasPrevias(Usuario usuario) {
-        EntityManagerHelper.beginTransaction();
+        ContraseniasPrevias containerContraseniasPrevias;
         Query query = EntityManagerHelper.createQuery("FROM ContraseniasPrevias cp WHERE cp.usuarioId = :user");
         query.setParameter("user", usuario.getId());
-        ContraseniasPrevias containerContraseniasPrevias = (ContraseniasPrevias) query.getSingleResult();
-        EntityManagerHelper.closeEntityManager();
-        return containerContraseniasPrevias != null ? containerContraseniasPrevias : new ContraseniasPrevias();
+        try{
+            containerContraseniasPrevias = (ContraseniasPrevias) query.getSingleResult();
+        } catch (NoResultException e){
+            containerContraseniasPrevias = null;
+        }
+        return containerContraseniasPrevias;
     }
 
     @Override
@@ -35,14 +39,5 @@ public class ContraseniasPreviasDAOMySQL implements ContraseniasPreviasDAO {
         EntityManagerHelper.getEntityManager().merge(contraseniasPrevias);
         EntityManagerHelper.commit();
         EntityManagerHelper.closeEntityManager();
-    }
-
-    public ContraseniasPrevias getContraseniasPrevias(Integer usuarioId) {
-        EntityManagerHelper.beginTransaction();
-        Query query = EntityManagerHelper.createQuery("FROM ContraseniasPrevias cp WHERE cp.usuarioId = :user");
-        query.setParameter("user", usuarioId);
-        ContraseniasPrevias containerContraseniasPrevias = (ContraseniasPrevias) query.getSingleResult();
-        EntityManagerHelper.closeEntityManager();
-        return containerContraseniasPrevias != null ? containerContraseniasPrevias : new ContraseniasPrevias();
     }
 }

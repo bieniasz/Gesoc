@@ -23,7 +23,7 @@ public class IntentosFallidosDAOMemoria implements IntentosFallidosDAO{
     }
 
     @Override
-    public IntentosFallidos buscarIntentosFallidosPorId(Integer id) {
-        return null;
+    public void actualizarIntentoFallido(IntentosFallidos intentosFallidos) {
+        this.intentos.replace(usuarioEnUso, intentosFallidos);
     }
 }

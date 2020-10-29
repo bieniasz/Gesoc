@@ -7,5 +7,5 @@ public interface IntentosFallidosDAO {
 
     public IntentosFallidos getIntentosFallidos(Usuario usuario);
     public void persistirIntentoFallido(IntentosFallidos intentoFallido);
-    IntentosFallidos buscarIntentosFallidosPorId(Integer id);
+    void actualizarIntentoFallido(IntentosFallidos intentosFallidos);
 }
