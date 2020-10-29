@@ -14,8 +14,10 @@ public class OperacionesIngresoController {
 
     public ModelAndView mostrarIngresos(Request request, Response response)  throws Exception{
 
+        Map<String, Object> parametros = new HashMap<>();
+        parametros.put("usuarioId", request.queryParams("usuarioId"));
 
-        return new ModelAndView(null,"operacionesIngreso.hbs");
+        return new ModelAndView(parametros,"operacionesIngreso.hbs");
     }
 
 }

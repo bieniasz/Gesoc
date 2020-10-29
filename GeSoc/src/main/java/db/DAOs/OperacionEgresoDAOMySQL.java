@@ -10,6 +10,11 @@ public class OperacionEgresoDAOMySQL implements OperacionEgresoDAO {
     }
 
     @Override
+    public OperacionEgreso buscarEgreso(Integer id) {
+        return null;
+    }
+
+    @Override
     public void guardarOperacionEgreso(OperacionEgreso egreso) {
         EntityManagerHelper.beginTransaction();
         EntityManagerHelper.persist(egreso);
