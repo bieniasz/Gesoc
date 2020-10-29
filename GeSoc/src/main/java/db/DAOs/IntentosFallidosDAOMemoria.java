@@ -21,4 +21,9 @@ public class IntentosFallidosDAOMemoria implements IntentosFallidosDAO{
     public void persistirIntentoFallido(IntentosFallidos intentoFallido) {
         this.intentos.put(usuarioEnUso, intentoFallido);
     }
+
+    @Override
+    public IntentosFallidos buscarIntentosFallidosPorId(Integer id) {
+        return null;
+    }
 }
