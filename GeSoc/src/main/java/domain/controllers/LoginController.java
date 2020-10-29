@@ -17,7 +17,6 @@ import java.util.List;
 public class LoginController {
 
     public ModelAndView mostrarLogin(Request request, Response response) {
-
         return new ModelAndView(null, "loginGesoc.hbs");
     }
 
@@ -28,52 +27,35 @@ public class LoginController {
         System.out.println(contrasenia);
 
         ValidadorDeUsuario validador = this.getValidador();
-
         List<String> errores = validador.validarContraseniaLogin(nombreDeUsuario,contrasenia);
         System.out.println(errores);
 
         //Todo probar tiempos login con los DAO mySQL
-
-
         //Todo el id del userDao debería volver del validador si no tiene errores.
         UserDAO usuarioDao = new UserDAOMySQL();
 
         LoginRespuesta loginRespuesta = new LoginRespuesta();
-
-
         Gson gson = new Gson();
-
-
 
         if (errores.size() == 0){
             loginRespuesta.setError(0);
             Usuario usuario = usuarioDao.buscarUsuarioPoruserId(nombreDeUsuario);
-            loginRespuesta.setUsuarioID(usuario.getId());
-            String jsonLoginRespuesta = gson.toJson(loginRespuesta);
-            return jsonLoginRespuesta;
-
+            loginRespuesta.setUsuarioID(usuario.getUsuarioId());
         }
         else{
             loginRespuesta.setError(1);
             loginRespuesta.setErrores(errores);
-            String jsonLoginRespuesta = gson.toJson(loginRespuesta);
-            return jsonLoginRespuesta;
-
         }
 
-
-
+        return gson.toJson(loginRespuesta);
     }
 
     private ValidadorDeUsuario getValidador(){
         AlmacenContrasenias almacen = new AlmacenContrasenias();
 
-
         almacen.setContraseniasPreviasDAO(new ContraseniasPreviasDAOMySQL());
         almacen.setIntentosFallidosDAO(new IntentosFallidosDAOMySQL());
         UserDAO usuarioDao = new UserDAOMySQL();
-
-
 
         ValidadorDeUsuario validador = new ValidadorDeUsuario();
         validador.setUsuarioDao(usuarioDao);
@@ -83,9 +65,7 @@ public class LoginController {
         almacen.registrarContrasenia(usuariosDao.getUsuario("igna"),usuariosDao.getUsuario("igna").getContrasenia());
         almacen.registrarContrasenia(usuariosDao.getUsuario("juanpa"),usuariosDao.getUsuario("igna").getContrasenia());
         */
-
         return validador;
-
     }
 
 }
@@ -93,8 +73,7 @@ public class LoginController {
 class LoginRespuesta{
     int error;
     List<String> errores = new ArrayList<>();
-    int usuarioID;
-
+    String usuarioID;
 
     public void setError(int flag){
         this.error = flag;
@@ -102,7 +81,7 @@ class LoginRespuesta{
     public void setErrores(List<String> errores){
         this.errores = errores;
     }
-    public void setUsuarioID(int id){
+    public void setUsuarioID(String id){
         this.usuarioID = id;
     }
 }

@@ -1,6 +1,5 @@
 package db.DAOs;
 
-import db.DAOs.UserDAO;
 import domain.entities.usuario.Usuario;
 
 import java.util.HashMap;
@@ -33,11 +32,11 @@ public class UserDAOMemoria implements UserDAO {
 
     @Override
     public void guardarUsuario(Usuario usuario) {
-        this.usuarioMap.put(usuario.getUsuario(),usuario);
+        this.usuarioMap.put(usuario.getUsuarioId(),usuario);
     }
 
     @Override
     public void modificarUsuario(Usuario usuario) {
-        this.usuarioMap.replace(usuario.getUsuario(),usuario);
+        this.usuarioMap.replace(usuario.getUsuarioId(),usuario);
     }
 }

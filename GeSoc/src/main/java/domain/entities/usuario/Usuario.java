@@ -27,7 +27,7 @@ public class Usuario extends EntidadPersistente {
     @ManyToOne(fetch = FetchType.EAGER, cascade=CascadeType.ALL)
     private Rol rol;
 
-    public String getUsuario() {
+    public String getUsuarioId() {
         return this.usuarioId;
     }
     public String getContrasenia() {return this.contrasenia; }
