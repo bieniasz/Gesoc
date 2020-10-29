@@ -40,9 +40,9 @@ html,body,h1,h2,h3,h4,h5 {font-family: "Raleway", sans-serif}
     <div class="w3-col s8 w3-bar">
 
       <span style="vertical-align: center;text-align: center"><strong>
-        Nombre
+        Nombre: {{usuarioId}}
         <br>
-        Entidad
+        Entidad: {{nombreFicticio}}
         </strong></span><br>
 
 
@@ -74,20 +74,20 @@ html,body,h1,h2,h3,h4,h5 {font-family: "Raleway", sans-serif}
 
   <!-- Header -->
   <header class="titulo" style="padding-top:22px">
-      <b><i class="fa fa-bank fa-fw"></i>{{#if ingreso}} Editar Operacion de Ingreso - Id {{ingreso.id}} {{else}} Editar Operacion de Ingreso {{/if}}</b>
+      <b><i class="fa fa-bank fa-fw"></i>{{#if ingreso}} Editar Operacion de Ingreso - Id {{ingresoId}} {{else}} Editar Operacion de Ingreso {{/if}}</b>
   </header>
 
    <!-- Formulario -->
-    <form class="" {{#if ingreso}} action="ingresoEditar?usuarioId={{usuarioId}}&ingresoId={{ingreso.id}}" {{else}} action="ingresoEditar?usuarioId={{usuarioId}}" {{/if}} method="post">
+   <form class="" {{#if ingreso}} action="ingresoEditar?usuarioId={{usuarioId}}&ingresoId={{ingresoId}}" {{else}} action="ingresoEditar?usuarioId={{usuarioId}}" {{/if}} method="post">
         <!-- <input id="organizacion" name="organizacion" type="number" class="input-formulario">
 		<br><br> -->
         <label for="fecha">Fecha</label>
         <input id="fecha" name="fecha" type="date"  class="input-formulario" {{#if ingreso}} value="{{ingreso.fecha}}" {{/if}}>
         <br><br>
-        <label for="descripcion">Descripción del Ingreso</label>
+        <label for="descripcion">Descripción</label>
         <input id="descripcion" name="descripcion" class="input-formulario" {{#if ingreso}} value="{{ingreso.descripcion}}" {{/if}}>
         <br><br>
-        <label for="monto">Valor Total</label>
+        <label for="monto">Monto</label>
         <input id="monto" name="monto" type="number" step="0.01" class="input-formulario" {{#if ingreso}} value="{{ingreso.monto}}" {{/if}}>
         <br><br>
 
