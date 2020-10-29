@@ -11,6 +11,8 @@ import javax.persistence.*;
 @Entity
 @DiscriminatorValue("Revisor")
 public class UsuarioRevisor extends Rol{
+    public UsuarioRevisor() {
+    }
 
     @ManyToOne(fetch = FetchType.LAZY, cascade=CascadeType.ALL)
     private Organizacion organizacion;

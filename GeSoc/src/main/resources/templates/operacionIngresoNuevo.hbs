@@ -1,0 +1,118 @@
+<!DOCTYPE html>
+<html>
+<title>Gesoc09 - Nueva operacion de ingreso</title>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<link rel="stylesheet" href="https://fonts.googleapis.com/css?family=Raleway">
+<link rel="stylesheet" href="https://fonts.googleapis.com/css?family=Lexend+Deca&display=swap" rel="stylesheet">
+<link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/4.7.0/css/font-awesome.min.css">
+<link rel="stylesheet" href="https://www.w3schools.com/w3css/4/w3.css">
+<link rel="stylesheet" href="css/w3.css">
+<link rel="stylesheet" href="css/operaciones.css">
+<link rel="stylesheet" href="css/search.bar.css">
+
+<script src="https://kit.fontawesome.com/27517fada0.js"></script>
+<script src="https://code.jquery.com/jquery-3.4.1.min.js" integrity="sha256-CSXorXvZcTkaix6Yvo6HppcZGetbYMGWSFlBw8HfCJo=" crossorigin="anonymous"></script>
+<script src="js/generales.js"></script>
+<script src="js/operaciones.js"></script>
+
+<style>
+html,body,h1,h2,h3,h4,h5 {font-family: "Raleway", sans-serif}
+</style>
+<body class="w3-light-grey">
+
+<!-- Top container -->
+<div class="w3-bar w3-top w3-large" style="background:#1aa3cfff; color:white; z-index:4">
+  <button class="w3-bar-item w3-button w3-hide-large w3-hover-none w3-hover-text-light-grey" onclick="w3_open();"><i class="fa fa-bars"></i>&nbsp;Menu</button>
+  <span class="w3-bar-item w3-right">
+    Gesoc 09&nbsp;
+
+    <img src="img/bandera.svg" class="w3-circle w3-margin-right" style="width:55px">
+  </span>
+</div>
+
+<!-- Sidebar/menu -->
+<nav class="w3-sidebar w3-collapse w3-white w3-animate-left" style="z-index:3;width:300px;" id="mySidebar"><br>
+  <div class="w3-container w3-row">
+    <div class="w3-col s4">
+      <img src="img/img_avatar3.png" class="w3-circle w3-margin-right" style="width:46px">
+    </div>
+    <div class="w3-col s8 w3-bar">
+
+      <span style="vertical-align: center;text-align: center"><strong>
+        Nombre
+        <br>
+        Entidad
+        </strong></span><br>
+
+
+    </div>
+  </div>
+  <hr>
+  <div class="w3-container">
+    <h5>Menu</h5>
+  </div>
+  <div class="w3-bar-block">
+    <a href="" class="w3-bar-item w3-button w3-padding-16 w3-hide-large w3-dark-grey w3-hover-black" onclick="w3_close()" title="close menu"><i class="fa fa-remove fa-fw"></i>&nbsp;Close Menu</a>
+
+    <a href="" class="w3-bar-item w3-button w3-padding"><i class="fa fa-bank fa-fw"></i>&nbsp;Operaciones</a>
+    <a href="" class="w3-bar-item w3-button w3-padding"><i class="fa fa-book"></i>&nbsp;Documentos comerciales</a>
+    <a href="" class="w3-bar-item w3-button"><i class="fa fa-envelope"></i>&nbsp;Bandeja de mensajes</a>
+
+  </div>
+  <div class="w3-bar-block" style="margin-top: 20px">
+  <a href="#" class="w3-bar-item w3-button"><i class="fa fa-power-off"></i>&nbsp;<b>Cerrar sesión</b></a>
+
+</nav>
+
+
+<!-- Overlay effect when opening sidebar on small screens -->
+<div class="w3-overlay w3-hide-large w3-animate-opacity" onclick="w3_close()" style="cursor:pointer" title="close side menu" id="myOverlay"></div>
+
+<!-- !PAGE CONTENT! -->
+<div class="w3-main" style="margin-left:310px;margin-top:43px;">
+
+  <!-- Header -->
+  <header class="titulo" style="padding-top:22px">
+      <b><i class="fa fa-bank fa-fw"></i>{{#if ingreso}} Operacion de Ingreso - Id {{ingreso.id}} {{else}} Nueva Operacion de Ingreso {{/if}}</b>
+  </header>
+
+   <!-- Formulario -->
+    <form class="" {{#if ingreso}} action="ingresoEditar?usuarioId={{usuarioId}}&ingresoId={{ingreso.id}}" {{else}} action="ingreso?usuarioId={{usuarioId}}" {{/if}} method="post">
+        <!-- <input id="organizacion" name="organizacion" type="number" class="input-formulario">
+		<br><br> -->
+        <label for="fecha">Fecha</label>
+        <input id="fecha" name="fecha" type="date"  class="input-formulario" {{#if ingreso}} value="{{ingreso.fecha}}" {{/if}}>
+        <br><br>
+        <label for="descripcion">Descripción del Ingreso</label>
+        <input id="descripcion" name="descripcion" class="input-formulario" {{#if ingreso}} value="{{ingreso.descripcion}}" {{/if}}>
+        <br><br>
+        <label for="monto">Valor Total</label>
+        <input id="monto" name="monto" type="number" step="0.01" class="input-formulario" {{#if ingreso}} value="{{ingreso.monto}}" {{/if}}>
+        <br><br>
+
+      <br>
+      <div align="left" width="90%">
+      <input class="btn-guardar" type="submit" value="Guardar">
+      </div>
+      <br>
+    </form>
+  <br><br><br>
+
+    <!-- Footer -->
+
+<head>
+ <style type ="text/css" >
+   .footer{
+       position: fixed;
+       text-align: center;
+       bottom: 0px;
+       width: 100%;
+   }
+</style>
+</head>
+<body>
+    <div class="footer">GESOC - Grupo 09</div>
+</body>
+
+</html>
