@@ -33,7 +33,7 @@ public class VinculadorIngresoEgresos {
             egreso.setIngresoAsociado(ingreso);
 
             egresoDAO.guardarOperacionEgreso(egreso);
-            ingresoDAO.guardarIngreso(ingreso);
+            ingresoDAO.guardarOperacionIngreso(ingreso);
         }
     }
 

@@ -7,6 +7,6 @@ import java.util.List;
 
 public interface CategoriaDAO {
     List<CategoriaDeOperaciones> getTodasLasCategorias();
-
     CategoriaDeOperaciones buscarCategoriaPorId(int idDeLaCategoria);
+    void modificarCategoria(CategoriaDeOperaciones categoria);
 }

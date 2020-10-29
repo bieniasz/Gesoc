@@ -24,4 +24,11 @@ public class CategoriaDAOMySQL implements CategoriaDAO {
     public CategoriaDeOperaciones buscarCategoriaPorId(int idDeLaCategoria) {
         return EntityManagerHelper.getEntityManager().find(CategoriaDeOperaciones.class, idDeLaCategoria);
     }
+
+    @Override
+    public void modificarCategoria(CategoriaDeOperaciones categoria) {
+        EntityManagerHelper.beginTransaction();
+        EntityManagerHelper.getEntityManager().merge(categoria);
+        EntityManagerHelper.commit();
+    }
 }

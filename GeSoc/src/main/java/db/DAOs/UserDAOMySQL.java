@@ -27,7 +27,8 @@ public class UserDAOMySQL implements UserDAO {
         EntityManagerHelper.commit();
     }
 
-    public void actualizarUsuario(Usuario usuario){
+    @Override
+    public void modificarUsuario(Usuario usuario) {
         EntityManagerHelper.beginTransaction();
         EntityManagerHelper.getEntityManager().merge(usuario);
         EntityManagerHelper.commit();
