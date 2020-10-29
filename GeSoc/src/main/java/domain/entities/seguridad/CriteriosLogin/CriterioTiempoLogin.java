@@ -15,9 +15,9 @@ public class CriterioTiempoLogin implements CriterioValidacion {
     public CriterioTiempoLogin() {
     }
 
-    private final Integer tiempoDeEspera;
-    private final Integer cantidadMaximaDeIntentos;
-    private final AlmacenContrasenias almacen;
+    private Integer tiempoDeEspera;
+    private Integer cantidadMaximaDeIntentos;
+    private AlmacenContrasenias almacen;
 
     public CriterioTiempoLogin(AlmacenContrasenias almacen) {
 
@@ -33,10 +33,10 @@ public class CriterioTiempoLogin implements CriterioValidacion {
 
         if (intentosFallidos != null) {
             if (intentosFallidos.getCantidadIntentos() >= cantidadMaximaDeIntentos) {
-                LocalDateTime horaDelIntentoMaximo = intentosFallidos.getHoraDelIntentoMaximo();
-                int tiempoEntreLoginsMaximo = distanciaEnSegundosEntreTiempos(horaDelIntentoMaximo, horaActual);
-                if (this.cumpleCondicionDeEspera(usuario, tiempoEntreLoginsMaximo) == false) {
-                    mensajesDeError.add("Debe esperar " + (tiempoDeEspera - tiempoEntreLoginsMaximo) + " segundos para volver loguearse.");
+                LocalDateTime horaDelIntentoFallidoMaximo = intentosFallidos.getHoraDelIntentoMaximo();
+                int tiempoDesdeIntentoFallidoMaximo = distanciaEnSegundosEntreTiempos(horaDelIntentoFallidoMaximo, horaActual);
+                if (!this.cumpleCondicionDeEspera(tiempoDesdeIntentoFallidoMaximo)) {
+                    mensajesDeError.add("Debe esperar " + (tiempoDeEspera - tiempoDesdeIntentoFallidoMaximo) + " segundos para volver loguearse.");
                     } else {
                         this.almacen.reiniciarIntentosFallidos(usuario);
                 }
@@ -58,23 +58,18 @@ public class CriterioTiempoLogin implements CriterioValidacion {
     }
 
     private int distanciaEnSegundosEntreTiempos(LocalDateTime desde, LocalDateTime hasta){
+        int distanciaEntreTiempos;
         if (desde != null){
             Duration duracion = Duration.between(desde,hasta);
-            int distanciaEntreTiempos = (int) duracion.getSeconds();
-            return distanciaEntreTiempos;
-            }else {
-                return (this.tiempoDeEspera + 1);
+            distanciaEntreTiempos = (int) duracion.getSeconds();
+        } else {
+            distanciaEntreTiempos = this.tiempoDeEspera + 1;
         }
 
+        return distanciaEntreTiempos;
     }
 
-    //TODO: para que un domain.entities.usuario en este metodo?
-    private boolean cumpleCondicionDeEspera(Usuario usuario, int tiempoEntreLogins){
-        if (tiempoEntreLogins >= this.tiempoDeEspera){
-
-            return true;
-        }else return false;
+    private boolean cumpleCondicionDeEspera(int tiempoEntreLogins){
+        return tiempoEntreLogins >= this.tiempoDeEspera;
     }
-
-
 }

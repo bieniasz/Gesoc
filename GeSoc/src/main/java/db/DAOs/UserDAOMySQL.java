@@ -5,13 +5,23 @@ import domain.entities.ProveedorDocComer.Proveedor;
 import domain.entities.seguridad.ContraseniasPrevias.ContraseniasPrevias;
 import domain.entities.usuario.Usuario;
 
+import javax.persistence.NoResultException;
 import javax.persistence.Query;
+import java.util.Arrays;
 
 public class UserDAOMySQL implements UserDAO {
 
     @Override
     public Usuario buscarUsuarioPoruserId(String userId){
-        Usuario usuario = (Usuario) EntityManagerHelper.createQuery("from Usuario u where u.usuarioId = '"+userId+"'").getSingleResult();
+        Usuario usuario;
+        try{
+            usuario = (Usuario) EntityManagerHelper
+                    .createQuery("from Usuario u where u.usuarioId = '" + userId + "'")
+                    .getSingleResult();
+        } catch (NoResultException e){
+            usuario = null;
+            System.out.println(e.getMessage() + Arrays.toString(e.getStackTrace()));
+        }
         return usuario;
     }
 

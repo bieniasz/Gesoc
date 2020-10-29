@@ -50,13 +50,15 @@ public class AlmacenContrasenias extends EntidadPersistente {
     }
 
     public boolean contraseniaRepiteContraseniasViejas(Usuario usuario, String contrasenia) {
+        boolean repiteContrasenias;
         ContraseniasPrevias contraseniasPrevias = this.contraseniasPreviasDAO.getContraseniasPrevias(usuario);
 
         try {
-            return contraseniasPrevias.getContrasenias().contains(contrasenia);
+            repiteContrasenias = contraseniasPrevias.getContrasenias().contains(contrasenia);
         } catch (Exception e) {
-            return false;
+            repiteContrasenias = false;
         }
+        return repiteContrasenias;
     }
 
     public void setPeriodosDeRotacion(Integer cantPeriodos){
@@ -65,27 +67,30 @@ public class AlmacenContrasenias extends EntidadPersistente {
 
     public List<String> getContraseniasPreviasDeUsuario(Usuario usuario) {
         ContraseniasPrevias contraseniasPrevias = this.contraseniasPreviasDAO.getContraseniasPrevias(usuario);
-
         return contraseniasPrevias.getContrasenias();
     }
 
-    public boolean compararContrasenia(Usuario usuario,String contrasenia) {
+    public boolean contraseniaEsCorrecta(Usuario usuario, String contrasenia) {
+        boolean esCorrecta;
         try {
             List<String> contraseniasPrevias = getContraseniasPreviasDeUsuario(usuario);
             int posicionUltimaContrasenia = contraseniasPrevias.size()-1;
-            return contraseniasPrevias.get(posicionUltimaContrasenia).equals(contrasenia);
+            esCorrecta = contraseniasPrevias.get(posicionUltimaContrasenia).equals(contrasenia);
         } catch (Exception e) {
-            return false;
+            esCorrecta = false;
         }
+        return esCorrecta;
     }
 
     public boolean existeUsuario(Usuario usuario){
+        boolean existe;
         try {
             List<String> contraseniasPreviasDeUsuario = getContraseniasPreviasDeUsuario(usuario);
-            return contraseniasPreviasDeUsuario.size() > 0;
+            existe = contraseniasPreviasDeUsuario.size() > 0;
         } catch (Exception e) {
-            return false;
+            existe = false;
         }
+        return existe;
     }
 
     public void agregarIntentoFallido(Usuario usuario) {

@@ -10,13 +10,13 @@ import java.util.List;
 
 public class ValidadorDeUsuario implements iValidadorDeUsuario{
 
-    public ValidadorDeUsuario() {
-    }
-
     //TODO: armar builder para tener todos los criterios seteados
     private List<CriterioValidacion> criteriosCreacionContrasenia = new ArrayList<>();
     private AlmacenContrasenias almacenContrasenias;
     private UserDAO usuarioDao;
+
+    public ValidadorDeUsuario() {
+    }
 
     public void setAlmacenContrasenias(AlmacenContrasenias almacenContrasenias) { this.almacenContrasenias = almacenContrasenias; }
     public void setUsuarioDao(UserDAO usuarioDao) {
@@ -28,7 +28,6 @@ public class ValidadorDeUsuario implements iValidadorDeUsuario{
 
 
     public List<String> validarCreacionContrasenia(String usuarioId, String contrasenia) {
-
         Usuario user = this.getUsuario(usuarioId);
         //TODO sacar esta lista de errores y manejarlo por try catch
         final List<String> errores = new ArrayList<String>();
@@ -44,7 +43,7 @@ public class ValidadorDeUsuario implements iValidadorDeUsuario{
 
 
     public List<String> validarContraseniaLogin(String usuarioId, String contrasenia) {
-        Usuario usuario = this.getUsuario(usuarioId);
+        Usuario usuario = this.getUsuario(usuarioId); //devuelve null si no existe el usuario en bd
         List<String> mensajesDeError = new ArrayList<>();
 
         //TODO: esto tambien por seter, no tener los criterios ahi tan harcodeados.
