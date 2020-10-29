@@ -27,10 +27,9 @@ import java.util.stream.Stream;
 
 public class OperacionEgresoController {
 
-    private ProveedorDAO proveedorDAO = new ProveedorDAOMemoria();
-    private OrganizacionDAO organizacionDao = new OrganizacionDAOMemoria();
-    private OperacionEgresoDAO operacionEgresoDAO = new OperacionEgresoDAOMemoria();
-    private CategoriaDAO categoriaDAO = new CategoriaDAOMemoria();
+    private ProveedorDAO proveedorDAO = new ProveedorDAOMySQL();
+    private OperacionEgresoDAO operacionEgresoDAO = new OperacionEgresoDAOMySQL();
+    private CategoriaDAO categoriaDAO = new CategoriaDAOMySQL();
     private UserDAO userDAO = new UserDAOMySQL();
 
 
@@ -76,7 +75,7 @@ public class OperacionEgresoController {
         this.actualizarDetallesDeEgreso(egreso,request);
         egreso.registrarDetalles(this.getListaDeDetalle(request));
 
-        //TODO: DAO.guardarEdicion(egreso)
+        this.operacionEgresoDAO.modificarOperacionEgreso(egreso);
 
         response.redirect("/operacionesEgreso?usuarioId=" + request.queryParams("usuarioId"));
         return response;
@@ -123,7 +122,6 @@ public class OperacionEgresoController {
             //TODO: validar que no haya dos ingresos asociados al mismo egreso
             //TODO: para el tipo le tengo que enviar los de ML
             //TODO: validacion por FE para no hacer guardar con campos vacios
-            //TODO: borrar categorias he items
             //TODO: no poder agregar la misma categoria dos veces.
             //TODO: en la vista, cuando el documento es fisico no tengo que mostrar el campo de archivo adjunto
             //TODO: boton cancelar para volver a la vista anterior
@@ -145,7 +143,7 @@ public class OperacionEgresoController {
         LocalDate fecha = LocalDate.parse(request.queryParams("fecha"));
         DocumentoComercial documentoComercial = this.crearDocumentoComercial(request);
         Integer cantidadPresupuestos = Integer.parseInt(request.queryParams("cantidadEsperadaPresupuestos"));
-        Organizacion organizacion = organizacionDao.getOrganizacionPorUsuarioId(new Integer(request.queryParams("usuarioId")));
+        Organizacion organizacion = this.userDAO.buscarUsuario(new Integer(request.queryParams("usuarioId"))).getRol().getOrganizacion();
         List<DetalleEgreso> detallesEgresos = this.getListaDeDetalle(request);
         List<CategoriaDeOperaciones> categoriasDeOperaciones = this.getListaDeCategorias(request);
 
@@ -194,22 +192,27 @@ public class OperacionEgresoController {
 
     private List<DetalleEgreso> getListaDeDetalle(Request request) {
         //TODO: controlar que la cantidad de egresos no sea nula, va en la vista
-        //TODO: eliminar detalles
-        Integer cantidadDeEgresos = new Integer(request.queryParams("cantidadDetalles"));
-
+        //TODO: testear combinacion de agregar y eliminar detalles nuevos y existentes
         List<DetalleEgreso> detallesEgresos = new ArrayList<>();
-        IntStream.range(0,cantidadDeEgresos).forEach( i -> {
 
-            DetalleEgreso detalleEgreso = new DetalleEgreso();
-            detalleEgreso.setValorTotal(new Double(request.queryParams("valorItem" + i)));
-            detalleEgreso.setCantidad(new Integer(request.queryParams("cantidadItem" + i)));
+        try {
+            Integer cantidadDeEgresos = new Integer(request.queryParams("cantidadDetalles"));
+            IntStream.range(0,cantidadDeEgresos).forEach( i -> {
+                try {
+                    DetalleEgreso detalleEgreso = new DetalleEgreso();
+                    detalleEgreso.setValorTotal(new Double(request.queryParams("valorItem" + i)));
+                    detalleEgreso.setCantidad(new Integer(request.queryParams("cantidadItem" + i)));
 
-            Item item = new Item();
-            item.setDescripcion(request.queryParams("descripcionItem" + i));
-            detalleEgreso.setItem(item);
+                    Item item = new Item();
+                    item.setDescripcion(request.queryParams("descripcionItem" + i));
+                    detalleEgreso.setItem(item);
 
-            detallesEgresos.add(detalleEgreso);
-        });
+                    detallesEgresos.add(detalleEgreso);
+                } catch ( Exception e) {}
+
+            });
+        } catch (Exception e) {}
+
 
         return  detallesEgresos;
     }

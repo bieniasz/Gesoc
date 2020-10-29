@@ -1,9 +1,6 @@
 package domain.controllers;
 
-import db.DAOs.CategoriaDAO;
-import db.DAOs.CategoriaDAOMemoria;
-import db.DAOs.OperacionEgresoDAO;
-import db.DAOs.OperacionEgresoDAOMemoria;
+import db.DAOs.*;
 import domain.entities.operacionComercial.CategoriaDeOperaciones;
 import domain.entities.operacionComercial.OperacionEgreso;
 import spark.ModelAndView;
@@ -15,7 +12,7 @@ import java.util.List;
 import java.util.Map;
 
 public class OperacionesEgresoController {
-    private OperacionEgresoDAO operacionEgresoDAO = new OperacionEgresoDAOMemoria();
+    private OperacionEgresoDAO operacionEgresoDAO = new OperacionEgresoDAOMySQL();
     private CategoriaDAO categoriaDAO = new CategoriaDAOMemoria();
 
     public ModelAndView mostrarEgresos(Request request, Response response)  throws Exception {

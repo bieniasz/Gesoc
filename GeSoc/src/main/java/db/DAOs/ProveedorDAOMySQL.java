@@ -4,7 +4,9 @@ import db.EntityManagerHelper;
 import domain.entities.ProveedorDocComer.Proveedor;
 import domain.entities.direccion.AtributosPersistentes.Ciudad;
 import domain.entities.direccion.Direccion;
+import domain.entities.operacionComercial.CategoriaDeOperaciones;
 
+import javax.persistence.NoResultException;
 import java.util.List;
 
 public class ProveedorDAOMySQL implements ProveedorDAO{
@@ -28,7 +30,16 @@ public class ProveedorDAOMySQL implements ProveedorDAO{
 
     @Override
     public List<Proveedor> getTodosLosProveedores() {
-        return null;
+
+        List<Proveedor> proveedorList;
+        try{
+            proveedorList = (List<Proveedor>) EntityManagerHelper
+                    .createQuery("from Proveedor")
+                    .getResultList();
+        } catch (NoResultException e){
+            proveedorList = null;
+        }
+        return proveedorList;
     }
 
     public Proveedor buscarProveedorPorNombre(String nombreProveedor) {
