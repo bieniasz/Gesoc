@@ -12,8 +12,6 @@ import java.util.List;
 
 public class CriterioTiempoLogin implements CriterioValidacion {
 
-    public CriterioTiempoLogin() {
-    }
 
     private Integer tiempoDeEspera;
     private Integer cantidadMaximaDeIntentos;

@@ -1,6 +1,6 @@
 <!DOCTYPE html>
 <html>
-<title>Gesoc09 - Nueva operacion de ingreso</title>
+<title>Gesoc09 - Editar operacion de ingreso</title>
 <meta charset="utf-8">
 <meta name="viewport" content="width=device-width, initial-scale=1">
 <link rel="stylesheet" href="https://fonts.googleapis.com/css?family=Raleway">
@@ -74,11 +74,11 @@ html,body,h1,h2,h3,h4,h5 {font-family: "Raleway", sans-serif}
 
   <!-- Header -->
   <header class="titulo" style="padding-top:22px">
-      <b><i class="fa fa-bank fa-fw"></i>{{#if ingreso}} Nnueva Operacion de Ingreso - Id {{ingreso.id}} {{else}} ??? Operacion de Ingreso {{/if}}</b>
+      <b><i class="fa fa-bank fa-fw"></i>{{#if ingreso}} Editar Operacion de Ingreso - Id {{ingreso.id}} {{else}} Editar Operacion de Ingreso {{/if}}</b>
   </header>
 
    <!-- Formulario -->
-    <form class="" {{#if ingreso}} action="ingreso?usuarioId={{usuarioId}}&ingresoId={{ingreso.id}}" {{else}} action="ingreso?usuarioId={{usuarioId}}" {{/if}} method="post">
+    <form class="" {{#if ingreso}} action="ingresoEditar?usuarioId={{usuarioId}}&ingresoId={{ingreso.id}}" {{else}} action="ingresoEditar?usuarioId={{usuarioId}}" {{/if}} method="post">
         <!-- <input id="organizacion" name="organizacion" type="number" class="input-formulario">
 		<br><br> -->
         <label for="fecha">Fecha</label>
