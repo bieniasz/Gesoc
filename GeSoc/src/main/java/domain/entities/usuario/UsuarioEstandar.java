@@ -11,8 +11,7 @@ public class UsuarioEstandar extends Rol{
     public UsuarioEstandar() {
     }
 
-    @ManyToOne(fetch = FetchType.LAZY, cascade=CascadeType.ALL)
-    //@JoinColumn(name= "domain/entities/organizacion",referencedColumnName = "id")
+    @ManyToOne(fetch = FetchType.EAGER, cascade=CascadeType.ALL)
     @JoinColumn(name = "organizacion",referencedColumnName = "id")
     protected Organizacion organizacion;
 

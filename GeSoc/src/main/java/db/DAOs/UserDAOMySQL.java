@@ -1,12 +1,9 @@
 package db.DAOs;
 
 import db.EntityManagerHelper;
-import domain.entities.ProveedorDocComer.Proveedor;
-import domain.entities.seguridad.ContraseniasPrevias.ContraseniasPrevias;
 import domain.entities.usuario.Usuario;
 
 import javax.persistence.NoResultException;
-import javax.persistence.Query;
 import java.util.Arrays;
 
 public class UserDAOMySQL implements UserDAO {

@@ -11,16 +11,14 @@ import javax.persistence.*;
 @Entity
 @DiscriminatorValue("Revisor")
 public class UsuarioRevisor extends Rol{
-    
-    public UsuarioRevisor() {
-    }
 
-    @ManyToOne(fetch = FetchType.LAZY, cascade=CascadeType.ALL)
+    @ManyToOne(fetch = FetchType.EAGER, cascade=CascadeType.ALL)
     private Organizacion organizacion;
 
     @OneToOne(fetch = FetchType.LAZY, cascade=CascadeType.ALL)
     public BandejaDeResultado bandejaDeResultado = new BandejaDeResultado();
 
+    public UsuarioRevisor() { }
     public UsuarioRevisor(Organizacion organizacion){
         this.organizacion = organizacion;
     }
@@ -40,9 +38,7 @@ public class UsuarioRevisor extends Rol{
     }
 
     @Override
-    public Organizacion getOrganizacion() {
-        return null;
-    }
+    public Organizacion getOrganizacion() { return this.organizacion; }
 
     public void recibirResultado(ResultadoDeValidacion resultadoDeValidacion) {
         this.bandejaDeResultado.recibirResultado(resultadoDeValidacion);

@@ -24,7 +24,7 @@ public class Usuario extends EntidadPersistente {
     @Column
     private String contrasenia;
 
-    @ManyToOne(fetch = FetchType.LAZY, cascade=CascadeType.ALL)
+    @ManyToOne(fetch = FetchType.EAGER, cascade=CascadeType.ALL)
     private Rol rol;
 
     public String getUsuario() {
