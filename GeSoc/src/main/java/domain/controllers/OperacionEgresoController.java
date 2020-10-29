@@ -27,16 +27,59 @@ import java.util.stream.Stream;
 
 public class OperacionEgresoController {
 
-    private ProveedorDAO proveedorDAO = new ProveedorDAOMemoria();
-    private OrganizacionDAO organizacionDao = new OrganizacionDAOMemoria();
-    private OperacionEgresoDAO operacionEgresoDAO = new OperacionEgresoDAOMemoria();
-    private CategoriaDAO categoriaDAO = new CategoriaDAOMemoria();
+    private ProveedorDAO proveedorDAO = new ProveedorDAOMySQL();
+    private OperacionEgresoDAO operacionEgresoDAO = new OperacionEgresoDAOMySQL();
+    private CategoriaDAO categoriaDAO = new CategoriaDAOMySQL();
     private UserDAO userDAO = new UserDAOMySQL();
 
 
 
+    public ModelAndView nuevoEgreso(Request request, Response response) throws Exception {
+
+        List<Proveedor> proveedores = this.proveedorDAO.getTodosLosProveedores();
+        List<CategoriaDeOperaciones> categorias = this.categoriaDAO.getTodasLasCategorias();
+        Map<String, Object> parametros = new HashMap<>();
+        parametros.put("provedoores", proveedores);
+        parametros.put("categorias", categorias);
+        parametros.put("usuarioId", request.queryParams("usuarioId"));
+
+        return new ModelAndView( parametros, "operacionEgresoNuevo.hbs");
+    }
+
+    public Response guardar(Request request, Response response) throws Exception {
+        Proveedor proveedor = proveedorDAO.getProveedor(new Integer(request.queryParams("proveedorId")));
+        LocalDate fecha = LocalDate.parse(request.queryParams("fecha"));
+        DocumentoComercial documentoComercial = this.crearDocumentoComercial(request);
+        Integer cantidadPresupuestos = Integer.parseInt(request.queryParams("cantidadEsperadaPresupuestos"));
+        Organizacion organizacion = this.userDAO.buscarUsuario(new Integer(request.queryParams("usuarioId"))).getRol().getOrganizacion();
+        List<DetalleEgreso> detallesEgresos = this.getListaDeDetalle(request);
+        List<CategoriaDeOperaciones> categoriasDeOperaciones = this.getListaDeCategorias(request);
+
+        MedioDePago medioDePago = new MedioDePago();
+        medioDePago.setDescMercadoPago(request.queryParams("descripcionDelPago"));
+        medioDePago.setIdMercadoPago(request.queryParams("medioDePagoId"));
+        medioDePago.setTipoMercadoPago(request.queryParams("tipoDePago"));
+
+        OperacionEgresoBuilder builder = new OperacionEgresoBuilder();
+        builder.setProveedor(proveedor);
+        builder.setCantEsperadaPresupuestos(cantidadPresupuestos);
+        builder.setFecha(fecha);
+        builder.setNumeroIdentificadorMedioPago(request.queryParams("medioDePagoId"));
+        builder.setDocumentoComercial(documentoComercial);
+        builder.setOrganizacion(organizacion);
+        builder.setDetalle(detallesEgresos);
+        builder.setMedioDePago(new MedioDePago());
+        builder.setCategoriasAsociadas(categoriasDeOperaciones);
+        OperacionEgreso operacion = builder.build();
+
+        this.operacionEgresoDAO.guardarOperacionEgreso(operacion);
+
+        response.redirect("/operacionesEgreso?usuarioId=" + request.queryParams("usuarioId"));
+        return response;
+    }
+
+
     public ModelAndView editarEgreso(Request request, Response response) throws Exception {
-        //TODO: ordenar el controller y poner primero los metodos de egreso nuevo, dividirlo en 2 controllers
         Integer id = new Integer(request.queryParams("egresoId"));
         OperacionEgreso operacionEgreso = this.operacionEgresoDAO.buscarOperacionEgresoPorId(id);
 
@@ -64,7 +107,6 @@ public class OperacionEgresoController {
         egreso.getMedioDePago().setIdMercadoPago(request.queryParams("medioDePagoId"));
         egreso.getMedioDePago().setTipoMercadoPago(request.queryParams("tipoDePago"));
 
-        //TODO: revisar documento comercial que es tipo y que es clase
         egreso.getDocumentoComercial().setNumeroDocumentoComercial(new Long(request.queryParams("documentoComercialNumero")));
         egreso.getDocumentoComercial().getTipoDocumentoComercial().setDescripcion(request.queryParams("documentoComercialClase"));
 
@@ -76,14 +118,13 @@ public class OperacionEgresoController {
         this.actualizarDetallesDeEgreso(egreso,request);
         egreso.registrarDetalles(this.getListaDeDetalle(request));
 
-        //TODO: DAO.guardarEdicion(egreso)
+        this.operacionEgresoDAO.modificarOperacionEgreso(egreso);
 
         response.redirect("/operacionesEgreso?usuarioId=" + request.queryParams("usuarioId"));
         return response;
     }
 
     private void actualizarDetallesDeEgreso(OperacionEgreso egreso, Request request) {
-        //TODO: checkear que valla al catch cuando borre un detalle
         List<DetalleEgreso> detallesAEliminar = new ArrayList<>();
 
         egreso.getDetalle().forEach( detalleEgreso -> {
@@ -105,7 +146,6 @@ public class OperacionEgresoController {
             IntStream.range(0,cantidadCategoriasARemover).forEach( i -> {
                 try {
                     int idDeLaCategoriaARemover = new Integer(request.queryParams("categoriaBorradaId" + i));
-                    //TODO: debuguear para probar este metodo
                     egreso.quitarCategoriaPorId(idDeLaCategoriaARemover);
 
                 } catch (Exception e) {}
@@ -117,60 +157,6 @@ public class OperacionEgresoController {
 
     }
 
-    public ModelAndView nuevoEgreso(Request request, Response response) throws Exception {
-
-            //TODO: los medios de pago son genericos o son de cada organizacion?
-            //TODO: validar que no haya dos ingresos asociados al mismo egreso
-            //TODO: para el tipo le tengo que enviar los de ML
-            //TODO: validacion por FE para no hacer guardar con campos vacios
-            //TODO: borrar categorias he items
-            //TODO: no poder agregar la misma categoria dos veces.
-            //TODO: en la vista, cuando el documento es fisico no tengo que mostrar el campo de archivo adjunto
-            //TODO: boton cancelar para volver a la vista anterior
-
-            List<Proveedor> proveedores = this.proveedorDAO.getTodosLosProveedores();
-            List<CategoriaDeOperaciones> categorias = this.categoriaDAO.getTodasLasCategorias();
-            Map<String, Object> parametros = new HashMap<>();
-            parametros.put("provedoores", proveedores);
-            parametros.put("categorias", categorias);
-            parametros.put("usuarioId", request.queryParams("usuarioId"));
-
-            return new ModelAndView( parametros, "operacionEgresoNuevo.hbs");
-    }
-
-    public Response guardar(Request request, Response response) throws Exception {
-        //TODO: verificar las categorias anden
-        //TODO: categorias borradas cuidado
-        Proveedor proveedor = proveedorDAO.getProveedor(new Integer(request.queryParams("proveedorId")));
-        LocalDate fecha = LocalDate.parse(request.queryParams("fecha"));
-        DocumentoComercial documentoComercial = this.crearDocumentoComercial(request);
-        Integer cantidadPresupuestos = Integer.parseInt(request.queryParams("cantidadEsperadaPresupuestos"));
-        Organizacion organizacion = organizacionDao.getOrganizacionPorUsuarioId(new Integer(request.queryParams("usuarioId")));
-        List<DetalleEgreso> detallesEgresos = this.getListaDeDetalle(request);
-        List<CategoriaDeOperaciones> categoriasDeOperaciones = this.getListaDeCategorias(request);
-
-        MedioDePago medioDePago = new MedioDePago();
-        medioDePago.setDescMercadoPago(request.queryParams("descripcionDelPago"));
-        medioDePago.setIdMercadoPago(request.queryParams("medioDePagoId"));
-        medioDePago.setTipoMercadoPago(request.queryParams("tipoDePago"));
-
-        OperacionEgresoBuilder builder = new OperacionEgresoBuilder();
-        builder.setProveedor(proveedor);
-        builder.setCantEsperadaPresupuestos(cantidadPresupuestos);
-        builder.setFecha(fecha);
-        builder.setNumeroIdentificadorMedioPago(request.queryParams("medioDePagoId"));
-        builder.setDocumentoComercial(documentoComercial);
-        builder.setOrganizacion(organizacion);
-        builder.setDetalle(detallesEgresos);
-        builder.setMedioDePago(new MedioDePago());
-        builder.setCategoriasAsociadas(categoriasDeOperaciones);
-        OperacionEgreso operacion = builder.build();
-
-        this.operacionEgresoDAO.guardarOperacionEgreso(operacion);
-
-        response.redirect("/operacionesEgreso?usuarioId=" + request.queryParams("usuarioId"));
-        return response;
-    }
 
     private List<CategoriaDeOperaciones> getListaDeCategorias(Request request) {
 
@@ -193,23 +179,26 @@ public class OperacionEgresoController {
     }
 
     private List<DetalleEgreso> getListaDeDetalle(Request request) {
-        //TODO: controlar que la cantidad de egresos no sea nula, va en la vista
-        //TODO: eliminar detalles
-        Integer cantidadDeEgresos = new Integer(request.queryParams("cantidadDetalles"));
-
         List<DetalleEgreso> detallesEgresos = new ArrayList<>();
-        IntStream.range(0,cantidadDeEgresos).forEach( i -> {
 
-            DetalleEgreso detalleEgreso = new DetalleEgreso();
-            detalleEgreso.setValorTotal(new Double(request.queryParams("valorItem" + i)));
-            detalleEgreso.setCantidad(new Integer(request.queryParams("cantidadItem" + i)));
+        try {
+            Integer cantidadDeEgresos = new Integer(request.queryParams("cantidadDetalles"));
+            IntStream.range(0,cantidadDeEgresos).forEach( i -> {
+                try {
+                    DetalleEgreso detalleEgreso = new DetalleEgreso();
+                    detalleEgreso.setValorTotal(new Double(request.queryParams("valorItem" + i)));
+                    detalleEgreso.setCantidad(new Integer(request.queryParams("cantidadItem" + i)));
 
-            Item item = new Item();
-            item.setDescripcion(request.queryParams("descripcionItem" + i));
-            detalleEgreso.setItem(item);
+                    Item item = new Item();
+                    item.setDescripcion(request.queryParams("descripcionItem" + i));
+                    detalleEgreso.setItem(item);
 
-            detallesEgresos.add(detalleEgreso);
-        });
+                    detallesEgresos.add(detalleEgreso);
+                } catch ( Exception e) {}
+
+            });
+        } catch (Exception e) {}
+
 
         return  detallesEgresos;
     }

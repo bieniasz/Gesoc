@@ -6,6 +6,7 @@ var cantidadDeItemsDeEgreso = 0;
 function guardarNuevoItem() {
     var table = document.getElementById("detalleEgresos");
     var row = table.insertRow(1);
+        row.setAttribute("id", "rowItemNuevo" + cantidadDeItemsDeEgreso);
 
     row.insertCell(0)
     var descripcion = row.insertCell(1);
@@ -31,7 +32,17 @@ function guardarNuevoItem() {
     valorInput.setAttribute("type", "number");
     valorInput.setAttribute("value", document.getElementById("valorItem").value);
     valor.appendChild(valorInput);
-    row.insertCell(4);
+
+    var acciones = row.insertCell(4);
+    //<a class="btn btn-border btn-border-blue" id="botonBorrarItem{{id}}" onclick="borrarItem({{id}})"><i class="fas fa-close"></i></a>
+        var botonBorrar = document.createElement("a");
+            botonBorrar.setAttribute("id", "botonBorrarItem" + cantidadDeItemsDeEgreso);
+            botonBorrar.setAttribute("class", "btn btn-border btn-border-blue");
+            botonBorrar.setAttribute("onclick", "borrarItemNuevo(" +  cantidadDeItemsDeEgreso +")");
+                var iconoCruzBorrar = document.createElement("i");
+                    iconoCruzBorrar.setAttribute("class", "fas fa-close");
+            botonBorrar.appendChild(iconoCruzBorrar);
+    acciones.appendChild(botonBorrar);
 
     cantidadDeItemsDeEgreso = cantidadDeItemsDeEgreso + 1;
     document.getElementById("cantidadDetalles").value = cantidadDeItemsDeEgreso;
@@ -44,4 +55,8 @@ function guardarNuevoItem() {
 
 function borrarItem(id) {
     document.getElementById('rowItemExistente' + id).remove();
+}
+
+function borrarItemNuevo(id) {
+    document.getElementById('rowItemNuevo' + id).remove();
 }
