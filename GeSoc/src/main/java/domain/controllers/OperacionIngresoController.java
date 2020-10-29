@@ -7,6 +7,7 @@ import domain.entities.operacionComercial.CategoriaDeOperaciones;
 import domain.entities.operacionComercial.OperacionIngreso;
 import domain.entities.organizacion.Organizacion;
 import domain.entities.usuario.Usuario;
+import domain.entities.usuario.UsuarioEstandar;
 import spark.ModelAndView;
 import spark.Request;
 import spark.Response;
@@ -55,7 +56,7 @@ public class OperacionIngresoController {
 
         this.operacionIngresoDAO.guardarOperacionIngreso(operacionIngreso);
 
-        response.redirect("/operacionIngreso?usuarioId=" + request.queryParams("usuarioId"));
+        response.redirect("/operacionesIngreso?usuarioId=" + request.queryParams("usuarioId"));
         return response;
     }
 
@@ -65,17 +66,26 @@ public class OperacionIngresoController {
         OperacionIngreso operacionIngreso = this.operacionIngresoDAO.buscarOperacionIngreso(id);
 
         Map<String, Object> parametros = new HashMap<>();
+        parametros.put("fecha", request.queryParams("fecha"));
+        parametros.put("descripcion", request.queryParams("descripcion"));
+        parametros.put("monto", request.queryParams("monto"));
+        /*solo para probar que funcione el guardar ya que no tengo el userId aca*/
+        String usuarioId = "aos123";
+        parametros.put("usuarioId", request.queryParams("usuarioId"));
+        /*solo para probar que funcione el guardar ya que no tengo el userId aca*/
 
-        return new ModelAndView( parametros, "operacionIngresoNuevo.hbs");
+        return new ModelAndView( parametros, "operacionIngresoEditar.hbs");
     }
 
     public Response guardarEditarIngreso(Request request, Response response) throws Exception {
         Integer id = new Integer(request.queryParams("id"));
-        OperacionIngreso ingreso = this.operacionIngresoDAO.buscarOperacionIngreso(id);
+        OperacionIngreso operacionIngreso = this.operacionIngresoDAO.buscarOperacionIngreso(id);
 
-        ingreso.setFecha(LocalDate.parse(request.queryParams("fecha")));
-        ingreso.setDescripcion(request.queryParams("descripcion"));
-        ingreso.setMonto(new Float(request.queryParams("monto")));
+        operacionIngreso.setFecha(LocalDate.parse(request.queryParams("fecha")));
+        operacionIngreso.setDescripcion(request.queryParams("descripcion"));
+        operacionIngreso.setMonto(new Float(request.queryParams("monto")));
+
+        this.operacionIngresoDAO.modificarOperacionIngreso(operacionIngreso);
 
         response.redirect("/operacionesIngreso?usuarioId=" + request.queryParams("usuarioId"));
         return response;

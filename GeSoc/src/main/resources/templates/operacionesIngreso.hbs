@@ -1,13 +1,15 @@
 <!DOCTYPE html>
 <html>
-<title>Gesoc09 - Operaciones de Ingreso</title>
+<title>Gesoc09 - Operaciones de egreso</title>
 <meta charset="utf-8">
 <meta name="viewport" content="width=device-width, initial-scale=1">
 <link rel="stylesheet" href="css/w3.css">
 <link rel="stylesheet" href="https://fonts.googleapis.com/css?family=Raleway">
 <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/4.7.0/css/font-awesome.min.css">
-<link rel="stylesheet" href="css/reset.css">
 <link rel="stylesheet" href="css/operaciones.css">
+<link rel="stylesheet" href="css/search.bar.css">
+<link rel="stylesheet" href="https://www.w3schools.com/w3css/4/w3.css">
+
     <script src="https://kit.fontawesome.com/27517fada0.js"></script>
     <link href="https://fonts.googleapis.com/css?family=Lexend+Deca&display=swap" rel="stylesheet">
     <script src="https://code.jquery.com/jquery-3.4.1.min.js" integrity="sha256-CSXorXvZcTkaix6Yvo6HppcZGetbYMGWSFlBw8HfCJo=" crossorigin="anonymous"></script>
@@ -20,7 +22,7 @@ html,body,h1,h2,h3,h4,h5 {font-family: "Raleway", sans-serif}
 <body class="w3-light-grey">
 
 <!-- Top container -->
-<div class="w3-bar w3-top w3-black w3-large" style="z-index:4">
+<div class="w3-bar w3-top w3-large" style="background:#1aa3cfff; color:white; z-index:4">
   <button class="w3-bar-item w3-button w3-hide-large w3-hover-none w3-hover-text-light-grey" onclick="w3_open();"><i class="fa fa-bars"></i>&nbsp;Menu</button>
   <span class="w3-bar-item w3-right">
     Gesoc 09&nbsp;
@@ -39,7 +41,7 @@ html,body,h1,h2,h3,h4,h5 {font-family: "Raleway", sans-serif}
 
         <div id="nombreUsuario"><strong>Nombre</strong></div>
         <div id="nombreEntidad"><strong>Entidad</strong></div>
-     
+
     </div>
   </div>
   <hr>
@@ -57,7 +59,6 @@ html,body,h1,h2,h3,h4,h5 {font-family: "Raleway", sans-serif}
   </div>
   <div class="w3-bar-block" style="margin-top: 20px">
   <a href="/login" class="w3-bar-item w3-button"><i class="fa fa-power-off"></i>&nbsp;<b>Cerrar sesión</b></a>
-
 </div>
 </nav>
 
@@ -70,145 +71,53 @@ html,body,h1,h2,h3,h4,h5 {font-family: "Raleway", sans-serif}
 
   <!-- Header -->
   <header class="titulo" style="padding-top:22px">
-    <b><i class="fa fa-bank fa-fw"></i> Operaciones de Ingreso</b>
+    <b><i class="fa fa-bank fa-fw"></i> Operaciones de egreso</b>
   </header>
 
   <div id="wrap">
-    <div id="window1" class="window" >
 
-        <!-- !Ingresos! --> 
 
-          <h3 style="margin-bottom: 0px;margin-left: 10px">Ingresos sin vincular 
-      <a href="" class="btn-border-blue fuente"><i class="fa fa-toggle-right"></i> Vincular</a>
-          </h3>
-                
-      
-      <div id="divTablaGrande">
-      <table class="tabla" id="tabla2">
-        <tbody>
-        
-        <tr>
-            <td style="width: 20%">🢁</td>
-            <td>Ingreso 4214123</td>
-        </tr>
-                <tr>
-            <td style="width: 20%">🢁</td>
-            <td>Ingreso 4214123</td>
-        </tr>
-                <tr>
-            <td style="width: 20%">🢁</td>
-            <td>Ingreso 4214123</td>
-        </tr>
-                <tr>
-            <td style="width: 20%">🢁</td>
-            <td>Ingreso 4214123</td>
-        </tr>
-                <tr>
-            <td style="width: 20%">🢁</td>
-            <td>Ingreso 4214123</td>
 
-        </tr>
-                <tr>
-            <td style="width: 20%">🢁</td>
-            <td>Ingreso 4214123</td>
-        </tr>
-                <tr>
-            <td style="width: 20%">🢁</td>
-            <td>Ingreso 4214123</td>
-        </tr>
+    <!-- !Operaciones! -->
 
-      
-        </tbody>
-      </table>
-    </div>
 
-      
 
-       </div>
-
-    
-    <!-- !Operaciones! --> 
-
-    <div id="window2" class="window">
-      
       <h3 style="margin-bottom: 0px;margin-left: 10px">Listado de ingresos
-        <a href="" class="btn-border-blue fuente"><i class="fa fa-plus-circle"></i> Nueva operacion</a>
-        <button onclick="" class="btn-border-blue fuente"><i class="fa fa-filter"></i></button>
-        
-      </h3>
-      
-      
-         
-        <div id="filtros" style="display: none"> 
-          Filtros acá
-        </div>
-      
-      
+        <a href="ingreso?usuarioId={{usuarioId}}" class="btn-border-blue fuente"><i class="fa fa-plus-circle"></i> Nueva operacion</a>
+
       <div id="divTablaGrande">
 
       <table class="tabla" id="tabla3">
         <thead>
-          <th><i class=""></i> Tipo</th>
-          <th><i class=""></i> Id </th>
+
           <th><i class=""></i> Fecha </th>
+          <th><i class=""></i> Id </th>
+          <th><i class=""></i> Monto </th>
 
           <th><i class="fas fa-tools"></i> Acciones</th>
         </thead>
+
         <tbody>
-        
+        {{#each ingresos}}
+
         <tr>
-            <td>🢁</td>
-            <td>Ingreso 4214123</td>
-            <td>Fecha</td>
-            
-            
+            <td>{{fecha}}</td>
+            <td>Ingreso {{id}}</td>
+            <td>{{valorTotal}}</td>
+
+
             <td>
                 <!--<a href="/usuario/{{id}}" name="button" style="margin:0px;" class="btn btn-border btn-border-blue" ><i class="far fa-eye"></i></a>-->
-                <a href="/usuario/{{id}}" name="button" class=" btn btn-edit"><i class="fas fa-edit"></i></a>
+                <a href="/IngresoEditar?usuarioId{{usuarioId}}=5&egresoId={{id}}" name="button" class=" btn btn-edit"><i class="fas fa-edit"></i></a>
                  <button type="button" name="button" class="btn" onclick="confirmarEliminacion('{{id}}')"><i class="fas fa-trash"></i></button>
             </td>
         </tr>
-                <tr>
-            <td>🢁</td>
-            <td>Ingreso 4214123</td>
-            <td>Fecha</td>
-            
-            
-            <td>
-                <!--<a href="/usuario/{{id}}" name="button" style="margin:0px;" class="btn btn-border btn-border-blue" ><i class="far fa-eye"></i></a>-->
-                <a href="/usuario/{{id}}" name="button" class=" btn btn-edit"><i class="fas fa-edit"></i></a>
-                 <button type="button" name="button" class="btn" onclick="confirmarEliminacion('{{id}}')"><i class="fas fa-trash"></i></button>
-            </td>
-        </tr>
-                <tr>
-            <td>🢁</td>
-            <td>Ingreso 4214123</td>
-            <td>Fecha</td>
-            
-            
-            <td>
-                <!--<a href="/usuario/{{id}}" name="button" style="margin:0px;" class="btn btn-border btn-border-blue" ><i class="far fa-eye"></i></a>-->
-                <a href="/usuario/{{id}}" name="button" class=" btn btn-edit"><i class="fas fa-edit"></i></a>
-                 <button type="button" name="button" class="btn" onclick="confirmarEliminacion('{{id}}')"><i class="fas fa-trash"></i></button>
-            </td>
-        </tr>
-                <tr>
-            <td>🢁</td>
-            <td>Ingreso 4214123</td>
-            <td>Fecha</td>
-            
-            
-            <td>
-                <!--<a href="/usuario/{{id}}" name="button" style="margin:0px;" class="btn btn-border btn-border-blue" ><i class="far fa-eye"></i></a>-->
-                <a href="/usuario/{{id}}" name="button" class=" btn btn-edit"><i class="fas fa-edit"></i></a>
-                 <button type="button" name="button" class="btn" onclick="confirmarEliminacion('{{id}}')"><i class="fas fa-trash"></i></button>
-            </td>
-        </tr>
-       
+        {{/each}}
+
         </tbody>
       </table>
       </div>
-    </div>
+
 
 
 </div>
@@ -220,12 +129,12 @@ html,body,h1,h2,h3,h4,h5 {font-family: "Raleway", sans-serif}
 
 <head>
  <style type ="text/css" >
-   .footer{ 
-       position: fixed;     
-       text-align: center;    
-       bottom: 0px; 
+   .footer{
+       position: fixed;
+       text-align: center;
+       bottom: 0px;
        width: 100%;
-   }  
+   }
 </style>
 </head>
 <body>
