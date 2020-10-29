@@ -189,6 +189,23 @@ a:hover{
 	cursor: pointer;
 	transition: .5s;
 }
+
+.btn-disabled {
+	display: block;
+	width: 100%;
+	height: 50px;
+	border-radius: 25px;
+	outline: none;
+	border: none;
+	background-color: gainsboro;
+	font-size: 1.2rem;
+	color: #888;
+	font-family: 'Poppins', sans-serif;
+	text-transform: uppercase;
+	margin: 1rem 0;
+	transition: .5s;
+}
+
 .btn:hover{
 	background-position: right;
 }

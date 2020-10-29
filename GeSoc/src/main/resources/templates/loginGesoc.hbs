@@ -62,6 +62,8 @@
 
 
             form.submit.addEventListener('click', () => {
+                form.submit.disabled = true;
+                form.submit.className = 'btn-disabled';
                  usuario = document.getElementById("usuario").value;
                  contrasenia = document.getElementById("contrasenia").value;
                  console.log(usuario,contrasenia);
