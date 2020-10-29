@@ -166,4 +166,9 @@ public class OperacionEgresoDAOMemoria implements OperacionEgresoDAO {
 
 
     }
+
+    @Override
+    public List<OperacionEgreso> getOperacionesEgresoPorOrganizacion(Integer organizacionId) {
+        return null;
+    }
 }
