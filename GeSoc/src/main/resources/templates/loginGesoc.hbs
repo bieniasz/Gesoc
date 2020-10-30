@@ -64,6 +64,7 @@
             form.submit.addEventListener('click', () => {
                 form.submit.disabled = true;
                 form.submit.className = 'btn-disabled';
+                form.erroresLogin.style.display = 'none';
                  usuario = document.getElementById("usuario").value;
                  contrasenia = document.getElementById("contrasenia").value;
                  console.log(usuario,contrasenia);
@@ -110,12 +111,11 @@
                                 });
 
                                 form.erroresLogin.style.display = "block";
+                                form.submit.disabled = false;
+                                form.submit.className = 'btn';
                             }
                 }
-
-
             })
-
         </script>
 
 
