@@ -10,13 +10,16 @@ public class CriterioDeOperaciones extends EntidadPersistente{
     }
 
     @OneToMany(fetch = FetchType.LAZY, cascade=CascadeType.ALL)
-@JoinColumn(name="CriterioDeOperaciones",referencedColumnName = "id")
+    @JoinColumn(name="CriterioDeOperaciones",referencedColumnName = "id")
     private List<CategoriaDeOperaciones> Categorias;
 
-@Column
+    @Column
     private boolean activo;
 
-@OneToMany(fetch = FetchType.LAZY, cascade=CascadeType.ALL)
-@JoinColumn(name="CriterioDeOperaciones",referencedColumnName = "id")
+    @Column
+    private String descripcion;
+
+    @OneToMany(fetch = FetchType.LAZY, cascade=CascadeType.ALL)
+    @JoinColumn(name="CriterioDeOperaciones",referencedColumnName = "id")
     private List<CriterioDeOperaciones> CriteriosHijos;
 }
