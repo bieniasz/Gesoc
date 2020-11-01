@@ -1,9 +1,10 @@
 package domain.entities.operacionComercial;
 
 import javax.persistence.*;
+import java.util.List;
 
 @Entity
-@Table
+@Table(name="CategoriaDeOperaciones")
 public class CategoriaDeOperaciones extends EntidadPersistente {
 
     public CategoriaDeOperaciones() {
@@ -18,6 +19,10 @@ public class CategoriaDeOperaciones extends EntidadPersistente {
     @ManyToOne(fetch = FetchType.LAZY, cascade=CascadeType.ALL)
     @JoinColumn(name="CriterioDeOperaciones",referencedColumnName = "id")
     private CriterioDeOperaciones criterioDeCategoria;
+
+    @ManyToMany(fetch = FetchType.LAZY, cascade=CascadeType.ALL)
+    @JoinColumn(name="OperacionComercial",referencedColumnName = "id")
+    private List<OperacionComercial> operacionComercial;
 
 
     //ACCESORES

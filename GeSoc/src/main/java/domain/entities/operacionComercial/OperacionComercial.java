@@ -32,8 +32,7 @@ public abstract class OperacionComercial extends EntidadPersistente {
     @JoinColumn(name="OperacionComercial",referencedColumnName = "id")
     private List<DetalleEgreso> detalle;
 
-    @OneToMany(fetch = FetchType.LAZY, cascade=CascadeType.ALL)
-    @JoinColumn(name="CategoriaDeOperaciones",referencedColumnName = "id")
+    @ManyToMany(mappedBy = "operacionComercial", fetch = FetchType.LAZY, cascade=CascadeType.ALL)
     private List<CategoriaDeOperaciones> categoriasAsociadas;
 
     public LocalDate getFecha() { return fecha; }
