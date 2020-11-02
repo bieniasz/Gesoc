@@ -24,11 +24,13 @@ public class OperacionesEgresoController {
         Usuario usuario = this.userDAO.buscarUsuarioPoruserId(usuarioID);
         List<OperacionEgreso> egresos = this.operacionEgresoDAO.getOperacionesEgresoPorOrganizacion(usuario.getRol().getOrganizacion().getId());
         List<CategoriaDeOperaciones> categorias = this.categoriaDAO.getTodasLasCategorias();
+        String nombreFicticioOrganizacion = usuario.getRol().getOrganizacion().getNombreFicticio();
 
         Map<String, Object> parametros = new HashMap<>();
         parametros.put("categorias", categorias);
         parametros.put("usuarioId", usuarioID);
         parametros.put("egresos", egresos);
+        parametros.put("nombreFicticioOrganizacion", nombreFicticioOrganizacion);
 
         return new ModelAndView(parametros, "operacionesEgreso.hbs");
     }

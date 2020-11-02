@@ -11,6 +11,7 @@ import domain.entities.operacionComercial.builder.PresupuestoBuilder;
 import domain.entities.organizacion.EntidadJuridica;
 import domain.entities.organizacion.Organizacion;
 import domain.entities.organizacion.categoria.Categoria;
+import domain.entities.usuario.Usuario;
 import spark.ModelAndView;
 import spark.Request;
 import spark.Response;
@@ -32,11 +33,18 @@ public class PresupustoController {
     private OperacionEgresoDAO operacionEgresoDAO = new OperacionEgresoDAOMemoria();
     private CategoriaDAO categoriaDAO = new CategoriaDAOMemoria();
     private PresupuestoDAO presupuestoDAO = new PresupuestoDAOMySQL();
+    private UserDAO userDAO = new UserDAOMySQL();
+
 
 
     public ModelAndView editarPresupuesto(Request request, Response response) throws Exception {
 
+        String usuarioID = request.queryParams("usuarioId");
+        Usuario usuario = userDAO.buscarUsuarioPoruserId(usuarioID);
+        String nombreFicticioOrganizacion = usuario.getRol().getOrganizacion().getNombreFicticio();
+
         Integer id = new Integer(request.queryParams("presupuestoId"));
+
         Presupuesto presupueto = this.presupuestoDAO.buscarPresupuesto(id);
 
         List<Proveedor> proveedores = this.proveedorDAO.getTodosLosProveedores();
@@ -47,6 +55,7 @@ public class PresupustoController {
         parametros.put("categorias", categorias);
         parametros.put("usuarioId", request.queryParams("usuarioId"));
         //parametros.put("egreso", operacionEgreso);
+        parametros.put("nombreFicticioOrganizacion", nombreFicticioOrganizacion);
 
         return new ModelAndView( parametros, "Presupuesto.hbs");
     }
@@ -72,7 +81,11 @@ public class PresupustoController {
     }
 
     public ModelAndView nuevoPresupuesto(Request request, Response response) throws Exception {
-    	// FALTA DAO PARA MOSTRAR OPERACIONES DE EGRESO 
+    	// FALTA DAO PARA MOSTRAR OPERACIONES DE EGRESO
+
+        String usuarioID = request.queryParams("usuarioId");
+        Usuario usuario = userDAO.buscarUsuarioPoruserId(usuarioID);
+        String nombreFicticioOrganizacion = usuario.getRol().getOrganizacion().getNombreFicticio();
     	    
     	//List<OperacionEgreso> operacionesEgreso = this.operacionEgresoDAO.buscarOperacionEgresoPorId(id);   
     		 List<CategoriaDeOperaciones> categorias = this.categoriaDAO.getTodasLasCategorias();
@@ -80,6 +93,7 @@ public class PresupustoController {
             parametros.put("categorias", categorias);
             parametros.put("usuarioId", request.queryParams("usuarioId"));
             //parametros.put("egreso", operacionEgreso);
+            parametros.put("nombreFicticioOrganizacion", nombreFicticioOrganizacion);
 
             return new ModelAndView( parametros, "nuevoPresupuesto.hbs");
     }

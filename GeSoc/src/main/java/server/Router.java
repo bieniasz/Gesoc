@@ -26,7 +26,7 @@ public class Router {
 
     private static void configure(){
         LoginController controllerLogin = new LoginController();
-        //OperacionesController controllerOperaciones = new OperacionesController(); OLD VERSION
+
         OperacionesEgresoController egresosController = new OperacionesEgresoController();
         OperacionesIngresoController ingresosController = new OperacionesIngresoController();
         BandejaDeMensajesController controllerBandejaDeMensajes = new BandejaDeMensajesController();
@@ -37,7 +37,7 @@ public class Router {
         Spark.get("/login", controllerLogin::mostrarLogin, Router.engine);
         Spark.post("/validarLogin", controllerLogin::ingresar);
 
-        //Spark.get("/operaciones", controllerOperaciones::mostrarOperaciones, Router.engine); OLD VERSION
+
         Spark.get("/operacionesEgreso", egresosController::mostrarEgresos, Router.engine);
         Spark.get("/operacionesIngreso", ingresosController::mostrarIngresos, Router.engine);
         Spark.get("/bandejaDeMensajes", controllerBandejaDeMensajes::mostrarBandejaDeMensajes, Router.engine);

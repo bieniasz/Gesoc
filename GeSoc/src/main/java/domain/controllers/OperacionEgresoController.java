@@ -36,12 +36,17 @@ public class OperacionEgresoController {
 
     public ModelAndView nuevoEgreso(Request request, Response response) throws Exception {
 
+        String usuarioID = request.queryParams("usuarioId");
+        Usuario usuario = userDAO.buscarUsuarioPoruserId(usuarioID);
+        String nombreFicticioOrganizacion = usuario.getRol().getOrganizacion().getNombreFicticio();
+
         List<Proveedor> proveedores = this.proveedorDAO.getTodosLosProveedores();
         List<CategoriaDeOperaciones> categorias = this.categoriaDAO.getTodasLasCategorias();
         Map<String, Object> parametros = new HashMap<>();
         parametros.put("provedoores", proveedores);
         parametros.put("categorias", categorias);
         parametros.put("usuarioId", request.queryParams("usuarioId"));
+        parametros.put("nombreFicticioOrganizacion", nombreFicticioOrganizacion);
 
         return new ModelAndView( parametros, "operacionEgresoNuevo.hbs");
     }
@@ -80,6 +85,10 @@ public class OperacionEgresoController {
 
 
     public ModelAndView editarEgreso(Request request, Response response) throws Exception {
+        String usuarioID = request.queryParams("usuarioId");
+        Usuario usuario = userDAO.buscarUsuarioPoruserId(usuarioID);
+        String nombreFicticioOrganizacion = usuario.getRol().getOrganizacion().getNombreFicticio();
+
         Integer id = new Integer(request.queryParams("egresoId"));
         OperacionEgreso operacionEgreso = this.operacionEgresoDAO.buscarOperacionEgresoPorId(id);
 
@@ -91,6 +100,7 @@ public class OperacionEgresoController {
         parametros.put("categorias", categorias);
         parametros.put("usuarioId", request.queryParams("usuarioId"));
         parametros.put("egreso", operacionEgreso);
+        parametros.put("nombreFicticioOrganizacion", nombreFicticioOrganizacion);
 
         return new ModelAndView( parametros, "operacionEgresoNuevo.hbs");
     }

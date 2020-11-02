@@ -33,11 +33,11 @@ public class OperacionIngresoController {
         //TODO: boton cancelar para volver a la vista anterior
         String userId = request.queryParams("usuarioId");
         Usuario usuario = userDAO.buscarUsuarioPoruserId(userId);
-        String nombreFicticio = usuario.getRol().getOrganizacion().getNombreFicticio();
+        String nombreFicticioOrganizacion = usuario.getRol().getOrganizacion().getNombreFicticio();
 
         Map<String, Object> parametros = new HashMap<>();
         parametros.put("usuarioId", request.queryParams("usuarioId"));
-        parametros.put("nombreFicticio", nombreFicticio);
+        parametros.put("nombreFicticioOrganizacion", nombreFicticioOrganizacion);
 
         return new ModelAndView( parametros, "operacionIngresoNuevo.hbs");
     }
@@ -70,14 +70,14 @@ public class OperacionIngresoController {
         OperacionIngreso operacionIngreso = this.operacionIngresoDAO.buscarOperacionIngreso(id);
         String userId = request.queryParams("usuarioId");
         Usuario usuario = userDAO.buscarUsuarioPoruserId(userId);
-        String nombreFicticio = usuario.getRol().getOrganizacion().getNombreFicticio();
+        String nombreFicticioOrganizacion = usuario.getRol().getOrganizacion().getNombreFicticio();
 
 
         Map<String, Object> parametros = new HashMap<>();
         parametros.put("ingreso", operacionIngreso);
         parametros.put("usuarioId", request.queryParams("usuarioId"));
         parametros.put("ingresoId", request.queryParams("ingresoId"));
-        parametros.put("nombreFicticio", nombreFicticio);
+        parametros.put("nombreFicticioOrganizacion", nombreFicticioOrganizacion);
 
         return new ModelAndView( parametros, "operacionIngresoEditar.hbs");
     }
