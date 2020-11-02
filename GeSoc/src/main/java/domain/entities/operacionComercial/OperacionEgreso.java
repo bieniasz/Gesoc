@@ -16,6 +16,8 @@ public class OperacionEgreso extends OperacionComercial {
     public OperacionEgreso() {
     }
 
+    //TODO: Probando persistencia del medio de pago
+    //@OneToOne(fetch = FetchType.LAZY, cascade=CascadeType.ALL)
     @ManyToOne(fetch = FetchType.LAZY, cascade=CascadeType.ALL)
     @JoinColumn(name="medioDePago",referencedColumnName = "id")
     private MedioDePago medioDePago;

@@ -31,10 +31,12 @@ public class OperacionEgresoController {
     private OperacionEgresoDAO operacionEgresoDAO = new OperacionEgresoDAOMySQL();
     private CategoriaDAO categoriaDAO = new CategoriaDAOMySQL();
     private UserDAO userDAO = new UserDAOMySQL();
+    private MedioDePagoDAO medioDePagoDAO = new MedioDePagoDAOMySQL();
 
 
 
     public ModelAndView nuevoEgreso(Request request, Response response) throws Exception {
+        //TODO: en la vista, para el medio de pago, se le puede poner numero
 
         String usuarioID = request.queryParams("usuarioId");
         Usuario usuario = userDAO.buscarUsuarioPoruserId(usuarioID);
@@ -42,9 +44,12 @@ public class OperacionEgresoController {
 
         List<Proveedor> proveedores = this.proveedorDAO.getTodosLosProveedores();
         List<CategoriaDeOperaciones> categorias = this.categoriaDAO.getTodasLasCategorias();
+        List<MedioDePago> medioDePagoList = this.medioDePagoDAO.buscarTodosLosMediosDePago();
+
         Map<String, Object> parametros = new HashMap<>();
         parametros.put("provedoores", proveedores);
         parametros.put("categorias", categorias);
+        parametros.put("mediosDePago", medioDePagoList);
         parametros.put("usuarioId", request.queryParams("usuarioId"));
         parametros.put("nombreFicticioOrganizacion", nombreFicticioOrganizacion);
 
@@ -59,21 +64,17 @@ public class OperacionEgresoController {
         Organizacion organizacion = this.userDAO.buscarUsuarioPoruserId(request.queryParams("usuarioId")).getRol().getOrganizacion();
         List<DetalleEgreso> detallesEgresos = this.getListaDeDetalle(request);
         List<CategoriaDeOperaciones> categoriasDeOperaciones = this.getListaDeCategorias(request);
-
-        MedioDePago medioDePago = new MedioDePago();
-        medioDePago.setDescMercadoPago(request.queryParams("descripcionDelPago"));
-        medioDePago.setIdMercadoPago(request.queryParams("medioDePagoId"));
-        medioDePago.setTipoMercadoPago(request.queryParams("tipoDePago"));
+        MedioDePago medioDePago = this.medioDePagoDAO.buscarMedioDePagoPorId(new Integer(request.queryParams("medioDePagoIdDB")));
 
         OperacionEgresoBuilder builder = new OperacionEgresoBuilder();
         builder.setProveedor(proveedor);
         builder.setCantEsperadaPresupuestos(cantidadPresupuestos);
         builder.setFecha(fecha);
-        builder.setNumeroIdentificadorMedioPago(request.queryParams("medioDePagoId"));
+        builder.setNumeroIdentificadorMedioPago(request.queryParams("numeroIdentificadorDelMedio"));
+        builder.setMedioDePago(medioDePago);
         builder.setDocumentoComercial(documentoComercial);
         builder.setOrganizacion(organizacion);
         builder.setDetalle(detallesEgresos);
-        builder.setMedioDePago(new MedioDePago());
         builder.setCategoriasAsociadas(categoriasDeOperaciones);
         OperacionEgreso operacion = builder.build();
 
@@ -174,11 +175,16 @@ public class OperacionEgresoController {
 
         try {
             Integer cantidadDeCategorias = new Integer(request.queryParams("cantidadDeCategoriasNuevas"));
+
             IntStream.range(0,cantidadDeCategorias).forEach( i -> {
 
                 try {
                     int idDeLaCategoria = new Integer(request.queryParams("categoriaNuevaId" + i));
+
+                    System.out.println("Id de la categoria en DB: " + idDeLaCategoria);
                     CategoriaDeOperaciones categoria = this.categoriaDAO.buscarCategoriaPorId(idDeLaCategoria);
+
+                    System.out.println("Descripcion categoria: " + categoria.getDescripcion());
                     categorias.add(categoria);
                 } catch (Exception e) {}
             });

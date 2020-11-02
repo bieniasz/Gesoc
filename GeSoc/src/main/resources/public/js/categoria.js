@@ -37,7 +37,7 @@ function agregarCategoria(descripcion, id) {
         divCategoriaNueva.appendChild(categoriaId);
 
     cantidadDeCategorias = cantidadDeCategorias + 1;
-    document.getElementById("cantidadDeCategoriasNuevas").value = cantidadDeCategorias
+    document.getElementById("cantidadDeCategoriasNuevas").value = cantidadDeCategorias;
     document.getElementById("buscarCategoria").classList.toggle("show");
 }
 

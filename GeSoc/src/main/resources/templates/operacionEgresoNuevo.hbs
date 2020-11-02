@@ -19,6 +19,7 @@
 <script src="js/documentoComercial.js"></script>
 <script src="js/filtrarEnBarraDeBusqueda.js"></script>
 <script src="js/proveedor.js"></script>
+<script src="js/medioDePago.js"></script>
 
 <style>
 html,body,h1,h2,h3,h4,h5 {font-family: "Raleway", sans-serif}
@@ -87,7 +88,7 @@ html,body,h1,h2,h3,h4,h5 {font-family: "Raleway", sans-serif}
         <input id="organizacion" name="organizacion" type="number" class="input-formulario">
         <br><br> -->
         <label for="fecha">Fecha</label>
-        <input id="fecha" name="fecha" type="date"  class="input-formulario" {{#if egreso}} value="{{egreso.fecha}}" {{/if}}>
+        <input id="fecha" name="fecha" type="date"  class="input-formulario" {{#if egreso}} value="{{egreso.fecha}}" {{/if}} required>
         <br><br>
         <label for="cantidadEsperadaPresupuestos">Cant. Presupuestos Req.</label>
         <input id="cantidadEsperadaPresupuestos" name="cantidadEsperadaPresupuestos" type="number" class="input-formulario" {{#if egreso}} value="{{egreso.cantidadEsperadaPresupuestos}}" {{/if}}>
@@ -114,15 +115,28 @@ html,body,h1,h2,h3,h4,h5 {font-family: "Raleway", sans-serif}
 
 <!-- !MEDIO DE PAGO! -->
         <h3 for="documentoComercial">Medio de pago</h3>
-        <label>Id de pago</label>
-        <input id="medioDePagoId" name="medioDePagoId" type="number" class="input-formulario" {{#if egreso}} value="{{egreso.medioDePago.idMercadoPago}}" {{/if}}>
-        <br><br>
+
         <label>Descripcion del pago</label>
         <input id="descripcionDelPago" name="descripcionDelPago" type="text" class="input-formulario" {{#if egreso}} value="{{egreso.medioDePago.descMercadoPago}}" {{/if}}>
+
+            <a name="searchMedioDePago" class=" btn btn-search" onclick="mostrarBuscarMedioDePago()"><i class="fas fa-search"></i></a>
+                <div class="dropdown">
+                    <div id="buscarMedioDePago" class="dropdown-content">
+                        <input type="text" placeholder="Search.." id="inputBuscarMedioDePago" onkeyup="filterFunction('buscarMedioDePago','inputBuscarMedioDePago')">
+                        {{#each mediosDePago}}
+                            <a onClick="llenarMedioDePago('{{idMercadoPago}}', '{{descMercadoPago}}', '{{tipoMercadoPago}}', '{{id}}')">{{descMercadoPago}}</a>
+                        {{/each}}
+                    </div>
+                </div>
+
         <br><br>
         <label>Tipo de pago</label>
-        <input id="tipoDePago" name="tipoDePago" type="text" class="input-formulario" {{#if egreso}} value="{{egreso.medioDePago.tipoMercadoPago}}" {{/if}}>
+        <input id="tipoDePago" name="tipoDePago" type="text" class="input-formulario" {{#if egreso}} value="{{egreso.medioDePago.tipoMercadoPago}}" {{/if}} readonly>
         <br><br>
+        <label>Numero</label>
+        <input id="numeroIdentificadorDelMedio" name="numeroIdentificadorDelMedio" type="number" class="input-formulario" {{#if egreso}} value="{{egreso.numeroIdentificadorMedioPago}}" {{/if}}>
+        <br><br>
+        <input type="hidden" id="medioDePagoIdDB" name="medioDePagoIdDB" {{#if egreso}} value="{{egreso.medioDePago.id}}" {{/if}}>
 
 <!-- !DOCUMENTO COMERCIAL! -->
         <h3 for="documentoComercial">Documento Comercial</h3>
@@ -146,9 +160,9 @@ html,body,h1,h2,h3,h4,h5 {font-family: "Raleway", sans-serif}
 <!-- !CATEGORIAS! -->
         <h3 style="margin-bottom: 5px;margin-left: 10px">Categorias
             <a name="searchCategoria" class=" btn btn-search" onclick="mostrarBuscarCategorias()"><i class="fas fa-search"></i></a>
-            <input type="hidden" id="cantidadDeCategoriasNuevas" name="cantidadDeCategorias">
-            <input type="hidden" id="categoriasExistentesEliminadas" name="categoriasExistentesEliminadas">
         </h3>
+        <input type="hidden" id="cantidadDeCategoriasNuevas" name="cantidadDeCategoriasNuevas">
+        <input type="hidden" id="categoriasExistentesEliminadas" name="categoriasExistentesEliminadas">
 
         <div class="dropdown">
             <div id="buscarCategoria" class="dropdown-content">
