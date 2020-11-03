@@ -1,10 +1,16 @@
 package domain.entities.seguridad;
 
 import db.DAOs.UserDAO;
+import domain.entities.config.Config;
 import domain.entities.seguridad.CriteriosLogin.CriterioLogin;
 import domain.entities.seguridad.CriteriosLogin.CriterioTiempoLogin;
+import domain.entities.seguridad.IntentosFallidos.IntentosFallidos;
+import domain.entities.seguridad.excepciones.LoginBloqueadoTemporalmenteException;
+import domain.entities.seguridad.excepciones.UsuarioContraseniaInvalidosException;
 import domain.entities.usuario.Usuario;
 
+import java.time.Duration;
+import java.time.LocalDateTime;
 import java.util.ArrayList;
 import java.util.List;
 
@@ -27,41 +33,81 @@ public class ValidadorDeUsuario implements iValidadorDeUsuario{
     }
 
 
-    public List<String> validarCreacionContrasenia(String usuarioId, String contrasenia) {
-        Usuario user = this.getUsuario(usuarioId);
-        //TODO sacar esta lista de errores y manejarlo por try catch
+    public List<String> validarCreacionContrasenia(String nombreUsuario, String contrasenia) {
         final List<String> errores = new ArrayList<String>();
-        this.criteriosCreacionContrasenia.forEach(criterio -> criterio.validar(user, contrasenia, errores));
+        try {
+            final Usuario user = this.usuarioDao.buscarUsuarioPoruserId(nombreUsuario);
+            if(user == null)
+                throw new UsuarioContraseniaInvalidosException();
 
-        if (errores.size() == 0) {
-            // TODO
-           this.almacenContrasenias.registrarContrasenia(user, contrasenia);
+            //TODO sacar esta lista de errores y manejarlo por try catch
+            this.criteriosCreacionContrasenia.forEach(criterio -> {
+                try {
+                    criterio.validar(user, contrasenia, errores);
+                } catch (LoginBloqueadoTemporalmenteException | UsuarioContraseniaInvalidosException e) {
+                    e.printStackTrace();
+                }
+            });
+
+            if (errores.size() == 0) {
+                // TODO
+                this.almacenContrasenias.registrarContrasenia(user, contrasenia);
+            }
+        } catch (UsuarioContraseniaInvalidosException e) {
+            e.printStackTrace();
+            errores.add(e.getMessage());
         }
 
         return errores;
     }
 
 
-    public List<String> validarContraseniaLogin(String usuarioId, String contrasenia) {
-        Usuario usuario = this.getUsuario(usuarioId); //devuelve null si no existe el usuario en bd
-        List<String> mensajesDeError = new ArrayList<>();
+    public Usuario validarLogin(String nombreUsuario, String contrasenia, LocalDateTime horaIntento) throws UsuarioContraseniaInvalidosException, LoginBloqueadoTemporalmenteException {
+        //List<String> mensajesDeError = new ArrayList<>();
+
+        Usuario usuario = this.usuarioDao.buscarUsuarioPoruserId(nombreUsuario);
+        if(usuario == null)
+            throw new UsuarioContraseniaInvalidosException();
 
         //TODO: esto tambien por seter, no tener los criterios ahi tan harcodeados.
-        CriterioLogin criterioLogin = new CriterioLogin(this.almacenContrasenias);
-        CriterioTiempoLogin criterioTiempoLogin = new CriterioTiempoLogin(this.almacenContrasenias);
+        //CriterioLogin criterioLogin = new CriterioLogin(this.almacenContrasenias);
+        //CriterioTiempoLogin criterioTiempoLogin = new CriterioTiempoLogin(this.almacenContrasenias);
 
-        criterioLogin.validar(usuario, contrasenia, mensajesDeError);
+        this.validarContrasenia(usuario, contrasenia);
+        this.validarTiempoLogin(usuario, horaIntento);
 
-        if(mensajesDeError.size() == 1){
-            criterioTiempoLogin.errorAlLogear(usuario);
-        } else{
-            criterioTiempoLogin.validar(usuario,contrasenia,mensajesDeError);
-        }
+        //criterioLogin.validar(usuario, contrasenia, mensajesDeError);
+        //criterioTiempoLogin.validar(usuario, contrasenia, mensajesDeError);
 
-        return mensajesDeError;
+        return usuario;
     }
 
-    private Usuario getUsuario(String usuarioId) {
-        return this.usuarioDao.buscarUsuarioPoruserId(usuarioId);
+    private void validarContrasenia(Usuario usuario, String contrasenia) throws UsuarioContraseniaInvalidosException {
+        //El usuario acá ya no es null
+        //TODO implementar cifrado/hash para las contraseñas
+        if(!usuario.getContrasenia().equals(contrasenia)) {
+            this.almacenContrasenias.registrarIntentoFallido(usuario);
+            throw new UsuarioContraseniaInvalidosException();
+        }
+    }
+
+    private void validarTiempoLogin(Usuario usuario, LocalDateTime horaIntento) throws LoginBloqueadoTemporalmenteException {
+        IntentosFallidos intentosFallidos = almacenContrasenias.getIntentosFallidosDeUsuario(usuario);
+
+        if (intentosFallidos != null
+                && intentosFallidos.getIntentosRealizados() >= Config.login_topeIntentosFallidos) {
+
+            LocalDateTime horaIntentoMaximo = intentosFallidos.getHoraDelIntentoMaximo();
+            if (this.cumpleCondicionDeEspera(horaIntentoMaximo, horaIntento)) {
+                this.almacenContrasenias.reiniciarIntentosFallidos(usuario);
+            } else {
+                throw new LoginBloqueadoTemporalmenteException();
+            }
+        }
+    }
+
+    private boolean cumpleCondicionDeEspera(LocalDateTime desde, LocalDateTime hasta) {
+        int distanciaEntreTiempos = (int) Duration.between(desde, hasta).getSeconds();
+        return distanciaEntreTiempos >= Config.login_tiempoDeEspera;
     }
 }

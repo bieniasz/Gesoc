@@ -1,5 +1,6 @@
 package domain.entities.seguridad;
 
+import domain.entities.config.Config;
 import domain.entities.operacionComercial.EntidadPersistente;
 import domain.entities.seguridad.ContraseniasPrevias.ContraseniasPrevias;
 import db.DAOs.ContraseniasPreviasDAO;
@@ -12,13 +13,12 @@ import java.util.*;
 
 public class AlmacenContrasenias extends EntidadPersistente {
 
-    public AlmacenContrasenias() {
-    }
-
     private Integer periodosDeRotacion = 3;
-
     private ContraseniasPreviasDAO contraseniasPreviasDAO;
     private IntentosFallidosDAO intentosFallidosDAO;
+
+    public AlmacenContrasenias() {
+    }
 
     public void setContraseniasPreviasDAO(ContraseniasPreviasDAO contraseniasPreviasDAO) {
         this.contraseniasPreviasDAO = contraseniasPreviasDAO;
@@ -32,6 +32,9 @@ public class AlmacenContrasenias extends EntidadPersistente {
         //ver que excepcion tira el dao si no encuentra una entrada.
         try {
             ContraseniasPrevias contraseniasPrevias = this.contraseniasPreviasDAO.getContraseniasPrevias(usuario);
+            if(contraseniasPrevias == null)
+                throw new Exception();
+
             contraseniasPrevias.agregarContrasenia(contrasenia);
             if (contraseniasPrevias.getContrasenias().size() > this.periodosDeRotacion) {
                 contraseniasPrevias.removerContrseniaVieja();
@@ -93,34 +96,37 @@ public class AlmacenContrasenias extends EntidadPersistente {
         return existe;
     }
 
-    public void agregarIntentoFallido(Usuario usuario) {
-      try {
-            IntentosFallidos intentosFallidos = this.intentosFallidosDAO.getIntentosFallidos(usuario);
+    public void registrarIntentoFallido(Usuario usuario) {
+        //TODO evaluar caso donde los logins incorrectos estan separados por mucho tiempo
+        IntentosFallidos intentosFallidos = this.intentosFallidosDAO.getIntentosFallidos(usuario);
+        if (intentosFallidos != null){
             intentosFallidos.nuevoIntentoFallido();
+            if (intentosFallidos.getIntentosRealizados() >= Config.login_topeIntentosFallidos)
+                this.setHoraDelIntentoMaximo(usuario);
             this.intentosFallidosDAO.modificarIntentoFallido(intentosFallidos);
-        } catch (NoResultException n) {
+        } else {
             IntentosFallidos intento = new IntentosFallidos();
             intento.setUsuarioId(usuario.getId());
-            intento.nuevoIntentoFallido();
             this.intentosFallidosDAO.persistirIntentoFallido(intento);
         }
     }
-
 
     public IntentosFallidos getIntentosFallidosDeUsuario(Usuario usuario){
         return this.intentosFallidosDAO.getIntentosFallidos(usuario);
     }
 
     public void reiniciarIntentosFallidos(Usuario usuario){
-        this.intentosFallidosDAO.getIntentosFallidos(usuario).reiniciarIntentos();
+        this.intentosFallidosDAO.eliminarIntentoFallido(usuario);
     }
 
     public void setHoraDelIntentoMaximo(Usuario usuario){
-        this.intentosFallidosDAO.getIntentosFallidos(usuario).setHoraDelIntentoMaximo();
+        IntentosFallidos intento = this.intentosFallidosDAO.getIntentosFallidos(usuario);
+        intento.setHoraDelIntentoMaximo();
+        intentosFallidosDAO.modificarIntentoFallido(intento);
     }
 
-    public void crearIntentoFallidoSiAplica(Usuario usuario){
-        // si existe un intento fallido no hacer nada, si no, crearlo1
+    public void crearIntentoFallidoSiAplica(Usuario usuario) {
+        // si existe un intento fallido no hacer nada, si no, crearlo
 
         boolean esElPrimerIntento = this.getIntentosFallidosDeUsuario(usuario) == null;
         if (this.existeUsuario(usuario) && esElPrimerIntento){

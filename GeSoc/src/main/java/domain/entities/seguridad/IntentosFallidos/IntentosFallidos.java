@@ -20,15 +20,8 @@ public class IntentosFallidos extends EntidadPersistente {
 
 
     public IntentosFallidos(){
-        this.intentosRealizados = 0;
+        this.intentosRealizados = 1;
         this.horaDelIntentoMaximo = null;
-    }
-
-    public int getCantidadIntentos() {
-        return intentosRealizados;
-    }
-    public LocalDateTime getHoraDelIntentoMaximo() {
-        return horaDelIntentoMaximo;
     }
 
     public void nuevoIntentoFallido(){
@@ -36,7 +29,7 @@ public class IntentosFallidos extends EntidadPersistente {
     }
 
     public void reiniciarIntentos(){
-        this.intentosRealizados = 0;
+        this.intentosRealizados = 1;
         this.horaDelIntentoMaximo = null;
     }
 
@@ -47,5 +40,8 @@ public class IntentosFallidos extends EntidadPersistente {
     public Integer getUsuarioId() {
         return usuarioId;
     }
-
+    public int getIntentosRealizados() { return intentosRealizados; }
+    public LocalDateTime getHoraDelIntentoMaximo() {
+        return horaDelIntentoMaximo;
+    }
 }

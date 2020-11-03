@@ -27,11 +27,15 @@ public class TestDireccionDAO {
     }
 
     @Test
-    public void TestPersistirCiudad(){
+    public void TestPersistirCiudad_RecuperarPorId(){
         Ciudad ciudad = new Ciudad();
         ciudad.setNombre("CABA");
-
         dao.guardarCiudad(ciudad);
+        Assert.assertNotEquals(0, ciudad.getId());
+
+        Integer ciudadID = ciudad.getId();
+        Ciudad caba = EntityManagerHelper.getEntityManager().find(Ciudad.class, ciudadID);
+        Assert.assertEquals(caba.getNombre(), "CABA");
     }
 
     @Test
@@ -41,55 +45,40 @@ public class TestDireccionDAO {
     }
 
     @Test
-    public void TestRecuperarCiudadPorId(){
-        Ciudad caba = EntityManagerHelper.getEntityManager().find(Ciudad.class, 1);
-        Assert.assertEquals(caba.getNombre(), "CABA");
-    }
+    public void TestPersistirProvincia_RecuperarPorId(){
+        Provincia chaco = new Provincia();
+        chaco.setNombre("Chaco");
+        dao.guardarProvincia(chaco);
+        Assert.assertNotEquals(0, chaco.getId());
 
-    @Test
-    public void TestPersistirProvincia(){
-        Provincia provincia = new Provincia();
-        provincia.setNombre("Chaco");
-
-        dao.guardarProvincia(provincia);
-    }
-
-    @Test
-    public void TestRecuperarProvinciaPorId(){
-        Provincia caba = EntityManagerHelper.getEntityManager().find(Provincia.class, 1);
-        Assert.assertEquals(caba.getNombre(), "Chaco");
+        Provincia provincia = EntityManagerHelper.getEntityManager().find(Provincia.class, chaco.getId());
+        Assert.assertEquals(provincia.getNombre(), "Chaco");
     }
 
     @Test
     public void TestPersistirPais(){
-        Pais pais = new Pais();
-        pais.setNombre("Argentina");
+        Pais argentina = new Pais();
+        argentina.setNombre("Argentina");
+        dao.guardarPais(argentina);
+        Assert.assertNotEquals(0, argentina.getId());
 
-        dao.guardarPais(pais);
-    }
-
-    @Test
-    public void TestRecuperarPaisPorId(){
-        Pais pais = EntityManagerHelper.getEntityManager().find(Pais.class, 1);
+        Pais pais = EntityManagerHelper.getEntityManager().find(Pais.class, argentina.getId());
         Assert.assertEquals(pais.getNombre(), "Argentina");
     }
 
     @Test
-    public void TestPersistirMoneda(){
-        Moneda moneda = new Moneda();
-        moneda.setNombre("USD");
+    public void TestPersistirMoneda_RecuperarPorId(){
+        Moneda dolar = new Moneda();
+        dolar.setNombre("USD");
+        dao.guardarMoneda(dolar);
+        Assert.assertNotEquals(0, dolar.getId());
 
-        dao.guardarMoneda(moneda);
-    }
-
-    @Test
-    public void TestRecuperarMonedaPorId(){
-        Moneda moneda = EntityManagerHelper.getEntityManager().find(Moneda.class, 1);
+        Moneda moneda = EntityManagerHelper.getEntityManager().find(Moneda.class, dolar.getId());
         Assert.assertEquals(moneda.getNombre(), "USD");
     }
 
     @Test
-    public void TestPersistirDireccion(){
+    public void TestPersistirDireccion_RecuperarPorID(){
         //TODO: usar direccion builder
         Direccion direccion = new Direccion();
         direccion.setCalle("Av. de Mayo");
@@ -101,18 +90,17 @@ public class TestDireccionDAO {
         direccion.setMonedaLocal(EntityManagerHelper.getEntityManager().find(Moneda.class, 1));
 
         dao.guardarDireccion(direccion);
-    }
+        Assert.assertNotEquals(0, direccion.getId());
 
-    @Test
-    public void TestRecuperarDireccion(){
-        Direccion direccion = EntityManagerHelper.getEntityManager().find(Direccion.class, 1);
+        Direccion direccionRec = EntityManagerHelper.getEntityManager().find(Direccion.class, direccion.getId());
 
-        Assert.assertEquals(direccion.getCalle(), "Av. de Mayo");
-        Assert.assertEquals(direccion.getAltura(), "1460");
-        Assert.assertEquals(direccion.getCiudad().getNombre(), "CABA");
-        Assert.assertEquals(direccion.getProvincia().getNombre(), "Chaco");
-        Assert.assertEquals(direccion.getPais().getNombre(), "Argentina");
-        Assert.assertEquals(direccion.getMonedaLocal().getNombre(), "USD");
+        Assert.assertEquals(direccionRec.getCalle(), "Av. de Mayo");
+        Assert.assertEquals(direccionRec.getAltura(), "1460");
+        Assert.assertEquals(direccionRec.getCiudad().getNombre(), "CABA");
+        Assert.assertEquals(direccionRec.getProvincia().getNombre(), "Chaco");
+        Assert.assertEquals(direccionRec.getPais().getNombre(), "Argentina");
+        Assert.assertEquals(direccionRec.getMonedaLocal().getNombre(), "USD");
+
     }
 
     @Test
