@@ -43,6 +43,7 @@ public abstract class OperacionComercialBuilder {
     public OperacionComercial build() throws Exception {
         if( this.categoriasAsociadas.size() != 0)
             this.operacion.setCategoriasAsociadas(this.categoriasAsociadas);
+            this.operacion.getCategoriasAsociadas().forEach( categoria -> categoria.agregarOperacion(this.operacion));
 
         if( this.documentoComercial != null)
             this.operacion.registrarDocumentoComercial(this.documentoComercial);

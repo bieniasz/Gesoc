@@ -1,6 +1,7 @@
 package domain.entities.operacionComercial;
 
 import javax.persistence.*;
+import java.util.ArrayList;
 import java.util.List;
 
 @Entity
@@ -48,5 +49,21 @@ public class CategoriaDeOperaciones extends EntidadPersistente {
 
     public void setCriterioDeCategoria(CriterioDeOperaciones criterioDeCategoria) {
         this.criterioDeCategoria = criterioDeCategoria;
+    }
+
+    public List<OperacionComercial> getOperacionComercial() {
+        return operacionComercial;
+    }
+
+    public void setOperacionComercial(List<OperacionComercial> operacionComercial) {
+        this.operacionComercial = operacionComercial;
+    }
+
+    public void agregarOperacion(OperacionComercial operacionComercial) {
+        if (this.operacionComercial == null) {
+            this.operacionComercial = new ArrayList<>();
+        }
+
+        this.operacionComercial.add(operacionComercial);
     }
 }

@@ -63,7 +63,12 @@ public class OperacionEgresoController {
         Integer cantidadPresupuestos = Integer.parseInt(request.queryParams("cantidadEsperadaPresupuestos"));
         Organizacion organizacion = this.userDAO.buscarUsuarioPoruserId(request.queryParams("usuarioId")).getRol().getOrganizacion();
         List<DetalleEgreso> detallesEgresos = this.getListaDeDetalle(request);
+
+
         List<CategoriaDeOperaciones> categoriasDeOperaciones = this.getListaDeCategorias(request);
+        categoriasDeOperaciones.forEach( categoria -> System.out.println("CATEGORIA A PERSISTIR: " + categoria.getDescripcion()));
+
+
         MedioDePago medioDePago = this.medioDePagoDAO.buscarMedioDePagoPorId(new Integer(request.queryParams("medioDePagoIdDB")));
 
         OperacionEgresoBuilder builder = new OperacionEgresoBuilder();
@@ -174,6 +179,7 @@ public class OperacionEgresoController {
         List<CategoriaDeOperaciones> categorias = new ArrayList<>();
 
         try {
+            System.out.println("Id de la categoria en FE: " + request.queryParams("cantidadDeCategoriasNuevas"));
             Integer cantidadDeCategorias = new Integer(request.queryParams("cantidadDeCategoriasNuevas"));
 
             IntStream.range(0,cantidadDeCategorias).forEach( i -> {
