@@ -30,12 +30,12 @@ public class DocumentoComercial extends EntidadPersistente {
 
     public void guardarDocumentoFisico(TipoComprobante tipo,Long numeroDocumento,String contenido){
 
-        DocumentoComercial DocFisico = new DocumentoComercial();
-        DocFisico.tipoDocumentoComercial = tipo;
-        DocFisico.numeroDocumentoComercial=numeroDocumento;
-        DocFisico.tipoDeAdjunto="Fisico";
-        DocFisico.content=contenido;
-
+        //DocumentoComercial DocFisico = new DocumentoComercial();
+        this.tipoDocumentoComercial = tipo;
+        this.numeroDocumentoComercial = numeroDocumento;
+        this.tipoDeAdjunto = "Fisico";
+        this.content = null;
+        this.activo = true;
     }
 
     public void altaDocumentoComercial(TipoComprobante tipo,Long numeroDoc,String tipoDeAdjunto,String contenido){

@@ -32,6 +32,7 @@ public class OperacionEgresoController {
     private CategoriaDAO categoriaDAO = new CategoriaDAOMySQL();
     private UserDAO userDAO = new UserDAOMySQL();
     private MedioDePagoDAO medioDePagoDAO = new MedioDePagoDAOMySQL();
+    private TipoComprobanteDAO tipoComprobanteDAO = new TipoComprobanteDAOMySQL();
 
 
 
@@ -45,11 +46,13 @@ public class OperacionEgresoController {
         List<Proveedor> proveedores = this.proveedorDAO.getTodosLosProveedores();
         List<CategoriaDeOperaciones> categorias = this.categoriaDAO.getTodasLasCategorias();
         List<MedioDePago> medioDePagoList = this.medioDePagoDAO.buscarTodosLosMediosDePago();
+        List<TipoComprobante> tipoComprobanteList = this.tipoComprobanteDAO.buscarTodosLosTiposDeComprobantes();
 
         Map<String, Object> parametros = new HashMap<>();
         parametros.put("provedoores", proveedores);
         parametros.put("categorias", categorias);
         parametros.put("mediosDePago", medioDePagoList);
+        parametros.put("tiposCombantes", tipoComprobanteList);
         parametros.put("usuarioId", request.queryParams("usuarioId"));
         parametros.put("nombreFicticioOrganizacion", nombreFicticioOrganizacion);
 
@@ -57,18 +60,15 @@ public class OperacionEgresoController {
     }
 
     public Response guardar(Request request, Response response) throws Exception {
+
+        DocumentoComercial documentoComercial = this.crearDocumentoComercial(request);
+
         Proveedor proveedor = proveedorDAO.getProveedor(new Integer(request.queryParams("proveedorId")));
         LocalDate fecha = LocalDate.parse(request.queryParams("fecha"));
-        DocumentoComercial documentoComercial = this.crearDocumentoComercial(request);
         Integer cantidadPresupuestos = Integer.parseInt(request.queryParams("cantidadEsperadaPresupuestos"));
         Organizacion organizacion = this.userDAO.buscarUsuarioPoruserId(request.queryParams("usuarioId")).getRol().getOrganizacion();
         List<DetalleEgreso> detallesEgresos = this.getListaDeDetalle(request);
-
-
         List<CategoriaDeOperaciones> categoriasDeOperaciones = this.getListaDeCategorias(request);
-        categoriasDeOperaciones.forEach( categoria -> System.out.println("CATEGORIA A PERSISTIR: " + categoria.getDescripcion()));
-
-
         MedioDePago medioDePago = this.medioDePagoDAO.buscarMedioDePagoPorId(new Integer(request.queryParams("medioDePagoIdDB")));
 
         OperacionEgresoBuilder builder = new OperacionEgresoBuilder();
@@ -91,19 +91,24 @@ public class OperacionEgresoController {
 
 
     public ModelAndView editarEgreso(Request request, Response response) throws Exception {
+        //TODO: revisar edicion de cada uno de los campos
+        //TODO: que no se pueda guardar si no tenes ningun detalle de egreso
         String usuarioID = request.queryParams("usuarioId");
         Usuario usuario = userDAO.buscarUsuarioPoruserId(usuarioID);
         String nombreFicticioOrganizacion = usuario.getRol().getOrganizacion().getNombreFicticio();
 
         Integer id = new Integer(request.queryParams("egresoId"));
         OperacionEgreso operacionEgreso = this.operacionEgresoDAO.buscarOperacionEgresoPorId(id);
-
         List<Proveedor> proveedores = this.proveedorDAO.getTodosLosProveedores();
         List<CategoriaDeOperaciones> categorias = this.categoriaDAO.getTodasLasCategorias();
-        Map<String, Object> parametros = new HashMap<>();
+        List<MedioDePago> medioDePagoList = this.medioDePagoDAO.buscarTodosLosMediosDePago();
+        List<TipoComprobante> tipoComprobanteList = this.tipoComprobanteDAO.buscarTodosLosTiposDeComprobantes();
 
+        Map<String, Object> parametros = new HashMap<>();
         parametros.put("provedoores", proveedores);
         parametros.put("categorias", categorias);
+        parametros.put("mediosDePago", medioDePagoList);
+        parametros.put("tiposCombantes", tipoComprobanteList);
         parametros.put("usuarioId", request.queryParams("usuarioId"));
         parametros.put("egreso", operacionEgreso);
         parametros.put("nombreFicticioOrganizacion", nombreFicticioOrganizacion);
@@ -230,11 +235,10 @@ public class OperacionEgresoController {
 
         switch (request.queryParams("documentoComercialTipo")) {
             case "Fisico":
-                TipoComprobante tipoComprobante = new TipoComprobante();
-                tipoComprobante.setDescripcion(request.queryParams("documentoComercialClase"));
+                TipoComprobante tipoComprobante = this.tipoComprobanteDAO.buscarTipoComprobantePorId(new Integer(request.queryParams("documentoComercialTipoComprobanteId")));
                 Long numeroDocumento = new Long(request.queryParams("documentoComercialNumero"));
+
                 documentoComercial.guardarDocumentoFisico(tipoComprobante, numeroDocumento,null);
-                documentoComercial.setContent(request.queryParams("documentoComercialAdjunto"));
                 break;
             case "Digital":
             	TipoComprobante tipoComprobanteDigital = new TipoComprobante();

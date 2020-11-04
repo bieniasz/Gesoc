@@ -2,8 +2,6 @@ package db.DAOs;
 
 import db.EntityManagerHelper;
 import domain.entities.operacionComercial.MedioDePago;
-import domain.entities.operacionComercial.OperacionEgreso;
-
 import javax.persistence.NoResultException;
 import javax.persistence.Query;
 import java.util.List;
