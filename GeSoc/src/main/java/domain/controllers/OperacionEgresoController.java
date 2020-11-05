@@ -61,7 +61,7 @@ public class OperacionEgresoController {
 
     public Response guardar(Request request, Response response) throws Exception {
 
-        DocumentoComercial documentoComercial = this.crearDocumentoComercial(request);
+        //DocumentoComercial documentoComercial = this.crearDocumentoComercial(request);
 
         Proveedor proveedor = proveedorDAO.getProveedor(new Integer(request.queryParams("proveedorId")));
         LocalDate fecha = LocalDate.parse(request.queryParams("fecha"));
@@ -77,7 +77,7 @@ public class OperacionEgresoController {
         builder.setFecha(fecha);
         builder.setNumeroIdentificadorMedioPago(request.queryParams("numeroIdentificadorDelMedio"));
         builder.setMedioDePago(medioDePago);
-        builder.setDocumentoComercial(documentoComercial);
+       // builder.setDocumentoComercial(documentoComercial);
         builder.setOrganizacion(organizacion);
         builder.setDetalle(detallesEgresos);
         builder.setCategoriasAsociadas(categoriasDeOperaciones);
