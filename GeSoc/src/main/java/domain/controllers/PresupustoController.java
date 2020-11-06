@@ -28,9 +28,9 @@ import java.util.stream.Stream;
 
 public class PresupustoController {
 
-    private ProveedorDAO proveedorDAO = new ProveedorDAOMemoria();
+    private ProveedorDAO proveedorDAO = new ProveedorDAOMySQL();
     private OrganizacionDAO organizacionDao = new OrganizacionDAOMemoria();
-    private OperacionEgresoDAO operacionEgresoDAO = new OperacionEgresoDAOMemoria();
+    private OperacionEgresoDAO operacionEgresoDAO = new OperacionEgresoDAOMySQL();
     private CategoriaDAO categoriaDAO = new CategoriaDAOMemoria();
     private PresupuestoDAO presupuestoDAO = new PresupuestoDAOMySQL();
     private UserDAO userDAO = new UserDAOMySQL();
@@ -46,6 +46,10 @@ public class PresupustoController {
         Integer id = new Integer(request.queryParams("presupuestoId"));
 
         Presupuesto presupueto = this.presupuestoDAO.buscarPresupuesto(id);
+        
+        Integer idEgreso = new Integer(request.queryParams("egresoId"));
+        
+        OperacionEgreso operacionEgreso = this.operacionEgresoDAO.buscarOperacionEgresoPorId(idEgreso);
 
         List<Proveedor> proveedores = this.proveedorDAO.getTodosLosProveedores();
         List<CategoriaDeOperaciones> categorias = this.categoriaDAO.getTodasLasCategorias();
@@ -54,7 +58,7 @@ public class PresupustoController {
         parametros.put("provedoores", proveedores);
         parametros.put("categorias", categorias);
         parametros.put("usuarioId", request.queryParams("usuarioId"));
-        //parametros.put("egreso", operacionEgreso);
+        parametros.put("egreso", operacionEgreso);
         parametros.put("nombreFicticioOrganizacion", nombreFicticioOrganizacion);
 
         return new ModelAndView( parametros, "Presupuesto.hbs");
@@ -86,16 +90,17 @@ public class PresupustoController {
         String usuarioID = request.queryParams("usuarioId");
         Usuario usuario = userDAO.buscarUsuarioPoruserId(usuarioID);
         String nombreFicticioOrganizacion = usuario.getRol().getOrganizacion().getNombreFicticio();
-    	    
-    	//List<OperacionEgreso> operacionesEgreso = this.operacionEgresoDAO.buscarOperacionEgresoPorId(id);   
-    		 List<CategoriaDeOperaciones> categorias = this.categoriaDAO.getTodasLasCategorias();
-            Map<String, Object> parametros = new HashMap<>();
-            parametros.put("categorias", categorias);
-            parametros.put("usuarioId", request.queryParams("usuarioId"));
-            //parametros.put("egreso", operacionEgreso);
-            parametros.put("nombreFicticioOrganizacion", nombreFicticioOrganizacion);
+        Integer organizacionId = new Integer(request.queryParams("organizacionId"));
+        
+    	List<OperacionEgreso> operacionesEgreso = this.operacionEgresoDAO.getOperacionesEgresoPorOrganizacion(organizacionId);   
+    	List<CategoriaDeOperaciones> categorias = this.categoriaDAO.getTodasLasCategorias();
+        Map<String, Object> parametros = new HashMap<>();
+        parametros.put("categorias", categorias);
+        parametros.put("usuarioId", request.queryParams("usuarioId"));
+        parametros.put("egreso", operacionesEgreso);
+        parametros.put("nombreFicticioOrganizacion", nombreFicticioOrganizacion);
 
-            return new ModelAndView( parametros, "nuevoPresupuesto.hbs");
+       return new ModelAndView( parametros, "nuevoPresupuesto.hbs");
     }
 
     public Response guardar(Request request, Response response) throws Exception {
@@ -121,8 +126,7 @@ public class PresupustoController {
         response.redirect("/operacionesEgreso?usuarioId=" + request.queryParams("usuarioId"));
         return response;
         
-        
-        
+             
         
         
         
