@@ -20,15 +20,18 @@ public class OperacionesEgresoController {
 
     public ModelAndView mostrarEgresos(Request request, Response response)  throws Exception {
 
-        String usuarioID = request.queryParams("usuarioId");
-        Usuario usuario = this.userDAO.buscarUsuarioPoruserId(usuarioID);
+        //String usuarioID = request.queryParams("usuarioId");
+        //System.out.println("query" + usuarioID);
+        String usuarioIDSpark = request.session().attribute("id");
+
+        Usuario usuario = this.userDAO.buscarUsuarioPoruserId(usuarioIDSpark);
         List<OperacionEgreso> egresos = this.operacionEgresoDAO.getOperacionesEgresoPorOrganizacion(usuario.getRol().getOrganizacion().getId());
         List<CategoriaDeOperaciones> categorias = this.categoriaDAO.getTodasLasCategorias();
         String nombreFicticioOrganizacion = usuario.getRol().getOrganizacion().getNombreFicticio();
 
         Map<String, Object> parametros = new HashMap<>();
         parametros.put("categorias", categorias);
-        parametros.put("usuarioId", usuarioID);
+        parametros.put("usuarioId", usuarioIDSpark);
         parametros.put("egresos", egresos);
         parametros.put("nombreFicticioOrganizacion", nombreFicticioOrganizacion);
 

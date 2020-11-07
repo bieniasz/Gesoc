@@ -39,8 +39,10 @@ public class OperacionEgresoController {
     public ModelAndView nuevoEgreso(Request request, Response response) throws Exception {
         //TODO: en la vista, para el medio de pago, se le puede poner numero
 
-        String usuarioID = request.queryParams("usuarioId");
-        Usuario usuario = userDAO.buscarUsuarioPoruserId(usuarioID);
+        //String usuarioID = request.queryParams("usuarioId");
+        String usuarioIDSpark = request.session().attribute("id");
+        Usuario usuario = userDAO.buscarUsuarioPoruserId(usuarioIDSpark);
+
         String nombreFicticioOrganizacion = usuario.getRol().getOrganizacion().getNombreFicticio();
 
         List<Proveedor> proveedores = this.proveedorDAO.getTodosLosProveedores();
@@ -53,20 +55,20 @@ public class OperacionEgresoController {
         parametros.put("categorias", categorias);
         parametros.put("mediosDePago", medioDePagoList);
         parametros.put("tiposCombantes", tipoComprobanteList);
-        parametros.put("usuarioId", request.queryParams("usuarioId"));
+        parametros.put("usuarioId", usuarioIDSpark);
         parametros.put("nombreFicticioOrganizacion", nombreFicticioOrganizacion);
 
         return new ModelAndView( parametros, "operacionEgresoNuevo.hbs");
     }
 
     public Response guardar(Request request, Response response) throws Exception {
-
+        String usuarioIDSpark = request.session().attribute("id");
         DocumentoComercial documentoComercial = this.crearDocumentoComercial(request);
 
         Proveedor proveedor = proveedorDAO.getProveedor(new Integer(request.queryParams("proveedorId")));
         LocalDate fecha = LocalDate.parse(request.queryParams("fecha"));
         Integer cantidadPresupuestos = Integer.parseInt(request.queryParams("cantidadEsperadaPresupuestos"));
-        Organizacion organizacion = this.userDAO.buscarUsuarioPoruserId(request.queryParams("usuarioId")).getRol().getOrganizacion();
+        Organizacion organizacion = this.userDAO.buscarUsuarioPoruserId(usuarioIDSpark).getRol().getOrganizacion();
         List<DetalleEgreso> detallesEgresos = this.getListaDeDetalle(request);
         List<CategoriaDeOperaciones> categoriasDeOperaciones = this.getListaDeCategorias(request);
         MedioDePago medioDePago = this.medioDePagoDAO.buscarMedioDePagoPorId(new Integer(request.queryParams("medioDePagoIdDB")));
@@ -85,7 +87,7 @@ public class OperacionEgresoController {
 
         this.operacionEgresoDAO.guardarOperacionEgreso(operacion);
 
-        response.redirect("/operacionesEgreso?usuarioId=" + request.queryParams("usuarioId"));
+        response.redirect("/operacionesEgreso");
         return response;
     }
 
@@ -93,8 +95,9 @@ public class OperacionEgresoController {
     public ModelAndView editarEgreso(Request request, Response response) throws Exception {
         //TODO: revisar edicion de cada uno de los campos
         //TODO: que no se pueda guardar si no tenes ningun detalle de egreso
-        String usuarioID = request.queryParams("usuarioId");
-        Usuario usuario = userDAO.buscarUsuarioPoruserId(usuarioID);
+        //String usuarioID = request.queryParams("usuarioId");
+        String usuarioIDSpark = request.session().attribute("id");
+        Usuario usuario = userDAO.buscarUsuarioPoruserId(usuarioIDSpark);
         String nombreFicticioOrganizacion = usuario.getRol().getOrganizacion().getNombreFicticio();
 
         Integer id = new Integer(request.queryParams("egresoId"));
@@ -109,7 +112,7 @@ public class OperacionEgresoController {
         parametros.put("categorias", categorias);
         parametros.put("mediosDePago", medioDePagoList);
         parametros.put("tiposCombantes", tipoComprobanteList);
-        parametros.put("usuarioId", request.queryParams("usuarioId"));
+        parametros.put("usuarioId", usuarioIDSpark);
         parametros.put("egreso", operacionEgreso);
         parametros.put("nombreFicticioOrganizacion", nombreFicticioOrganizacion);
 
@@ -141,7 +144,7 @@ public class OperacionEgresoController {
 
         this.operacionEgresoDAO.modificarOperacionEgreso(egreso);
 
-        response.redirect("/operacionesEgreso?usuarioId=" + request.queryParams("usuarioId"));
+        response.redirect("/operacionesEgreso");
         return response;
     }
 

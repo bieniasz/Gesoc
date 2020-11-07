@@ -27,19 +27,21 @@ public class LoginController {
         String contrasenia     = request.queryParams("contrasenia");
         LocalDateTime horaIntento = LocalDateTime.now();
 
-        System.out.println(nombreDeUsuario);
-        System.out.println(contrasenia);
 
         try {
             ValidadorDeUsuario validador = this.getValidador();
             Usuario usuario = validador.validarLogin(nombreDeUsuario, contrasenia, horaIntento);
             loginRespuesta.setError(0);
             loginRespuesta.setUsuarioID(usuario.getUsuarioId());
+            //Todo sumo el manejo de sessiones por arriba para ver si funciona y luego refactorizar el query.
+            request.session(true);
+            request.session().attribute("id", usuario.getUsuarioId());
+
         } catch (UsuarioContraseniaInvalidosException | LoginBloqueadoTemporalmenteException ex){
             ex.printStackTrace();
             List<String> errores = new ArrayList<>();
             errores.add(ex.getMessage());
-            System.out.println(errores);
+
             loginRespuesta.setError(1);
             loginRespuesta.setErrores(errores);
         }
@@ -63,6 +65,11 @@ public class LoginController {
         return validador;
     }
 
+    public Response cerrarSesion(Request request, Response response) {
+        request.session().invalidate();
+        response.redirect("/");
+        return response;
+    }
 }
 
 class LoginRespuesta {
