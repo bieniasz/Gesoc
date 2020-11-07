@@ -63,7 +63,8 @@ public class OperacionEgresoController {
 
     public Response guardar(Request request, Response response) throws Exception {
         String usuarioIDSpark = request.session().attribute("id");
-        DocumentoComercial documentoComercial = this.crearDocumentoComercial(request);
+
+        //DocumentoComercial documentoComercial = this.crearDocumentoComercial(request);
 
         Proveedor proveedor = proveedorDAO.getProveedor(new Integer(request.queryParams("proveedorId")));
         LocalDate fecha = LocalDate.parse(request.queryParams("fecha"));
@@ -79,7 +80,7 @@ public class OperacionEgresoController {
         builder.setFecha(fecha);
         builder.setNumeroIdentificadorMedioPago(request.queryParams("numeroIdentificadorDelMedio"));
         builder.setMedioDePago(medioDePago);
-        builder.setDocumentoComercial(documentoComercial);
+       // builder.setDocumentoComercial(documentoComercial);
         builder.setOrganizacion(organizacion);
         builder.setDetalle(detallesEgresos);
         builder.setCategoriasAsociadas(categoriasDeOperaciones);
@@ -233,8 +234,15 @@ public class OperacionEgresoController {
         return  detallesEgresos;
     }
 
-    private DocumentoComercial crearDocumentoComercial(Request request) {
-        DocumentoComercial documentoComercial = new DocumentoComercial();
+    public Response guardarDocumentoComercial(Request request, Response response) {
+
+        System.out.println("---- EGRESOID: " + request.queryParams("egresoId"));
+        System.out.println("---- TIPO DOCUMENTO: " + request.queryParams("tipoDocumento"));
+        System.out.println("---- NUMERO: " + request.queryParams("numero"));
+        System.out.println("---- TIPO COMPROBANTE ID: " + request.queryParams("tipoComprobanteId"));
+        System.out.println("---- CONTENIDO: " + request.queryParams("contenidoSerializado"));
+
+       /* DocumentoComercial documentoComercial = new DocumentoComercial();
 
         switch (request.queryParams("documentoComercialTipo")) {
             case "Fisico":
@@ -250,8 +258,8 @@ public class OperacionEgresoController {
                 documentoComercial.altaDocumentoComercial(tipoComprobanteDigital, numeroDocumentoDigital,"Digital",request.queryParams("documentoComercialAdjunto"));
                         
                 break;
-        }
+        } */
 
-        return documentoComercial;
+        return response;
     }
 }

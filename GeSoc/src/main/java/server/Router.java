@@ -65,7 +65,8 @@ public class Router {
         Spark.post("/ingresoEditar", controllerOperacionIngreso::guardarEditarIngreso);
 
 
-     
+        Spark.post("/guardarDocumento", controllerOperacionEgreso::guardarDocumentoComercial);
+
         
         Spark.get("/presupuesto", controllerPresupuesto::nuevoPresupuesto, Router.engine);
         Spark.before("/presupuesto", authMiddleware::verificarSesionGeneral);
