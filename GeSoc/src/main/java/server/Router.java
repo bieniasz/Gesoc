@@ -52,7 +52,7 @@ public class Router {
         Spark.get("/ingresoEditar", controllerOperacionIngreso::editarIngreso, Router.engine);
         Spark.post("/ingresoEditar", controllerOperacionIngreso::guardarEditarIngreso);
 
-     
+        Spark.post("/guardarDocumento", controllerOperacionEgreso::guardarDocumentoComercial);
         
         Spark.get("/presupuesto", controllerPresupuesto::nuevoPresupuesto, Router.engine);
         //Spark.post("/presupuesto", controllerPresupuesto::guardar, Router.engine);

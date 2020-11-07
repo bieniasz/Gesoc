@@ -230,8 +230,15 @@ public class OperacionEgresoController {
         return  detallesEgresos;
     }
 
-    private DocumentoComercial crearDocumentoComercial(Request request) {
-        DocumentoComercial documentoComercial = new DocumentoComercial();
+    public Response guardarDocumentoComercial(Request request, Response response) {
+
+        System.out.println("---- EGRESOID: " + request.queryParams("egresoId"));
+        System.out.println("---- TIPO DOCUMENTO: " + request.queryParams("tipoDocumento"));
+        System.out.println("---- NUMERO: " + request.queryParams("numero"));
+        System.out.println("---- TIPO COMPROBANTE ID: " + request.queryParams("tipoComprobanteId"));
+        System.out.println("---- CONTENIDO: " + request.queryParams("contenidoSerializado"));
+
+       /* DocumentoComercial documentoComercial = new DocumentoComercial();
 
         switch (request.queryParams("documentoComercialTipo")) {
             case "Fisico":
@@ -247,8 +254,8 @@ public class OperacionEgresoController {
                 documentoComercial.altaDocumentoComercial(tipoComprobanteDigital, numeroDocumentoDigital,"Digital",request.queryParams("documentoComercialAdjunto"));
                         
                 break;
-        }
+        } */
 
-        return documentoComercial;
+        return response;
     }
 }
