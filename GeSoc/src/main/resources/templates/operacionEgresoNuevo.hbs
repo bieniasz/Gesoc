@@ -80,7 +80,7 @@ html,body,h1,h2,h3,h4,h5 {font-family: "Raleway", sans-serif}
   </header>
 
    <!-- Formulario -->
-    <form class="" {{#if egreso}} action="egresoEditar?usuarioId={{usuarioId}}&egresoId={{egreso.id}}" {{else}} action="egreso?usuarioId={{usuarioId}}" {{/if}} method="post">
+    <form class="" {{#if egreso}} action="/egresoEditar?egresoId={{egreso.id}}" {{else}} action="/egreso" {{/if}} method="post">
 
         <label for="fecha">Fecha</label>
         <input id="fecha" name="fecha" type="date"  class="input-formulario" {{#if egreso}} value="{{egreso.fecha}}" {{/if}} required>

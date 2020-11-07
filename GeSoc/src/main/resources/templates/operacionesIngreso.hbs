@@ -84,7 +84,7 @@ html,body,h1,h2,h3,h4,h5 {font-family: "Raleway", sans-serif}
 
 
       <h3 style="margin-bottom: 0px;margin-left: 10px">Listado de ingresos
-        <a href="ingreso?usuarioId={{usuarioId}}" class="btn-border-blue fuente"><i class="fa fa-plus-circle"></i> Nueva operacion</a>
+        <a href="/ingreso" class="btn-border-blue fuente"><i class="fa fa-plus-circle"></i> Nueva operacion</a>
 
       <div id="divTablaGrande">
 
@@ -109,7 +109,7 @@ html,body,h1,h2,h3,h4,h5 {font-family: "Raleway", sans-serif}
 
             <td>
                 <!--<a href="/usuario/{{id}}" name="button" style="margin:0px;" class="btn btn-border btn-border-blue" ><i class="far fa-eye"></i></a>-->
-                <a href="/ingresoEditar?usuarioId={{usuarioId}}&ingresoId={{id}}" name="button" class=" btn btn-edit"><i class="fas fa-edit"></i></a>
+                <a href="/ingresoEditar?ingresoId={{id}}" name="button" class=" btn btn-edit"><i class="fas fa-edit"></i></a>
                  <button type="button" name="button" class="btn" onclick="confirmarEliminacion('{{id}}')"><i class="fas fa-trash"></i></button>
             </td>
         </tr>

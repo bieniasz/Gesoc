@@ -75,7 +75,7 @@ html,body,h1,h2,h3,h4,h5 {font-family: "Raleway", sans-serif}
   </header>
 
    <!-- Formulario -->
-   <form class="" {{#if ingreso}} action="ingresoEditar?usuarioId={{usuarioId}}&ingresoId={{ingresoId}}" {{else}} action="ingresoEditar?usuarioId={{usuarioId}}" {{/if}} method="post">
+   <form class="" {{#if ingreso}} action="ingresoEditar?ingresoId={{ingresoId}}" {{else}} action="ingresoEditar" {{/if}} method="post">
         <!-- <input id="organizacion" name="organizacion" type="number" class="input-formulario">
 		<br><br> -->
         <label for="fecha">Fecha</label>

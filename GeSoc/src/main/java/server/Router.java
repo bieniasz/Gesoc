@@ -37,7 +37,7 @@ public class Router {
         AuthMiddleware authMiddleware       = new AuthMiddleware();
 
         Spark.get("/", controllerLogin::mostrarLogin, Router.engine);
-        Spark.post("/validarLogin", controllerLogin::ingresar);
+        Spark.post("/iniciarSesion", controllerLogin::ingresar);
         Spark.before("/", authMiddleware::verificarSesionLogin);
         Spark.get("/cerrarSesion", controllerLogin::cerrarSesion);
 

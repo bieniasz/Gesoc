@@ -81,7 +81,7 @@ html,body,h1,h2,h3,h4,h5 {font-family: "Raleway", sans-serif}
 
 <!-- !Operaciones! -->
       <h3 style="margin-bottom: 0px;margin-left: 10px">Listado de egresos
-        <a href="egreso?usuarioId={{usuarioId}}" class="btn-border-blue fuente"><i class="fa fa-plus-circle"></i> Nueva operacion</a>
+        <a href="egreso" class="btn-border-blue fuente"><i class="fa fa-plus-circle"></i> Nueva operacion</a>
         <a name="searchCategoria" class=" btn-border-blue fuente" onclick="mostrarBuscarCategorias()"><i class="fa fa-filter"></i></a>
 
       </h3>
@@ -123,7 +123,7 @@ html,body,h1,h2,h3,h4,h5 {font-family: "Raleway", sans-serif}
 
                 <td>
                     <!--<a href="/usuario/{{id}}" name="button" style="margin:0px;" class="btn btn-border btn-border-blue" ><i class="far fa-eye"></i></a>-->
-                    <a href="/egresoEditar?usuarioId={{usuarioId}}&egresoId={{id}}" name="button" class=" btn btn-edit"><i class="fas fa-edit"></i></a>
+                    <a href="/egresoEditar?egresoId={{id}}" name="button" class=" btn btn-edit"><i class="fas fa-edit"></i></a>
                    <!-- <a name="adjuntarDocumentoComercial" class="btn btn-primary"><i class="fas fa-paperclip"></i></a>  -->
                     <button type="button" name="button" class="btn" onclick="confirmarEliminacion('{{id}}')"><i class="fas fa-trash"></i></button>
                     <button type="button" name="adjuntarDocumentoComercial" class="btn btn-primary" onclick="mostrarDocumentoComercialModal('{{id}}')"><i class="fas fa-paperclip" ></i></button>
