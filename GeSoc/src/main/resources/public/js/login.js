@@ -30,7 +30,6 @@ function loadValidationBtn(){
 	};
 
 	form.submit.addEventListener('click', () => {
-	    var horaIntento = new Date().getTime();
 		form.submit.disabled = true;
 		form.submit.className = 'btn-disabled';
 		form.erroresLogin.style.display = 'none';
@@ -41,8 +40,7 @@ function loadValidationBtn(){
 			type: "Post",
 			data: {
 				usuario: form.usuario.value,
-				contrasenia: form.contrasenia.value,
-				horaIntento: horaIntento
+				contrasenia: form.contrasenia.value
 			},
 			dataType: 'json',
 			success: function(jsonResponse){

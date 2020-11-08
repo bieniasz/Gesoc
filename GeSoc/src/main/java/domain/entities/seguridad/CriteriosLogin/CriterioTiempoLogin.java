@@ -26,7 +26,7 @@ public class CriterioTiempoLogin implements CriterioValidacion {
      * cuánto tiempo debe esperar para volver a intentarlo.
      **/
     @Override
-    public void validar(Usuario usuario, String contrasenia, List<String> mensajesDeError) throws LoginBloqueadoTemporalmenteException {
+    public void validar(Usuario usuario, String contrasenia, List<String> mensajesDeError) {
         LocalDateTime horaActual = LocalDateTime.now();
         IntentosFallidos intentosFallidos = almacen.getIntentosFallidosDeUsuario(usuario);
 
@@ -37,7 +37,7 @@ public class CriterioTiempoLogin implements CriterioValidacion {
             if (this.cumpleCondicionDeEspera(horaIntentoMaximo, horaActual)) {
                 this.almacen.reiniciarIntentosFallidos(usuario);
             } else {
-                throw new LoginBloqueadoTemporalmenteException();
+                //throw new LoginBloqueadoTemporalmenteException();
             }
         }
     }

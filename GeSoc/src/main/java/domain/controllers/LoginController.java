@@ -36,10 +36,9 @@ public class LoginController {
             loginRespuesta.setError(0);
             loginRespuesta.setUsuarioID(usuario.getUsuarioId());
         } catch (UsuarioContraseniaInvalidosException | LoginBloqueadoTemporalmenteException ex){
-            ex.printStackTrace();
+            System.out.println(ex.getMessage());
             List<String> errores = new ArrayList<>();
             errores.add(ex.getMessage());
-            System.out.println(errores);
             loginRespuesta.setError(1);
             loginRespuesta.setErrores(errores);
         }

@@ -2,12 +2,11 @@ package domain.entities.seguridad;
 
 import db.DAOs.UserDAO;
 import domain.entities.config.Config;
-import domain.entities.seguridad.CriteriosLogin.CriterioLogin;
-import domain.entities.seguridad.CriteriosLogin.CriterioTiempoLogin;
 import domain.entities.seguridad.IntentosFallidos.IntentosFallidos;
 import domain.entities.seguridad.excepciones.LoginBloqueadoTemporalmenteException;
 import domain.entities.seguridad.excepciones.UsuarioContraseniaInvalidosException;
 import domain.entities.usuario.Usuario;
+import org.mindrot.jbcrypt.BCrypt;
 
 import java.time.Duration;
 import java.time.LocalDateTime;
@@ -17,7 +16,7 @@ import java.util.List;
 public class ValidadorDeUsuario implements iValidadorDeUsuario{
 
     //TODO: armar builder para tener todos los criterios seteados
-    private List<CriterioValidacion> criteriosCreacionContrasenia = new ArrayList<>();
+    private final List<CriterioValidacion> criteriosCreacionContrasenia = new ArrayList<>();
     private AlmacenContrasenias almacenContrasenias;
     private UserDAO usuarioDao;
 
@@ -44,7 +43,7 @@ public class ValidadorDeUsuario implements iValidadorDeUsuario{
             this.criteriosCreacionContrasenia.forEach(criterio -> {
                 try {
                     criterio.validar(user, contrasenia, errores);
-                } catch (LoginBloqueadoTemporalmenteException | UsuarioContraseniaInvalidosException e) {
+                } catch (Exception e) {
                     e.printStackTrace();
                 }
             });
@@ -63,29 +62,19 @@ public class ValidadorDeUsuario implements iValidadorDeUsuario{
 
 
     public Usuario validarLogin(String nombreUsuario, String contrasenia, LocalDateTime horaIntento) throws UsuarioContraseniaInvalidosException, LoginBloqueadoTemporalmenteException {
-        //List<String> mensajesDeError = new ArrayList<>();
-
         Usuario usuario = this.usuarioDao.buscarUsuarioPoruserId(nombreUsuario);
         if(usuario == null)
             throw new UsuarioContraseniaInvalidosException();
 
-        //TODO: esto tambien por seter, no tener los criterios ahi tan harcodeados.
-        //CriterioLogin criterioLogin = new CriterioLogin(this.almacenContrasenias);
-        //CriterioTiempoLogin criterioTiempoLogin = new CriterioTiempoLogin(this.almacenContrasenias);
-
         this.validarContrasenia(usuario, contrasenia);
         this.validarTiempoLogin(usuario, horaIntento);
-
-        //criterioLogin.validar(usuario, contrasenia, mensajesDeError);
-        //criterioTiempoLogin.validar(usuario, contrasenia, mensajesDeError);
 
         return usuario;
     }
 
     private void validarContrasenia(Usuario usuario, String contrasenia) throws UsuarioContraseniaInvalidosException {
-        //El usuario acá ya no es null
-        //TODO implementar cifrado/hash para las contraseñas
-        if(!usuario.getContrasenia().equals(contrasenia)) {
+        boolean passCoincide = BCrypt.checkpw(contrasenia, usuario.getContrasenia());
+        if(!passCoincide){
             this.almacenContrasenias.registrarIntentoFallido(usuario);
             throw new UsuarioContraseniaInvalidosException();
         }
