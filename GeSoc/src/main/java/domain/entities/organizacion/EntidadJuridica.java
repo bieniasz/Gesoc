@@ -20,7 +20,7 @@ public class EntidadJuridica extends Organizacion {
     @Column
     private String nombreFicticio;
     @Column
-    private Integer cuit;
+    private String cuit;
 
     @OneToOne(fetch = FetchType.LAZY, cascade=CascadeType.ALL)
     private Direccion direccionPostal;
@@ -42,7 +42,7 @@ public class EntidadJuridica extends Organizacion {
     public String getRazonSocial() { return razonSocial; }
     @Override
     public String getNombreFicticio() { return nombreFicticio; }
-    public Integer getCuit() { return cuit; }
+    public String getCuit() { return cuit; }
     public Direccion getDireccionPostal() { return direccionPostal; }
     public List<EntidadBase> getEntidadesBase() { return entidadesBase; }
     public String getCodigoIGJ() { return codigoIGJ; }
@@ -51,7 +51,7 @@ public class EntidadJuridica extends Organizacion {
 
     public void setRazonSocial(String razonSocial) { this.razonSocial = razonSocial; }
     public void setNombreFicticio(String nombreFicticio) { this.nombreFicticio = nombreFicticio; }
-    public void setCuit(Integer cuit) { this.cuit = cuit; }
+    public void setCuit(String cuit) { this.cuit = cuit; }
     public void setDireccionPostal(Direccion direccionPostal) { this.direccionPostal = direccionPostal; }
     public void setEntidadesBase(List<EntidadBase> entidadesBase) { this.entidadesBase = entidadesBase; }
     public void setCodigoIGJ(String codigoIGJ) { this.codigoIGJ = codigoIGJ; }

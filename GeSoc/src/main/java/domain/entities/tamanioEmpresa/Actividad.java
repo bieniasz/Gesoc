@@ -28,6 +28,9 @@ public class Actividad extends EntidadPersistente {
 */
 
 	@Column
+	private String descripcion;
+
+	@Column
 	private double topeMicro;
 	@Column
 	private double topePequenia;
@@ -47,6 +50,15 @@ public class Actividad extends EntidadPersistente {
 	@Column
 	private boolean activo;
 
+
+	public String getDescripcion() {
+		return descripcion;
+	}
+
+	public boolean isActivo() {
+		return activo;
+	}
+
 	public double getTopePromVentasMicro() { return topeMicro; }
 	public double getTopePromVentasPequenia() { return topePequenia; }
 	public double getTopePromVentasMedianaT1() { return topeMedianaT1; }
@@ -56,6 +68,14 @@ public class Actividad extends EntidadPersistente {
 	public int getTopeCantPersonalPequenia() { return topeCantPersonalPequenia;	}
 	public int getTopeCantPersonalMedianaTramo1() {	return topeCantPersonalMedianaTramo1; }
 	public int getTopeCantPersonalMedianaTramo2() {	return topeCantPersonalMedianaTramo2; }
+
+	public void setDescripcion(String descripcion) {
+		this.descripcion = descripcion;
+	}
+
+	public void setActivo(boolean activo) {
+		this.activo = activo;
+	}
 
 	public void setTopeMicro(double topeMicro) {
 		this.topeMicro = topeMicro;

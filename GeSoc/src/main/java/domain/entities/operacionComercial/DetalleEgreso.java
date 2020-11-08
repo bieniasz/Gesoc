@@ -9,6 +9,9 @@ public class DetalleEgreso extends EntidadPersistente {
     public DetalleEgreso() {
     }
 
+    @Column
+    public String tipo;
+
     @OneToOne(fetch = FetchType.LAZY, cascade=CascadeType.ALL)
     public Item item;
 
