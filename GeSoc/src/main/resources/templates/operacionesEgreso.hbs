@@ -52,14 +52,14 @@ html,body,h1,h2,h3,h4,h5 {font-family: "Raleway", sans-serif}
   <div class="w3-bar-block">
     <a href="#" class="w3-bar-item w3-button w3-padding-16 w3-hide-large w3-dark-grey w3-hover-black" onclick="w3_close()" title="close menu"><i class="fa fa-remove fa-fw"></i>&nbsp;Close Menu</a>
 
-    <a href="/operacionesEgreso?usuarioId={{usuarioId}}" class="w3-bar-item w3-button w3-padding"><i class="fa fa-bank fa-fw"></i>&nbsp;Egresos</a>
-    <a href="/operacionesIngreso?usuarioId={{usuarioId}}" class="w3-bar-item w3-button w3-padding"><i class="fa fa-bank fa-fw"></i>&nbsp;Ingresos</a>
+    <a href="/operacionesEgreso" class="w3-bar-item w3-button w3-padding"><i class="fa fa-bank fa-fw"></i>&nbsp;Egresos</a>
+    <a href="/operacionesIngreso" class="w3-bar-item w3-button w3-padding"><i class="fa fa-bank fa-fw"></i>&nbsp;Ingresos</a>
     <!-- <a href="#" class="w3-bar-item w3-button w3-padding"><i class="fa fa-book"></i>&nbsp;Documentos comerciales</a> -->
-    <a href="/bandejaDeMensajes?usuarioId={{usuarioId}}" class="w3-bar-item w3-button"><i class="fa fa-envelope"></i>&nbsp;Bandeja de mensajes</a>
+    <a href="/bandejaDeMensajes" class="w3-bar-item w3-button"><i class="fa fa-envelope"></i>&nbsp;Bandeja de mensajes</a>
 
   </div>
   <div class="w3-bar-block" style="margin-top: 20px">
-  <a href="/login" class="w3-bar-item w3-button"><i class="fa fa-power-off"></i>&nbsp;<b>Cerrar sesión</b></a>
+  <a href="/cerrarSesion" class="w3-bar-item w3-button"><i class="fa fa-power-off"></i>&nbsp;<b>Cerrar sesión</b></a>
 </div>
 </nav>
 
@@ -81,7 +81,7 @@ html,body,h1,h2,h3,h4,h5 {font-family: "Raleway", sans-serif}
 
 <!-- !Operaciones! -->
       <h3 style="margin-bottom: 0px;margin-left: 10px">Listado de egresos
-        <a href="egreso?usuarioId={{usuarioId}}" class="btn-border-blue fuente"><i class="fa fa-plus-circle"></i> Nueva operacion</a>
+        <a href="egreso" class="btn-border-blue fuente"><i class="fa fa-plus-circle"></i> Nueva operacion</a>
         <a name="searchCategoria" class=" btn-border-blue fuente" onclick="mostrarBuscarCategorias()"><i class="fa fa-filter"></i></a>
 
       </h3>
@@ -123,7 +123,7 @@ html,body,h1,h2,h3,h4,h5 {font-family: "Raleway", sans-serif}
 
                 <td>
                     <!--<a href="/usuario/{{id}}" name="button" style="margin:0px;" class="btn btn-border btn-border-blue" ><i class="far fa-eye"></i></a>-->
-                    <a href="/egresoEditar?usuarioId={{usuarioId}}&egresoId={{id}}" name="button" class=" btn btn-edit"><i class="fas fa-edit"></i></a>
+                    <a href="/egresoEditar?egresoId={{id}}" name="button" class=" btn btn-edit"><i class="fas fa-edit"></i></a>
                    <!-- <a name="adjuntarDocumentoComercial" class="btn btn-primary"><i class="fas fa-paperclip"></i></a>  -->
                     <button type="button" name="button" class="btn" onclick="confirmarEliminacion('{{id}}')"><i class="fas fa-trash"></i></button>
                     <button type="button" name="adjuntarDocumentoComercial" class="btn btn-adjuntar-documento" onclick="mostrarDocumentoComercialModal('{{id}}')"><i class="fas fa-paperclip" ></i></button>

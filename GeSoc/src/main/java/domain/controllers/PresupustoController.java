@@ -39,12 +39,14 @@ public class PresupustoController {
 
     public ModelAndView editarPresupuesto(Request request, Response response) throws Exception {
 
-        String usuarioID = request.queryParams("usuarioId");
-        Usuario usuario = userDAO.buscarUsuarioPoruserId(usuarioID);
+        //String usuarioID = request.queryParams("usuarioId");
+        String usuarioIDSpark = request.session().attribute("id");
+        Usuario usuario = userDAO.buscarUsuarioPoruserId(usuarioIDSpark);
         String nombreFicticioOrganizacion = usuario.getRol().getOrganizacion().getNombreFicticio();
 
         Integer id = new Integer(request.queryParams("presupuestoId"));
 
+        //Todo revisar que el nombre este bien, dice "presupueto"
         Presupuesto presupueto = this.presupuestoDAO.buscarPresupuesto(id);
         
         Integer idEgreso = new Integer(request.queryParams("egresoId"));
@@ -57,8 +59,10 @@ public class PresupustoController {
 
         parametros.put("provedoores", proveedores);
         parametros.put("categorias", categorias);
-        parametros.put("usuarioId", request.queryParams("usuarioId"));
+
+        parametros.put("usuarioId", usuarioIDSpark);
         parametros.put("egreso", operacionEgreso);
+
         parametros.put("nombreFicticioOrganizacion", nombreFicticioOrganizacion);
 
         return new ModelAndView( parametros, "Presupuesto.hbs");
@@ -80,33 +84,37 @@ public class PresupustoController {
         egreso.getDocumentoComercial().setNumeroDocumentoComercial(new Long(request.queryParams("documentoComercialNumero")));
         egreso.getDocumentoComercial().getTipoDocumentoComercial().setDescripcion(request.queryParams("documentoComercialClase"));
 
-        response.redirect("/operacionesEgreso?usuarioId=" + request.queryParams("usuarioId"));
+        response.redirect("/operacionesEgreso");
         return response;
     }
 
     public ModelAndView nuevoPresupuesto(Request request, Response response) throws Exception {
     	// FALTA DAO PARA MOSTRAR OPERACIONES DE EGRESO
 
-        String usuarioID = request.queryParams("usuarioId");
-        Usuario usuario = userDAO.buscarUsuarioPoruserId(usuarioID);
+        //String usuarioID = request.queryParams("usuarioId");
+        String usuarioIDSpark = request.session().attribute("id");
+        Usuario usuario = userDAO.buscarUsuarioPoruserId(usuarioIDSpark);
         String nombreFicticioOrganizacion = usuario.getRol().getOrganizacion().getNombreFicticio();
+
         Integer organizacionId = new Integer(request.queryParams("organizacionId"));
         
     	List<OperacionEgreso> operacionesEgreso = this.operacionEgresoDAO.getOperacionesEgresoPorOrganizacion(organizacionId);   
     	List<CategoriaDeOperaciones> categorias = this.categoriaDAO.getTodasLasCategorias();
         Map<String, Object> parametros = new HashMap<>();
         parametros.put("categorias", categorias);
-        parametros.put("usuarioId", request.queryParams("usuarioId"));
+        parametros.put("usuarioId", usuarioIDSpark);
         parametros.put("egreso", operacionesEgreso);
         parametros.put("nombreFicticioOrganizacion", nombreFicticioOrganizacion);
 
        return new ModelAndView( parametros, "nuevoPresupuesto.hbs");
+
     }
 
     public Response guardar(Request request, Response response) throws Exception {
-        
+        String usuarioIDSpark = request.session().attribute("id");
        
         DocumentoComercial documentoComercial = this.crearDocumentoComercial(request);
+        //Todo está bien usar el integer para el id?
         Organizacion organizacion = organizacionDao.getOrganizacionPorUsuarioId(new Integer(request.queryParams("usuarioId")));
         List<DetalleEgreso> detallesEgresos = this.getListaDeDetalle(request);
         Boolean esElElegido = this.getEsElElegido(request);
@@ -123,7 +131,7 @@ public class PresupustoController {
 
         this.presupuestoDAO.guardarPresupuesto(presupuesto);
 
-        response.redirect("/operacionesEgreso?usuarioId=" + request.queryParams("usuarioId"));
+        response.redirect("/operacionesEgreso");
         return response;
         
              

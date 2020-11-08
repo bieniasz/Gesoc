@@ -1,7 +1,6 @@
 package domain.entities.seguridad;
 
 import db.DAOs.IntentosFallidosDAOMemoria;
-import db.DAOs.IntentosFallidosDAOMySQL;
 import domain.entities.seguridad.excepciones.UsuarioContraseniaInvalidosException;
 import org.junit.Assert;
 import org.junit.Before;

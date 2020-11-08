@@ -17,12 +17,12 @@ public class CriterioLogin implements CriterioValidacion {
         this.almacen = almacen;
     }
 
-    public void validar(Usuario usuario, String contrasenia, List<String> mensajesDeError) throws UsuarioContraseniaInvalidosException {
+    public void validar(Usuario usuario, String contrasenia, List<String> mensajesDeError) {
         //El usuario acá ya no es null
         //TODO implementar cifrado/hash para las contraseñas
         if(!usuario.getContrasenia().equals(contrasenia)) {
             this.almacen.registrarIntentoFallido(usuario);
-            throw new UsuarioContraseniaInvalidosException();
+            //throw new UsuarioContraseniaInvalidosException();
         }
     }
 }
