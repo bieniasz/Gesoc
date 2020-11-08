@@ -25,6 +25,9 @@ public class OperacionIngreso extends EntidadPersistente {
     @Column(columnDefinition = "DATE")
     private LocalDate fecha;
 
+    @Column(columnDefinition = "DATE")
+    private LocalDate fechaHastaAceptable;
+
     @Column
     private Float monto;
 
@@ -45,6 +48,7 @@ public class OperacionIngreso extends EntidadPersistente {
     }
     public Organizacion getOrganizacion() { return organizacion; }
     public List<OperacionEgreso> getEgresosAsociados() { return egresosAsociados; }
+    public LocalDate getFechaHastaAceptable() { return this.fechaHastaAceptable; }
 
     public void setDescripcion(String descripcion) {
         this.descripcion = descripcion;
@@ -57,4 +61,5 @@ public class OperacionIngreso extends EntidadPersistente {
     }
     public void setOrganizacion(Organizacion organizacion) { this.organizacion = organizacion; }
     public void setEgresosAsociados(List<OperacionEgreso> egresosAsociados) { this.egresosAsociados = egresosAsociados; }
+    public void setFechaHastaAceptable(LocalDate fecha) { this.fechaHastaAceptable = fecha; }
 }

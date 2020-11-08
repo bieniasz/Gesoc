@@ -17,7 +17,6 @@ import java.util.Map;
 public class VinculadorIngresoEgresos {
     private List<OperacionIngreso> operacionIngresoList;
     private List<OperacionEgreso> operacionEgresoList;
-    private LocalDate fechaHastaAceptable;
     private IAdapterVinculacion adapterVinculador;
 
     public VinculadorIngresoEgresos(){ this.adapterVinculador = new AdapterVinculator(); }
@@ -26,7 +25,7 @@ public class VinculadorIngresoEgresos {
         OperacionEgresoDAO egresoDAO = new OperacionEgresoDAOMemoria();
         OperacionIngresoDAO ingresoDAO = new OperacionIngresoDAOMySQL();
 
-        Map<OperacionEgreso, OperacionIngreso> mapIngresosEgresos = this.adapterVinculador.obtenerVinculaciones(this.operacionIngresoList, this.operacionEgresoList, fechaHastaAceptable);
+        Map<OperacionEgreso, OperacionIngreso> mapIngresosEgresos = this.adapterVinculador.obtenerVinculaciones(this.operacionIngresoList, this.operacionEgresoList);
 
         for (OperacionEgreso egreso : mapIngresosEgresos.keySet()) {
             OperacionIngreso ingreso = mapIngresosEgresos.get(egreso);
@@ -43,11 +42,9 @@ public class VinculadorIngresoEgresos {
     public List<OperacionEgreso> getOperacionEgresoList() {
         return operacionEgresoList;
     }
-    public LocalDate getFechaHastaAceptable() { return fechaHastaAceptable; }
 
     public void setOperacionIngresoList(List<OperacionIngreso> operacionIngreso) { this.operacionIngresoList = operacionIngreso; }
     public void setOperacionEgresoList(List<OperacionEgreso> operacionEgresoList) { this.operacionEgresoList = operacionEgresoList;    }
-    public void setFechaHastaAceptable(LocalDate fechaHastaAceptable) { this.fechaHastaAceptable = fechaHastaAceptable; }
     public void setAdapterVinculador(IAdapterVinculacion adapter){
         this.adapterVinculador = adapter;
     }

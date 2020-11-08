@@ -24,11 +24,11 @@ import java.util.Map;
 public class AdapterVinculator implements IAdapterVinculacion {
 
     @Override
-    public Map<OperacionEgreso, OperacionIngreso> obtenerVinculaciones(List<OperacionIngreso> operacionesIngreso, List<OperacionEgreso> operacionesEgreso, LocalDate fechaHastaAceptable) throws IOException {
+    public Map<OperacionEgreso, OperacionIngreso> obtenerVinculaciones(List<OperacionIngreso> operacionesIngreso, List<OperacionEgreso> operacionesEgreso) throws IOException {
         Map<OperacionEgreso, OperacionIngreso> mapVinculaciones = new HashMap<>();
 
         //Hago la llamada al servicio y obtengo el string con el resultado
-        String strJSONBody = generarPutJsonBody(operacionesEgreso, operacionesIngreso, fechaHastaAceptable);
+        String strJSONBody = generarPutJsonBody(operacionesEgreso, operacionesIngreso);
         String strIngresosVinculados = makeHTTPPutRequest("http://localhost:9000/vincular", strJSONBody);
         JSONObject jsonResultadoVinculacion = new JSONObject(strIngresosVinculados);
 
@@ -88,9 +88,9 @@ public class AdapterVinculator implements IAdapterVinculacion {
         return responseBody;
     }
 
-    public String generarPutJsonBody(List<OperacionEgreso> operacionesEgreso, List<OperacionIngreso> operacionesIngreso, LocalDate fechaHastaAceptable) {
+    public String generarPutJsonBody(List<OperacionEgreso> operacionesEgreso, List<OperacionIngreso> operacionesIngreso) {
         JSONObject jsonRepoEgresosObject = new JSONObject().put("egresos", parsearEgresos(operacionesEgreso));
-        JSONObject jsonRepoIngresosObject = new JSONObject().put("ingresos", parsearIngresos(operacionesIngreso, fechaHastaAceptable));
+        JSONObject jsonRepoIngresosObject = new JSONObject().put("ingresos", parsearIngresos(operacionesIngreso));
 
         JSONObject jsonGeneralObject = new JSONObject();
         jsonGeneralObject.put("repositorioEgresos", jsonRepoEgresosObject);
@@ -111,13 +111,13 @@ public class AdapterVinculator implements IAdapterVinculacion {
         }
         return jsonEgresosArray;
     }
-    private JSONArray parsearIngresos(List<OperacionIngreso> operacionesIngreso, LocalDate fechaHastaAceptable) {
+    private JSONArray parsearIngresos(List<OperacionIngreso> operacionesIngreso) {
         JSONArray jsonIngresosArray = new JSONArray();
         for (OperacionIngreso ingreso : operacionesIngreso) {
             JSONObject jsonIngresoObj = new JSONObject()
                     .put("id_ingreso", String.valueOf(ingreso.getId()))
                     .put("fecha", ingreso.getFecha())
-                    .put("fecha_hasta", fechaHastaAceptable)
+                    .put("fecha_hasta", ingreso.getFechaHastaAceptable())
                     .put("valorTotal", Double.valueOf(ingreso.getMonto()))
                     .put("descripcion", ingreso.getDescripcion());
             jsonIngresosArray.put(jsonIngresoObj);
