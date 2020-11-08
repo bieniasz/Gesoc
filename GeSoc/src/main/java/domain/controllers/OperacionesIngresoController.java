@@ -20,8 +20,9 @@ public class OperacionesIngresoController {
 
     public ModelAndView mostrarIngresos(Request request, Response response)  throws Exception {
 
-        String usuarioID = request.queryParams("usuarioId");
-        Usuario usuario = userDAO.buscarUsuarioPoruserId(usuarioID);
+        //String usuarioID = request.queryParams("usuarioId");
+        String usuarioIDSpark = request.session().attribute("id");
+        Usuario usuario = userDAO.buscarUsuarioPoruserId(usuarioIDSpark);
         int organizacionId = usuario.getRol().getOrganizacion().getId();
 
         String nombreFicticioOrganizacion = usuario.getRol().getOrganizacion().getNombreFicticio();
@@ -30,7 +31,7 @@ public class OperacionesIngresoController {
         ingresos = operacionIngresoDAO.getOperacionesIngresoPorOrganizacion(organizacionId);
 
         Map<String, Object> parametros = new HashMap<>();
-        parametros.put("usuarioId", usuarioID);
+        parametros.put("usuarioId", usuarioIDSpark);
         parametros.put("ingresos", ingresos);
         parametros.put("nombreFicticioOrganizacion", nombreFicticioOrganizacion);
 

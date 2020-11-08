@@ -33,10 +33,10 @@ function loadValidationBtn(){
 		form.submit.disabled = true;
 		form.submit.className = 'btn-disabled';
 		form.erroresLogin.style.display = 'none';
-		console.log(form.usuario.value, form.contrasenia.value);
+
 
 		$.ajax({
-			url: "/validarLogin",
+			url: "/iniciarSesion",
 			type: "Post",
 			data: {
 				usuario: form.usuario.value,
@@ -44,9 +44,7 @@ function loadValidationBtn(){
 			},
 			dataType: 'json',
 			success: function(jsonResponse){
-				console.log(jsonResponse);
-				console.log(jsonResponse.error);
-				console.log(jsonResponse.errores);
+
 
 				if (jsonResponse == "") {
 					console.error('No hubo respuesta del servidor');
@@ -58,8 +56,8 @@ function loadValidationBtn(){
 
 		function handleResponse (responseObject) {
 			if (responseObject.error == 0) {
-				var id = responseObject.usuarioID;
-				location.href = "/operacionesEgreso?usuarioId=" + id;
+
+				location.href = "/operacionesEgreso";
 			} else {
 				while (form.erroresLogin.firstChild) {
 					form.erroresLogin.removeChild(form.erroresLogin.firstChild);
