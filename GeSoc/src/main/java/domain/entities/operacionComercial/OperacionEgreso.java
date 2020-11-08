@@ -16,6 +16,7 @@ public class OperacionEgreso extends OperacionComercial {
     public OperacionEgreso() {
     }
 
+
     @ManyToOne(fetch = FetchType.LAZY, cascade=CascadeType.ALL)
     @JoinColumn(name="medioDePago",referencedColumnName = "id")
     private MedioDePago medioDePago;

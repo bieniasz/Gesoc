@@ -31,26 +31,29 @@ public class OperacionIngresoController {
 
         //TODO: validacion por FE para no hacer guardar con campos vacios
         //TODO: boton cancelar para volver a la vista anterior
-        String userId = request.queryParams("usuarioId");
-        Usuario usuario = userDAO.buscarUsuarioPoruserId(userId);
-        String nombreFicticio = usuario.getRol().getOrganizacion().getNombreFicticio();
+        //String userId = request.queryParams("usuarioId");
+        String usuarioIDSpark = request.session().attribute("id");
+        Usuario usuario = userDAO.buscarUsuarioPoruserId(usuarioIDSpark);
+        String nombreFicticioOrganizacion = usuario.getRol().getOrganizacion().getNombreFicticio();
 
         Map<String, Object> parametros = new HashMap<>();
-        parametros.put("usuarioId", request.queryParams("usuarioId"));
-        parametros.put("nombreFicticio", nombreFicticio);
+        parametros.put("usuarioId", usuarioIDSpark);
+        parametros.put("nombreFicticioOrganizacion", nombreFicticioOrganizacion);
 
         return new ModelAndView( parametros, "operacionIngresoNuevo.hbs");
     }
 
     public Response guardar(Request request, Response response) throws Exception {
+
         OperacionIngreso operacionIngreso = new OperacionIngreso();
 
         LocalDate fecha = LocalDate.parse(request.queryParams("fecha"));
         String descripcion = request.queryParams("descripcion");
         Float monto = new Float(request.queryParams("monto"));
 
-        String userId = request.queryParams("usuarioId");
-        Usuario usuario = userDAO.buscarUsuarioPoruserId(userId);
+        //String userId = request.queryParams("usuarioId");
+        String usuarioIDSpark = request.session().attribute("id");
+        Usuario usuario = userDAO.buscarUsuarioPoruserId(usuarioIDSpark);
         Organizacion organizacion = usuario.getRol().getOrganizacion();
 
         operacionIngreso.setFecha(fecha);
@@ -60,7 +63,7 @@ public class OperacionIngresoController {
 
         this.operacionIngresoDAO.guardarOperacionIngreso(operacionIngreso);
 
-        response.redirect("/operacionesIngreso?usuarioId=" + request.queryParams("usuarioId"));
+        response.redirect("/operacionesIngreso");
         return response;
     }
 
@@ -68,16 +71,17 @@ public class OperacionIngresoController {
 
         Integer id = new Integer(request.queryParams("ingresoId"));
         OperacionIngreso operacionIngreso = this.operacionIngresoDAO.buscarOperacionIngreso(id);
-        String userId = request.queryParams("usuarioId");
-        Usuario usuario = userDAO.buscarUsuarioPoruserId(userId);
-        String nombreFicticio = usuario.getRol().getOrganizacion().getNombreFicticio();
+        //String userId = request.queryParams("usuarioId");
+        String usuarioIDSpark = request.session().attribute("id");
+        Usuario usuario = userDAO.buscarUsuarioPoruserId(usuarioIDSpark);
+        String nombreFicticioOrganizacion = usuario.getRol().getOrganizacion().getNombreFicticio();
 
 
         Map<String, Object> parametros = new HashMap<>();
         parametros.put("ingreso", operacionIngreso);
-        parametros.put("usuarioId", request.queryParams("usuarioId"));
+        parametros.put("usuarioId", usuarioIDSpark);
         parametros.put("ingresoId", request.queryParams("ingresoId"));
-        parametros.put("nombreFicticio", nombreFicticio);
+        parametros.put("nombreFicticioOrganizacion", nombreFicticioOrganizacion);
 
         return new ModelAndView( parametros, "operacionIngresoEditar.hbs");
     }
@@ -92,7 +96,7 @@ public class OperacionIngresoController {
 
         this.operacionIngresoDAO.modificarOperacionIngreso(operacionIngreso);
 
-        response.redirect("/operacionesIngreso?usuarioId=" + request.queryParams("usuarioId"));
+        response.redirect("/operacionesIngreso");
         return response;
     }
 

@@ -19,6 +19,7 @@
 <script src="js/documentoComercial.js"></script>
 <script src="js/filtrarEnBarraDeBusqueda.js"></script>
 <script src="js/proveedor.js"></script>
+<script src="js/medioDePago.js"></script>
 
 <style>
 html,body,h1,h2,h3,h4,h5 {font-family: "Raleway", sans-serif}
@@ -43,8 +44,8 @@ html,body,h1,h2,h3,h4,h5 {font-family: "Raleway", sans-serif}
     </div>
     <div class="w3-col s8 w3-bar">
 
-        <div id="nombreUsuario"><strong>Nombre</strong></div>
-        <div id="nombreEntidad"><strong>Entidad</strong></div>
+        <div id="nombreUsuario"><strong>Nombre: {{usuarioId}}</strong></div>
+        <div id="nombreEntidad"><strong>Entidad: {{nombreFicticioOrganizacion}}</strong></div>
 
     </div>
   </div>
@@ -55,16 +56,15 @@ html,body,h1,h2,h3,h4,h5 {font-family: "Raleway", sans-serif}
   <div class="w3-bar-block">
     <a href="#" class="w3-bar-item w3-button w3-padding-16 w3-hide-large w3-dark-grey w3-hover-black" onclick="w3_close()" title="close menu"><i class="fa fa-remove fa-fw"></i>&nbsp;Close Menu</a>
 
-    <a href="/operacionesEgreso?usuarioId={{usuarioId}}" class="w3-bar-item w3-button w3-padding"><i class="fa fa-bank fa-fw"></i>&nbsp;Egresos</a>
-    <a href="/operacionesIngreso?usuarioId={{usuarioId}}" class="w3-bar-item w3-button w3-padding"><i class="fa fa-bank fa-fw"></i>&nbsp;Ingresos</a>
+    <a href="/operacionesEgreso" class="w3-bar-item w3-button w3-padding"><i class="fa fa-bank fa-fw"></i>&nbsp;Egresos</a>
+    <a href="/operacionesIngreso" class="w3-bar-item w3-button w3-padding"><i class="fa fa-bank fa-fw"></i>&nbsp;Ingresos</a>
     <!-- <a href="#" class="w3-bar-item w3-button w3-padding"><i class="fa fa-book"></i>&nbsp;Documentos comerciales</a> -->
-    <a href="/bandejaDeMensajes?usuarioId={{usuarioId}}" class="w3-bar-item w3-button"><i class="fa fa-envelope"></i>&nbsp;Bandeja de mensajes</a>
+    <a href="/bandejaDeMensajes" class="w3-bar-item w3-button"><i class="fa fa-envelope"></i>&nbsp;Bandeja de mensajes</a>
 
   </div>
   <div class="w3-bar-block" style="margin-top: 20px">
-  <a href="/login" class="w3-bar-item w3-button"><i class="fa fa-power-off"></i>&nbsp;<b>Cerrar sesión</b></a>
-
-
+  <a href="/cerrarSesion" class="w3-bar-item w3-button"><i class="fa fa-power-off"></i>&nbsp;<b>Cerrar sesión</b></a>
+</div>
 </nav>
 
 
@@ -80,26 +80,18 @@ html,body,h1,h2,h3,h4,h5 {font-family: "Raleway", sans-serif}
   </header>
 
    <!-- Formulario -->
-    <form class="" {{#if egreso}} action="egresoEditar?usuarioId={{usuarioId}}&egresoId={{egreso.id}}" {{else}} action="egreso?usuarioId={{usuarioId}}" {{/if}} method="post">
-        <!-- <label for="IDEgreso">ID de Egreso</label>
-        <input id="IDEgreso" name="IDEgreso" type="number"  class="input-formulario-readonly" readonly>
-        <br><br>
-        <label for="organizacion">Organización</label>
-        <input id="organizacion" name="organizacion" type="number" class="input-formulario">
-        <br><br> -->
+    <form class="" {{#if egreso}} action="/egresoEditar?egresoId={{egreso.id}}" {{else}} action="/egreso" {{/if}} method="post">
+
         <label for="fecha">Fecha</label>
-        <input id="fecha" name="fecha" type="date"  class="input-formulario" {{#if egreso}} value="{{egreso.fecha}}" {{/if}}>
+        <input id="fecha" name="fecha" type="date"  class="input-formulario" {{#if egreso}} value="{{egreso.fecha}}" {{/if}} required>
         <br><br>
         <label for="cantidadEsperadaPresupuestos">Cant. Presupuestos Req.</label>
-        <input id="cantidadEsperadaPresupuestos" name="cantidadEsperadaPresupuestos" type="number" class="input-formulario" {{#if egreso}} value="{{egreso.cantidadEsperadaPresupuestos}}" {{/if}}>
+        <input id="cantidadEsperadaPresupuestos" name="cantidadEsperadaPresupuestos" type="number" class="input-formulario" {{#if egreso}} value="{{egreso.cantidadEsperadaPresupuestos}}" {{/if}} required>
         <br><br>
-        <!-- <label for="valorTotal">Valor Total</label>
-        <input id="valorTotal" name="valorTotal" type="number" step="0.01" class="input-formulario">
-        <br><br> -->
 
 <!-- !PROVEEDOR! -->
         <label for="Proveedor">Proveedor</label>
-        <input id="proveedor" name="proveedor" type="text" class="input-formulario" {{#if egreso}} value="{{egreso.proveedor.nombreApellido_RazonSocial}}" {{/if}}>
+        <input id="proveedor" readonly name="proveedor" type="text" class="input-formulario" {{#if egreso}} value="{{egreso.proveedor.nombreApellido_RazonSocial}}" {{/if}} required>
         <a name="searchProveedor" class=" btn btn-search" onclick="mostrarBuscarProveedor()"><i class="fas fa-search"></i></a>
         <input type="hidden" id="proveedorId" name="proveedorId" {{#if egreso}} value="{{egreso.proveedor.id}}" {{/if}}>
 
@@ -114,42 +106,34 @@ html,body,h1,h2,h3,h4,h5 {font-family: "Raleway", sans-serif}
         <br><br>
 
 <!-- !MEDIO DE PAGO! -->
-        <h3 for="documentoComercial">Medio de pago</h3>
-        <label>Id de pago</label>
-        <input id="medioDePagoId" name="medioDePagoId" type="number" class="input-formulario" {{#if egreso}} value="{{egreso.medioDePago.idMercadoPago}}" {{/if}}>
-        <br><br>
         <label>Descripcion del pago</label>
-        <input id="descripcionDelPago" name="descripcionDelPago" type="text" class="input-formulario" {{#if egreso}} value="{{egreso.medioDePago.descMercadoPago}}" {{/if}}>
+        <input id="descripcionDelPago" readonly name="descripcionDelPago" type="text" class="input-formulario" {{#if egreso}} value="{{egreso.medioDePago.descMercadoPago}}" {{/if}} required>
+
+            <a name="searchMedioDePago" class=" btn btn-search" onclick="mostrarBuscarMedioDePago()"><i class="fas fa-search"></i></a>
+                <div class="dropdown">
+                    <div id="buscarMedioDePago" class="dropdown-content">
+                        <input type="text" placeholder="Search.." id="inputBuscarMedioDePago" onkeyup="filterFunction('buscarMedioDePago','inputBuscarMedioDePago')">
+                        {{#each mediosDePago}}
+                            <a onClick="llenarMedioDePago('{{idMercadoPago}}', '{{descMercadoPago}}', '{{tipoMercadoPago}}', '{{id}}')">{{descMercadoPago}}</a>
+                        {{/each}}
+                    </div>
+                </div>
+
         <br><br>
         <label>Tipo de pago</label>
-        <input id="tipoDePago" name="tipoDePago" type="text" class="input-formulario" {{#if egreso}} value="{{egreso.medioDePago.tipoMercadoPago}}" {{/if}}>
+        <input id="tipoDePago" name="tipoDePago" type="text" class="input-formulario" {{#if egreso}} value="{{egreso.medioDePago.tipoMercadoPago}}" {{/if}} readonly>
         <br><br>
-
-<!-- !DOCUMENTO COMERCIAL! -->
-        <h3 for="documentoComercial">Documento Comercial</h3>
-        <label for="documentoComercialTipo">Tipo</label>
-        <select id="documentoComercialTipo" name="documentoComercialTipo" class="input-formulario" >
-            <option value="Fisico">Fisico</option>
-            <option value="Digital">Digital</option>
-        </select>
+        <label>Numero identificador del Medio de Pago</label>
+        <input id="numeroIdentificadorDelMedio" name="numeroIdentificadorDelMedio" type="number" class="input-formulario" {{#if egreso}} value="{{egreso.numeroIdentificadorMedioPago}}" {{/if}} required>
         <br><br>
-        <label for="documentoComercialNumero">Numero</label>
-        <input id="documentoComercialNumero" name="documentoComercialNumero" type="number" class="input-formulario" {{#if egreso}} value="{{egreso.documentoComercial.numeroDocumentoComercial}}" {{/if}}>
-        <br><br>
-        <label for="documentoComercialClase">Clase de documento</label>
-        <input id="documentoComercialClase" name="documentoComercialClase" type="text" class="input-formulario" {{#if egreso}} value="{{egreso.documentoComercial.tipoDocumentoComercial.descripcion}}" {{/if}}>
-        <br><br>
-        <label for="documentoComercialAdjunto">Adjunto</label>
-        <input id="documentoComercialAdjunto" name="documentoComercialAdjunto" type="file" onsubmit="serializarArchivo()" class="input-formulario">
-        <br><br>
-
+        <input type="hidden" id="medioDePagoIdDB" name="medioDePagoIdDB" {{#if egreso}} value="{{egreso.medioDePago.id}}" {{/if}}>
 
 <!-- !CATEGORIAS! -->
         <h3 style="margin-bottom: 5px;margin-left: 10px">Categorias
             <a name="searchCategoria" class=" btn btn-search" onclick="mostrarBuscarCategorias()"><i class="fas fa-search"></i></a>
-            <input type="hidden" id="cantidadDeCategoriasNuevas" name="cantidadDeCategorias">
-            <input type="hidden" id="categoriasExistentesEliminadas" name="categoriasExistentesEliminadas">
         </h3>
+        <input type="hidden" id="cantidadDeCategoriasNuevas" name="cantidadDeCategoriasNuevas">
+        <input type="hidden" id="categoriasExistentesEliminadas" name="categoriasExistentesEliminadas">
 
         <div class="dropdown">
             <div id="buscarCategoria" class="dropdown-content">
@@ -176,6 +160,10 @@ html,body,h1,h2,h3,h4,h5 {font-family: "Raleway", sans-serif}
       <h3 style="margin-bottom: 5px;margin-left: 10px">Detalle Egreso
           <button type="button" name="buttonAgregarItem" class="btn-border-blue fuente" onclick="agregarItem()"><i class="fa fa-plus-circle" style="margin-bottom:25px;"></i></button></h3>
       <input type="hidden" id="cantidadDetalles" name="cantidadDetalles">
+        {{#if egreso}}
+            <label>Valor Total: {{egreso.valorTotal}}</label>
+            <br><br>
+        {{/if}}
 
       <table class="tabla" id="detalleEgresos" name="detalleEgresos">
         <thead>

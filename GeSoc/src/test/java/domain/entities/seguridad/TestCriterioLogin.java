@@ -1,5 +1,7 @@
 package domain.entities.seguridad;
 
+import db.DAOs.IntentosFallidosDAOMemoria;
+import domain.entities.seguridad.excepciones.UsuarioContraseniaInvalidosException;
 import org.junit.Assert;
 import org.junit.Before;
 import org.junit.Test;
@@ -21,59 +23,44 @@ public class TestCriterioLogin {
         //TODO: setear DAOs dummy
         this.almacen = new AlmacenContrasenias();
         this.almacen.setContraseniasPreviasDAO(new ContraseniasPreviasDAOMemoria());
+        this.almacen.setIntentosFallidosDAO(new IntentosFallidosDAOMemoria());
         this.criterio = new CriterioLogin(this.almacen);
         this.errorMessages = new ArrayList<String>();
     }
 
     @Test
-    public void usuarioYcontraseniaCoincidenConElALmacen(){
+    public void usuarioYcontraseniaCoincidenConElALmacen() throws UsuarioContraseniaInvalidosException {
         //TODO: tengo que asegurarme solo con la contrasenia actual y no una vieja
         //TODO: debugear para ver que no se me este pasando nada
         Usuario user = new Usuario();
         user.setUsuarioId("user");
+        user.setContrasenia("password");
         this.almacen.registrarContrasenia(user,"password");
         this.criterio.validar(user,"password",errorMessages);
 
         Assert.assertEquals(0,errorMessages.size());
     }
 
-    @Test
-    public void usuarioNoCoincideConElALmacen(){
+    @Test (expected = UsuarioContraseniaInvalidosException.class)
+    public void usuarioNoCoincideConElALmacen() throws UsuarioContraseniaInvalidosException {
         Usuario user = new Usuario();
         user.setUsuarioId("user");
-
+        user.setContrasenia("password");
         Usuario user2 = new Usuario();
-        user.setUsuarioId("otroUser");
+        user2.setUsuarioId("otroUser");
+        user2.setContrasenia("password2");
 
         this.almacen.registrarContrasenia(user,"password");
         this.almacen.registrarContrasenia(user2,"password2");
 
         this.criterio.validar(user2,"password",errorMessages);
-
-        Assert.assertEquals(1,errorMessages.size());
     }
 
-    @Test
-    public void contraseniaNoCoincideConElALmacen(){
+    @Test (expected = UsuarioContraseniaInvalidosException.class)
+    public void contraseniaNoCoincideConElALmacen() throws UsuarioContraseniaInvalidosException {
         Usuario user = new Usuario();
         user.setUsuarioId("user");
-        this.almacen.registrarContrasenia(user,"password");
+        user.setContrasenia("password");
         this.criterio.validar(user,"passwordInconrrecta",errorMessages);
-
-        Assert.assertEquals(1,errorMessages.size());
     }
-
-    @Test
-    public void usuarioYContraseniaNoCoincideConElALmacen(){
-        Usuario user = new Usuario();
-        user.setUsuarioId("user");
-
-        Usuario user2 = new Usuario();
-        user.setUsuarioId("user2");
-        this.almacen.registrarContrasenia(user,"password");
-        this.criterio.validar(user2, "passwordincorrecta",errorMessages);
-
-        Assert.assertEquals(1,errorMessages.size());
-    }
-
 }

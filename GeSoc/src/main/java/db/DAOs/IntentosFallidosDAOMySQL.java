@@ -36,8 +36,8 @@ public class IntentosFallidosDAOMySQL implements IntentosFallidosDAO {
         EntityManagerHelper.commit();
     }
 
-    public void eliminarIntentosFallidos(Usuario usuario){
-
+    @Override
+    public void eliminarIntentoFallido(Usuario usuario){
         Query query = EntityManagerHelper.createQuery("from IntentosFallidos i where i.usuarioId = :user");
         query.setParameter("user", usuario.getId());
         try{

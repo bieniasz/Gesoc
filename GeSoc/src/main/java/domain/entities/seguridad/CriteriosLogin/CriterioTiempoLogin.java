@@ -1,8 +1,10 @@
 package domain.entities.seguridad.CriteriosLogin;
 
+import domain.entities.config.Config;
 import domain.entities.seguridad.AlmacenContrasenias;
 import domain.entities.seguridad.CriterioValidacion;
 import domain.entities.seguridad.IntentosFallidos.IntentosFallidos;
+import domain.entities.seguridad.excepciones.LoginBloqueadoTemporalmenteException;
 import domain.entities.usuario.Usuario;
 
 import java.time.Duration;
@@ -12,62 +14,49 @@ import java.util.List;
 
 public class CriterioTiempoLogin implements CriterioValidacion {
 
-
-    private Integer tiempoDeEspera;
-    private Integer cantidadMaximaDeIntentos;
-    private AlmacenContrasenias almacen;
+    private final AlmacenContrasenias almacen;
 
     public CriterioTiempoLogin(AlmacenContrasenias almacen) {
-
-        this.tiempoDeEspera = 5; // va a ser considerado en segundos
-        this.cantidadMaximaDeIntentos = 3;
         this.almacen = almacen;
     }
 
+    /**
+     * Si los datos de login son correctos, se valida que el mismo no esté bloqueado temporalmente
+     * por superar la cantidad de intentos fallidos máxima. En caso afirmativo, se muestra
+     * cuánto tiempo debe esperar para volver a intentarlo.
+     **/
     @Override
     public void validar(Usuario usuario, String contrasenia, List<String> mensajesDeError) {
-        LocalDateTime horaActual = LocalDateTime.now();  //.compareTo();
+        LocalDateTime horaActual = LocalDateTime.now();
         IntentosFallidos intentosFallidos = almacen.getIntentosFallidosDeUsuario(usuario);
 
-        if (intentosFallidos != null) {
-            if (intentosFallidos.getCantidadIntentos() >= cantidadMaximaDeIntentos) {
-                LocalDateTime horaDelIntentoFallidoMaximo = intentosFallidos.getHoraDelIntentoMaximo();
-                int tiempoDesdeIntentoFallidoMaximo = distanciaEnSegundosEntreTiempos(horaDelIntentoFallidoMaximo, horaActual);
-                if (!this.cumpleCondicionDeEspera(tiempoDesdeIntentoFallidoMaximo)) {
-                    mensajesDeError.add("Debe esperar " + (tiempoDeEspera - tiempoDesdeIntentoFallidoMaximo) + " segundos para volver loguearse.");
-                    } else {
-                        this.almacen.reiniciarIntentosFallidos(usuario);
-                }
+        if (intentosFallidos != null
+                && intentosFallidos.getIntentosRealizados() == Config.login_topeIntentosFallidos) {
+
+            LocalDateTime horaIntentoMaximo = intentosFallidos.getHoraDelIntentoMaximo();
+            if (this.cumpleCondicionDeEspera(horaIntentoMaximo, horaActual)) {
+                this.almacen.reiniciarIntentosFallidos(usuario);
+            } else {
+                //throw new LoginBloqueadoTemporalmenteException();
             }
         }
     }
 
 
+    //TODO obsoleto. reemplazar en los test
     public void errorAlLogear(Usuario usuario) {
         IntentosFallidos intentosFallidos = this.almacen.getIntentosFallidosDeUsuario(usuario);
 
-        if (intentosFallidos != null){
-            almacen.agregarIntentoFallido(usuario);
-
-            if (intentosFallidos.getCantidadIntentos() == this.cantidadMaximaDeIntentos) {
+        if (intentosFallidos != null) {
+            almacen.registrarIntentoFallido(usuario);
+            if (intentosFallidos.getIntentosRealizados() == Config.login_topeIntentosFallidos) {
                 almacen.setHoraDelIntentoMaximo(usuario);
             }
         }
     }
 
-    private int distanciaEnSegundosEntreTiempos(LocalDateTime desde, LocalDateTime hasta){
-        int distanciaEntreTiempos;
-        if (desde != null){
-            Duration duracion = Duration.between(desde,hasta);
-            distanciaEntreTiempos = (int) duracion.getSeconds();
-        } else {
-            distanciaEntreTiempos = this.tiempoDeEspera + 1;
-        }
-
-        return distanciaEntreTiempos;
-    }
-
-    private boolean cumpleCondicionDeEspera(int tiempoEntreLogins){
-        return tiempoEntreLogins >= this.tiempoDeEspera;
+    private boolean cumpleCondicionDeEspera(LocalDateTime desde, LocalDateTime hasta) {
+        int distanciaEntreTiempos = (int) Duration.between(desde, hasta).getSeconds();
+        return distanciaEntreTiempos >= Config.login_tiempoDeEspera;
     }
 }

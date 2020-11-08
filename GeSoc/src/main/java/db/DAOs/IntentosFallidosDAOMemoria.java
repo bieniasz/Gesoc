@@ -26,4 +26,9 @@ public class IntentosFallidosDAOMemoria implements IntentosFallidosDAO{
     public void modificarIntentoFallido(IntentosFallidos intentosFallidos) {
         this.intentos.replace(usuarioEnUso, intentosFallidos);
     }
+
+    @Override
+    public void eliminarIntentoFallido(Usuario usuario) {
+        this.intentos.remove(usuario);
+    }
 }

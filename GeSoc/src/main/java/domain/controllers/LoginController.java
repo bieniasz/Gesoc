@@ -1,16 +1,17 @@
 package domain.controllers;
 
 import com.google.gson.Gson;
-import com.google.gson.JsonObject;
 import db.DAOs.*;
 import domain.entities.seguridad.AlmacenContrasenias;
 import domain.entities.seguridad.ValidadorDeUsuario;
+import domain.entities.seguridad.excepciones.LoginBloqueadoTemporalmenteException;
+import domain.entities.seguridad.excepciones.UsuarioContraseniaInvalidosException;
 import domain.entities.usuario.Usuario;
 import spark.ModelAndView;
 import spark.Request;
 import spark.Response;
 
-import javax.security.sasl.RealmCallback;
+import java.time.LocalDateTime;
 import java.util.ArrayList;
 import java.util.List;
 
@@ -21,44 +22,39 @@ public class LoginController {
     }
 
     public String ingresar(Request request, Response response){
+        LoginRespuesta loginRespuesta = new LoginRespuesta();
         String nombreDeUsuario = request.queryParams("usuario");
         String contrasenia     = request.queryParams("contrasenia");
-        System.out.println(nombreDeUsuario);
-        System.out.println(contrasenia);
+        LocalDateTime horaIntento = LocalDateTime.now();
 
-        ValidadorDeUsuario validador = this.getValidador();
-        List<String> errores = validador.validarContraseniaLogin(nombreDeUsuario,contrasenia);
-        System.out.println(errores);
 
-        //Todo probar tiempos login con los DAO mySQL
-        //Todo el id del userDao debería volver del validador si no tiene errores.
-        UserDAO usuarioDao = new UserDAOMySQL();
-
-        LoginRespuesta loginRespuesta = new LoginRespuesta();
-        Gson gson = new Gson();
-
-        if (errores.size() == 0){
+        try {
+            ValidadorDeUsuario validador = this.getValidador();
+            Usuario usuario = validador.validarLogin(nombreDeUsuario, contrasenia, horaIntento);
             loginRespuesta.setError(0);
-            Usuario usuario = usuarioDao.buscarUsuarioPoruserId(nombreDeUsuario);
             loginRespuesta.setUsuarioID(usuario.getUsuarioId());
-        }
-        else{
+            //Todo sumo el manejo de sessiones por arriba para ver si funciona y luego refactorizar el query.
+            request.session(true);
+            request.session().attribute("id", usuario.getUsuarioId());
+
+        } catch (UsuarioContraseniaInvalidosException | LoginBloqueadoTemporalmenteException ex){
+            System.out.println(ex.getMessage());
+            List<String> errores = new ArrayList<>();
+            errores.add(ex.getMessage());
             loginRespuesta.setError(1);
             loginRespuesta.setErrores(errores);
         }
 
-        return gson.toJson(loginRespuesta);
+        return new Gson().toJson(loginRespuesta);
     }
 
     private ValidadorDeUsuario getValidador(){
         AlmacenContrasenias almacen = new AlmacenContrasenias();
-
         almacen.setContraseniasPreviasDAO(new ContraseniasPreviasDAOMySQL());
         almacen.setIntentosFallidosDAO(new IntentosFallidosDAOMySQL());
-        UserDAO usuarioDao = new UserDAOMySQL();
 
         ValidadorDeUsuario validador = new ValidadorDeUsuario();
-        validador.setUsuarioDao(usuarioDao);
+        validador.setUsuarioDao(new UserDAOMySQL());
         validador.setAlmacenContrasenias(almacen);
 
         /* Hay que registar la contraseña en el almacen??
@@ -68,9 +64,14 @@ public class LoginController {
         return validador;
     }
 
+    public Response cerrarSesion(Request request, Response response) {
+        request.session().invalidate();
+        response.redirect("/");
+        return response;
+    }
 }
 
-class LoginRespuesta{
+class LoginRespuesta {
     int error;
     List<String> errores = new ArrayList<>();
     String usuarioID;

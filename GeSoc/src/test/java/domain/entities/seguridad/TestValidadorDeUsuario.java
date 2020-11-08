@@ -1,5 +1,7 @@
 package domain.entities.seguridad;
 
+import domain.entities.seguridad.excepciones.LoginBloqueadoTemporalmenteException;
+import domain.entities.seguridad.excepciones.UsuarioContraseniaInvalidosException;
 import org.junit.Assert;
 import org.junit.Before;
 import org.junit.Test;
@@ -10,26 +12,31 @@ import db.DAOs.UserDAO;
 import db.DAOs.UserDAOMemoria;
 import domain.entities.usuario.Usuario;
 
+import java.time.LocalDateTime;
 import java.util.List;
 
 public class TestValidadorDeUsuario {
     private ValidadorDeUsuario validador;
-    private AlmacenContrasenias almancen;
+    private AlmacenContrasenias almacen;
     private Usuario usuario;
+    UserDAO usuarioDao;
+    LocalDateTime horaIntento;
 
     @Before
     public void init(){
-        this.almancen = new AlmacenContrasenias();
-        this.almancen.setContraseniasPreviasDAO(new ContraseniasPreviasDAOMemoria());
-        this.almancen.setIntentosFallidosDAO(new IntentosFallidosDAOMemoria());
+        this.almacen = new AlmacenContrasenias();
+        this.almacen.setContraseniasPreviasDAO(new ContraseniasPreviasDAOMemoria());
+        this.almacen.setIntentosFallidosDAO(new IntentosFallidosDAOMemoria());
 
         this.usuario = new Usuario();
         this.usuario.setUsuarioId("testUser");
-        UserDAO usuarioDao = new UserDAOMemoria();
+        this.usuario.setContrasenia("password");
+        usuarioDao = new UserDAOMemoria();
         usuarioDao.guardarUsuario(this.usuario);
         this.validador = new ValidadorDeUsuario();
         this.validador.setUsuarioDao(usuarioDao);
-        this.validador.setAlmacenContrasenias(this.almancen);
+        this.validador.setAlmacenContrasenias(this.almacen);
+        this.horaIntento = LocalDateTime.now();
     }
 
 
@@ -61,55 +68,64 @@ public class TestValidadorDeUsuario {
 
     @Test
     public void validaElAlmacenContrasenias() {
-        this.validador.agregarCriterioDeCreacionDeContrasenia(new CriterioRotacionContrasenia(this.almancen));
-        this.almancen.registrarContrasenia(this.usuario, "nnKKKKK6456/(%nn");
+        this.validador.agregarCriterioDeCreacionDeContrasenia(new CriterioRotacionContrasenia(this.almacen));
+        this.almacen.registrarContrasenia(this.usuario, "nnKKKKK6456/(%nn");
 
         List<String> mensajesDeError = this.validador.validarCreacionContrasenia("testUser","nnKKKKK6456/(%nn");
         Assert.assertEquals(1, mensajesDeError.size());
     }
 
-    @Test
-    public void validarMetodoContraseniaLoginConError(){
+    @Test (expected = UsuarioContraseniaInvalidosException.class)
+    public void validarMetodoContraseniaLoginConError() throws LoginBloqueadoTemporalmenteException, UsuarioContraseniaInvalidosException {
         //TODO: los criterios de login todavia los tengo harcodeados, los tengo que mover a setters
-        List<String> errores = this.validador.validarContraseniaLogin("user","password");
-        Assert.assertEquals(1,errores.size());
+        this.validador.validarLogin("user","password", this.horaIntento);
     }
 
     @Test
-    public void validarMetodoContraseniaLoginSinError(){
-        this.almancen.registrarContrasenia(this.usuario,"password");
-        List<String> errores = this.validador.validarContraseniaLogin("testUser","password");
-        Assert.assertEquals(0,errores.size());
+    public void validarMetodoContraseniaLoginSinError() throws LoginBloqueadoTemporalmenteException, UsuarioContraseniaInvalidosException {
+        this.almacen.registrarContrasenia(this.usuario,"password");
+        Usuario usuario = this.validador.validarLogin("testUser","password", this.horaIntento);
+        Assert.assertNotNull(usuario);
     }
 
     @Test
-    public void validarMetodoContraseniaLoginMultiple() throws InterruptedException {
-        this.almancen.registrarContrasenia(this.usuario,"password");
+    public void validarMetodoContraseniaLoginMultiple() throws InterruptedException, LoginBloqueadoTemporalmenteException, UsuarioContraseniaInvalidosException {
+        this.almacen.registrarContrasenia(this.usuario,"password");
         List<String> errores;
-
         //Intento 1 fallido
-        errores = this.validador.validarContraseniaLogin("testUser","Incorrecta");
-        Assert.assertEquals(1,errores.size());
-        Assert.assertTrue(this.almancen.getIntentosFallidosDeUsuario(this.usuario) != null);
+        try {
+            this.validador.validarLogin("testUser", "Incorrecta", this.horaIntento);
+        } catch (Exception e){
+            Assert.assertEquals(UsuarioContraseniaInvalidosException.class, e.getClass());
+        }
 
         //Intento 2 fallido
-        errores = this.validador.validarContraseniaLogin("testUser","Incorrecta");
-        Assert.assertEquals(1,errores.size());
+        try {
+            this.validador.validarLogin("testUser", "Incorrecta", this.horaIntento);
+        } catch (Exception e){
+            Assert.assertEquals(UsuarioContraseniaInvalidosException.class, e.getClass());
+        }
 
         //Intento 3 fallido
-        errores = this.validador.validarContraseniaLogin("testUser","Incorrecta");
-        Assert.assertEquals(1,errores.size());
-        Assert.assertEquals(3,this.almancen.getIntentosFallidosDeUsuario(usuario).getCantidadIntentos());
+        try {
+            this.validador.validarLogin("testUser", "Incorrecta", this.horaIntento);
+        } catch (Exception e){
+            Assert.assertEquals(UsuarioContraseniaInvalidosException.class, e.getClass());
+            Usuario usuario = this.usuarioDao.buscarUsuarioPoruserId("testUser");
+            Assert.assertEquals(3, this.almacen.getIntentosFallidosDeUsuario(usuario).getIntentosRealizados());
+        }
 
         //Intento 4 correcto sin tiempo de espera
-        errores = this.validador.validarContraseniaLogin("testUser","password");
-        Assert.assertEquals(1,errores.size());
-        System.out.println(errores);
+        try {
+            this.validador.validarLogin("testUser", "password", this.horaIntento);
+        } catch (Exception e){
+            Assert.assertEquals(LoginBloqueadoTemporalmenteException.class, e.getClass());
+        }
 
         //Intento 4 correcto con tiempo de espera
         Thread.sleep(5000);
-        errores = this.validador.validarContraseniaLogin("testUser","password");
-        Assert.assertEquals(0,errores.size());
+        Usuario usuario = this.validador.validarLogin("testUser", "password", this.horaIntento);
+        Assert.assertNotNull(usuario);
     }
 }
 

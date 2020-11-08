@@ -19,9 +19,13 @@ public class TipoComprobante extends EntidadPersistente {
     @Column
     private boolean activo;
 
-public void altaTipoComprobante(String descripcionComprobante){
-    TipoComprobante TipoNuevoComprobante = new  TipoComprobante();
-    TipoNuevoComprobante.descripcion=descripcionComprobante;
+    public void altaTipoComprobante(String descripcionComprobante){
+        TipoComprobante TipoNuevoComprobante = new  TipoComprobante();
+        TipoNuevoComprobante.descripcion=descripcionComprobante;
+    }
+
+    public boolean isActivo() {
+        return activo;
     }
 
     public String getDescripcion() {
@@ -30,10 +34,6 @@ public void altaTipoComprobante(String descripcionComprobante){
 
     public void setDescripcion(String descripcion) {
         this.descripcion = descripcion;
-    }
-
-    public boolean isActivo() {
-        return activo;
     }
 
     public void setActivo(boolean activo) {
