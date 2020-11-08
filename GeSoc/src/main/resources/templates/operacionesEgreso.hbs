@@ -126,7 +126,7 @@ html,body,h1,h2,h3,h4,h5 {font-family: "Raleway", sans-serif}
                     <a href="/egresoEditar?usuarioId={{usuarioId}}&egresoId={{id}}" name="button" class=" btn btn-edit"><i class="fas fa-edit"></i></a>
                    <!-- <a name="adjuntarDocumentoComercial" class="btn btn-primary"><i class="fas fa-paperclip"></i></a>  -->
                     <button type="button" name="button" class="btn" onclick="confirmarEliminacion('{{id}}')"><i class="fas fa-trash"></i></button>
-                    <button type="button" name="adjuntarDocumentoComercial" class="btn btn-primary" onclick="mostrarDocumentoComercialModal('{{id}}')"><i class="fas fa-paperclip" ></i></button>
+                    <button type="button" name="adjuntarDocumentoComercial" class="btn btn-adjuntar-documento" onclick="mostrarDocumentoComercialModal('{{id}}')"><i class="fas fa-paperclip" ></i></button>
                 </td>
             </tr>
         {{/each}}
@@ -142,11 +142,12 @@ html,body,h1,h2,h3,h4,h5 {font-family: "Raleway", sans-serif}
     <div class="modalContent">
         <h3>Agregar Documento Comercial</h3>
         <form>
-            <select id="documentoComercialTipo" name="documentoComercialTipo" class="input-formulario">
+            <select id="documentoComercialTipo" name="documentoComercialTipo" class="input-formulario" onchange="mostrarOcultarAdjuntarRecibo()">
                 <option value="Fisico">Fisico</option>
                 <option value="Digital">Digital</option>
             </select>
             <input id="documentoComercialNumero" name="documentoComercialNumero" type="number" class="input-formulario" placeholder="Numero">
+            <br><br>
             <input type="hidden" id="documentoComercialTipoComprobanteId" name="documentoComercialTipoComprobanteId">
             <input id="documentoComercialTipoComprobante" name="documentoComercialTipoComprobante" type="text" class="input-formulario" placeholder="Tipo de comprobante" readonly>
             <a name="searchDocumentoComercialTipoComprobate" class=" btn btn-search" onclick="mostrarBuscarDocumentoComercialTipoComprobante()"><i class="fas fa-search"></i></a>
@@ -159,13 +160,16 @@ html,body,h1,h2,h3,h4,h5 {font-family: "Raleway", sans-serif}
                 </div>
             </div>
             <br><br>
-            <input id="documentoComercialAdjunto" name="documentoComercialAdjunto" type="file" class="input-formulario">
+
+            <input id="documentoComercialAdjunto" name="documentoComercialAdjunto" type="hidden" class="input-formulario" onchange="previewFile()">
+            <br><br>
+            <div id="seccionImagen" name="seccionImagen"></div>
+
 
         </form>
-        <br>
         <div class="">
             <button type="button" name="button" class="btn-verde" onclick="guardarDocumentoComercial()">Guardar</button>
-            <button type="button" name="button" class="btn-cancelar" onclick="cerrarModal()">Cerrar</button>
+            <button type="button" name="button" class="btn-cancelar" onclick="limpiarAgregarDocumentoModal()">Cerrar</button>
         </div>
     </div>
 </div>

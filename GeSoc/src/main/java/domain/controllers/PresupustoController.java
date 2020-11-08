@@ -189,14 +189,14 @@ public class PresupustoController {
                 TipoComprobante tipoComprobante = new TipoComprobante();
                 tipoComprobante.setDescripcion(request.queryParams("documentoComercialClase"));
                 Long numeroDocumento = new Long(request.queryParams("documentoComercialNumero"));
-                documentoComercial.guardarDocumentoFisico(tipoComprobante, numeroDocumento,null);
-                documentoComercial.setContent(request.queryParams("documentoComercialAdjunto"));
+                documentoComercial.guardarDocumentoFisico(tipoComprobante, numeroDocumento);
+                documentoComercial.setContent(request.queryParams("documentoComercialAdjunto").getBytes());
                 break;
             case "Digital":
             	TipoComprobante tipoComprobanteDigital = new TipoComprobante();
             	tipoComprobanteDigital.setDescripcion(request.queryParams("documentoComercialClase"));
                 Long numeroDocumentoDigital = new Long(request.queryParams("documentoComercialNumero"));
-                documentoComercial.altaDocumentoComercial(tipoComprobanteDigital, numeroDocumentoDigital,"Digital",request.queryParams("documentoComercialAdjunto"));
+                documentoComercial.altaDocumentoComercial(tipoComprobanteDigital, numeroDocumentoDigital,"Digital",request.queryParams("documentoComercialAdjunto").getBytes());
                         
                 break;
         }

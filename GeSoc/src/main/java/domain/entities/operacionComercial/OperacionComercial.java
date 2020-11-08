@@ -42,6 +42,8 @@ public abstract class OperacionComercial extends EntidadPersistente {
     public List<CategoriaDeOperaciones> getCategoriasAsociadas() { return categoriasAsociadas; }
 
     public void setFecha(LocalDate fecha) { this.fecha = fecha; }
+    public void setValorTotal(Double valorTotal) {this.valorTotal = valorTotal; }
+    public void setDocumentoComercial(DocumentoComercial documentoComercial) { this.documentoComercial = documentoComercial; }
     public void setDetalle(List<DetalleEgreso> detalle) {
         this.detalle = detalle;
         actualizarValorTotal();
@@ -86,4 +88,6 @@ public abstract class OperacionComercial extends EntidadPersistente {
     public void quitarCategoriaPorId(int idDeLaCategoriaARemover){
         this.categoriasAsociadas.removeIf( categoria -> categoria.getId() == idDeLaCategoriaARemover);
     }
+
+
 }

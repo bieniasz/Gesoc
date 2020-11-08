@@ -61,7 +61,7 @@ public class OperacionEgresoDAOMemoria implements OperacionEgresoDAO {
         TipoComprobante tipoComprobante = new TipoComprobante();
         tipoComprobante.setDescripcion("Ticket");
         documentoComercial.setTipoDocumentoComercial(tipoComprobante);
-        documentoComercial.setContent("sdaffag");
+        documentoComercial.setContent("sdaffag".getBytes());
         documentoComercial.setNumeroDocumentoComercial((long)45235);
 
         CategoriaDeOperaciones categoria = new CategoriaDeOperaciones();
@@ -130,7 +130,7 @@ public class OperacionEgresoDAOMemoria implements OperacionEgresoDAO {
         TipoComprobante tipoComprobante = new TipoComprobante();
         tipoComprobante.setDescripcion("Ticket");
         documentoComercial.setTipoDocumentoComercial(tipoComprobante);
-        documentoComercial.setContent("sdaffag");
+        documentoComercial.setContent("sdaffag".getBytes());
         documentoComercial.setNumeroDocumentoComercial((long) 45235);
 
         CategoriaDeOperaciones categoria = new CategoriaDeOperaciones();

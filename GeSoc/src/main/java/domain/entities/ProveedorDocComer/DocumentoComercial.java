@@ -21,16 +21,14 @@ public class DocumentoComercial extends EntidadPersistente {
     @Column
     private String tipoDeAdjunto;
 
-    @Column
-    private String content;
+    @Column(columnDefinition = "LONGBLOB")
+    private byte[] content;
 
     @Column
     private boolean activo;
 
 
-    public void guardarDocumentoFisico(TipoComprobante tipo,Long numeroDocumento,String contenido){
-
-        //DocumentoComercial DocFisico = new DocumentoComercial();
+    public void guardarDocumentoFisico(TipoComprobante tipo,Long numeroDocumento){
         this.tipoDocumentoComercial = tipo;
         this.numeroDocumentoComercial = numeroDocumento;
         this.tipoDeAdjunto = "Fisico";
@@ -38,15 +36,14 @@ public class DocumentoComercial extends EntidadPersistente {
         this.activo = true;
     }
 
-    public void altaDocumentoComercial(TipoComprobante tipo,Long numeroDoc,String tipoDeAdjunto,String contenido){
-        DocumentoComercial Documento = new DocumentoComercial();
-        Documento.tipoDocumentoComercial = tipo;
-        Documento.numeroDocumentoComercial = numeroDoc;
-        Documento.tipoDeAdjunto = tipoDeAdjunto;
-        Documento.content=contenido;
+    public void altaDocumentoComercial(TipoComprobante tipo,Long numeroDoc,String tipoDeAdjunto,byte[] contenido){
+        this.tipoDocumentoComercial = tipo;
+        this.numeroDocumentoComercial = numeroDoc;
+        this.tipoDeAdjunto = tipoDeAdjunto;
+        this.content=contenido;
     }
 
-	public void setContent(String contenido) {
+	public void setContent(byte[] contenido) {
 		 this.content=contenido;
 		
 	}
@@ -75,7 +72,7 @@ public class DocumentoComercial extends EntidadPersistente {
         this.tipoDeAdjunto = tipoDeAdjunto;
     }
 
-    public String getContent() {
+    public byte[] getContent() {
         return content;
     }
 

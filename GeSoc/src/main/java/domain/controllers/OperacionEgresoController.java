@@ -61,8 +61,6 @@ public class OperacionEgresoController {
 
     public Response guardar(Request request, Response response) throws Exception {
 
-        //DocumentoComercial documentoComercial = this.crearDocumentoComercial(request);
-
         Proveedor proveedor = proveedorDAO.getProveedor(new Integer(request.queryParams("proveedorId")));
         LocalDate fecha = LocalDate.parse(request.queryParams("fecha"));
         Integer cantidadPresupuestos = Integer.parseInt(request.queryParams("cantidadEsperadaPresupuestos"));
@@ -77,7 +75,6 @@ public class OperacionEgresoController {
         builder.setFecha(fecha);
         builder.setNumeroIdentificadorMedioPago(request.queryParams("numeroIdentificadorDelMedio"));
         builder.setMedioDePago(medioDePago);
-       // builder.setDocumentoComercial(documentoComercial);
         builder.setOrganizacion(organizacion);
         builder.setDetalle(detallesEgresos);
         builder.setCategoriasAsociadas(categoriasDeOperaciones);
@@ -230,7 +227,7 @@ public class OperacionEgresoController {
         return  detallesEgresos;
     }
 
-    public Response guardarDocumentoComercial(Request request, Response response) {
+    public Response guardarDocumentoComercial(Request request, Response response) throws Exception {
 
         System.out.println("---- EGRESOID: " + request.queryParams("egresoId"));
         System.out.println("---- TIPO DOCUMENTO: " + request.queryParams("tipoDocumento"));
@@ -238,23 +235,27 @@ public class OperacionEgresoController {
         System.out.println("---- TIPO COMPROBANTE ID: " + request.queryParams("tipoComprobanteId"));
         System.out.println("---- CONTENIDO: " + request.queryParams("contenidoSerializado"));
 
-       /* DocumentoComercial documentoComercial = new DocumentoComercial();
 
-        switch (request.queryParams("documentoComercialTipo")) {
+        TipoComprobante tipoComprobante = new TipoComprobanteDAOMySQL().buscarTipoComprobantePorId(new Integer(request.queryParams("tipoComprobanteId")));
+
+        DocumentoComercial documentoComercial = new DocumentoComercial();
+        documentoComercial.setNumeroDocumentoComercial(new Long(request.queryParams("numero")));
+        documentoComercial.setTipoDocumentoComercial(tipoComprobante);
+        documentoComercial.setActivo(true);
+        switch (request.queryParams("tipoDocumento")) {
             case "Fisico":
-                TipoComprobante tipoComprobante = this.tipoComprobanteDAO.buscarTipoComprobantePorId(new Integer(request.queryParams("documentoComercialTipoComprobanteId")));
-                Long numeroDocumento = new Long(request.queryParams("documentoComercialNumero"));
-
-                documentoComercial.guardarDocumentoFisico(tipoComprobante, numeroDocumento,null);
+                documentoComercial.setTipoDeAdjunto("Fisico");
+                documentoComercial.setContent(null);
                 break;
             case "Digital":
-            	TipoComprobante tipoComprobanteDigital = new TipoComprobante();
-            	tipoComprobanteDigital.setDescripcion(request.queryParams("documentoComercialClase"));
-                Long numeroDocumentoDigital = new Long(request.queryParams("documentoComercialNumero"));
-                documentoComercial.altaDocumentoComercial(tipoComprobanteDigital, numeroDocumentoDigital,"Digital",request.queryParams("documentoComercialAdjunto"));
-                        
-                break;
-        } */
+                documentoComercial.setTipoDeAdjunto("Digital");
+                documentoComercial.setContent(request.queryParams("contenidoSerializado").getBytes());
+        }
+
+        OperacionEgreso egreso = new OperacionEgresoDAOMySQL().buscarOperacionEgresoPorId(new Integer(request.queryParams("egresoId")));
+        egreso.setDocumentoComercial(documentoComercial);
+
+        this.operacionEgresoDAO.modificarOperacionEgreso(egreso);
 
         return response;
     }
