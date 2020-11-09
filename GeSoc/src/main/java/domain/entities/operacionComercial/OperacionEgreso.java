@@ -28,7 +28,6 @@ public class OperacionEgreso extends OperacionComercial {
     private Proveedor proveedor;
 
     @ManyToOne(fetch = FetchType.LAZY, cascade=CascadeType.ALL)
-    //@JoinColumn(name = "domain/entities/organizacion",referencedColumnName = "id")
     @JoinColumn(name = "organizacion",referencedColumnName = "id")
     private Organizacion organizacion;
 

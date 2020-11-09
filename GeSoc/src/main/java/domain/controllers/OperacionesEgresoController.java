@@ -19,6 +19,7 @@ public class OperacionesEgresoController {
     private CategoriaDAO categoriaDAO = new CategoriaDAOMySQL();
     private UserDAO userDAO = new UserDAOMySQL();
     private TipoComprobanteDAO tipoComprobanteDAO = new TipoComprobanteDAOMySQL();
+    private ImagenesDAO imagenesDAO = new ImagenesDAOMySQL();
 
     public ModelAndView mostrarEgresos(Request request, Response response)  throws Exception {
 
@@ -28,6 +29,7 @@ public class OperacionesEgresoController {
 
         Usuario usuario = this.userDAO.buscarUsuarioPoruserId(usuarioIDSpark);
         List<OperacionEgreso> egresos = this.operacionEgresoDAO.getOperacionesEgresoPorOrganizacion(usuario.getRol().getOrganizacion().getId());
+        this.arreglarImagenEgresos(egresos);
         List<CategoriaDeOperaciones> categorias = this.categoriaDAO.getTodasLasCategorias();
         String nombreFicticioOrganizacion = usuario.getRol().getOrganizacion().getNombreFicticio();
         List<TipoComprobante> tipoComprobanteList = this.tipoComprobanteDAO.buscarTodosLosTiposDeComprobantes();
@@ -40,6 +42,19 @@ public class OperacionesEgresoController {
         parametros.put("tiposCombantes", tipoComprobanteList);
 
         return new ModelAndView(parametros, "operacionesEgreso.hbs");
+    }
+
+    private void arreglarImagenEgresos(List<OperacionEgreso> egresos) {
+        egresos.forEach( egreso -> {
+                try {
+                    String content = this.imagenesDAO.buscarContenido(egreso.getId());
+                    System.out.println("DOCUMENTO: " + content);
+
+                    egreso.getDocumentoComercial().setContentDeserealizado(content);
+                } catch (Exception e){}
+
+            });
+
     }
 
 }

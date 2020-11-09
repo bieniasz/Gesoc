@@ -23,6 +23,7 @@ public class DocumentoComercial extends EntidadPersistente {
 
     @Column(columnDefinition = "LONGBLOB")
     private byte[] content;
+    private String contentDeserealizado;
 
     @Column
     private boolean activo;
@@ -82,5 +83,13 @@ public class DocumentoComercial extends EntidadPersistente {
 
     public void setActivo(boolean activo) {
         this.activo = activo;
+    }
+
+    public String getContentDeserealizado() {
+        return contentDeserealizado;
+    }
+
+    public void setContentDeserealizado(String contentDeserealizado) {
+        this.contentDeserealizado = contentDeserealizado;
     }
 }

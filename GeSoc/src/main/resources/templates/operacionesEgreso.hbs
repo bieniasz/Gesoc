@@ -119,14 +119,9 @@ html,body,h1,h2,h3,h4,h5 {font-family: "Raleway", sans-serif}
                 <td>{{fecha}}</td>
                 <td>Egreso {{id}}</td>
                 <td>{{valorTotal}}</td>
-
-
                 <td>
-                    <!--<a href="/usuario/{{id}}" name="button" style="margin:0px;" class="btn btn-border btn-border-blue" ><i class="far fa-eye"></i></a>-->
                     <a href="/egresoEditar?egresoId={{id}}" name="button" class=" btn btn-edit"><i class="fas fa-edit"></i></a>
-                   <!-- <a name="adjuntarDocumentoComercial" class="btn btn-primary"><i class="fas fa-paperclip"></i></a>  -->
-                    <button type="button" name="button" class="btn" onclick="confirmarEliminacion('{{id}}')"><i class="fas fa-trash"></i></button>
-                    <button type="button" name="adjuntarDocumentoComercial" class="btn btn-adjuntar-documento" onclick="mostrarDocumentoComercialModal('{{id}}')"><i class="fas fa-paperclip" ></i></button>
+                    <button type="button" name="adjuntarDocumentoComercial" class="btn btn-adjuntar-documento" {{#if documentoComercial}} onclick="mostrarDocumentoComercialModalPopulado('{{id}}', '{{documentoComercial.tipoDocumentoComercial.descripcion}}', '{{documentoComercial.tipoDocumentoComercial.id}}', '{{documentoComercial.numeroDocumentoComercial}}', '{{documentoComercial.tipoDeAdjunto}}', '{{documentoComercial.contentDeserealizado}}')" {{else}} onclick="mostrarDocumentoComercialModal('{{id}}')" {{/if}}><i class="fas fa-paperclip" ></i></button>
                 </td>
             </tr>
         {{/each}}
