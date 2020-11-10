@@ -139,6 +139,8 @@ public class PresupuestoController {
         Boolean esElElegido = this.getEsElElegido(request);
         
         OperacionEgreso egreso= this.operacionEgresoDAO.buscarOperacionEgresoPorId(new Integer(request.queryParams("egreso")));
+        
+        Integer egresoId = new Integer(request.queryParams("egreso"));
        
         LocalDate fecha = LocalDate.parse(request.queryParams("fecha"));
         
@@ -156,7 +158,7 @@ public class PresupuestoController {
 
         this.presupuestoDAO.guardarPresupuesto(presupuesto);
 
-        response.redirect("/operacionesEgreso");
+        response.redirect("/presupuestos?egresoId="+egresoId);
         return response;
         
              
