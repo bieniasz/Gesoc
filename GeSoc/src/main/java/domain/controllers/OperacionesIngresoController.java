@@ -36,8 +36,6 @@ public class OperacionesIngresoController {
 
         parametros.put("ingresos", ingresos);
 
-
-
         return new ModelAndView(parametros, "operacionesIngreso.hbs");
     }
 
