@@ -2,8 +2,7 @@ function mostrarBuscarEgreso() {
   document.getElementById("buscarEgreso").classList.toggle("show");
 }
 
-function llenarEgreso(egreso, id) {
-    document.getElementById("egreso").value = egreso;
-    document.getElementById("egresoId").value = id;
+function llenarEgreso(egreso) {
+    document.getElementById("egreso").value = egreso;  
     document.getElementById("buscarEgreso").classList.toggle("show");
 }

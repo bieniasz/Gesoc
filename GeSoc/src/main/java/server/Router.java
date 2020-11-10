@@ -33,7 +33,7 @@ public class Router {
         BandejaDeMensajesController controllerBandejaDeMensajes = new BandejaDeMensajesController();
         OperacionEgresoController controllerOperacionEgreso = new OperacionEgresoController();
         OperacionIngresoController controllerOperacionIngreso = new OperacionIngresoController();
-        PresupustoController controllerPresupuesto = new PresupustoController();
+        PresupuestoController controllerPresupuesto = new PresupuestoController();
         AuthMiddleware authMiddleware       = new AuthMiddleware();
 
         Spark.get("/", controllerLogin::mostrarLogin, Router.engine);
@@ -69,8 +69,9 @@ public class Router {
 
         
         Spark.get("/presupuesto", controllerPresupuesto::nuevoPresupuesto, Router.engine);
+        Spark.get("/presupuestos", controllerPresupuesto::mostrarPresupuestos, Router.engine);
         Spark.before("/presupuesto", authMiddleware::verificarSesionGeneral);
-        //Spark.post("/presupuesto", controllerPresupuesto::guardar, Router.engine);
+        Spark.post("/presupuesto", controllerPresupuesto::guardar);
 
         
         

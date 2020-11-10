@@ -1,6 +1,6 @@
 <!DOCTYPE html>
 <html>
-<title>Gesoc09 - Operaciones de egreso</title>
+<title>Gesoc09 - Presupuestos</title>
 <meta charset="utf-8">
 <meta name="viewport" content="width=device-width, initial-scale=1">
 <link rel="stylesheet" href="css/w3.css">
@@ -72,37 +72,23 @@ html,body,h1,h2,h3,h4,h5 {font-family: "Raleway", sans-serif}
 
   <!-- Header -->
   <header class="titulo" style="padding-top:22px">
-    <b><i class="fa fa-bank fa-fw"></i> Operaciones de egreso</b>
+    <b><i class="fa fa-bank fa-fw"></i> Presupuestos</b>
   </header>
 
   <div id="wrap">
 
         
 
-<!-- !Operaciones! -->
-      <h3 style="margin-bottom: 0px;margin-left: 10px">Listado de egresos
-        <a href="egreso" class="btn-border-blue fuente"><i class="fa fa-plus-circle"></i> Nueva operacion</a>
-        <a name="searchCategoria" class=" btn-border-blue fuente" onclick="mostrarBuscarCategorias()"><i class="fa fa-filter"></i></a>
-
+<!-- !Presupuesto! -->
+      <h3 style="margin-bottom: 0px;margin-left: 10px">Listado de presupuestos
+        
       </h3>
-      <div class="dropdown">
-           <div id="buscarCategoria" class="dropdown-content">
-               <input type="text" placeholder="Search.." id="inputBuscarCategoria" onkeyup="filterFunction('buscarCategoria','inputBuscarCategoria')">
-               {{#each categorias}}
-                   <a onClick="agregarCategoria('{{descripcion}}', '{{id}}')">{{descripcion}}</a>
-               {{/each}}
-           </div>
-      </div>
+      
 
-      <div id="seccionCategorias" style="cursor:pointer"></div>
-         
-        <div id="filtros" style="display: none"> 
-          Filtros acá
-        </div>
-
+      
       <div id="divTablaGrande">
 
-          <input type="hidden" id="idEgresoSeleccionadoParaAdjuntarRecibo" name="idEgresoSeleccionadoParaAdjuntarRecibo">
+       <input type="hidden" id="idEgresoSeleccionadoParaAdjuntarRecibo" name="idEgresoSeleccionadoParaAdjuntarRecibo">
       <table class="tabla" id="tabla3">
         <thead>
 
@@ -114,16 +100,14 @@ html,body,h1,h2,h3,h4,h5 {font-family: "Raleway", sans-serif}
         </thead>
 
         <tbody>
-        {{#each egresos}}
+        {{#each presupuesto}}
             <tr>
                 <td>{{fecha}}</td>
-                <td>Egreso {{id}}</td>
+                <td>Presupuesto {{id}}</td>
                 <td>{{valorTotal}}</td>
                 <td>
-                    <a href="/egresoEditar?egresoId={{id}}" name="button" class=" btn btn-edit"><i class="fas fa-edit"></i></a>
-                    <button type="button" name="adjuntarDocumentoComercial" class="btn btn-adjuntar-documento" {{#if documentoComercial}} onclick="mostrarDocumentoComercialModalPopulado('{{id}}', '{{documentoComercial.tipoDocumentoComercial.descripcion}}', '{{documentoComercial.tipoDocumentoComercial.id}}', '{{documentoComercial.numeroDocumentoComercial}}', '{{documentoComercial.tipoDeAdjunto}}', '{{documentoComercial.contentDeserealizado}}')" {{else}} onclick="mostrarDocumentoComercialModal('{{id}}')" {{/if}}><i class="fas fa-paperclip" ></i></button>
-                	<a name="crearPresupuesto" class="btn btn-adjuntar-documento"  href="/presupuesto?egresoId={{id}}"><i class="fas fa-cash-register" ></i></a>
-                	<a name="verPresupuestos" class="btn btn-adjuntar-documento"  href="/presupuestos?egresoId={{id}}"><i class="fas fa-list-ul"></i></a>
+                    <a href="/egresoEditar?egresoId={{id}}" name="button" class=" btn btn-edit"><i class="fas fa-edit"></i></a> 
+                   
                 </td>
             </tr>
         {{/each}}
@@ -134,43 +118,7 @@ html,body,h1,h2,h3,h4,h5 {font-family: "Raleway", sans-serif}
 </div>
 </div>
 
-<!-- ================= MODAL AGREGAR DOCUMENTO COMERCIAL ================== -->
-<div class="modalAgregarDetalle modal" id="modalAgregarDetalle">
-    <div class="modalContent">
-        <h3>Agregar Documento Comercial</h3>
-        <form>
-            <select id="documentoComercialTipo" name="documentoComercialTipo" class="input-formulario" onchange="mostrarOcultarAdjuntarRecibo()">
-                <option value="Fisico">Fisico</option>
-                <option value="Digital">Digital</option>
-            </select>
-            <input id="documentoComercialNumero" name="documentoComercialNumero" type="number" class="input-formulario" placeholder="Numero">
-            <br><br>
-            <input type="hidden" id="documentoComercialTipoComprobanteId" name="documentoComercialTipoComprobanteId">
-            <input id="documentoComercialTipoComprobante" name="documentoComercialTipoComprobante" type="text" class="input-formulario" placeholder="Tipo de comprobante" readonly>
-            <a name="searchDocumentoComercialTipoComprobate" class=" btn btn-search" onclick="mostrarBuscarDocumentoComercialTipoComprobante()"><i class="fas fa-search"></i></a>
-            <div class="dropdown">
-                <div id="buscarDocumentoComercialTipoComprobante" class="dropdown-content">
-                    <input type="text" placeholder="Search.." id="inputBuscarDocumentoComercialTipoComprobante" onkeyup="filterFunction('buscarDocumentoComercialTipoComprobante','inputBuscarDocumentoComercialTipoComprobante')">
-                    {{#each tiposCombantes}}
-                        <a onClick="llenarTipoComprobante('{{id}}', '{{descripcion}}')">{{descripcion}}</a>
-                    {{/each}}
-                </div>
-            </div>
-            <br><br>
 
-            <input id="documentoComercialAdjunto" name="documentoComercialAdjunto" type="hidden" class="input-formulario" onchange="previewFile()">
-            <br><br>
-            <div id="seccionImagen" name="seccionImagen"></div>
-
-
-        </form>
-        <div class="">
-            <button type="button" name="button" class="btn-verde" onclick="guardarDocumentoComercial()">Guardar</button>
-            
-            <button type="button" name="button" class="btn-cancelar" onclick="limpiarAgregarDocumentoModal()">Cerrar</button>
-        </div>
-    </div>
-</div>
 
     <!-- Footer -->
 

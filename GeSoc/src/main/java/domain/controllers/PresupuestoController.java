@@ -26,7 +26,7 @@ import java.util.stream.IntStream;
 import java.util.Arrays;
 import java.util.stream.Stream;
 
-public class PresupustoController {
+public class PresupuestoController {
 
     private ProveedorDAO proveedorDAO = new ProveedorDAOMySQL();
     private OrganizacionDAO organizacionDao = new OrganizacionDAOMemoria();
@@ -35,6 +35,32 @@ public class PresupustoController {
     private PresupuestoDAO presupuestoDAO = new PresupuestoDAOMySQL();
     private UserDAO userDAO = new UserDAOMySQL();
 
+    
+    public ModelAndView mostrarPresupuestos(Request request, Response response)  throws Exception {
+
+       
+        String usuarioIDSpark = request.session().attribute("id");
+        
+        Integer idEgreso = new Integer(request.queryParams("egresoId"));
+
+        Usuario usuario = this.userDAO.buscarUsuarioPoruserId(usuarioIDSpark);
+        List<OperacionEgreso> egresos = this.operacionEgresoDAO.getOperacionesEgresoPorOrganizacion(usuario.getRol().getOrganizacion().getId());
+    
+        List<CategoriaDeOperaciones> categorias = this.categoriaDAO.getTodasLasCategorias();
+        String nombreFicticioOrganizacion = usuario.getRol().getOrganizacion().getNombreFicticio();
+    
+        List<Presupuesto> presupuestos= this.operacionEgresoDAO.buscarOperacionEgresoPorId(idEgreso).getPresupuestos();
+        
+        		
+        Map<String, Object> parametros = new HashMap<>();
+        parametros.put("categorias", categorias);
+        parametros.put("usuarioId", usuarioIDSpark);
+        parametros.put("presupuestos", presupuestos);
+        parametros.put("nombreFicticioOrganizacion", nombreFicticioOrganizacion);
+      
+
+        return new ModelAndView(parametros, "presupuestos.hbs");
+    }
 
 
     public ModelAndView editarPresupuesto(Request request, Response response) throws Exception {
@@ -89,21 +115,20 @@ public class PresupustoController {
     }
 
     public ModelAndView nuevoPresupuesto(Request request, Response response) throws Exception {
-    	// FALTA DAO PARA MOSTRAR OPERACIONES DE EGRESO
+    	
 
         //String usuarioID = request.queryParams("usuarioId");
         String usuarioIDSpark = request.session().attribute("id");
         Usuario usuario = userDAO.buscarUsuarioPoruserId(usuarioIDSpark);
         String nombreFicticioOrganizacion = usuario.getRol().getOrganizacion().getNombreFicticio();
 
-        Integer organizacionId = new Integer(request.queryParams("organizacionId"));
-        
-    	List<OperacionEgreso> operacionesEgreso = this.operacionEgresoDAO.getOperacionesEgresoPorOrganizacion(organizacionId);   
+        Integer organizacionId =  usuario.getRol().getOrganizacion().getId();        
+    	
     	List<CategoriaDeOperaciones> categorias = this.categoriaDAO.getTodasLasCategorias();
         Map<String, Object> parametros = new HashMap<>();
         parametros.put("categorias", categorias);
         parametros.put("usuarioId", usuarioIDSpark);
-        parametros.put("egreso", operacionesEgreso);
+        parametros.put("egresoId", request.queryParams("egresoId"));
         parametros.put("nombreFicticioOrganizacion", nombreFicticioOrganizacion);
 
        return new ModelAndView( parametros, "nuevoPresupuesto.hbs");
@@ -111,20 +136,26 @@ public class PresupustoController {
     }
 
     public Response guardar(Request request, Response response) throws Exception {
-        String usuarioIDSpark = request.session().attribute("id");
        
-        DocumentoComercial documentoComercial = this.crearDocumentoComercial(request);
-        //Todo está bien usar el integer para el id?
-        Organizacion organizacion = organizacionDao.getOrganizacionPorUsuarioId(new Integer(request.queryParams("usuarioId")));
+    	String usuarioIDSpark = request.session().attribute("id");       
+       
+               
         List<DetalleEgreso> detallesEgresos = this.getListaDeDetalle(request);
+        
         Boolean esElElegido = this.getEsElElegido(request);
         
-
+        OperacionEgreso egreso= this.operacionEgresoDAO.buscarOperacionEgresoPorId(new Integer(request.queryParams("egreso")));
+       
+        LocalDate fecha = LocalDate.parse(request.queryParams("fecha"));
+        
+        List<CategoriaDeOperaciones> categoriasDeOperaciones = this.getListaDeCategorias(request);
+        
         
         PresupuestoBuilder builder = new PresupuestoBuilder();
-        
+        builder.setCategoriasAsociadas(categoriasDeOperaciones);
+        builder.setFecha(fecha);
         builder.setDetalle(detallesEgresos);
-        //builder.setEgreso(egreso);
+        builder.setEgreso(egreso);
         builder.setEsElElegido(esElElegido);
       
         Presupuesto presupuesto = builder.build();
@@ -147,44 +178,54 @@ public class PresupustoController {
 		return respuesta;
 	}
 
-	private List<CategoriaDeOperaciones> getListaDeCategorias(Request request) {
+    private List<CategoriaDeOperaciones> getListaDeCategorias(Request request) {
 
         List<CategoriaDeOperaciones> categorias = new ArrayList<>();
+        System.out.println("Cantidad de categorias agregadas: " + request.queryParams("cantidadDeCategoriasNuevas"));
+        Integer cantidadDeCategorias = new Integer(request.queryParams("cantidadDeCategoriasNuevas"));
 
         try {
-            Integer cantidadDeCategorias = new Integer(request.queryParams("cantidadDeCategoriasNuevas"));
             IntStream.range(0,cantidadDeCategorias).forEach( i -> {
 
+                int idDeLaCategoria = new Integer(request.queryParams("categoriaNuevaId" + i));
+                System.out.println("Id de la categoria en DB: " + idDeLaCategoria);
+
                 try {
-                    int idDeLaCategoria = new Integer(request.queryParams("categoriaNuevaId" + i));
+
                     CategoriaDeOperaciones categoria = this.categoriaDAO.buscarCategoriaPorId(idDeLaCategoria);
+
+                    System.out.println("Descripcion categoria: " + categoria.getDescripcion());
                     categorias.add(categoria);
                 } catch (Exception e) {}
             });
 
         } catch (Exception e) {}
 
+        System.out.println("LONGITUD LISTA CATEGORIAS: " + categorias.size());
         return  categorias;
     }
 
-    private List<DetalleEgreso> getListaDeDetalle(Request request) {
-        //TODO: controlar que la cantidad de egresos no sea nula, va en la vista
-        //TODO: eliminar detalles
-        Integer cantidadDeEgresos = new Integer(request.queryParams("cantidadDetalles"));
-
+	private List<DetalleEgreso> getListaDeDetalle(Request request) {
         List<DetalleEgreso> detallesEgresos = new ArrayList<>();
-        IntStream.range(0,cantidadDeEgresos).forEach( i -> {
 
-            DetalleEgreso detalleEgreso = new DetalleEgreso();
-            detalleEgreso.setValorTotal(new Double(request.queryParams("valorItem" + i)));
-            detalleEgreso.setCantidad(new Integer(request.queryParams("cantidadItem" + i)));
+        try {
+            Integer cantidadDeEgresos = new Integer(request.queryParams("cantidadDetalles"));
+            IntStream.range(0,cantidadDeEgresos).forEach( i -> {
+                try {
+                    DetalleEgreso detalleEgreso = new DetalleEgreso();
+                    detalleEgreso.setValorTotal(new Double(request.queryParams("valorItem" + i)));
+                    detalleEgreso.setCantidad(new Integer(request.queryParams("cantidadItem" + i)));
 
-            Item item = new Item();
-            item.setDescripcion(request.queryParams("descripcionItem" + i));
-            detalleEgreso.setItem(item);
+                    Item item = new Item();
+                    item.setDescripcion(request.queryParams("descripcionItem" + i));
+                    detalleEgreso.setItem(item);
 
-            detallesEgresos.add(detalleEgreso);
-        });
+                    detallesEgresos.add(detalleEgreso);
+                } catch ( Exception e) {}
+
+            });
+        } catch (Exception e) {}
+
 
         return  detallesEgresos;
     }
