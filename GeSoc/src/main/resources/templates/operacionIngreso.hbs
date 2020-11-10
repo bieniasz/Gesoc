@@ -77,15 +77,13 @@
     <a href="/operacionesEgreso" class="w3-bar-item w3-button w3-padding"><i class="fa fa-bank fa-fw"></i>&nbsp;Egresos</a>
     <a href="/operacionesIngreso" class="w3-bar-item w3-button w3-padding"><i class="fa fa-bank fa-fw"></i>&nbsp;Ingresos</a>
     <!-- <a href="#" class="w3-bar-item w3-button w3-padding"><i class="fa fa-book"></i>&nbsp;Documentos comerciales</a> -->
-    <a href="/bandejaDeMensajes" class="w3-bar-item w3-button"><i class="fa fa-envelope"></i>&nbsp;Bandeja de mensajes</a>
+    <a href="/bandejaDeMensajes" class="w3-bar-item w3-button" {{#if usuarioRevisor}} {{else}} style="display: none" {{/if}}><i class="fa fa-envelope"></i>&nbsp;Bandeja de mensajes</a>
 
   </div>
   <div class="w3-bar-block" style="margin-top: 20px">
   <a href="/cerrarSesion" class="w3-bar-item w3-button"><i class="fa fa-power-off"></i>&nbsp;<b>Cerrar sesión</b></a>
 </div>
 </nav>
-
-
 
 <!-- Overlay effect when opening sidebar on small screens -->
 <div class="w3-overlay w3-hide-large w3-animate-opacity" onclick="w3_close()" style="cursor:pointer" title="close side menu" id="myOverlay"></div>

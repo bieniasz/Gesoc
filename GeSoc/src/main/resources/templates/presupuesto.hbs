@@ -53,7 +53,7 @@ html,body,h1,h2,h3,h4,h5 {font-family: "Raleway", sans-serif}
     <a href="/operacionesEgreso" class="w3-bar-item w3-button w3-padding"><i class="fa fa-bank fa-fw"></i>&nbsp;Egresos</a>
     <a href="/operacionesIngreso" class="w3-bar-item w3-button w3-padding"><i class="fa fa-bank fa-fw"></i>&nbsp;Ingresos</a>
     <!-- <a href="#" class="w3-bar-item w3-button w3-padding"><i class="fa fa-book"></i>&nbsp;Documentos comerciales</a> -->
-    <a href="/bandejaDeMensajes" class="w3-bar-item w3-button"><i class="fa fa-envelope"></i>&nbsp;Bandeja de mensajes</a>
+    <a href="/bandejaDeMensajes" class="w3-bar-item w3-button" {{#if usuarioRevisor}} {{else}} style="display: none" {{/if}}><i class="fa fa-envelope"></i>&nbsp;Bandeja de mensajes</a>
 
   </div>
   <div class="w3-bar-block" style="margin-top: 20px">

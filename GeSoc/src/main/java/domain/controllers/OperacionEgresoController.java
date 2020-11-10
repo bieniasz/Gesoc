@@ -33,6 +33,7 @@ public class OperacionEgresoController {
     private UserDAO userDAO = new UserDAOMySQL();
     private MedioDePagoDAO medioDePagoDAO = new MedioDePagoDAOMySQL();
     private TipoComprobanteDAO tipoComprobanteDAO = new TipoComprobanteDAOMySQL();
+    private UsuarioHandler usuarioHandler = new UsuarioHandler();
 
 
 
@@ -40,19 +41,21 @@ public class OperacionEgresoController {
         String usuarioIDSpark = request.session().attribute("id");
         Usuario usuario = userDAO.buscarUsuarioPoruserId(usuarioIDSpark);
 
-        String nombreFicticioOrganizacion = usuario.getRol().getOrganizacion().getNombreFicticio();
         List<Proveedor> proveedores = this.proveedorDAO.getTodosLosProveedores();
         List<CategoriaDeOperaciones> categorias = this.categoriaDAO.getTodasLasCategorias();
         List<MedioDePago> medioDePagoList = this.medioDePagoDAO.buscarTodosLosMediosDePago();
         List<TipoComprobante> tipoComprobanteList = this.tipoComprobanteDAO.buscarTodosLosTiposDeComprobantes();
 
         Map<String, Object> parametros = new HashMap<>();
+
+        //Devuelve la lista de parametros con la información del rol de usuario y los datos que van en el menú.
+        usuarioHandler.agregarDatosDeUsuario(parametros,usuario);
+
         parametros.put("provedoores", proveedores);
         parametros.put("categorias", categorias);
         parametros.put("mediosDePago", medioDePagoList);
         parametros.put("tiposCombantes", tipoComprobanteList);
-        parametros.put("usuarioId", usuarioIDSpark);
-        parametros.put("nombreFicticioOrganizacion", nombreFicticioOrganizacion);
+
 
         return new ModelAndView( parametros, "operacionEgresoNuevo.hbs");
     }
@@ -90,7 +93,6 @@ public class OperacionEgresoController {
         //TODO: que no se pueda guardar si no tenes ningun detalle de egreso
         String usuarioIDSpark = request.session().attribute("id");
         Usuario usuario = userDAO.buscarUsuarioPoruserId(usuarioIDSpark);
-        String nombreFicticioOrganizacion = usuario.getRol().getOrganizacion().getNombreFicticio();
 
         Integer id = new Integer(request.queryParams("egresoId"));
         OperacionEgreso operacionEgreso = this.operacionEgresoDAO.buscarOperacionEgresoPorId(id);
@@ -100,13 +102,16 @@ public class OperacionEgresoController {
         List<TipoComprobante> tipoComprobanteList = this.tipoComprobanteDAO.buscarTodosLosTiposDeComprobantes();
 
         Map<String, Object> parametros = new HashMap<>();
+
+        //Devuelve la lista de parametros con la información del rol de usuario y los datos que van en el menú.
+        usuarioHandler.agregarDatosDeUsuario(parametros,usuario);
+
         parametros.put("provedoores", proveedores);
         parametros.put("categorias", categorias);
         parametros.put("mediosDePago", medioDePagoList);
         parametros.put("tiposCombantes", tipoComprobanteList);
-        parametros.put("usuarioId", usuarioIDSpark);
         parametros.put("egreso", operacionEgreso);
-        parametros.put("nombreFicticioOrganizacion", nombreFicticioOrganizacion);
+
 
         return new ModelAndView( parametros, "operacionEgresoNuevo.hbs");
     }

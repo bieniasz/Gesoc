@@ -4,7 +4,9 @@ import db.DAOs.*;
 import domain.entities.ProveedorDocComer.TipoComprobante;
 import domain.entities.operacionComercial.CategoriaDeOperaciones;
 import domain.entities.operacionComercial.OperacionEgreso;
+import domain.entities.usuario.Rol;
 import domain.entities.usuario.Usuario;
+import domain.entities.usuario.UsuarioRevisor;
 import spark.ModelAndView;
 import spark.Request;
 import spark.Response;
@@ -20,26 +22,27 @@ public class OperacionesEgresoController {
     private UserDAO userDAO = new UserDAOMySQL();
     private TipoComprobanteDAO tipoComprobanteDAO = new TipoComprobanteDAOMySQL();
     private ImagenesDAO imagenesDAO = new ImagenesDAOMySQL();
+    private UsuarioHandler usuarioHandler = new UsuarioHandler();
 
     public ModelAndView mostrarEgresos(Request request, Response response)  throws Exception {
 
-        //String usuarioID = request.queryParams("usuarioId");
-        //System.out.println("query" + usuarioID);
         String usuarioIDSpark = request.session().attribute("id");
-
         Usuario usuario = this.userDAO.buscarUsuarioPoruserId(usuarioIDSpark);
+
         List<OperacionEgreso> egresos = this.operacionEgresoDAO.getOperacionesEgresoPorOrganizacion(usuario.getRol().getOrganizacion().getId());
         this.arreglarImagenEgresos(egresos);
         List<CategoriaDeOperaciones> categorias = this.categoriaDAO.getTodasLasCategorias();
-        String nombreFicticioOrganizacion = usuario.getRol().getOrganizacion().getNombreFicticio();
         List<TipoComprobante> tipoComprobanteList = this.tipoComprobanteDAO.buscarTodosLosTiposDeComprobantes();
 
         Map<String, Object> parametros = new HashMap<>();
+
+        //Devuelve la lista de parametros con la información del rol de usuario y los datos que van en el menú.
+        usuarioHandler.agregarDatosDeUsuario(parametros,usuario);
+
         parametros.put("categorias", categorias);
-        parametros.put("usuarioId", usuarioIDSpark);
         parametros.put("egresos", egresos);
-        parametros.put("nombreFicticioOrganizacion", nombreFicticioOrganizacion);
         parametros.put("tiposCombantes", tipoComprobanteList);
+
 
         return new ModelAndView(parametros, "operacionesEgreso.hbs");
     }
@@ -56,5 +59,7 @@ public class OperacionesEgresoController {
             });
 
     }
+
+
 
 }

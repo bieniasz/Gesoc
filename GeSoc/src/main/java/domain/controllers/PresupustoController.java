@@ -34,15 +34,14 @@ public class PresupustoController {
     private CategoriaDAO categoriaDAO = new CategoriaDAOMemoria();
     private PresupuestoDAO presupuestoDAO = new PresupuestoDAOMySQL();
     private UserDAO userDAO = new UserDAOMySQL();
+    private UsuarioHandler usuarioHandler = new UsuarioHandler();
 
 
 
     public ModelAndView editarPresupuesto(Request request, Response response) throws Exception {
 
-        //String usuarioID = request.queryParams("usuarioId");
         String usuarioIDSpark = request.session().attribute("id");
         Usuario usuario = userDAO.buscarUsuarioPoruserId(usuarioIDSpark);
-        String nombreFicticioOrganizacion = usuario.getRol().getOrganizacion().getNombreFicticio();
 
         Integer id = new Integer(request.queryParams("presupuestoId"));
 
@@ -55,15 +54,14 @@ public class PresupustoController {
 
         List<Proveedor> proveedores = this.proveedorDAO.getTodosLosProveedores();
         List<CategoriaDeOperaciones> categorias = this.categoriaDAO.getTodasLasCategorias();
+
         Map<String, Object> parametros = new HashMap<>();
+        //Devuelve la lista de parametros con la información del rol de usuario y los datos que van en el menú.
+        usuarioHandler.agregarDatosDeUsuario(parametros,usuario);
 
         parametros.put("provedoores", proveedores);
         parametros.put("categorias", categorias);
-
-        parametros.put("usuarioId", usuarioIDSpark);
         parametros.put("egreso", operacionEgreso);
-
-        parametros.put("nombreFicticioOrganizacion", nombreFicticioOrganizacion);
 
         return new ModelAndView( parametros, "Presupuesto.hbs");
     }
@@ -96,7 +94,8 @@ public class PresupustoController {
         Usuario usuario = userDAO.buscarUsuarioPoruserId(usuarioIDSpark);
         String nombreFicticioOrganizacion = usuario.getRol().getOrganizacion().getNombreFicticio();
 
-        Integer organizacionId = new Integer(request.queryParams("organizacionId"));
+
+        Integer organizacionId = usuario.getRol().getOrganizacion().getId();
         
     	List<OperacionEgreso> operacionesEgreso = this.operacionEgresoDAO.getOperacionesEgresoPorOrganizacion(organizacionId);   
     	List<CategoriaDeOperaciones> categorias = this.categoriaDAO.getTodasLasCategorias();

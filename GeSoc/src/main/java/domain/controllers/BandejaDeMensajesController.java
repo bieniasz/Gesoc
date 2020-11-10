@@ -13,17 +13,18 @@ import java.util.Map;
 public class BandejaDeMensajesController {
 
     private UserDAO userDAO = new UserDAOMySQL();
+    private UsuarioHandler usuarioHandler = new UsuarioHandler();
 
     public ModelAndView mostrarBandejaDeMensajes(Request request, Response response) {
 
         //String usuarioID = request.queryParams("usuarioId");
         String usuarioIDSpark = request.session().attribute("id");
         Usuario usuario = userDAO.buscarUsuarioPoruserId(usuarioIDSpark);
-        String nombreFicticioOrganizacion = usuario.getRol().getOrganizacion().getNombreFicticio();
 
         Map<String, Object> parametros = new HashMap<>();
-        parametros.put("usuarioId", usuarioIDSpark);
-        parametros.put("nombreFicticioOrganizacion", nombreFicticioOrganizacion);
+
+        //Devuelve la lista de parametros con la información del rol de usuario y los datos que van en el menú.
+        usuarioHandler.agregarDatosDeUsuario(parametros,usuario);
 
         return new ModelAndView(parametros, "bandejaDeMensajes.hbs");
     }
