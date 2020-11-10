@@ -84,11 +84,11 @@ html,body,h1,h2,h3,h4,h5 {font-family: "Raleway", sans-serif}
         
       </h3>
       
-
+<input type="hidden" id="idEgresoSeleccionadoParaAdjuntarRecibo" name="idEgresoSeleccionadoParaAdjuntarRecibo">
       
       <div id="divTablaGrande">
 
-       <input type="hidden" id="idEgresoSeleccionadoParaAdjuntarRecibo" name="idEgresoSeleccionadoParaAdjuntarRecibo">
+      
       <table class="tabla" id="tabla3">
         <thead>
 
@@ -100,13 +100,13 @@ html,body,h1,h2,h3,h4,h5 {font-family: "Raleway", sans-serif}
         </thead>
 
         <tbody>
-        {{#each presupuesto}}
+        {{#each presupuestos}}
             <tr>
                 <td>{{fecha}}</td>
                 <td>Presupuesto {{id}}</td>
                 <td>{{valorTotal}}</td>
                 <td>
-                    <a href="/egresoEditar?egresoId={{id}}" name="button" class=" btn btn-edit"><i class="fas fa-edit"></i></a> 
+                    <a href="/editarPresupuesto?presupuestoId={{id}}" name="button" class=" btn btn-edit"><i class="fas fa-edit"></i></a> 
                    
                 </td>
             </tr>

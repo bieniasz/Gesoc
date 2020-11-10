@@ -31,7 +31,7 @@ public class PresupuestoController {
     private ProveedorDAO proveedorDAO = new ProveedorDAOMySQL();
     private OrganizacionDAO organizacionDao = new OrganizacionDAOMemoria();
     private OperacionEgresoDAO operacionEgresoDAO = new OperacionEgresoDAOMySQL();
-    private CategoriaDAO categoriaDAO = new CategoriaDAOMemoria();
+    private CategoriaDAO categoriaDAO = new CategoriaDAOMySQL();
     private PresupuestoDAO presupuestoDAO = new PresupuestoDAOMySQL();
     private UserDAO userDAO = new UserDAOMySQL();
 
@@ -49,7 +49,7 @@ public class PresupuestoController {
         List<CategoriaDeOperaciones> categorias = this.categoriaDAO.getTodasLasCategorias();
         String nombreFicticioOrganizacion = usuario.getRol().getOrganizacion().getNombreFicticio();
     
-        List<Presupuesto> presupuestos= this.operacionEgresoDAO.buscarOperacionEgresoPorId(idEgreso).getPresupuestos();
+        List<Presupuesto> presupuestos= this.presupuestoDAO.buscarPresupuestoEgresoId(idEgreso);
         
         		
         Map<String, Object> parametros = new HashMap<>();
@@ -72,17 +72,18 @@ public class PresupuestoController {
 
         Integer id = new Integer(request.queryParams("presupuestoId"));
 
-        //Todo revisar que el nombre este bien, dice "presupueto"
-        Presupuesto presupueto = this.presupuestoDAO.buscarPresupuesto(id);
+     
+        Presupuesto presupuesto = this.presupuestoDAO.buscarPresupuesto(id);
         
-        Integer idEgreso = new Integer(request.queryParams("egresoId"));
+       
         
-        OperacionEgreso operacionEgreso = this.operacionEgresoDAO.buscarOperacionEgresoPorId(idEgreso);
+        OperacionEgreso operacionEgreso = this.operacionEgresoDAO.buscarOperacionEgresoPorId(presupuesto.getEgreso().getId());
 
         List<Proveedor> proveedores = this.proveedorDAO.getTodosLosProveedores();
         List<CategoriaDeOperaciones> categorias = this.categoriaDAO.getTodasLasCategorias();
         Map<String, Object> parametros = new HashMap<>();
 
+        parametros.put("presupuesto", presupuesto);
         parametros.put("provedoores", proveedores);
         parametros.put("categorias", categorias);
 
@@ -91,7 +92,7 @@ public class PresupuestoController {
 
         parametros.put("nombreFicticioOrganizacion", nombreFicticioOrganizacion);
 
-        return new ModelAndView( parametros, "Presupuesto.hbs");
+        return new ModelAndView( parametros, "nuevoPresupuesto.hbs");
     }
 
     public Response guardarEditarPresupuesto(Request request, Response response) throws Exception {

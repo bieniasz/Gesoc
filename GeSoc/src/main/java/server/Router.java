@@ -70,6 +70,7 @@ public class Router {
         
         Spark.get("/presupuesto", controllerPresupuesto::nuevoPresupuesto, Router.engine);
         Spark.get("/presupuestos", controllerPresupuesto::mostrarPresupuestos, Router.engine);
+        Spark.get("/editarPresupuesto", controllerPresupuesto::editarPresupuesto, Router.engine);
         Spark.before("/presupuesto", authMiddleware::verificarSesionGeneral);
         Spark.post("/presupuesto", controllerPresupuesto::guardar);
 

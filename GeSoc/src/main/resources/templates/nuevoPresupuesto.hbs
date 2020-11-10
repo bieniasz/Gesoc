@@ -67,7 +67,7 @@ html,body,h1,h2,h3,h4,h5 {font-family: "Raleway", sans-serif}
 
   <!-- Header -->
   <header class="titulo" style="padding-top:22px">
-      <b><i class="fa fa-bank fa-fw"></i>{{#if egreso}} Presupuesto - Id {{egreso.id}} {{else}} Nuevo Presupuesto {{/if}}</b>
+      <b><i class="fa fa-bank fa-fw"></i>{{#if presupuesto}} Presupuesto - Id {{presupuesto.id}} {{else}} Nuevo Presupuesto {{/if}}</b>
   </header>
   
  <form class=""  action="/presupuesto" method="post"> 
@@ -75,20 +75,20 @@ html,body,h1,h2,h3,h4,h5 {font-family: "Raleway", sans-serif}
 <!-- !FECHA! -->
 		
 		<label for="fecha">Fecha</label>
-        <input id="fecha" name="fecha" type="date"  class="input-formulario" required>
+        <input id="fecha" name="fecha" type="date"  class="input-formulario" required {{#if presupuesto}} value="{{presupuesto.fecha}}" {{/if}}>
         <br><br>
 
   
        
 <!-- !EGRESO ASOCIADO! -->
         <label for="Egreso">Egreso Asociado</label>
-        <input id="egreso" name="egreso" type="text" class="input-formulario"  readonly value="{{egresoId}}">   
+        <input id="egreso" name="egreso" type="text" class="input-formulario"  readonly  {{#if presupuesto}} value="{{presupuesto.egreso.id}}" {{else}} value="{{egresoId}}"  {{/if}}>   
         
         
         <br><br>
 <!-- !ES EL ELEGIDO! -->
   		<br><br>
-        <label><input type="checkbox" id="prespuestoElegidoCheck" value="prespuestoElegidoCheck"> Es presupuesto elegido</label>
+        <label><input type="checkbox" id="prespuestoElegidoCheck"  {{#if presupuesto}} value="{{presupuesto.esElElegido}}" {{else}}  value="prespuestoElegidoCheck" {{/if}}> Es presupuesto elegido</label>
         <br><br>
 <!-- !CATEGORIAS! -->
         <h3 style="margin-bottom: 5px;margin-left: 10px">Categorias
@@ -107,8 +107,8 @@ html,body,h1,h2,h3,h4,h5 {font-family: "Raleway", sans-serif}
         </div>
 
         <div id="seccionCategorias">
-            {{#if egreso}}
-                {{#each egreso.categoriasAsociadas}}
+            {{#if presupuesto}}
+                {{#each presupuesto.categoriasAsociadas}}
                     <div>
                         <input id="categoria{{id}}" name="categoria{{id}}" class="w3-tag w3-padding w3-small w3-center w3-yellow" type="text" readonly value="{{descripcion}}">
                         <a class="btn btn-search" id="eliminarCategoria{{id}}" onclick="eliminarCategoria({{id}})"><i class="fas fa-close"></i></a>
@@ -118,10 +118,14 @@ html,body,h1,h2,h3,h4,h5 {font-family: "Raleway", sans-serif}
         </div>
         <br><br>
 
-<!-- !DETALLE PRESUPUESTO! -->
+<!-- !DETALLE EGRESO! -->
       <h3 style="margin-bottom: 5px;margin-left: 10px">Detalle Presupuesto
           <button type="button" name="buttonAgregarItem" class="btn-border-blue fuente" onclick="agregarItem()"><i class="fa fa-plus-circle" style="margin-bottom:25px;"></i></button></h3>
       <input type="hidden" id="cantidadDetalles" name="cantidadDetalles">
+        {{#if presupuesto}}
+            <label>Valor Total: {{presupuesto.valorTotal}}</label>
+            <br><br>
+        {{/if}}
 
       <table class="tabla" id="detalleEgresos" name="detalleEgresos">
         <thead>
@@ -132,18 +136,15 @@ html,body,h1,h2,h3,h4,h5 {font-family: "Raleway", sans-serif}
           <th><i class="fas fa-tools"></i> Acciones</th>
         </thead>
         <tbody>
-        {{#if egreso}}
-            {{#each egreso.detalle}}
-                <tr>
-                    <td>{{id}}</td>
-                    <td>{{item.descripcion}}</td>
-                    <td>{{cantidad}}</td>
-                    <td>{{valorTotal}}</td>
+        {{#if presupuesto}}
+            {{#each presupuesto.detalle}}
+                <tr id="rowItemExistente{{id}}" name="rowItemExistente{{id}}">
+                    <td><input id="valorItemExistenteId{{id}}" name="valorItemExistenteId{{id}}" type="number" readonly value="{{id}}"></td>
+                    <td><input id="valorItemExistenteDescripcion{{id}}" name="valorItemExistenteDescripcion{{id}}" type="text" value="{{item.descripcion}}"></td>
+                    <td><input id="valorItemExistenteCantidad{{id}}" name="valorItemExistenteCantidad{{id}}" type="number" value="{{cantidad}}"></td>
+                    <td><input id="valorItemExistenteValor{{id}}" name="valorItemExistenteValor{{id}}" type="number" value="{{valorTotal}}"></td>
                     <td>
-                     <!-- <a href="" name="button" style="margin:0px;" class="btn btn-border btn-border-blue" ><i class="far fa-eye"></i></a>-->
-                     <!--  <a href="" name="button" class=" btn btn-edit"><i class="fas fa-edit"></i></a>-->
-                    <!--  <button type="button" name="buttonAgregarItem" class="btn btn-edit" onclick="agregarItem()"><i class="fas fa-edit"></i></button>
-                      <button type="button" name="button" class="btn" onclick="confirmarEliminacion('{{id}}')"><i class="fas fa-trash"></i></button> -->
+                        <a class="btn btn-border btn-border-blue" id="botonBorrarItem{{id}}" onclick="borrarItem({{id}})"><i class="fas fa-close"></i></a>
                     </td>
                   </tr>
             {{/each}}

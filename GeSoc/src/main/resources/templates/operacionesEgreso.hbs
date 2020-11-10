@@ -102,7 +102,7 @@ html,body,h1,h2,h3,h4,h5 {font-family: "Raleway", sans-serif}
 
       <div id="divTablaGrande">
 
-          <input type="hidden" id="idEgresoSeleccionadoParaAdjuntarRecibo" name="idEgresoSeleccionadoParaAdjuntarRecibo">
+      <input type="hidden" id="idEgresoSeleccionadoParaAdjuntarRecibo" name="idEgresoSeleccionadoParaAdjuntarRecibo">
       <table class="tabla" id="tabla3">
         <thead>
 
@@ -120,10 +120,10 @@ html,body,h1,h2,h3,h4,h5 {font-family: "Raleway", sans-serif}
                 <td>Egreso {{id}}</td>
                 <td>{{valorTotal}}</td>
                 <td>
-                    <a href="/egresoEditar?egresoId={{id}}" name="button" class=" btn btn-edit"><i class="fas fa-edit"></i></a>
-                    <button type="button" name="adjuntarDocumentoComercial" class="btn btn-adjuntar-documento" {{#if documentoComercial}} onclick="mostrarDocumentoComercialModalPopulado('{{id}}', '{{documentoComercial.tipoDocumentoComercial.descripcion}}', '{{documentoComercial.tipoDocumentoComercial.id}}', '{{documentoComercial.numeroDocumentoComercial}}', '{{documentoComercial.tipoDeAdjunto}}', '{{documentoComercial.contentDeserealizado}}')" {{else}} onclick="mostrarDocumentoComercialModal('{{id}}')" {{/if}}><i class="fas fa-paperclip" ></i></button>
-                	<a name="crearPresupuesto" class="btn btn-adjuntar-documento"  href="/presupuesto?egresoId={{id}}"><i class="fas fa-cash-register" ></i></a>
-                	<a name="verPresupuestos" class="btn btn-adjuntar-documento"  href="/presupuestos?egresoId={{id}}"><i class="fas fa-list-ul"></i></a>
+                    <a href="/egresoEditar?egresoId={{id}}" name="button" class=" btn btn-edit"><i class="fas fa-edit"  title="Editar"></i></a>
+                    <button type="button" name="adjuntarDocumentoComercial" class="btn btn-adjuntar-documento" {{#if documentoComercial}} onclick="mostrarDocumentoComercialModalPopulado('{{id}}', '{{documentoComercial.tipoDocumentoComercial.descripcion}}', '{{documentoComercial.tipoDocumentoComercial.id}}', '{{documentoComercial.numeroDocumentoComercial}}', '{{documentoComercial.tipoDeAdjunto}}', '{{documentoComercial.contentDeserealizado}}')" {{else}} onclick="mostrarDocumentoComercialModal('{{id}}')" {{/if}}><i class="fas fa-paperclip" title="Adjuntar archivo" ></i></button>
+                	<a name="crearPresupuesto" class="btn btn-adjuntar-documento"  href="/presupuesto?egresoId={{id}}"><i class="fas fa-cash-register"  title="Nuevo presupuesto"></i></a>
+                	<a name="verPresupuestos" class="btn btn-adjuntar-documento"   href="/presupuestos?egresoId={{id}}"><i class="fas fa-list-ul" title="Mostrar presupuestos"></i> </a>
                 </td>
             </tr>
         {{/each}}
