@@ -82,6 +82,9 @@ html,body,h1,h2,h3,h4,h5 {font-family: "Raleway", sans-serif}
         <label for="fecha">Fecha</label>
         <input id="fecha" name="fecha" type="date"  class="input-formulario" {{#if ingreso}} value="{{ingreso.fecha}}" {{/if}}>
         <br><br>
+        <label for="fechaHastaAceptable">Fecha límite aceptaibilidad egresos</label>
+        <input id="fechaHastaAceptable" name="fechaHastaAceptable" type="date"  class="input-formulario" {{#if ingreso}} value="{{ingreso.fechaHastaAceptable}}" {{/if}}>
+        <br><br>
         <label for="descripcion">Descripción del Ingreso</label>
         <input id="descripcion" name="descripcion" class="input-formulario" {{#if ingreso}} value="{{ingreso.descripcion}}" {{/if}}>
         <br><br>
