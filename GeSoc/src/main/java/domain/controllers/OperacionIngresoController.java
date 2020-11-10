@@ -48,6 +48,7 @@ public class OperacionIngresoController {
         OperacionIngreso operacionIngreso = new OperacionIngreso();
 
         LocalDate fecha = LocalDate.parse(request.queryParams("fecha"));
+        LocalDate fechaHastaAceptable = LocalDate.parse(request.queryParams("fechaHastaAceptable"));
         String descripcion = request.queryParams("descripcion");
         Float monto = new Float(request.queryParams("monto"));
 
@@ -57,6 +58,7 @@ public class OperacionIngresoController {
         Organizacion organizacion = usuario.getRol().getOrganizacion();
 
         operacionIngreso.setFecha(fecha);
+        operacionIngreso.setFechaHastaAceptable(fechaHastaAceptable);
         operacionIngreso.setDescripcion(descripcion);
         operacionIngreso.setMonto(monto);
         operacionIngreso.setOrganizacion(organizacion);
@@ -91,6 +93,7 @@ public class OperacionIngresoController {
         OperacionIngreso operacionIngreso = this.operacionIngresoDAO.buscarOperacionIngreso(id);
 
         operacionIngreso.setFecha(LocalDate.parse(request.queryParams("fecha")));
+        operacionIngreso.setFechaHastaAceptable(LocalDate.parse(request.queryParams("fechaHastaAceptable")));
         operacionIngreso.setDescripcion(request.queryParams("descripcion"));
         operacionIngreso.setMonto(new Float(request.queryParams("monto")));
 
