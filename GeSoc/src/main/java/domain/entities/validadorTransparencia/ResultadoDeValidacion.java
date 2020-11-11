@@ -53,4 +53,11 @@ public class ResultadoDeValidacion  extends EntidadPersistente {
 
     public void setResultados(List<String> resultados) { this.resultados = resultados; }
 
+    public OperacionEgreso getOperacionEgreso() {
+        return operacionEgreso;
+    }
+
+    public void setOperacionEgreso(OperacionEgreso operacionEgreso) {
+        this.operacionEgreso = operacionEgreso;
+    }
 }

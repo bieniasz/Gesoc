@@ -83,50 +83,35 @@ html,body,h1,h2,h3,h4,h5 {font-family: "Raleway", sans-serif}
 
       <table class="tabla" id="tabla3" >
         <thead>
-          <th><i class=""></i> Id </th>
-          <th><i class=""></i> Monto </th>
-          <th><i class=""></i> Fecha </th>
-          <th><i class=""></i> Resultado </th>
-          <th><i class=""></i> Leido/No leido </th>
+          <th><i class=""></i> Operacion Id </th>
+          <th><i class=""></i> Fecha de Mensaje </th>
+          <th><i class=""></i> Leido </th>
+
 
         </thead>
         <tbody style="height: 20px">
-        
-        <tr>
-            <td>Ingreso 4214123</td>
-            <td>$ 567.550,00</td>
-            <td>11/10/2020</td>
-            <td></td>
-            <td></td>
-            <td style="border-bottom: 0px solid grey;background: #f1f1f1"><button onclick="" style="cursor: pointer" class="btn-border-blue fuente"><i class="fa fa-eye"></i></button></td>
-      
-        </tr>
+
+        {{#each bandeja.resultadosDeValidacion}}
 
         <tr>
-            <td>Ingreso 4214123</td>
-            <td>$ 56.550,00</td>
-            <td>13/10/2020</td>
-            <td></td>
-            <td></td>
-            <td style="border-bottom: 0px solid grey;background: #f1f1f1"><button onclick="" style="cursor: pointer" class="btn-border-blue fuente"><i class="fa fa-eye"></i></button></td>
+            <td>Egreso - {{operacionEgreso.id}}</td>
+            <td>Fecha - {{fecha}}</td>
+            <td>
+                <button type="button" name="button" class="btn" onclick="mostrarMensajes('{{resultados}}')">{{#if leido}}<i class="far fa-envelope-open"></i> {{else}}<i class="far fa-envelope"></i> {{/if}}</button>
+            </td>
+
         </tr>
-        
-        <tr>
-            <td>Ingreso 4214123</td>
-            <td>$ 56.550,00</td>
-            <td>15/10/2020</td>
-            <td></td>
-            <td></td>
-            <td style="border-bottom: 0px solid grey;background: #f1f1f1"><button onclick="" style="cursor: pointer" class="btn-border-blue fuente"><i class="fa fa-eye"></i></button></td>
-        </tr>
-                <td>Ingreso 4214123</td>
-            <td>$ 56.550,00</td>
-            <td>17/10/2020</td>
-            <td></td>
-            <td></td>
-            <td style="border-bottom: 0px solid grey;background: #f1f1f1"><button onclick="" style="cursor: pointer" class="btn-border-blue fuente"><i class="fa fa-eye"></i></button></td>
-        </tr>
-       
+        {{/each}}
+
+
+
+
+
+
+
+
+
+
         </tbody>
       </table>
 
@@ -152,6 +137,42 @@ html,body,h1,h2,h3,h4,h5 {font-family: "Raleway", sans-serif}
     <div class="footer">GESOC - Grupo 09</div>
 </body>
 
+<div class="modalAgregarDetalle modal" id="modalAgregarDetalle">
+    <div class="modalContent">
+        <h3>Agregar Documento Comercial</h3>
+        <form>
+            <select id="documentoComercialTipo" name="documentoComercialTipo" class="input-formulario" onchange="mostrarOcultarAdjuntarRecibo()">
+                <option value="Fisico">Fisico</option>
+                <option value="Digital">Digital</option>
+            </select>
+            <input id="documentoComercialNumero" name="documentoComercialNumero" type="number" class="input-formulario" placeholder="Numero">
+            <br><br>
+            <input type="hidden" id="documentoComercialTipoComprobanteId" name="documentoComercialTipoComprobanteId">
+            <input id="documentoComercialTipoComprobante" name="documentoComercialTipoComprobante" type="text" class="input-formulario" placeholder="Tipo de comprobante" readonly>
+            <a name="searchDocumentoComercialTipoComprobate" class=" btn btn-search" onclick="mostrarBuscarDocumentoComercialTipoComprobante()"><i class="fas fa-search"></i></a>
+            <div class="dropdown">
+                <div id="buscarDocumentoComercialTipoComprobante" class="dropdown-content">
+                    <input type="text" placeholder="Search.." id="inputBuscarDocumentoComercialTipoComprobante" onkeyup="filterFunction('buscarDocumentoComercialTipoComprobante','inputBuscarDocumentoComercialTipoComprobante')">
+                    {{#each tiposCombantes}}
+                        <a onClick="llenarTipoComprobante('{{id}}', '{{descripcion}}')">{{descripcion}}</a>
+                    {{/each}}
+                </div>
+            </div>
+            <br><br>
+
+            <input id="documentoComercialAdjunto" name="documentoComercialAdjunto" type="hidden" class="input-formulario" onchange="previewFile()">
+            <br><br>
+            <div id="seccionImagen" name="seccionImagen"></div>
+
+
+        </form>
+        <div class="">
+            <button type="button" name="button" class="btn-verde" onclick="guardarDocumentoComercial()">Guardar</button>
+            <button type="button" name="button" class="btn-cancelar" onclick="limpiarAgregarDocumentoModal()">Cerrar</button>
+        </div>
+    </div>
+</div>
+
 
 <script>
 // Get the Sidebar
@@ -176,7 +197,10 @@ function w3_close() {
   mySidebar.style.display = "none";
   overlayBg.style.display = "none";
 }
+
 </script>
 
 </body>
 </html>
+
+

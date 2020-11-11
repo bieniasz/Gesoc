@@ -24,3 +24,13 @@ for (i = 0; i < acc.length; i++) {
 }
 
 }
+
+function mostrarMensajes(mensajes){
+    mensajes.forEach(cargarMensaje)
+
+}
+
+function cargarMensaje(item, index){
+
+
+}
