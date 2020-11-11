@@ -59,7 +59,7 @@ html,body,h1,h2,h3,h4,h5 {font-family: "Raleway", sans-serif}
     <a href="/operacionesEgreso" class="w3-bar-item w3-button w3-padding"><i class="fa fa-bank fa-fw"></i>&nbsp;Egresos</a>
     <a href="/operacionesIngreso" class="w3-bar-item w3-button w3-padding"><i class="fa fa-bank fa-fw"></i>&nbsp;Ingresos</a>
     <!-- <a href="#" class="w3-bar-item w3-button w3-padding"><i class="fa fa-book"></i>&nbsp;Documentos comerciales</a> -->
-    <a href="/bandejaDeMensajes" class="w3-bar-item w3-button"><i class="fa fa-envelope"></i>&nbsp;Bandeja de mensajes</a>
+    <a href="/bandejaDeMensajes" class="w3-bar-item w3-button" {{#if usuarioRevisor}} {{else}} style="display: none" {{/if}}><i class="fa fa-envelope"></i>&nbsp;Bandeja de mensajes</a>
 
   </div>
   <div class="w3-bar-block" style="margin-top: 20px">
@@ -132,7 +132,7 @@ html,body,h1,h2,h3,h4,h5 {font-family: "Raleway", sans-serif}
         <h3 style="margin-bottom: 5px;margin-left: 10px">Categorias
             <a name="searchCategoria" class=" btn btn-search" onclick="mostrarBuscarCategorias()"><i class="fas fa-search"></i></a>
         </h3>
-        <input type="hidden" id="cantidadDeCategoriasNuevas" name="cantidadDeCategoriasNuevas">
+        <input type="hidden" id="cantidadDeCategoriasNuevas" name="cantidadDeCategoriasNuevas" value="0">
         <input type="hidden" id="categoriasExistentesEliminadas" name="categoriasExistentesEliminadas">
 
         <div class="dropdown">
@@ -177,10 +177,10 @@ html,body,h1,h2,h3,h4,h5 {font-family: "Raleway", sans-serif}
         {{#if egreso}}
             {{#each egreso.detalle}}
                 <tr id="rowItemExistente{{id}}" name="rowItemExistente{{id}}">
-                    <td><input id="valorItemExistenteId{{id}}" name="valorItemExistente{{id}}" type="number" readonly value="{{id}}"></td>
-                    <td><input id="valorItemExistenteDescripcion{{id}}" name="valorItemExistente{{id}}" type="text" value="{{item.descripcion}}"></td>
-                    <td><input id="valorItemExistenteCantidad{{id}}" name="valorItemExistente{{id}}" type="number" value="{{cantidad}}"></td>
-                    <td><input id="valorItemExistenteValor{{id}}" name="valorItemExistente{{id}}" type="number" value="{{valorTotal}}"></td>
+                    <td><input id="valorItemExistenteId{{id}}" name="valorItemExistenteId{{id}}" type="number" readonly value="{{id}}"></td>
+                    <td><input id="valorItemExistenteDescripcion{{id}}" name="valorItemExistenteDescripcion{{id}}" type="text" value="{{item.descripcion}}"></td>
+                    <td><input id="valorItemExistenteCantidad{{id}}" name="valorItemExistenteCantidad{{id}}" type="number" value="{{cantidad}}"></td>
+                    <td><input id="valorItemExistenteValor{{id}}" name="valorItemExistenteValor{{id}}" type="number" value="{{valorTotal}}"></td>
                     <td>
                         <a class="btn btn-border btn-border-blue" id="botonBorrarItem{{id}}" onclick="borrarItem({{id}})"><i class="fas fa-close"></i></a>
                     </td>

@@ -16,12 +16,18 @@ import java.util.Map;
 
 public class BandejaDeMensajesController {
 
+
     private UserDAO usuarioDao = new UserDAOMySQL();
+
+
+    private UserDAO userDAO = new UserDAOMySQL();
+    private UsuarioHandler usuarioHandler = new UsuarioHandler();
 
 
     public ModelAndView mostrarBandejaDeMensajes(Request request, Response response) {
 
         String usuarioIDSpark = request.session().attribute("id");
+
         Usuario usuario = usuarioDao.buscarUsuarioPoruserId(usuarioIDSpark);
         int numberid = usuario.getId();
         Integer bandejaDeResultadoId = (Integer) EntityManagerHelper.getEntityManager().createNativeQuery("select distinct bandejaDeResultado_id from usuario u, rol r, bandejaderesultado br, resultadodevalidacion rv where u.rol_id=r.id and r.bandejaDeResultado_id=br.id and br.id = rv.BandejaDeResultado and u.id="+numberid).getSingleResult();
@@ -40,7 +46,7 @@ public class BandejaDeMensajesController {
         parametros.put("bandeja", bandeja);
         parametros.put("nombreFicticioOrganizacion", nombreFicticioOrganizacion);
         //parametros.put("contrasenia",contrasenia);
-
+        usuarioHandler.agregarDatosDeUsuario(parametros,usuario);
 
         return new ModelAndView(parametros, "bandejaDeMensajes.hbs");
     }

@@ -26,19 +26,20 @@ public class OperacionIngresoController {
 
     private OperacionIngresoDAO operacionIngresoDAO = new OperacionIngresoDAOMySQL();
     private UserDAO userDAO = new UserDAOMySQL();
+    private UsuarioHandler usuarioHandler = new UsuarioHandler();
 
     public ModelAndView nuevoIngreso(Request request, Response response) throws Exception {
 
         //TODO: validacion por FE para no hacer guardar con campos vacios
         //TODO: boton cancelar para volver a la vista anterior
-        //String userId = request.queryParams("usuarioId");
+
         String usuarioIDSpark = request.session().attribute("id");
         Usuario usuario = userDAO.buscarUsuarioPoruserId(usuarioIDSpark);
-        String nombreFicticioOrganizacion = usuario.getRol().getOrganizacion().getNombreFicticio();
 
         Map<String, Object> parametros = new HashMap<>();
-        parametros.put("usuarioId", usuarioIDSpark);
-        parametros.put("nombreFicticioOrganizacion", nombreFicticioOrganizacion);
+
+        //Devuelve la lista de parametros con la información del rol de usuario y los datos que van en el menú.
+        usuarioHandler.agregarDatosDeUsuario(parametros,usuario);
 
         return new ModelAndView( parametros, "operacionIngresoNuevo.hbs");
     }
@@ -48,6 +49,7 @@ public class OperacionIngresoController {
         OperacionIngreso operacionIngreso = new OperacionIngreso();
 
         LocalDate fecha = LocalDate.parse(request.queryParams("fecha"));
+        LocalDate fechaHastaAceptable = LocalDate.parse(request.queryParams("fechaHastaAceptable"));
         String descripcion = request.queryParams("descripcion");
         Float monto = new Float(request.queryParams("monto"));
 
@@ -57,6 +59,7 @@ public class OperacionIngresoController {
         Organizacion organizacion = usuario.getRol().getOrganizacion();
 
         operacionIngreso.setFecha(fecha);
+        operacionIngreso.setFechaHastaAceptable(fechaHastaAceptable);
         operacionIngreso.setDescripcion(descripcion);
         operacionIngreso.setMonto(monto);
         operacionIngreso.setOrganizacion(organizacion);
@@ -71,17 +74,17 @@ public class OperacionIngresoController {
 
         Integer id = new Integer(request.queryParams("ingresoId"));
         OperacionIngreso operacionIngreso = this.operacionIngresoDAO.buscarOperacionIngreso(id);
-        //String userId = request.queryParams("usuarioId");
+
         String usuarioIDSpark = request.session().attribute("id");
         Usuario usuario = userDAO.buscarUsuarioPoruserId(usuarioIDSpark);
-        String nombreFicticioOrganizacion = usuario.getRol().getOrganizacion().getNombreFicticio();
-
 
         Map<String, Object> parametros = new HashMap<>();
+
+        //Devuelve la lista de parametros con la información del rol de usuario y los datos que van en el menú.
+        usuarioHandler.agregarDatosDeUsuario(parametros,usuario);
+
         parametros.put("ingreso", operacionIngreso);
-        parametros.put("usuarioId", usuarioIDSpark);
         parametros.put("ingresoId", request.queryParams("ingresoId"));
-        parametros.put("nombreFicticioOrganizacion", nombreFicticioOrganizacion);
 
         return new ModelAndView( parametros, "operacionIngresoEditar.hbs");
     }
@@ -91,6 +94,7 @@ public class OperacionIngresoController {
         OperacionIngreso operacionIngreso = this.operacionIngresoDAO.buscarOperacionIngreso(id);
 
         operacionIngreso.setFecha(LocalDate.parse(request.queryParams("fecha")));
+        operacionIngreso.setFechaHastaAceptable(LocalDate.parse(request.queryParams("fechaHastaAceptable")));
         operacionIngreso.setDescripcion(request.queryParams("descripcion"));
         operacionIngreso.setMonto(new Float(request.queryParams("monto")));
 

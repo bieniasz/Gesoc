@@ -33,17 +33,13 @@ public class OperacionEgresoController {
     private UserDAO userDAO = new UserDAOMySQL();
     private MedioDePagoDAO medioDePagoDAO = new MedioDePagoDAOMySQL();
     private TipoComprobanteDAO tipoComprobanteDAO = new TipoComprobanteDAOMySQL();
+    private UsuarioHandler usuarioHandler = new UsuarioHandler();
 
 
 
     public ModelAndView nuevoEgreso(Request request, Response response) throws Exception {
-        //TODO: en la vista, para el medio de pago, se le puede poner numero
-
-        //String usuarioID = request.queryParams("usuarioId");
         String usuarioIDSpark = request.session().attribute("id");
         Usuario usuario = userDAO.buscarUsuarioPoruserId(usuarioIDSpark);
-
-        String nombreFicticioOrganizacion = usuario.getRol().getOrganizacion().getNombreFicticio();
 
         List<Proveedor> proveedores = this.proveedorDAO.getTodosLosProveedores();
         List<CategoriaDeOperaciones> categorias = this.categoriaDAO.getTodasLasCategorias();
@@ -51,12 +47,15 @@ public class OperacionEgresoController {
         List<TipoComprobante> tipoComprobanteList = this.tipoComprobanteDAO.buscarTodosLosTiposDeComprobantes();
 
         Map<String, Object> parametros = new HashMap<>();
+
+        //Devuelve la lista de parametros con la información del rol de usuario y los datos que van en el menú.
+        usuarioHandler.agregarDatosDeUsuario(parametros,usuario);
+
         parametros.put("provedoores", proveedores);
         parametros.put("categorias", categorias);
         parametros.put("mediosDePago", medioDePagoList);
         parametros.put("tiposCombantes", tipoComprobanteList);
-        parametros.put("usuarioId", usuarioIDSpark);
-        parametros.put("nombreFicticioOrganizacion", nombreFicticioOrganizacion);
+
 
         return new ModelAndView( parametros, "operacionEgresoNuevo.hbs");
     }
@@ -91,12 +90,9 @@ public class OperacionEgresoController {
 
 
     public ModelAndView editarEgreso(Request request, Response response) throws Exception {
-        //TODO: revisar edicion de cada uno de los campos
         //TODO: que no se pueda guardar si no tenes ningun detalle de egreso
-        //String usuarioID = request.queryParams("usuarioId");
         String usuarioIDSpark = request.session().attribute("id");
         Usuario usuario = userDAO.buscarUsuarioPoruserId(usuarioIDSpark);
-        String nombreFicticioOrganizacion = usuario.getRol().getOrganizacion().getNombreFicticio();
 
         Integer id = new Integer(request.queryParams("egresoId"));
         OperacionEgreso operacionEgreso = this.operacionEgresoDAO.buscarOperacionEgresoPorId(id);
@@ -106,13 +102,16 @@ public class OperacionEgresoController {
         List<TipoComprobante> tipoComprobanteList = this.tipoComprobanteDAO.buscarTodosLosTiposDeComprobantes();
 
         Map<String, Object> parametros = new HashMap<>();
+
+        //Devuelve la lista de parametros con la información del rol de usuario y los datos que van en el menú.
+        usuarioHandler.agregarDatosDeUsuario(parametros,usuario);
+
         parametros.put("provedoores", proveedores);
         parametros.put("categorias", categorias);
         parametros.put("mediosDePago", medioDePagoList);
         parametros.put("tiposCombantes", tipoComprobanteList);
-        parametros.put("usuarioId", usuarioIDSpark);
         parametros.put("egreso", operacionEgreso);
-        parametros.put("nombreFicticioOrganizacion", nombreFicticioOrganizacion);
+
 
         return new ModelAndView( parametros, "operacionEgresoNuevo.hbs");
     }
@@ -125,18 +124,15 @@ public class OperacionEgresoController {
         egreso.setCantidadEsperadaPresupuestos(Integer.parseInt(request.queryParams("cantidadEsperadaPresupuestos")));
         egreso.setProveedor(proveedorDAO.getProveedor(new Integer(request.queryParams("proveedorId"))));
 
-        egreso.getMedioDePago().setDescMercadoPago(request.queryParams("descripcionDelPago"));
-        egreso.getMedioDePago().setIdMercadoPago(request.queryParams("medioDePagoId"));
-        egreso.getMedioDePago().setTipoMercadoPago(request.queryParams("tipoDePago"));
-
-        egreso.getDocumentoComercial().setNumeroDocumentoComercial(new Long(request.queryParams("documentoComercialNumero")));
-        egreso.getDocumentoComercial().getTipoDocumentoComercial().setDescripcion(request.queryParams("documentoComercialClase"));
+        egreso.setNumeroIdentificadorMedioPago(request.queryParams("numeroIdentificadorDelMedio"));
+        MedioDePago medioDePago = this.medioDePagoDAO.buscarMedioDePagoPorId(new Integer(request.queryParams("medioDePagoIdDB")));
+        egreso.setMedioDePago(medioDePago);
 
         this.removerCategoriasDeEgreso(egreso, request);
         List<CategoriaDeOperaciones> categoriasAgregadas = this.getListaDeCategorias(request);
-        categoriasAgregadas.forEach( categoria -> egreso.asociarACategoria(categoria));
+        egreso.getCategoriasAsociadas().addAll(categoriasAgregadas);
+        egreso.getCategoriasAsociadas().forEach( categoria -> categoria.agregarOperacion(egreso));
 
-        //TODO: agregar el boton de borrar a los items nuevos
         this.actualizarDetallesDeEgreso(egreso,request);
         egreso.registrarDetalles(this.getListaDeDetalle(request));
 
@@ -151,9 +147,9 @@ public class OperacionEgresoController {
 
         egreso.getDetalle().forEach( detalleEgreso -> {
             try {
-                detalleEgreso.setValorTotal(new Double(request.queryParams("valorItemExistenteId" + detalleEgreso.getId())));
-                detalleEgreso.setCantidad(new Integer(request.queryParams("valorItemExistenteId" + detalleEgreso.getId())));
-                detalleEgreso.getItem().setDescripcion((request.queryParams("valorItemExistenteId" + detalleEgreso.getId())));
+                detalleEgreso.setValorTotal(new Double(request.queryParams("valorItemExistenteValor" + detalleEgreso.getId())));
+                detalleEgreso.setCantidad(new Integer(request.queryParams("valorItemExistenteCantidad" + detalleEgreso.getId())));
+                detalleEgreso.getItem().setDescripcion((request.queryParams("valorItemExistenteDescripcion" + detalleEgreso.getId())));
             } catch (Exception e) {
                 detallesAEliminar.add(detalleEgreso);
             }
@@ -183,17 +179,17 @@ public class OperacionEgresoController {
     private List<CategoriaDeOperaciones> getListaDeCategorias(Request request) {
 
         List<CategoriaDeOperaciones> categorias = new ArrayList<>();
+        System.out.println("Cantidad de categorias agregadas: " + request.queryParams("cantidadDeCategoriasNuevas"));
+        Integer cantidadDeCategorias = new Integer(request.queryParams("cantidadDeCategoriasNuevas"));
 
         try {
-            System.out.println("Id de la categoria en FE: " + request.queryParams("cantidadDeCategoriasNuevas"));
-            Integer cantidadDeCategorias = new Integer(request.queryParams("cantidadDeCategoriasNuevas"));
-
             IntStream.range(0,cantidadDeCategorias).forEach( i -> {
 
-                try {
-                    int idDeLaCategoria = new Integer(request.queryParams("categoriaNuevaId" + i));
+                int idDeLaCategoria = new Integer(request.queryParams("categoriaNuevaId" + i));
+                System.out.println("Id de la categoria en DB: " + idDeLaCategoria);
 
-                    System.out.println("Id de la categoria en DB: " + idDeLaCategoria);
+                try {
+
                     CategoriaDeOperaciones categoria = this.categoriaDAO.buscarCategoriaPorId(idDeLaCategoria);
 
                     System.out.println("Descripcion categoria: " + categoria.getDescripcion());
@@ -203,6 +199,7 @@ public class OperacionEgresoController {
 
         } catch (Exception e) {}
 
+        System.out.println("LONGITUD LISTA CATEGORIAS: " + categorias.size());
         return  categorias;
     }
 
@@ -233,13 +230,7 @@ public class OperacionEgresoController {
 
     public Response guardarDocumentoComercial(Request request, Response response) throws Exception {
 
-        System.out.println("---- EGRESOID: " + request.queryParams("egresoId"));
-        System.out.println("---- TIPO DOCUMENTO: " + request.queryParams("tipoDocumento"));
-        System.out.println("---- NUMERO: " + request.queryParams("numero"));
-        System.out.println("---- TIPO COMPROBANTE ID: " + request.queryParams("tipoComprobanteId"));
-        System.out.println("---- CONTENIDO: " + request.queryParams("contenidoSerializado"));
-
-
+        //TODO: guardar documento editado
         TipoComprobante tipoComprobante = new TipoComprobanteDAOMySQL().buscarTipoComprobantePorId(new Integer(request.queryParams("tipoComprobanteId")));
 
         DocumentoComercial documentoComercial = new DocumentoComercial();

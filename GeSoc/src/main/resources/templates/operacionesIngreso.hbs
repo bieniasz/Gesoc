@@ -54,14 +54,13 @@ html,body,h1,h2,h3,h4,h5 {font-family: "Raleway", sans-serif}
     <a href="/operacionesEgreso" class="w3-bar-item w3-button w3-padding"><i class="fa fa-bank fa-fw"></i>&nbsp;Egresos</a>
     <a href="/operacionesIngreso" class="w3-bar-item w3-button w3-padding"><i class="fa fa-bank fa-fw"></i>&nbsp;Ingresos</a>
     <!-- <a href="#" class="w3-bar-item w3-button w3-padding"><i class="fa fa-book"></i>&nbsp;Documentos comerciales</a> -->
-    <a href="/bandejaDeMensajes" class="w3-bar-item w3-button"><i class="fa fa-envelope"></i>&nbsp;Bandeja de mensajes</a>
+    <a href="/bandejaDeMensajes" class="w3-bar-item w3-button" {{#if usuarioRevisor}} {{else}} style="display: none" {{/if}}><i class="fa fa-envelope"></i>&nbsp;Bandeja de mensajes</a>
 
   </div>
   <div class="w3-bar-block" style="margin-top: 20px">
   <a href="/cerrarSesion" class="w3-bar-item w3-button"><i class="fa fa-power-off"></i>&nbsp;<b>Cerrar sesión</b></a>
 </div>
 </nav>
-
 
 
 <!-- Overlay effect when opening sidebar on small screens -->
@@ -80,11 +79,9 @@ html,body,h1,h2,h3,h4,h5 {font-family: "Raleway", sans-serif}
 
 
     <!-- !Operaciones! -->
-
-
-
       <h3 style="margin-bottom: 0px;margin-left: 10px">Listado de ingresos
         <a href="/ingreso" class="btn-border-blue fuente"><i class="fa fa-plus-circle"></i> Nueva operacion</a>
+      </h3>
 
       <div id="divTablaGrande">
 
@@ -94,6 +91,7 @@ html,body,h1,h2,h3,h4,h5 {font-family: "Raleway", sans-serif}
           <th><i class=""></i> Fecha </th>
           <th><i class=""></i> Id </th>
           <th><i class=""></i> Monto </th>
+          <th><i class=""></i> Fecha límite aceptabilidad egresos </th>
 
           <th><i class="fas fa-tools"></i> Acciones</th>
         </thead>
@@ -105,7 +103,7 @@ html,body,h1,h2,h3,h4,h5 {font-family: "Raleway", sans-serif}
             <td>{{fecha}}</td>
             <td>Ingreso {{id}}</td>
             <td>{{monto}}</td>
-
+            <td>{{fechaHastaAceptable}}</td>
 
             <td>
                 <!--<a href="/usuario/{{id}}" name="button" style="margin:0px;" class="btn btn-border btn-border-blue" ><i class="far fa-eye"></i></a>-->
@@ -119,12 +117,8 @@ html,body,h1,h2,h3,h4,h5 {font-family: "Raleway", sans-serif}
       </table>
       </div>
 
-
-
 </div>
 </div>
-
-
 
     <!-- Footer -->
 

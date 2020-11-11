@@ -3,6 +3,25 @@ function mostrarDocumentoComercialModal(id) {
     document.getElementById("modalAgregarDetalle").style.display = 'block';
 }
 
+function mostrarDocumentoComercialModalPopulado(idEgreso, descripcionTipoDocumento, idTipoDocumento, numero, tipo, contenido) {
+
+    mostrarDocumentoComercialModal(idEgreso);
+    document.getElementById("documentoComercialNumero").value = numero;
+    document.getElementById("documentoComercialTipoComprobanteId").value = idTipoDocumento;
+    document.getElementById("documentoComercialTipoComprobante").value = descripcionTipoDocumento;
+    document.getElementById("documentoComercialAdjunto").type = "file";
+
+    document.getElementById("documentoComercialTipo").value = tipo;
+    if (tipo == "Digital") {
+             var imagen = document.createElement("IMG");
+                 imagen.src = contenido;
+                 imagen.class = "w3-circle";
+                 imagen.style = "width:150px";
+                 imagen.id = "previsualizacionDelDocumento"
+                 document.getElementById("seccionImagen").appendChild(imagen);
+         }
+}
+
 function previewFile() {
   console.log("Metodo preview");
   eliminarPreviewAnterior()
@@ -39,13 +58,15 @@ function mostrarOcultarAdjuntarRecibo() {
 
     if (seleccion == "Fisico") {
         var adjunto = document.getElementById("documentoComercialAdjunto");
-            adjunto.value = null;
             adjunto.type = "hidden";
-
-        eliminarPreviewAnterior();
+            document.getElementById("previsualizacionDelDocumento").style.visibility = "hidden";
     }
     if (seleccion == "Digital") {
         document.getElementById("documentoComercialAdjunto").type = "file";
+        var imagenPreview = document.getElementById("previsualizacionDelDocumento")
+        if (imagenPreview) {
+            imagenPreview.style.visibility = "visible";
+        }
     }
 
 }
