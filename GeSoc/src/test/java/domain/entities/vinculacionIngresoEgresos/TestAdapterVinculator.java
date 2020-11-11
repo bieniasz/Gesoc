@@ -27,42 +27,56 @@ public class TestAdapterVinculator {
         this.adapter = new AdapterVinculator();
 
         OperacionEgreso egreso1 = new OperacionEgreso();
-        egreso1.setDetalle(new ArrayList<>());
-        egreso1.valorTotal = 500.50;
-        egreso1.registrarDocumentoComercial(new DocumentoComercial());
-        egreso1.setFecha(LocalDate.of(2020, 10, 12));
+        egreso1.valorTotal = 50.0;
+        egreso1.setFecha(LocalDate.of(2020, 1, 10));
         egreso1.setId(1);
 
         OperacionEgreso egreso2 = new OperacionEgreso();
-        egreso2.setDetalle(new ArrayList<>());
-        egreso2.valorTotal = 700.0;
-        egreso2.setFecha(LocalDate.of(2020, 10, 13));
-        egreso2.registrarDocumentoComercial(new DocumentoComercial());
+        egreso2.valorTotal = 150.0;
+        egreso2.setFecha(LocalDate.of(2020, 2, 20));
         egreso2.setId(2);
 
         OperacionEgreso egreso3 = new OperacionEgreso();
-        egreso3.setDetalle(new ArrayList<>());
-        egreso3.valorTotal = 1000.0;
-        egreso3.setFecha(LocalDate.of(2020, 10, 13));
-        egreso3.registrarDocumentoComercial(new DocumentoComercial());
+        egreso3.valorTotal = 200.0;
+        egreso3.setFecha(LocalDate.of(2020, 3, 8));
         egreso3.setId(3);
+
+        OperacionEgreso egreso4 = new OperacionEgreso();
+        egreso4.setId(4);
+        egreso4.setFecha(LocalDate.of(2020, 3, 9));
+        egreso4.valorTotal = 500.0;
+
+        OperacionEgreso egreso5 = new OperacionEgreso();
+        egreso5.setId(5);
+        egreso5.setFecha(LocalDate.of(2020, 5, 1));
+        egreso5.valorTotal = 800.0;
+
+        OperacionEgreso egreso6 = new OperacionEgreso();
+        egreso6.setId(6);
+        egreso6.setFecha(LocalDate.of(2020, 7, 4));
+        egreso6.valorTotal = 100.0;
 
         this.operacionesEgreso.add(egreso1);
         this.operacionesEgreso.add(egreso2);
         this.operacionesEgreso.add(egreso3);
+        this.operacionesEgreso.add(egreso4);
+        this.operacionesEgreso.add(egreso5);
+        this.operacionesEgreso.add(egreso6);
+
 
         OperacionIngreso ingreso1 = new OperacionIngreso();
         ingreso1.setId(1);
         ingreso1.setDescripcion("Un ingreso");
-        ingreso1.setFecha(LocalDate.of(2020, 10, 13));
-        ingreso1.setFechaHastaAceptable(LocalDate.now());
-        ingreso1.setMonto(1200f);
+        ingreso1.setFecha(LocalDate.of(2020, 2, 10));
+        ingreso1.setFechaHastaAceptable(LocalDate.of(2020, 3, 10));
+        ingreso1.setMonto(500f);
+
         OperacionIngreso ingreso2 = new OperacionIngreso();
         ingreso2.setId(2);
         ingreso2.setDescripcion("Otro ingreso");
-        ingreso2.setFecha(LocalDate.of(2020, 10, 12));
-        ingreso2.setFechaHastaAceptable(LocalDate.now());
-        ingreso2.setMonto(500f);
+        ingreso2.setFecha(LocalDate.of(2020, 4, 24));
+        ingreso2.setFechaHastaAceptable(LocalDate.of(2020, 5, 15));
+        ingreso2.setMonto(1000f);
 
         this.operacionesIngreso.add(ingreso1);
         this.operacionesIngreso.add(ingreso2);

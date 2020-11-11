@@ -16,10 +16,10 @@ import domain.entities.vinculacionIngresoEgresos.adapters.IAdapterVinculacion;
 
 import java.io.IOException;
 import java.nio.charset.StandardCharsets;
-import java.time.LocalDate;
 import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
+import java.util.Optional;
 
 public class AdapterVinculator implements IAdapterVinculacion {
 
@@ -28,36 +28,37 @@ public class AdapterVinculator implements IAdapterVinculacion {
         Map<OperacionEgreso, OperacionIngreso> mapVinculaciones = new HashMap<>();
 
         //Hago la llamada al servicio y obtengo el string con el resultado
-        String strJSONBody = generarPutJsonBody(operacionesEgreso, operacionesIngreso);
-        String strIngresosVinculados = makeHTTPPutRequest("http://localhost:9000/vincular", strJSONBody);
+        String strJSONBody = this.generarPutJsonBody(operacionesEgreso, operacionesIngreso);
+        String strIngresosVinculados = this.makeHTTPPutRequest("http://localhost:9000/vincular", strJSONBody);
         JSONObject jsonResultadoVinculacion = new JSONObject(strIngresosVinculados);
 
         //Hago la vinculacion en memoria
-
         JSONArray arrayIngresosVinculados = jsonResultadoVinculacion.getJSONArray("ingresosVinculados");
         //Recorro los ingresos
         for (int i = 0; i < arrayIngresosVinculados.length(); i++) {
             JSONObject jsonIngresoVinculado = arrayIngresosVinculados.getJSONObject(i);
-            String strIdIngreso = jsonIngresoVinculado.getString("id_ingreso");
+            int idIngreso = Integer.parseInt(jsonIngresoVinculado.getString("id_ingreso"));
 
-            OperacionIngreso operacionIngresoVinculado = operacionesIngreso
+            Optional<OperacionIngreso> optIngresoVinculado = operacionesIngreso
                     .stream()
-                    .filter(op -> op.getId() == Integer.parseInt(strIdIngreso))
-                    .findFirst()
-                    .get();
+                    .filter(op -> op.getId() == idIngreso)
+                    .findFirst();
 
-            //Obtengo sus egresos vinculados
-            JSONArray arrayEgresosVinculados = jsonIngresoVinculado.getJSONArray("egresos");
-            for (int j = 0; j < arrayEgresosVinculados.length(); j++){
-                String idEgreso = arrayEgresosVinculados.getString(j);
+            if (optIngresoVinculado.isPresent()) {
+                OperacionIngreso ingresoVinculado = optIngresoVinculado.get();
+                //Obtengo sus egresos vinculados
+                JSONArray arrayEgresosVinculados = jsonIngresoVinculado.getJSONArray("egresos");
+                for (int j = 0; j < arrayEgresosVinculados.length(); j++) {
+                    int idEgreso = Integer.parseInt(arrayEgresosVinculados.getString(j));
 
-                OperacionEgreso operacionEgresoVinculado = operacionesEgreso
-                        .stream()
-                        .filter(op -> op.getId() == Integer.parseInt(idEgreso))
-                        .findFirst()
-                        .get();
+                    OperacionEgreso egresoVinculado = operacionesEgreso
+                            .stream()
+                            .filter(op -> op.getId() == idEgreso)
+                            .findFirst()
+                            .get();
 
-                mapVinculaciones.put(operacionEgresoVinculado, operacionIngresoVinculado);
+                    mapVinculaciones.put(egresoVinculado, ingresoVinculado);
+                }
             }
         }
 
@@ -84,8 +85,7 @@ public class AdapterVinculator implements IAdapterVinculacion {
             }
         };
 
-        String responseBody = httpclient.execute(httpPut, responseHandler);
-        return responseBody;
+        return httpclient.execute(httpPut, responseHandler);
     }
 
     public String generarPutJsonBody(List<OperacionEgreso> operacionesEgreso, List<OperacionIngreso> operacionesIngreso) {
@@ -104,9 +104,11 @@ public class AdapterVinculator implements IAdapterVinculacion {
             JSONObject jsonEgresoObj = new JSONObject();
             jsonEgresoObj.put("id_egreso", String.valueOf(egreso.getId()));
             jsonEgresoObj.put("fecha", egreso.getFecha());
-            jsonEgresoObj.put("valorTotal", Double.valueOf(egreso.getValorTotal()));
-            jsonEgresoObj.put("documentoComercial", String.valueOf(egreso.getDocumentoComercial().getId()));
-            jsonEgresoObj.put("detalle", egreso.getDetalle().toString());
+            jsonEgresoObj.put("valorTotal", egreso.getValorTotal());
+            String docID = egreso.getDocumentoComercial() != null ? String.valueOf(egreso.getDocumentoComercial().getId()) : "";
+            jsonEgresoObj.put("documentoComercial", docID);
+            String strDetalle = egreso.getDetalle() != null ? egreso.getDetalle().toString() : "";
+            jsonEgresoObj.put("detalle", strDetalle);
             jsonEgresosArray.put(jsonEgresoObj);
         }
         return jsonEgresosArray;

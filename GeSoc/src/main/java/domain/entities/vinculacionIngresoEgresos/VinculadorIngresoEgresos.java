@@ -1,9 +1,6 @@
 package domain.entities.vinculacionIngresoEgresos;
 
-import db.DAOs.OperacionEgresoDAO;
-import db.DAOs.OperacionEgresoDAOMemoria;
-import db.DAOs.OperacionIngresoDAO;
-import db.DAOs.OperacionIngresoDAOMySQL;
+import db.DAOs.*;
 import domain.entities.operacionComercial.OperacionEgreso;
 import domain.entities.operacionComercial.OperacionIngreso;
 import domain.entities.vinculacionIngresoEgresos.adapters.IAdapterVinculacion;
@@ -22,7 +19,7 @@ public class VinculadorIngresoEgresos {
     public VinculadorIngresoEgresos(){ this.adapterVinculador = new AdapterVinculator(); }
 
     public void vincularOperaciones() throws IOException {
-        OperacionEgresoDAO egresoDAO = new OperacionEgresoDAOMemoria();
+        OperacionEgresoDAO egresoDAO = new OperacionEgresoDAOMySQL();
         OperacionIngresoDAO ingresoDAO = new OperacionIngresoDAOMySQL();
 
         Map<OperacionEgreso, OperacionIngreso> mapIngresosEgresos = this.adapterVinculador.obtenerVinculaciones(this.operacionIngresoList, this.operacionEgresoList);
