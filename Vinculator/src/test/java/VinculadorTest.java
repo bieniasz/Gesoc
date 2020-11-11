@@ -5,7 +5,6 @@ import java.io.File;
 import java.io.FileReader;
 import java.io.IOException;
 import java.lang.reflect.Type;
-import java.net.URISyntaxException;
 import java.net.URL;
 import java.nio.file.Paths;
 import java.time.LocalDate;
@@ -19,14 +18,11 @@ import com.google.gson.JsonDeserializer;
 import com.google.gson.JsonElement;
 import com.google.gson.JsonParseException;
 
-import main.java.criterios.CriterioEjecucionFecha;
 import main.java.criterios.OrdenValorPrimeroEgreso;
-import main.java.dominio.CriterioEjecucion;
+import main.java.criterios.CriterioEjecucion;
 import main.java.dominio.RepositorioCentral;
 import main.java.dominio.RepositorioEgresos;
 import main.java.dominio.RepositorioIngresos;
-import spark.Request;
-import spark.Response;
 
 public class VinculadorTest {
 

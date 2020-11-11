@@ -7,7 +7,6 @@ import domain.entities.vinculacionIngresoEgresos.adapters.IAdapterVinculacion;
 import domain.entities.vinculacionIngresoEgresos.adapters.adapterVinculator.AdapterVinculator;
 
 import java.io.IOException;
-import java.time.LocalDate;
 import java.util.List;
 import java.util.Map;
 
@@ -15,14 +14,17 @@ public class VinculadorIngresoEgresos {
     private List<OperacionIngreso> operacionIngresoList;
     private List<OperacionEgreso> operacionEgresoList;
     private IAdapterVinculacion adapterVinculador;
+    private String criterioOrdenamiento;
 
-    public VinculadorIngresoEgresos(){ this.adapterVinculador = new AdapterVinculator(); }
+    public VinculadorIngresoEgresos() {
+        this.adapterVinculador = new AdapterVinculator();
+    }
 
     public void vincularOperaciones() throws IOException {
         OperacionEgresoDAO egresoDAO = new OperacionEgresoDAOMySQL();
         OperacionIngresoDAO ingresoDAO = new OperacionIngresoDAOMySQL();
 
-        Map<OperacionEgreso, OperacionIngreso> mapIngresosEgresos = this.adapterVinculador.obtenerVinculaciones(this.operacionIngresoList, this.operacionEgresoList);
+        Map<OperacionEgreso, OperacionIngreso> mapIngresosEgresos = this.adapterVinculador.obtenerVinculaciones(this.operacionIngresoList, this.operacionEgresoList, this.criterioOrdenamiento);
 
         for (OperacionEgreso egreso : mapIngresosEgresos.keySet()) {
             OperacionIngreso ingreso = mapIngresosEgresos.get(egreso);
@@ -44,6 +46,9 @@ public class VinculadorIngresoEgresos {
     public void setOperacionEgresoList(List<OperacionEgreso> operacionEgresoList) { this.operacionEgresoList = operacionEgresoList;    }
     public void setAdapterVinculador(IAdapterVinculacion adapter){
         this.adapterVinculador = adapter;
+    }
+    public void setCriterioOrdenamiento(String criterioOrdenamiento) {
+        this.criterioOrdenamiento = criterioOrdenamiento;
     }
 
     public void addOperacionIngreso(OperacionIngreso operacionIngreso){this.operacionIngresoList.add(operacionIngreso); }

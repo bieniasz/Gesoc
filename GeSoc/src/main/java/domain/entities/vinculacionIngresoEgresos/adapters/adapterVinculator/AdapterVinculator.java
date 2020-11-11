@@ -16,19 +16,16 @@ import domain.entities.vinculacionIngresoEgresos.adapters.IAdapterVinculacion;
 
 import java.io.IOException;
 import java.nio.charset.StandardCharsets;
-import java.util.HashMap;
-import java.util.List;
-import java.util.Map;
-import java.util.Optional;
+import java.util.*;
 
 public class AdapterVinculator implements IAdapterVinculacion {
 
     @Override
-    public Map<OperacionEgreso, OperacionIngreso> obtenerVinculaciones(List<OperacionIngreso> operacionesIngreso, List<OperacionEgreso> operacionesEgreso) throws IOException {
+    public Map<OperacionEgreso, OperacionIngreso> obtenerVinculaciones(List<OperacionIngreso> operacionesIngreso, List<OperacionEgreso> operacionesEgreso, String criterio) throws IOException {
         Map<OperacionEgreso, OperacionIngreso> mapVinculaciones = new HashMap<>();
 
         //Hago la llamada al servicio y obtengo el string con el resultado
-        String strJSONBody = this.generarPutJsonBody(operacionesEgreso, operacionesIngreso);
+        String strJSONBody = this.generarPutJsonBody(operacionesEgreso, operacionesIngreso, criterio);
         String strIngresosVinculados = this.makeHTTPPutRequest("http://localhost:9000/vincular", strJSONBody);
         JSONObject jsonResultadoVinculacion = new JSONObject(strIngresosVinculados);
 
@@ -65,7 +62,7 @@ public class AdapterVinculator implements IAdapterVinculacion {
         return mapVinculaciones;
     }
 
-    public String makeHTTPPutRequest(String url, String content) throws IOException {
+    private String makeHTTPPutRequest(String url, String content) throws IOException {
         CloseableHttpClient httpclient = HttpClients.createDefault();
         HttpPut httpPut = new HttpPut(url);
 
@@ -88,17 +85,18 @@ public class AdapterVinculator implements IAdapterVinculacion {
         return httpclient.execute(httpPut, responseHandler);
     }
 
-    public String generarPutJsonBody(List<OperacionEgreso> operacionesEgreso, List<OperacionIngreso> operacionesIngreso) {
-        JSONObject jsonRepoEgresosObject = new JSONObject().put("egresos", parsearEgresos(operacionesEgreso));
-        JSONObject jsonRepoIngresosObject = new JSONObject().put("ingresos", parsearIngresos(operacionesIngreso));
+    private String generarPutJsonBody(List<OperacionEgreso> operacionesEgreso, List<OperacionIngreso> operacionesIngreso, String criterio) {
+        JSONObject jsonRepoEgresosObject = new JSONObject().put("egresos", parseEgresos(operacionesEgreso));
+        JSONObject jsonRepoIngresosObject = new JSONObject().put("ingresos", parseIngresos(operacionesIngreso));
 
         JSONObject jsonGeneralObject = new JSONObject();
         jsonGeneralObject.put("repositorioEgresos", jsonRepoEgresosObject);
         jsonGeneralObject.put("repositorioIngresos", jsonRepoIngresosObject);
+        jsonGeneralObject.put("criterioEjecucion", criterio);
 
         return jsonGeneralObject.toString();
     }
-    private JSONArray parsearEgresos(List<OperacionEgreso> operacionesEgreso) {
+    private JSONArray parseEgresos(List<OperacionEgreso> operacionesEgreso) {
         JSONArray jsonEgresosArray = new JSONArray();
         for (OperacionEgreso egreso : operacionesEgreso) {
             JSONObject jsonEgresoObj = new JSONObject();
@@ -113,7 +111,7 @@ public class AdapterVinculator implements IAdapterVinculacion {
         }
         return jsonEgresosArray;
     }
-    private JSONArray parsearIngresos(List<OperacionIngreso> operacionesIngreso) {
+    private JSONArray parseIngresos(List<OperacionIngreso> operacionesIngreso) {
         JSONArray jsonIngresosArray = new JSONArray();
         for (OperacionIngreso ingreso : operacionesIngreso) {
             JSONObject jsonIngresoObj = new JSONObject()
@@ -126,5 +124,4 @@ public class AdapterVinculator implements IAdapterVinculacion {
         }
         return jsonIngresosArray;
     }
-
 }

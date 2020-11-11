@@ -8,7 +8,6 @@ import java.util.List;
 import com.google.gson.Gson;
 
 import main.java.condiciones.PeriodoAceptabilidad;
-import main.java.dominio.CriterioEjecucion;
 import main.java.dominio.Egreso;
 import main.java.dominio.Ingreso;
 import main.java.dominio.IngresoVinculado;
@@ -19,8 +18,7 @@ import main.java.dominio.RepositorioIngresosVinculados;
 public class CriterioEjecucionFecha implements CriterioEjecucion {
 
 	@Override
-	public String  ejecutar(RepositorioIngresos repositorioIngresos, RepositorioEgresos repositorioEgresos)  {
-
+	public String ejecutar(RepositorioIngresos repositorioIngresos, RepositorioEgresos repositorioEgresos)  {
 		RepositorioIngresosVinculados	ingresosVinculados = new RepositorioIngresosVinculados();
 		
 		//comparador por fechas egresos
@@ -55,9 +53,9 @@ public class CriterioEjecucionFecha implements CriterioEjecucion {
 			for(Egreso egreso : egrePreAsignar) {
 				//si el monto del egreso no supera el monto del ingreso
 				if (acumulador + egreso.getValorTotal() <= ingreso.getValorTotal()
-						&& !egreso.getAsignado()) {
+					&& !egreso.getAsignado()) {
 
-					acumulador+=egreso.getValorTotal();
+					acumulador += egreso.getValorTotal();
 					ingresoVinculado.agregarEgreso(egreso.getId_egreso());
 					egreso.setAsignado(true);
 				}
@@ -66,9 +64,6 @@ public class CriterioEjecucionFecha implements CriterioEjecucion {
 			ingresosVinculados.agregarIngresoVinculado(ingresoVinculado);
 		}	// fin del for ingreso
      	
-		Gson gson = new Gson();
-	String ingresosVinculadoString = gson.toJson(ingresosVinculados);
-	
-	return ingresosVinculadoString;}
-
+		return new Gson().toJson(ingresosVinculados);
+	}
 }

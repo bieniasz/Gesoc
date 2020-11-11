@@ -1,9 +1,9 @@
 package domain.entities.vinculacionIngresoEgresos;
 
-import domain.entities.ProveedorDocComer.DocumentoComercial;
+import domain.entities.config.Config;
+import domain.entities.config.Constantes;
 import domain.entities.operacionComercial.OperacionEgreso;
 import domain.entities.operacionComercial.OperacionIngreso;
-import domain.entities.organizacion.Organizacion;
 import domain.entities.vinculacionIngresoEgresos.adapters.adapterVinculator.AdapterVinculator;
 import org.junit.Assert;
 import org.junit.Before;
@@ -83,14 +83,15 @@ public class TestAdapterVinculator {
     }
 
     @Test
-    public void TestAdapterVinculatorNoDevuelveNull() throws IOException {
-        Map<OperacionEgreso, OperacionIngreso> mapVinculaciones = this.adapter.obtenerVinculaciones(this.operacionesIngreso, this.operacionesEgreso);
+    public void TestAdapterVinculatorDevuelveVinculaciones() throws IOException {
+        /*  Vinculaciones esperadas
+            Egreso  Ingreso
+            2       1
+            3       1
+            5       2
+        */
+        Map<OperacionEgreso, OperacionIngreso> mapVinculaciones = this.adapter.obtenerVinculaciones(this.operacionesIngreso, this.operacionesEgreso, Constantes.vinculador_criterios_Fecha);
         Assert.assertNotNull(mapVinculaciones);
-    }
-
-    @Test
-    public void TestAdapterVinculatorConVinculaciones() throws IOException {
-        Map<OperacionEgreso, OperacionIngreso> mapVinculaciones = this.adapter.obtenerVinculaciones(this.operacionesIngreso, this.operacionesEgreso);
-        Assert.assertTrue(mapVinculaciones.size() > 0);
+        Assert.assertEquals(3, mapVinculaciones.size());
     }
 }
