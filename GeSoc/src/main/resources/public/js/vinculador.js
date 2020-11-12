@@ -11,7 +11,7 @@ function mostrarVinculadorModal() {
   </div>
 */
 
-function correrVinculacion() {
+function correrVinculacion(organizacion) {
     var div = document.createElement("DIV");
         div.setAttribute("class", "alert");
         document.getElementById("divMensajesDelVinculador").appendChild(div);
@@ -27,10 +27,11 @@ function correrVinculacion() {
         div.appendChild(strong);
 
     document.getElementById("modalAgregarDetalle").style.display = 'none';
-/*
-$.post( "/vincular", {
-        criterio: document.getElementById("criterioTipo").value
-    } ).done( mensajeComplete() ); */
+
+    $.post( "/vincular", {
+        criterio: document.getElementById("criterioTipo").value,
+        organizacionID: organizacion
+    } ).done( mensajeComplete() );
 }
 
 function mensajeComplete() {

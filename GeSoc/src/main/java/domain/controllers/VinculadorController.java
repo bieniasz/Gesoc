@@ -22,6 +22,9 @@ public class VinculadorController {
         Integer organizacionID = Integer.valueOf(request.queryParams("organizacionID"));
         String strCriterio = request.queryParams("criterio");
 
+        System.out.println("ORGANIZACION: " + organizacionID);
+        System.out.println("CRITERIO: " + strCriterio);
+
         List<OperacionEgreso> egresosSinVincular = this.egresosDAO
                 .getOperacionesEgresoPorOrganizacion(organizacionID)
                 .stream()
@@ -38,8 +41,7 @@ public class VinculadorController {
         vinculador.setOperacionIngresoList(ingresosSinVincular);
         vinculador.setCriterioOrdenamiento(strCriterio);
         vinculador.vincularOperaciones();
-
-        response.redirect("/operacionesEgreso");
+        
         return response;
     }
 
