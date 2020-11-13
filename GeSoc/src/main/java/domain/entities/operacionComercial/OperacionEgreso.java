@@ -40,8 +40,9 @@ public class OperacionEgreso extends OperacionComercial {
     private List<Presupuesto> presupuestos = new ArrayList<Presupuesto>();
 
 
-    @ManyToMany(fetch = FetchType.LAZY, cascade=CascadeType.ALL)
-    private List<OperacionIngreso> ingresosAsociados;
+    @ManyToOne(fetch = FetchType.LAZY, cascade=CascadeType.ALL)
+    @JoinColumn(name="ingresoAsociado",referencedColumnName = "id")
+    private OperacionIngreso ingresoAsociado;
 
 
     public MedioDePago getMedioDePago() {  return medioDePago; }
@@ -63,15 +64,13 @@ public class OperacionEgreso extends OperacionComercial {
         this.cantidadEsperadaPresupuestos = cantidadEsperadaPresupuestos;
     }
     public void setPresupuestos(List<Presupuesto> presupuestos) { this.presupuestos = presupuestos; }
-    public void agregarIngreso(OperacionIngreso ingreso){
-        ingresosAsociados.add(ingreso);
+
+
+    public OperacionIngreso getIngresoAsociado() {
+        return ingresoAsociado;
     }
 
-    public List<OperacionIngreso> getIngresosAsociados() {
-        return ingresosAsociados;
-    }
-
-    public void setIngresosAsociados(List<OperacionIngreso> ingresosAsociados) {
-        this.ingresosAsociados = ingresosAsociados;
+    public void setIngresoAsociado(OperacionIngreso ingresoAsociado) {
+        this.ingresoAsociado = ingresoAsociado;
     }
 }
