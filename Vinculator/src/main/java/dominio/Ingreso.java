@@ -8,6 +8,7 @@ public class Ingreso {
 	private LocalDate fecha_hasta; //
 	Double valorTotal; // decimal
 	String descripcion;
+	Double montoAcumulado = 0.0;
 	public String getId_Ingreso() {
 		return id_ingreso;
 	}
@@ -37,5 +38,12 @@ public class Ingreso {
 	}
 	public void setFecha_hasta(LocalDate fecha_hasta) {
 		this.fecha_hasta = fecha_hasta;
-	} 
+	}
+	public Double getMontoAcumulado() {
+		return montoAcumulado;
+	}
+	public void setMontoAcumulado(Double montoAcumulado) {
+		this.montoAcumulado = montoAcumulado;
+	}
+	public void acumularMonto(Double monto) { this.montoAcumulado += monto; }
 }
