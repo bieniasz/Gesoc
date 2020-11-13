@@ -41,7 +41,7 @@ public class VinculadorController {
         vinculador.setOperacionIngresoList(ingresosSinVincular);
         vinculador.setCriterioOrdenamiento(strCriterio);
         vinculador.vincularOperaciones();
-        
+
         return response;
     }
 

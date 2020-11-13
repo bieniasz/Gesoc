@@ -6,16 +6,19 @@
 <link rel="stylesheet" href="css/w3.css">
 <link rel="stylesheet" href="https://fonts.googleapis.com/css?family=Raleway">
 <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/4.7.0/css/font-awesome.min.css">
+<link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/3.4.1/css/bootstrap.min.css">
 <link rel="stylesheet" href="css/operaciones.css">
 <link rel="stylesheet" href="css/vinculador.css">
 <link rel="stylesheet" href="css/search.bar.css">
 <link rel="stylesheet" href="https://www.w3schools.com/w3css/4/w3.css">
+<link href="https://fonts.googleapis.com/css?family=Lexend+Deca&display=swap" rel="stylesheet">
 
-    <script src="https://kit.fontawesome.com/27517fada0.js"></script>
-    <link href="https://fonts.googleapis.com/css?family=Lexend+Deca&display=swap" rel="stylesheet">
-    <script src="https://code.jquery.com/jquery-3.4.1.min.js" integrity="sha256-CSXorXvZcTkaix6Yvo6HppcZGetbYMGWSFlBw8HfCJo=" crossorigin="anonymous"></script>
-    <script src="js/generales.js"></script>
-    <script src="js/vinculador.js"></script>
+<script src="https://kit.fontawesome.com/27517fada0.js"></script>
+<script src="https://code.jquery.com/jquery-3.4.1.min.js" integrity="sha256-CSXorXvZcTkaix6Yvo6HppcZGetbYMGWSFlBw8HfCJo=" crossorigin="anonymous"></script>
+<script src="js/generales.js"></script>
+<script src="js/vinculador.js"></script>
+<script src="https://ajax.googleapis.com/ajax/libs/jquery/3.5.1/jquery.min.js"></script>
+<script src="https://maxcdn.bootstrapcdn.com/bootstrap/3.4.1/js/bootstrap.min.js"></script>
 
 
 <style>
@@ -147,12 +150,25 @@ html,body,h1,h2,h3,h4,h5 {font-family: "Raleway", sans-serif}
         <h3>Vinculador</h3>
         <form>
             <label for="criterioTipo">Criterio: </label>
-            <select id="criterioTipo" name="criterioTipo" class="input-formulario" onchange="mostrarOcultarAdjuntarRecibo()">
+            <select id="criterioTipo" name="criterioTipo" class="input-formulario" onchange="mostrarMixBusqueda()">
                 <option value="Orden-Valor-PrimeroEgreso">Orden-Valor-PrimeroEgreso</option>
                 <option value="Orden-Valor-PrimeroIngreso">Orden-Valor-PrimeroIngreso</option>
                 <option value="Fecha">Fecha</option>
                 <option value="Mix">Mix</option>
             </select>
+            <a name="searchMix" id="botonBusquedaMixHidden" class="btn btn-search btn-search-hidden" onclick="mostrarMixDropdown()"><i class="fas fa-search"></i></a>
+
+            <div class="dropdown">
+                <div id="buscarMix" class="dropdown-content">
+                    <input type="text" placeholder="Search.." id="inputBuscarMix" onkeyup="filterFunction('buscarMix','inputBuscarMix')">
+                        <a onClick="agregarCriterioExtra('Orden-Valor-PrimeroEgreso')">Orden-Valor-PrimeroEgreso</a>
+                        <a onClick="agregarCriterioExtra('Orden-Valor-PrimeroIngreso')">Orden-Valor-PrimeroIngreso</a>
+                        <a onClick="agregarCriterioExtra('Fecha')">Fecha</a>
+                </div>
+            </div>
+
+            <br><br>
+                <div id="criteriosExtra"></div>
             <br><br>
         </form>
         <div>
