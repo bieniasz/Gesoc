@@ -31,7 +31,8 @@ public class OperacionIngreso extends EntidadPersistente {
     @Column
     private Float monto;
 
-    @OneToMany(fetch = FetchType.LAZY, cascade=CascadeType.ALL)
+    @ManyToMany(fetch = FetchType.LAZY, cascade=CascadeType.ALL)
+    @JoinColumn(name = "egresosAsociados",referencedColumnName = "id")
     private List<OperacionEgreso> egresosAsociados;
 
     public void agregarEgresoAsociado(OperacionEgreso egreso) { this.egresosAsociados.add(egreso); }
@@ -62,4 +63,11 @@ public class OperacionIngreso extends EntidadPersistente {
     public void setOrganizacion(Organizacion organizacion) { this.organizacion = organizacion; }
     public void setEgresosAsociados(List<OperacionEgreso> egresosAsociados) { this.egresosAsociados = egresosAsociados; }
     public void setFechaHastaAceptable(LocalDate fecha) { this.fechaHastaAceptable = fecha; }
+
+    public void agregarEgreso(OperacionEgreso egreso){
+        egresosAsociados.add(egreso);
+
+    }
+
+
 }

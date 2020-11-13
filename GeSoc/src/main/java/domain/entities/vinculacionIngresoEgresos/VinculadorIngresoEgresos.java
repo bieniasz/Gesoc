@@ -28,7 +28,7 @@ public class VinculadorIngresoEgresos {
 
         for (OperacionEgreso egreso : mapIngresosEgresos.keySet()) {
             OperacionIngreso ingreso = mapIngresosEgresos.get(egreso);
-            egreso.setIngresoAsociado(ingreso);
+            egreso.agregarIngreso(ingreso);
 
             egresoDAO.guardarOperacionEgreso(egreso);
             ingresoDAO.guardarOperacionIngreso(ingreso);

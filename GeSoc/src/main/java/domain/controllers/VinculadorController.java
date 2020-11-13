@@ -10,7 +10,7 @@ import domain.entities.vinculacionIngresoEgresos.VinculadorIngresoEgresos;
 import spark.Request;
 import spark.Response;
 
-import java.io.IOException;
+
 import java.util.List;
 import java.util.stream.Collectors;
 
@@ -46,7 +46,7 @@ public class VinculadorController {
     }
 
     private boolean noEstaVinculado(OperacionEgreso egreso) {
-        return egreso.getIngresoAsociado() == null;
+        return egreso.getIngresosAsociados() == null;
     }
 
     private boolean noEstaVinculado(OperacionIngreso ingreso) {

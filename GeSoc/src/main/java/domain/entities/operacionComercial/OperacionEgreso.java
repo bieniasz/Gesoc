@@ -25,6 +25,7 @@ public class OperacionEgreso extends OperacionComercial {
     private String numeroIdentificadorMedioPago;
 
     @ManyToOne(fetch = FetchType.LAZY, cascade=CascadeType.ALL)
+    @JoinColumn(name = "proveedor",referencedColumnName = "id")
     private Proveedor proveedor;
 
     @ManyToOne(fetch = FetchType.LAZY, cascade=CascadeType.ALL)
@@ -35,12 +36,12 @@ public class OperacionEgreso extends OperacionComercial {
     private Integer cantidadEsperadaPresupuestos;
 
     @OneToMany(fetch = FetchType.LAZY, cascade=CascadeType.ALL)
+    @JoinColumn(name="presupuestos",referencedColumnName = "id")
     private List<Presupuesto> presupuestos = new ArrayList<Presupuesto>();
 
 
-    @ManyToOne(fetch = FetchType.LAZY, cascade=CascadeType.ALL)
-    @JoinColumn(name = "OperacionIngreso",referencedColumnName = "id")
-    private OperacionIngreso ingresoAsociado;
+    @ManyToMany(fetch = FetchType.LAZY, cascade=CascadeType.ALL)
+    private List<OperacionIngreso> ingresosAsociados;
 
 
     public MedioDePago getMedioDePago() {  return medioDePago; }
@@ -49,7 +50,7 @@ public class OperacionEgreso extends OperacionComercial {
     public Organizacion getOrganizacion() { return organizacion; }
     public Integer getCantidadEsperadaPresupuestos() { return cantidadEsperadaPresupuestos; }
     public List<Presupuesto> getPresupuestos() { return presupuestos; }
-    public OperacionIngreso getIngresoAsociado() { return ingresoAsociado; }
+
 
     public void asociarPresupuesto(Presupuesto presupuesto) {
         this.presupuestos.add(presupuesto);
@@ -62,8 +63,15 @@ public class OperacionEgreso extends OperacionComercial {
         this.cantidadEsperadaPresupuestos = cantidadEsperadaPresupuestos;
     }
     public void setPresupuestos(List<Presupuesto> presupuestos) { this.presupuestos = presupuestos; }
-    public void setIngresoAsociado(OperacionIngreso operacionIngreso){
-        this.ingresoAsociado = operacionIngreso;
-        operacionIngreso.agregarEgresoAsociado(this);
+    public void agregarIngreso(OperacionIngreso ingreso){
+        ingresosAsociados.add(ingreso);
+    }
+
+    public List<OperacionIngreso> getIngresosAsociados() {
+        return ingresosAsociados;
+    }
+
+    public void setIngresosAsociados(List<OperacionIngreso> ingresosAsociados) {
+        this.ingresosAsociados = ingresosAsociados;
     }
 }
