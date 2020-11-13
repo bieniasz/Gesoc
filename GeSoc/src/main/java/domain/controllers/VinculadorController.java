@@ -48,7 +48,7 @@ public class VinculadorController {
     }
 
     private boolean noEstaVinculado(OperacionEgreso egreso) {
-        return egreso.getIngresosAsociados() == null;
+        return egreso.getIngresoAsociado() == null;
     }
 
     private boolean noEstaVinculado(OperacionIngreso ingreso) {

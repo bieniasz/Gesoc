@@ -29,7 +29,7 @@ public class VinculadorIngresoEgresos {
         mapIngresosEgresos = this.adapterVinculador.obtenerVinculaciones(this.operacionIngresoList, this.operacionEgresoList, this.criterioOrdenamiento, this.criteriosAdicionalesMix);
         for (OperacionEgreso egreso : mapIngresosEgresos.keySet()) {
             OperacionIngreso ingreso = mapIngresosEgresos.get(egreso);
-            egreso.agregarIngreso(ingreso);
+            egreso.setIngresoAsociado(ingreso);
 
             egresoDAO.guardarOperacionEgreso(egreso);
             ingresoDAO.guardarOperacionIngreso(ingreso);
