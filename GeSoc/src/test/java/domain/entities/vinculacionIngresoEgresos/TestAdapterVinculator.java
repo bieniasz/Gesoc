@@ -83,14 +83,17 @@ public class TestAdapterVinculator {
     }
 
     @Test
-    public void TestAdapterVinculatorDevuelveVinculaciones() throws IOException {
+    public void TestAdapterVinculatorDevuelveVinculacionesPorFecha() throws IOException {
         /*  Vinculaciones esperadas
             Egreso  Ingreso
             2       1
             3       1
             5       2
         */
-        Map<OperacionEgreso, OperacionIngreso> mapVinculaciones = this.adapter.obtenerVinculaciones(this.operacionesIngreso, this.operacionesEgreso, Constantes.vinculador_criterios_Fecha);
+        Map<OperacionEgreso, OperacionIngreso> mapVinculaciones;
+        String criterio = Constantes.vinculador_criterios_Fecha;
+        String[] criteriosAd = { Constantes.vinculador_criterios_PrimeroEgreso, Constantes.vinculador_criterios_Fecha };
+        mapVinculaciones = this.adapter.obtenerVinculaciones(this.operacionesIngreso, this.operacionesEgreso, criterio, criteriosAd);
         Assert.assertNotNull(mapVinculaciones);
         Assert.assertEquals(3, mapVinculaciones.size());
     }

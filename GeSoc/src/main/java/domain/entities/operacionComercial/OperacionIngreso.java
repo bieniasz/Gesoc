@@ -62,4 +62,11 @@ public class OperacionIngreso extends EntidadPersistente {
     public void setOrganizacion(Organizacion organizacion) { this.organizacion = organizacion; }
     public void setEgresosAsociados(List<OperacionEgreso> egresosAsociados) { this.egresosAsociados = egresosAsociados; }
     public void setFechaHastaAceptable(LocalDate fecha) { this.fechaHastaAceptable = fecha; }
+
+    public void agregarEgreso(OperacionEgreso egreso){
+        egresosAsociados.add(egreso);
+
+    }
+
+
 }

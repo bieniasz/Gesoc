@@ -12,8 +12,12 @@ public class CriterioEjecucionFactory {
             case "Fecha":
                 criterio = new CriterioEjecucionFecha();
                 break;
-            //TODO case "Orden-Valor-PrimeroIngreso"
-            //TODO case "Mix"
+            case "Orden-Valor-PrimeroIngreso":
+                criterio = new OrdenValorPrimeroIngreso();
+                break;
+            case "Mix":
+                criterio = new CriterioMix();
+                break;
             default:
                 criterio = null;
         }
