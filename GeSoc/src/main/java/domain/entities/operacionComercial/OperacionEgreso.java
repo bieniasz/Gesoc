@@ -25,7 +25,7 @@ public class OperacionEgreso extends OperacionComercial {
     private String numeroIdentificadorMedioPago;
 
     @ManyToOne(fetch = FetchType.LAZY, cascade=CascadeType.ALL)
-    @JoinColumn(name = "proveedor",referencedColumnName = "id")
+    @JoinColumn(name = "Proveedor_id",referencedColumnName = "id")
     private Proveedor proveedor;
 
     @ManyToOne(fetch = FetchType.LAZY, cascade=CascadeType.ALL)
@@ -41,7 +41,7 @@ public class OperacionEgreso extends OperacionComercial {
 
 
     @ManyToOne(fetch = FetchType.LAZY, cascade=CascadeType.ALL)
-    @JoinColumn(name="ingresoAsociado",referencedColumnName = "id")
+    @JoinColumn(name = "OperacionIngreso",referencedColumnName = "id")
     private OperacionIngreso ingresoAsociado;
 
 
