@@ -3,6 +3,7 @@ package domain.controllers;
 import db.DAOs.*;
 import domain.entities.ProveedorDocComer.TipoComprobante;
 import domain.entities.operacionComercial.CategoriaDeOperaciones;
+import domain.entities.operacionComercial.CriterioDeOperaciones;
 import domain.entities.operacionComercial.OperacionEgreso;
 import domain.entities.usuario.Rol;
 import domain.entities.usuario.Usuario;
@@ -23,6 +24,7 @@ public class OperacionesEgresoController {
     private TipoComprobanteDAO tipoComprobanteDAO = new TipoComprobanteDAOMySQL();
     private ImagenesDAO imagenesDAO = new ImagenesDAOMySQL();
     private UsuarioHandler usuarioHandler = new UsuarioHandler();
+    private CriterioDeOperacionesDAO criterioDeOperacionesDAO = new CriterioDeOperacionesDAOMySQL();
 
     public ModelAndView mostrarEgresos(Request request, Response response)  throws Exception {
 
@@ -33,6 +35,7 @@ public class OperacionesEgresoController {
         this.arreglarImagenEgresos(egresos);
         List<CategoriaDeOperaciones> categorias = this.categoriaDAO.getTodasLasCategorias();
         List<TipoComprobante> tipoComprobanteList = this.tipoComprobanteDAO.buscarTodosLosTiposDeComprobantes();
+        List<CriterioDeOperaciones> criteriosDeOperaciones = this.criterioDeOperacionesDAO.getTodasLosCriterios();
 
         Map<String, Object> parametros = new HashMap<>();
 
@@ -42,6 +45,7 @@ public class OperacionesEgresoController {
         parametros.put("categorias", categorias);
         parametros.put("egresos", egresos);
         parametros.put("tiposCombantes", tipoComprobanteList);
+        parametros.put("criteriosDeOperaciones", criteriosDeOperaciones);
 
 
         return new ModelAndView(parametros, "operacionesEgreso.hbs");
