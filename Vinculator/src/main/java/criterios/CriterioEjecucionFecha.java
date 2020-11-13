@@ -8,6 +8,7 @@ import java.util.List;
 import com.google.gson.Gson;
 
 import main.java.condiciones.PeriodoAceptabilidad;
+import main.java.condiciones.PreCondicion;
 import main.java.dominio.Egreso;
 import main.java.dominio.Ingreso;
 import main.java.dominio.IngresoVinculado;
@@ -15,12 +16,10 @@ import main.java.dominio.RepositorioEgresos;
 import main.java.dominio.RepositorioIngresos;
 import main.java.dominio.RepositorioIngresosVinculados;
 
-public class CriterioEjecucionFecha implements CriterioEjecucion {
+public class CriterioEjecucionFecha extends CriterioEjecucion {
 
 	@Override
-	public String ejecutar(RepositorioIngresos repositorioIngresos, RepositorioEgresos repositorioEgresos)  {
-		RepositorioIngresosVinculados	ingresosVinculados = new RepositorioIngresosVinculados();
-		
+	public RepositorioIngresosVinculados ejecutar(RepositorioIngresos repositorioIngresos, RepositorioEgresos repositorioEgresos)  {
 		//comparador por fechas egresos
 		Comparator<Egreso> byfechaEgreso = new Comparator<Egreso>() {
 			public int compare(Egreso e1, Egreso e2) {
@@ -28,7 +27,6 @@ public class CriterioEjecucionFecha implements CriterioEjecucion {
 				else return 1;
 			}
 		};
-		
 		//comparador por fechas ingresos
 		Comparator<Ingreso> byfechaIngreso = new Comparator<Ingreso>() {
 			public int compare(Ingreso i1, Ingreso i2) {
@@ -39,31 +37,27 @@ public class CriterioEjecucionFecha implements CriterioEjecucion {
 
 		// ordena de menor a mayor los ingresos  por fecha
 		List<Ingreso> ingresosOrdenados= repositorioIngresos.getIngresos();
-		Collections.sort(ingresosOrdenados, byfechaIngreso);	
+		Collections.sort(ingresosOrdenados, byfechaIngreso);
 		
 		for(Ingreso ingreso : ingresosOrdenados) {
-			//filtro los egresos con la condicion dada
-			List<Egreso> egrePreAsignar = new PeriodoAceptabilidad(repositorioEgresos,ingreso.getFecha(),ingreso.getFecha_hasta()).getEgresos();
+			PreCondicion pcFechaAceptable = new PeriodoAceptabilidad(ingreso.getFecha(), ingreso.getFecha_hasta());
+			List<Egreso> egresosAceptados = pcFechaAceptable.filtrarEgresos(repositorioEgresos);
 			// ordena de menor a mayor los egresos por fecha
-			Collections.sort(egrePreAsignar, byfechaEgreso);
-			Double acumulador = 0.0;
-			
-			IngresoVinculado ingresoVinculado = new IngresoVinculado (ingreso.getId_Ingreso(),ingreso.getDescripcion());
-			//asigno los egresos al ingreso hasta alcanzar un monto cercano al total
-			for(Egreso egreso : egrePreAsignar) {
-				//si el monto del egreso no supera el monto del ingreso
-				if (acumulador + egreso.getValorTotal() <= ingreso.getValorTotal()
-					&& !egreso.getAsignado()) {
+			Collections.sort(egresosAceptados, byfechaEgreso);
 
-					acumulador += egreso.getValorTotal();
-					ingresoVinculado.agregarEgreso(egreso.getId_egreso());
+			IngresoVinculado ingresoVinculado = new IngresoVinculado (ingreso.getId_Ingreso(),ingreso.getDescripcion());
+			for(Egreso egreso : egresosAceptados) {
+				//si el monto del egreso no supera el monto del ingreso
+				if (!egreso.isAsignado() && montoEgresoNoSuperaTotal(egreso, ingreso)) {
+					ingreso.acumularMonto(egreso.getValorTotal());
 					egreso.setAsignado(true);
+					ingresoVinculado.agregarEgreso(egreso.getId_egreso());
 				}
 			}
 
 			ingresosVinculados.agregarIngresoVinculado(ingresoVinculado);
 		}	// fin del for ingreso
      	
-		return new Gson().toJson(ingresosVinculados);
+		return ingresosVinculados;
 	}
 }

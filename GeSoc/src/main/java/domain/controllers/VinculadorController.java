@@ -4,13 +4,15 @@ import db.DAOs.OperacionEgresoDAO;
 import db.DAOs.OperacionEgresoDAOMySQL;
 import db.DAOs.OperacionIngresoDAO;
 import db.DAOs.OperacionIngresoDAOMySQL;
+import domain.entities.config.Constantes;
 import domain.entities.operacionComercial.OperacionEgreso;
 import domain.entities.operacionComercial.OperacionIngreso;
 import domain.entities.vinculacionIngresoEgresos.VinculadorIngresoEgresos;
 import spark.Request;
 import spark.Response;
 
-import java.io.IOException;
+
+import java.util.Arrays;
 import java.util.List;
 import java.util.stream.Collectors;
 
@@ -37,9 +39,12 @@ public class VinculadorController {
         vinculador.setOperacionEgresoList(egresosSinVincular);
         vinculador.setOperacionIngresoList(ingresosSinVincular);
         vinculador.setCriterioOrdenamiento(strCriterio);
+        if (strCriterio.equals(Constantes.vinculador_criterios_Mix)){
+            String[] strCriteriosAdic = request.queryParamsValues("criteriosAdicionales[]");
+            vinculador.setCriteriosAdicionalesMix(strCriteriosAdic);
+        }
         vinculador.vincularOperaciones();
-
-        response.redirect("/operacionesEgreso");
+        
         return response;
     }
 

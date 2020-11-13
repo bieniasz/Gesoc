@@ -25,16 +25,15 @@ public class OperacionesIngresoController {
         String usuarioIDSpark = request.session().attribute("id");
         Usuario usuario = userDAO.buscarUsuarioPoruserId(usuarioIDSpark);
         int organizacionId = usuario.getRol().getOrganizacion().getId();
-
         List<OperacionIngreso> ingresos = new ArrayList<>();
         ingresos = operacionIngresoDAO.getOperacionesIngresoPorOrganizacion(organizacionId);
 
         Map<String, Object> parametros = new HashMap<>();
 
-        //Devuelve la lista de parametros con la información del rol de usuario y los datos que van en el menú.
         usuarioHandler.agregarDatosDeUsuario(parametros,usuario);
 
         parametros.put("ingresos", ingresos);
+        parametros.put("organizacionId", organizacionId);
 
         return new ModelAndView(parametros, "operacionesIngreso.hbs");
     }

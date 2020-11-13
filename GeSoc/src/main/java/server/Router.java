@@ -34,6 +34,7 @@ public class Router {
         OperacionEgresoController controllerOperacionEgreso = new OperacionEgresoController();
         OperacionIngresoController controllerOperacionIngreso = new OperacionIngresoController();
         PresupuestoController controllerPresupuesto = new PresupuestoController();
+        VinculadorController vinculadorController = new VinculadorController();
         AuthMiddleware authMiddleware       = new AuthMiddleware();
 
         Spark.get("/", controllerLogin::mostrarLogin, Router.engine);
@@ -75,6 +76,8 @@ public class Router {
         Spark.before("/editarPresupuesto", authMiddleware::verificarSesionGeneral);
         Spark.before("/presupuestos", authMiddleware::verificarSesionGeneral);
         Spark.post("/presupuesto", controllerPresupuesto::guardar);
+
+        Spark.post("/vincular", vinculadorController::ejecutarVinculador);
 
         
         

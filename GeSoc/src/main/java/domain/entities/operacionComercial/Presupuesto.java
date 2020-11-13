@@ -10,7 +10,7 @@ public class Presupuesto extends OperacionComercial{
     }
 
     @ManyToOne(fetch = FetchType.LAZY, cascade=CascadeType.ALL)
-    @JoinColumn(name="OperacionEgreso", referencedColumnName = "id")
+    @JoinColumn(name="egreso", referencedColumnName = "id")
     private OperacionEgreso egreso;
 
     @Column

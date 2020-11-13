@@ -8,7 +8,7 @@ public class Egreso {
 	Double valorTotal; // decimal
 	String documentoComercial; // DocumentoComercial
 	String detalle; // 
-	Boolean asignado=false;
+	Boolean asignado = false;
 
 	public String getId_egreso() {
 		return id_egreso;
@@ -42,7 +42,7 @@ public class Egreso {
 	}
 	
 	
-	public Boolean getAsignado() {
+	public Boolean isAsignado() {
 		return asignado;
 	}
 	public void setAsignado(Boolean asignado) {

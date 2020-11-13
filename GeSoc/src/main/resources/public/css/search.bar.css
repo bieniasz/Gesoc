@@ -49,3 +49,7 @@
 .dropdown a:hover {background-color: #ddd;}
 
 .show {display: block;}
+
+.btn-search-hidden {
+    visibility: hidden;
+}
