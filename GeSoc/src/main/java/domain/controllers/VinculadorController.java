@@ -4,6 +4,7 @@ import db.DAOs.OperacionEgresoDAO;
 import db.DAOs.OperacionEgresoDAOMySQL;
 import db.DAOs.OperacionIngresoDAO;
 import db.DAOs.OperacionIngresoDAOMySQL;
+import domain.entities.config.Constantes;
 import domain.entities.operacionComercial.OperacionEgreso;
 import domain.entities.operacionComercial.OperacionIngreso;
 import domain.entities.vinculacionIngresoEgresos.VinculadorIngresoEgresos;
@@ -11,6 +12,7 @@ import spark.Request;
 import spark.Response;
 
 
+import java.util.Arrays;
 import java.util.List;
 import java.util.stream.Collectors;
 
@@ -21,9 +23,6 @@ public class VinculadorController {
     public Response ejecutarVinculador(Request request, Response response)  throws Exception {
         Integer organizacionID = Integer.valueOf(request.queryParams("organizacionID"));
         String strCriterio = request.queryParams("criterio");
-
-        System.out.println("ORGANIZACION: " + organizacionID);
-        System.out.println("CRITERIO: " + strCriterio);
 
         List<OperacionEgreso> egresosSinVincular = this.egresosDAO
                 .getOperacionesEgresoPorOrganizacion(organizacionID)
@@ -40,8 +39,11 @@ public class VinculadorController {
         vinculador.setOperacionEgresoList(egresosSinVincular);
         vinculador.setOperacionIngresoList(ingresosSinVincular);
         vinculador.setCriterioOrdenamiento(strCriterio);
+        if (strCriterio.equals(Constantes.vinculador_criterios_Mix)){
+            String[] strCriteriosAdic = request.queryParamsValues("criteriosAdicionales[]");
+            vinculador.setCriteriosAdicionalesMix(strCriteriosAdic);
+        }
         vinculador.vincularOperaciones();
-        
         return response;
     }
 

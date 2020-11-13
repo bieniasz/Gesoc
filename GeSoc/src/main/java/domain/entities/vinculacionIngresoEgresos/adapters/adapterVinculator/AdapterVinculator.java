@@ -21,12 +21,12 @@ import java.util.*;
 public class AdapterVinculator implements IAdapterVinculacion {
 
     @Override
-    public Map<OperacionEgreso, OperacionIngreso> obtenerVinculaciones(List<OperacionIngreso> operacionesIngreso, List<OperacionEgreso> operacionesEgreso, String criterio) throws IOException {
+    public Map<OperacionEgreso, OperacionIngreso> obtenerVinculaciones(List<OperacionIngreso> operacionesIngreso, List<OperacionEgreso> operacionesEgreso, String criterio, String[] criteriosMix) throws IOException {
         Map<OperacionEgreso, OperacionIngreso> mapVinculaciones = new HashMap<>();
 
         //Hago la llamada al servicio y obtengo el string con el resultado
-        String strJSONBody = this.generarPutJsonBody(operacionesEgreso, operacionesIngreso, criterio);
-        String strIngresosVinculados = this.makeHTTPPutRequest("http://localhost:9000/vincular", strJSONBody);
+        String strJSONBody = generarPutJsonBody(operacionesEgreso, operacionesIngreso, criterio, criteriosMix);
+        String strIngresosVinculados = makeHTTPPutRequest("http://localhost:9000/vincular", strJSONBody);
         JSONObject jsonResultadoVinculacion = new JSONObject(strIngresosVinculados);
 
         //Hago la vinculacion en memoria
@@ -85,7 +85,7 @@ public class AdapterVinculator implements IAdapterVinculacion {
         return httpclient.execute(httpPut, responseHandler);
     }
 
-    private String generarPutJsonBody(List<OperacionEgreso> operacionesEgreso, List<OperacionIngreso> operacionesIngreso, String criterio) {
+    private String generarPutJsonBody(List<OperacionEgreso> operacionesEgreso, List<OperacionIngreso> operacionesIngreso, String criterio, String[] criteriosMix) {
         JSONObject jsonRepoEgresosObject = new JSONObject().put("egresos", parseEgresos(operacionesEgreso));
         JSONObject jsonRepoIngresosObject = new JSONObject().put("ingresos", parseIngresos(operacionesIngreso));
 
@@ -93,6 +93,9 @@ public class AdapterVinculator implements IAdapterVinculacion {
         jsonGeneralObject.put("repositorioEgresos", jsonRepoEgresosObject);
         jsonGeneralObject.put("repositorioIngresos", jsonRepoIngresosObject);
         jsonGeneralObject.put("criterioEjecucion", criterio);
+        if(criteriosMix != null){
+            jsonGeneralObject.put("criteriosMix", criteriosMix);
+        }
 
         return jsonGeneralObject.toString();
     }

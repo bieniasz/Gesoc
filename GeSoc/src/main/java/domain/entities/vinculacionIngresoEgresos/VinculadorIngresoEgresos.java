@@ -15,6 +15,7 @@ public class VinculadorIngresoEgresos {
     private List<OperacionEgreso> operacionEgresoList;
     private IAdapterVinculacion adapterVinculador;
     private String criterioOrdenamiento;
+    private String[] criteriosAdicionalesMix;
 
     public VinculadorIngresoEgresos() {
         this.adapterVinculador = new AdapterVinculator();
@@ -23,9 +24,9 @@ public class VinculadorIngresoEgresos {
     public void vincularOperaciones() throws IOException {
         OperacionEgresoDAO egresoDAO = new OperacionEgresoDAOMySQL();
         OperacionIngresoDAO ingresoDAO = new OperacionIngresoDAOMySQL();
+        Map<OperacionEgreso, OperacionIngreso> mapIngresosEgresos;
 
-        Map<OperacionEgreso, OperacionIngreso> mapIngresosEgresos = this.adapterVinculador.obtenerVinculaciones(this.operacionIngresoList, this.operacionEgresoList, this.criterioOrdenamiento);
-
+        mapIngresosEgresos = this.adapterVinculador.obtenerVinculaciones(this.operacionIngresoList, this.operacionEgresoList, this.criterioOrdenamiento, this.criteriosAdicionalesMix);
         for (OperacionEgreso egreso : mapIngresosEgresos.keySet()) {
             OperacionIngreso ingreso = mapIngresosEgresos.get(egreso);
             egreso.agregarIngreso(ingreso);
@@ -49,6 +50,9 @@ public class VinculadorIngresoEgresos {
     }
     public void setCriterioOrdenamiento(String criterioOrdenamiento) {
         this.criterioOrdenamiento = criterioOrdenamiento;
+    }
+    public void setCriteriosAdicionalesMix(String[] criterios) {
+        this.criteriosAdicionalesMix = criterios;
     }
 
     public void addOperacionIngreso(OperacionIngreso operacionIngreso){this.operacionIngresoList.add(operacionIngreso); }
