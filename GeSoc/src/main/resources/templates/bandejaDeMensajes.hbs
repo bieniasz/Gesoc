@@ -78,7 +78,22 @@ html,body,h1,h2,h3,h4,h5 {font-family: "Raleway", sans-serif}
   <div id="wrap">
 
         <div id="filtros">
-          Filtros acá
+            <h4>Filtros</h4>
+            <form action="/filtrarMensajes" method="post">
+                <label for="fechaDesde">Fecha desde</label>
+                <input id="fechaDesde" name="fechaDesde" type="date" class="input-formulario">
+
+                <label for="fechaHasta">Fecha hasta</label>
+                <input id="fechaHasta" name="fechaHasta" type="date" class="input-formulario">
+
+                <select id="leidoNoLeido" name="leidoNoLeido" class="input-formulario">
+                    <option value="Todos">Todos</option>
+                    <option value="Leidos">Leidos</option>
+                </select>
+
+
+                <input type="submit" value="Filtrar">
+            </form>
         </div>
       
       <div id="divTablaGrande">
@@ -93,7 +108,7 @@ html,body,h1,h2,h3,h4,h5 {font-family: "Raleway", sans-serif}
         </thead>
         <tbody style="height: 20px">
 
-        {{#each bandeja.resultadosDeValidacion}}
+        {{#each resultadosDeValidacion}}
 
         <tr>
             <td>Egreso - {{operacionEgreso.id}}</td>
