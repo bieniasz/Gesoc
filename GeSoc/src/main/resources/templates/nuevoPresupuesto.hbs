@@ -20,11 +20,12 @@
 <script src="js/filtrarEnBarraDeBusqueda.js"></script>
 <script src="js/proveedor.js"></script>
 <script src="js/egreso.js"></script>
+<script src="js/presupuesto.js"></script>
 
 <style>
 html,body,h1,h2,h3,h4,h5 {font-family: "Raleway", sans-serif}
 </style>
-<body class="w3-light-grey">
+<body class="w3-light-grey" {{#if presupuesto}} onload="presupuestoCheck('{{presupuesto.esElElegido}}')"  {{/if}}>
 
 <!-- Top container -->
 <div class="w3-bar w3-top w3-large" style="background:#1aa3cfff; color:white; z-index:4">
@@ -99,7 +100,7 @@ html,body,h1,h2,h3,h4,h5 {font-family: "Raleway", sans-serif}
         <br><br>
 <!-- !ES EL ELEGIDO! -->
   		<br><br>
-        <label><input type="checkbox" id="prespuestoElegidoCheck"  name="prespuestoElegidoCheck" {{#if presupuesto}} value="{{presupuesto.esElElegido}}" {{/if}}> Es presupuesto elegido</label>
+        <label><input type="checkbox" id="prespuestoElegidoCheck"  name="prespuestoElegidoCheck" {{#if presupuesto}} onload="presupuestoCheck('{{presupuesto.esElElegido}}')"  {{/if}}> Es presupuesto elegido</label>
         <br><br>
 <!-- !CATEGORIAS! -->
         <h3 style="margin-bottom: 5px;margin-left: 10px">Categorias

@@ -19,6 +19,7 @@ public class Presupuesto extends OperacionComercial{
 
     public OperacionEgreso getEgreso() { return egreso; }
     public boolean isElegido() { return esElElegido; }
+    public boolean getEsElElegido() { return esElElegido; }
 
     public void setElegido(boolean elegido) { this.esElElegido = elegido; }
     public void setEgreso(OperacionEgreso egreso) {
