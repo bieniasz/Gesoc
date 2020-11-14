@@ -6,48 +6,34 @@ body{
   font-family: 'Lato', sans-serif;
 }
 
-.accordion {
-  background-color: #eee;
-  color: #444;
-  cursor: pointer;
-  padding: 18px;
-  width: 100%;
-  border: none;
-  text-align: left;
-  outline: none;
-  font-size: 15px;
-  transition: 0.4s;
-}
-
-.active, .accordion:hover {
-  background-color: #ccc; 
-}
-
-.panel {
-  padding: 0 18px;
-  display: none;
-  background-color: white;
-  overflow: hidden;
+label{
+         color: #3A3A3A;
+         margin: 0;
+         font-weight: 500;
+         font-size: 20px;
+         line-height: 1em;
+         padding-right: 20px;
+         padding-left: 10px;
 }
 
 #wrap {
   height: 100%;
   position: relative;
   width: 100%;
-    
+
 }
 
-.window { 
+.window {
   position:relative;
   float:left;
   height:100%;
-      
+
 }
-.pane { 
+.pane {
   width: 100%;
   position: relative;
   height: 50%;
-  
+
 }
 #pane1{
   border-bottom:1px solid;
@@ -59,6 +45,18 @@ body{
 }
 #window2 {
     width:70%;
+}
+
+#Subtitulo{
+         margin-left: 5%;
+         color: #3A3A3A;
+         margin-bottom:40px;
+         font-weight: 500;
+         font-size: 35px;
+         line-height: 2em;
+         padding-right: 10px;
+         padding-left: 10px;
+
 }
 
 
@@ -76,19 +74,19 @@ body{
 
 #divTablaGrande{
   overflow:scroll;
-     height:700px;
-    
+     height: 70vh;
+
 }
 
 #divTablaChica{
   overflow:scroll;
      height:250px;
-    
+
 }
 #divTablaChica2{
   overflow:scroll;
      height:404px;
-    
+
 }
 
 
@@ -106,15 +104,13 @@ body{
 
 .tabla{
   margin:10px;
-  width:100%;
+  width:95%;
 }
 
 .tabla thead{
   margin-bottom: 10px;
   width:100%;
   margin-bottom: 20px;
-
-
 }
 
 .tabla th{
@@ -139,9 +135,9 @@ body{
 }
 
 .tabla tr:hover {
-  background-color: rgb(240, 173, 186);
-}
+  background-color: rgb(204, 255, 255);
 
+}
 
 .btn{
   border:0px;
@@ -166,7 +162,6 @@ body{
 }
 .btn-border-blue{
   padding: 7px;
-  
   width: 35px;
   height: 35px;
   font-size: 16px;
@@ -176,26 +171,46 @@ body{
   text-decoration: none;
 }
 
+.btn-adjuntar-documento{
+  background-color: white;
+  border: 2px solid #008CBA;
+  color: black;
+  opacity: 0.6;
+  transition: 0.3s;
+  display: inline-block;
+  text-decoration: none;
+  cursor: pointer;
+}
+.btn-adjuntar-documento:hover {
+  opacity: 1;
+  box-shadow: 0 12px 16px 0 rgba(0,0,0,0.24),0 17px 50px 0 rgba(0,0,0,0.19);
+  background-color: #008CBA;
+  color: white;
+}
 
-#modalEliminar{
+#modalAgregarDetalle{
   display: none; /* Hidden by default */
   position: fixed; /* Stay in place */
   z-index: 1; /* Sit on top */
-  left: 0;
-  top: 0;
+  left: 50%;
+  top: 50%;
   width: 100%; /* Full width */
   height: 100%; /* Full height */
   overflow: auto; /* Enable scroll if needed */
   background-color: rgb(0,0,0); /* Fallback color */
   background-color: rgba(0,0,0,0.4); /* Black w/ opacity */
+  transform: translate(-50%, -50%);
 }
 .modalContent{
   background-color: #fefefe;
-  margin: 15% auto; /* 15% from the top and centered */
+  position: fixed;
+  left: 50%;
+  top: 50%;
   padding: 20px;
-  border: 1px solid #888;
-  width: 80%;
+  border: 3px solid #888;
+  transform: translate(-50%, -50%);
 }
+
 .btn-close-modal {
   cursor:pointer;
   float:right;
@@ -207,6 +222,8 @@ body{
   font-size:16px;
 }
 .btn-cancelar{
+  position: relative;
+  left: 68%;
   border:0px;
   padding: 10px;
   font-size: 16px;
@@ -227,24 +244,26 @@ body{
   color:white;
 }
 .btn-verde{
+  position: relative;
+  left: 68%;
   border:0px;
   padding: 10px;
   font-size: 16px;
   background-color: grey;
   border-radius: 5px;
   margin:5px;
-  background-color:rgb(68, 168, 68);
+  background-color:#1aa3cfff;
   cursor:pointer;
   color:white;
 }
 
 #filtros {
-  width: 91.5%;
+  width: 93%;
   padding: 30px 0;
-  
+
   background-color: lightblue;
-  margin-top: 20px;
-  margin-left: 12px;
+  margin-top: 5px;
+  margin-left: 13px;
 }
 
 @media (max-width:450px) {
@@ -255,7 +274,77 @@ body{
     align-items: center;
     padding: 10px;
   }
+}
 
+.input-formulario{
+  width: 250 px;
+  align: center;
+  margin: 10px;
+  opacity:80%;
+      padding: 7px;
+      height: 35px;
+      font-size: 16px;
+      border-radius: 5px;
+      color: rgb(10, 123, 199);
+      border: 1px solid rgb(10, 123, 199);
+      text-decoration: none;
+}
+.botonfiltrar{
+        width: 250 px;
+        padding: 5px;
+        height: 35px;
+        font-size: 16px;
+        border-radius: 5px;
+        color: rgb(10, 123, 199);
+        border: 1px solid rgb(10, 123, 199);
+        text-decoration: none;
+ }
 
+.btn-guardar{
+  width: 90%;
+  align: center;
+  font-size: 20px;
+  font-weight: bold;
 
 }
+.input-formulario-readonly{
+  background-color: lightgrey;
+  width: 200px;
+  align: left;
+}
+.scroll-formularios{
+  overflow: scroll;
+  height: 250px;
+  width: 90%;
+}
+.scroll-formularios-seleccion{
+  overflow: scroll;
+  height: 1000px;
+  width: 90%;
+}
+
+
+.tooltip {
+  position: relative;
+  display: inline-block;
+  border-bottom: 1px dotted black;
+}
+
+
+.tooltip .tooltiptext {
+  visibility: hidden;
+  width: 120px;
+  background-color: black;
+  color: #fff;
+  text-align: center;
+  padding: 5px 0;
+  border-radius: 6px;
+  position: absolute;
+  z-index: 1;
+}
+
+
+.tooltip:hover .tooltiptext {
+  visibility: visible;
+}
+
