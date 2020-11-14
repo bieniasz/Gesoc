@@ -83,14 +83,16 @@ public class ValidadorDeUsuario implements iValidadorDeUsuario{
     private void validarTiempoLogin(Usuario usuario, LocalDateTime horaIntento) throws LoginBloqueadoTemporalmenteException {
         IntentosFallidos intentosFallidos = almacenContrasenias.getIntentosFallidosDeUsuario(usuario);
 
-        if (intentosFallidos != null
-                && intentosFallidos.getIntentosRealizados() >= Config.login_topeIntentosFallidos) {
-
-            LocalDateTime horaIntentoMaximo = intentosFallidos.getHoraDelIntentoMaximo();
-            if (this.cumpleCondicionDeEspera(horaIntentoMaximo, horaIntento)) {
-                this.almacenContrasenias.reiniciarIntentosFallidos(usuario);
+        if (intentosFallidos != null) {
+            if(intentosFallidos.getIntentosRealizados() >= Config.login_topeIntentosFallidos) {
+                LocalDateTime horaIntentoMaximo = intentosFallidos.getHoraDelIntentoMaximo();
+                if (this.cumpleCondicionDeEspera(horaIntentoMaximo, horaIntento)) {
+                    this.almacenContrasenias.reiniciarIntentosFallidos(usuario);
+                } else {
+                    throw new LoginBloqueadoTemporalmenteException();
+                }
             } else {
-                throw new LoginBloqueadoTemporalmenteException();
+                this.almacenContrasenias.reiniciarIntentosFallidos(usuario);
             }
         }
     }
