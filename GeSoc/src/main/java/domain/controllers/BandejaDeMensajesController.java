@@ -7,6 +7,7 @@ import db.EntityManagerHelper;
 import domain.entities.ProveedorDocComer.Proveedor;
 import domain.entities.bandejaDeResultado.BandejaDeResultado;
 import domain.entities.usuario.Usuario;
+import domain.entities.validadorTransparencia.ResultadoDeValidacion;
 import spark.ModelAndView;
 import spark.Request;
 import spark.Response;
@@ -22,6 +23,29 @@ public class BandejaDeMensajesController {
 
     private UserDAO userDAO = new UserDAOMySQL();
     private UsuarioHandler usuarioHandler = new UsuarioHandler();
+
+    public Response cambiarEstadoMensaje(Request request, Response response) {
+
+        System.out.println("Entro al metodo");
+        System.out.println(request.queryParams("idResultado"));
+
+        Integer idMensaje = Integer.parseInt(request.queryParams("idResultado"));
+        System.out.println(idMensaje+"recibido");
+
+        ResultadoDeValidacion resultado =  EntityManagerHelper.getEntityManager().find(ResultadoDeValidacion.class, idMensaje);
+        resultado.setLeido(true);
+
+        System.out.println("Seteo el leido");
+
+        EntityManagerHelper.beginTransaction();
+        EntityManagerHelper.getEntityManager().merge(resultado);
+        EntityManagerHelper.commit();
+
+        System.out.println("persistio");
+
+        return  response;
+
+    }
 
 
     public ModelAndView mostrarBandejaDeMensajes(Request request, Response response) {
