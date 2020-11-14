@@ -33,6 +33,8 @@ public class PresupuestoController {
     private OperacionEgresoDAO operacionEgresoDAO = new OperacionEgresoDAOMySQL();
     private CategoriaDAO categoriaDAO = new CategoriaDAOMySQL();
     private PresupuestoDAO presupuestoDAO = new PresupuestoDAOMySQL();
+    private TipoComprobanteDAO tipoComprobanteDAO = new TipoComprobanteDAOMySQL();
+    private ImagenesDAO imagenesDAO = new ImagenesDAOMySQL();
     private UserDAO userDAO = new UserDAOMySQL();
     private UsuarioHandler usuarioHandler = new UsuarioHandler();
     private CriterioDeOperacionesDAO criterioDeOperacionesDAO = new CriterioDeOperacionesDAOMySQL();
@@ -45,13 +47,15 @@ public class PresupuestoController {
         Integer idEgreso = new Integer(request.queryParams("egresoId"));
 
         Usuario usuario = this.userDAO.buscarUsuarioPoruserId(usuarioIDSpark);
-        List<OperacionEgreso> egresos = this.operacionEgresoDAO.getOperacionesEgresoPorOrganizacion(usuario.getRol().getOrganizacion().getId());
-    
+        List<CriterioDeOperaciones> criteriosDeOperaciones = this.criterioDeOperacionesDAO.getTodasLosCriterios();
+  
         List<CategoriaDeOperaciones> categorias = this.categoriaDAO.getTodasLasCategorias();
 
+        List<TipoComprobante> tipoComprobanteList = this.tipoComprobanteDAO.buscarTodosLosTiposDeComprobantes();
+    
         List<Presupuesto> presupuestos= this.presupuestoDAO.buscarPresupuestoEgresoId(idEgreso);
-
-        List<CriterioDeOperaciones> criteriosDeOperaciones = this.criterioDeOperacionesDAO.getTodasLosCriterios();
+        
+        this.arreglarImagenPresupuestos(presupuestos);
 
         Map<String, Object> parametros = new HashMap<>();
         usuarioHandler.agregarDatosDeUsuario(parametros,usuario);
@@ -59,6 +63,7 @@ public class PresupuestoController {
         parametros.put("categorias", categorias);
         parametros.put("presupuestos", presupuestos);
         parametros.put("criteriosDeOperaciones", criteriosDeOperaciones);
+        parametros.put("tiposCombantes", tipoComprobanteList);
 
         return new ModelAndView(parametros, "presupuestos.hbs");
     }
@@ -72,6 +77,8 @@ public class PresupuestoController {
         Integer id = new Integer(request.queryParams("presupuestoId"));
 
         Presupuesto presupuesto = this.presupuestoDAO.buscarPresupuesto(id);
+        
+        
         
         OperacionEgreso operacionEgreso = this.operacionEgresoDAO.buscarOperacionEgresoPorId(presupuesto.getEgreso().getId());
 
@@ -251,4 +258,18 @@ public class PresupuestoController {
 
         return documentoComercial;
     }
+    
+    private void arreglarImagenPresupuestos(List<Presupuesto> presupuestos) {
+    	presupuestos.forEach( presupuesto -> {
+                try {
+                    String content = this.imagenesDAO.buscarContenido(presupuesto.getId());
+                    System.out.println("DOCUMENTO: " + content);
+
+                    presupuesto.getDocumentoComercial().setContentDeserealizado(content);
+                } catch (Exception e){}
+
+            });
+
+    }
+    
 }

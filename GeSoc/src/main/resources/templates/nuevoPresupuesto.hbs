@@ -77,7 +77,8 @@ html,body,h1,h2,h3,h4,h5 {font-family: "Raleway", sans-serif}
 
   <!-- Header -->
   <header class="titulo" style="padding-top:22px">
-      <b><i class="fa fa-bank fa-fw"></i>{{#if presupuesto}} Presupuesto - Id {{presupuesto.id}} {{else}} Nuevo Presupuesto {{/if}}</b>
+        {{#if presupuesto}}  <a href="/presupuestos?egresoId={{presupuesto.egreso.id}}" class="btn-border-blue fuente"><i class="fa fa-toggle-left"></i> Atrás</a>{{/if}}
+        <b><i class="fa fa-bank fa-fw"></i>{{#if presupuesto}} Presupuesto - Id {{presupuesto.id}} {{else}} Nuevo Presupuesto {{/if}}</b>
   </header>
   
  <form class=""  action="/presupuesto" method="post"> 
@@ -203,6 +204,8 @@ html,body,h1,h2,h3,h4,h5 {font-family: "Raleway", sans-serif}
         </div>
     </div>
 </div>
+
+
 
 </body>
 </html>

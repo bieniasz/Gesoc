@@ -16,8 +16,10 @@
     <script src="https://code.jquery.com/jquery-3.4.1.min.js" integrity="sha256-CSXorXvZcTkaix6Yvo6HppcZGetbYMGWSFlBw8HfCJo=" crossorigin="anonymous"></script>
     <script src="js/generales.js"></script>
     <script src="js/documentoComercial.js"></script>
+
     <script src="js/criterioDeOperaciones.js"></script>
     <script src="js/filtrarEnBarraDeBusqueda.js"></script>
+
 
 
 <style>
@@ -132,6 +134,9 @@ html,body,h1,h2,h3,h4,h5 {font-family: "Raleway", sans-serif}
                     {{/each}}</td>
                 <td>
                     <a href="/editarPresupuesto?presupuestoId={{id}}" name="button" class=" btn btn-edit"><i class="fas fa-edit"></i></a> 
+
+                   <button type="button" name="adjuntarDocumentoComercial" class="btn btn-adjuntar-documento" {{#if documentoComercial}} onclick="mostrarDocumentoComercialModalPopulado('{{id}}', '{{documentoComercial.tipoDocumentoComercial.descripcion}}', '{{documentoComercial.tipoDocumentoComercial.id}}', '{{documentoComercial.numeroDocumentoComercial}}', '{{documentoComercial.tipoDeAdjunto}}', '{{documentoComercial.contentDeserealizado}}')" {{else}} onclick="mostrarDocumentoComercialModal('{{id}}')" {{/if}}><i class="fas fa-paperclip" title="Adjuntar archivo" ></i></button>
+
                 </td>
             </tr>
         {{/each}}
@@ -160,6 +165,43 @@ html,body,h1,h2,h3,h4,h5 {font-family: "Raleway", sans-serif}
     <div class="footer">GESOC - Grupo 09</div>
 </body>
 
+<!-- ================= MODAL AGREGAR DOCUMENTO COMERCIAL ================== -->
+<div class="modalAgregarDetalle modal" id="modalAgregarDetalle">
+    <div class="modalContent">
+        <h3>Agregar Documento Comercial</h3>
+        <form>
+            <select id="documentoComercialTipo" name="documentoComercialTipo" class="input-formulario" onchange="mostrarOcultarAdjuntarRecibo()">
+                <option value="Fisico">Fisico</option>
+                <option value="Digital">Digital</option>
+            </select>
+            <input id="documentoComercialNumero" name="documentoComercialNumero" type="number" class="input-formulario" placeholder="Numero">
+            <br><br>
+            <input type="hidden" id="documentoComercialTipoComprobanteId" name="documentoComercialTipoComprobanteId">
+            <input id="documentoComercialTipoComprobante" name="documentoComercialTipoComprobante" type="text" class="input-formulario" placeholder="Tipo de comprobante" readonly>
+            <a name="searchDocumentoComercialTipoComprobate" class=" btn btn-search" onclick="mostrarBuscarDocumentoComercialTipoComprobante()"><i class="fas fa-search"></i></a>
+            <div class="dropdown">
+                <div id="buscarDocumentoComercialTipoComprobante" class="dropdown-content">
+                    <input type="text" placeholder="Search.." id="inputBuscarDocumentoComercialTipoComprobante" onkeyup="filterFunction('buscarDocumentoComercialTipoComprobante','inputBuscarDocumentoComercialTipoComprobante')">
+                    {{#each tiposCombantes}}
+                        <a onClick="llenarTipoComprobante('{{id}}', '{{descripcion}}')">{{descripcion}}</a>
+                    {{/each}}
+                </div>
+            </div>
+            <br><br>
+
+            <input id="documentoComercialAdjunto" name="documentoComercialAdjunto" type="hidden" class="input-formulario" onchange="previewFile()">
+            <br><br>
+            <div id="seccionImagen" name="seccionImagen"></div>
+
+
+        </form>
+        <div class="">
+            <button type="button" name="button" class="btn-verde" onclick="guardarDocumentoComercial()">Guardar</button>
+            
+            <button type="button" name="button" class="btn-cancelar" onclick="limpiarAgregarDocumentoModal()">Cerrar</button>
+        </div>
+    </div>
+</div>
 
 <script>
 // Get the Sidebar
