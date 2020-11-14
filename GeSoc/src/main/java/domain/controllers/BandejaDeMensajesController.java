@@ -58,14 +58,23 @@ public class BandejaDeMensajesController {
 
         Usuario usuario = usuarioDao.buscarUsuarioPoruserId(usuarioIDSpark);
         int numberid = usuario.getId();
-        Integer bandejaDeResultadoId = (Integer) EntityManagerHelper.getEntityManager().createNativeQuery("select distinct bandejaDeResultado_id from usuario u, rol r, bandejaderesultado br, resultadodevalidacion rv where u.rol_id=r.id and r.bandejaDeResultado_id=br.id and br.id = rv.BandejaDeResultado and u.id="+numberid).getSingleResult();
-        BandejaDeResultado bandeja = EntityManagerHelper.getEntityManager().find(BandejaDeResultado.class, bandejaDeResultadoId);
-        String nombreFicticioOrganizacion = usuario.getRol().getOrganizacion().getNombreFicticio();
 
+        String nombreFicticioOrganizacion = usuario.getRol().getOrganizacion().getNombreFicticio();
         Map<String, Object> parametros = new HashMap<>();
-        parametros.put("usuarioId",usuarioIDSpark);
-        parametros.put("resultadosDeValidacion", bandeja.getResultadosDeValidacion());
-        parametros.put("nombreFicticioOrganizacion", nombreFicticioOrganizacion);
+
+        try {
+            Integer bandejaDeResultadoId = (Integer) EntityManagerHelper.getEntityManager().createNativeQuery("select distinct bandejaDeResultado_id from usuario u, rol r, bandejaderesultado br, resultadodevalidacion rv where u.rol_id=r.id and r.bandejaDeResultado_id=br.id and br.id = rv.BandejaDeResultado and u.id="+numberid).getSingleResult();
+            BandejaDeResultado bandeja = EntityManagerHelper.getEntityManager().find(BandejaDeResultado.class, bandejaDeResultadoId);
+            parametros.put("resultadosDeValidacion", bandeja.getResultadosDeValidacion());
+            parametros.put("usuarioId",usuarioIDSpark);
+            parametros.put("nombreFicticioOrganizacion", nombreFicticioOrganizacion);
+        } catch (Exception e) {
+            parametros.put("usuarioId",usuarioIDSpark);
+            parametros.put("nombreFicticioOrganizacion", nombreFicticioOrganizacion);
+        }
+
+
+
         usuarioHandler.agregarDatosDeUsuario(parametros,usuario);
 
         return new ModelAndView(parametros, "bandejaDeMensajes.hbs");
