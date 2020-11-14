@@ -77,9 +77,6 @@ public class PresupuestoController {
         Integer id = new Integer(request.queryParams("presupuestoId"));
 
         Presupuesto presupuesto = this.presupuestoDAO.buscarPresupuesto(id);
-        
-        
-        
         OperacionEgreso operacionEgreso = this.operacionEgresoDAO.buscarOperacionEgresoPorId(presupuesto.getEgreso().getId());
 
         List<Proveedor> proveedores = this.proveedorDAO.getTodosLosProveedores();
@@ -141,19 +138,12 @@ public class PresupuestoController {
 
     public Response guardar(Request request, Response response) throws Exception {
        
-    	String usuarioIDSpark = request.session().attribute("id");       
-       
-               
+    	String usuarioIDSpark = request.session().attribute("id");
         List<DetalleEgreso> detallesEgresos = this.getListaDeDetalle(request);
-        
         Boolean esElElegido = this.getEsElElegido(request);
-        
         OperacionEgreso egreso= this.operacionEgresoDAO.buscarOperacionEgresoPorId(new Integer(request.queryParams("egreso")));
-        
         Integer egresoId = new Integer(request.queryParams("egreso"));
-       
         LocalDate fecha = LocalDate.parse(request.queryParams("fecha"));
-        
         List<CategoriaDeOperaciones> categoriasDeOperaciones = this.getListaDeCategorias(request);
         
         
@@ -165,21 +155,24 @@ public class PresupuestoController {
         builder.setEsElElegido(esElElegido);
       
         Presupuesto presupuesto = builder.build();
-
         this.presupuestoDAO.guardarPresupuesto(presupuesto);
 
         response.redirect("/presupuestos?egresoId="+egresoId);
         return response;
         
-             
-        
-        
-        
     }
 
-    private Boolean getEsElElegido(Request request) {		
-    	             
-          Boolean respuesta = new Boolean(request.queryParams("prespuestoElegidoCheck" ));            
+    private Boolean getEsElElegido(Request request) {
+        System.out.println("ES EL ELEGIDO: " + request.queryParams("prespuestoElegidoCheck"));
+
+        Boolean respuesta;
+        if (request.queryParams("prespuestoElegidoCheck").equals("on")) {
+            respuesta = true;
+        } else {
+            respuesta = false;
+        }
+
+        System.out.println("ES EL ELEGIDO: " + respuesta);
        
 		return respuesta;
 	}

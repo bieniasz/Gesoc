@@ -70,7 +70,8 @@ html,body,h1,h2,h3,h4,h5 {font-family: "Raleway", sans-serif}
 
   <!-- Header -->
   <header class="titulo" style="padding-top:22px">
-      <b><i class="fa fa-bank fa-fw"></i>{{#if ingreso}} Editar Operacion de Ingreso - Id {{ingresoId}} {{else}} Editar Operacion de Ingreso {{/if}}</b>
+      {{#if ingreso}}  <a href="/operacionesIngreso" class="btn-border-blue fuente"><i class="fa fa-toggle-left"></i> Atrás</a>{{/if}}
+      <b><i class="fa fa-bank fa-fw"></i>{{#if ingreso}} Operacion de Ingreso - Id {{ingresoId}} {{else}} Editar Operacion de Ingreso {{/if}}</b>
   </header>
 
    <!-- Formulario -->
@@ -92,7 +93,7 @@ html,body,h1,h2,h3,h4,h5 {font-family: "Raleway", sans-serif}
 
       <br>
       <div align="left" width="90%">
-      <input class="btn-guardar" type="submit" value="Guardar">
+
       </div>
       <br>
     </form>

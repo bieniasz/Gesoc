@@ -76,6 +76,7 @@ html,body,h1,h2,h3,h4,h5 {font-family: "Raleway", sans-serif}
 
   <!-- Header -->
   <header class="titulo" style="padding-top:22px">
+      {{#if egreso}}  <a href="/operacionesEgreso" class="btn-border-blue fuente"><i class="fa fa-toggle-left"></i> Atrás</a>{{/if}}
       <b><i class="fa fa-bank fa-fw"></i>{{#if egreso}} Operacion de Egreso - Id {{egreso.id}} {{else}} Nueva Operacion de Egreso {{/if}}</b>
   </header>
 
@@ -195,7 +196,10 @@ html,body,h1,h2,h3,h4,h5 {font-family: "Raleway", sans-serif}
       <!-- !FIN Detalle del Egreso! -->
       <br>
       <div align="left" width="90%">
-      <input class="btn-guardar" type="submit" value="Guardar">
+        {{#if egreso}}
+        {{else}}
+            <input class="btn-guardar" type="submit" value="Guardar">
+        {{/if}}
       </div>
       <br>
     </form>

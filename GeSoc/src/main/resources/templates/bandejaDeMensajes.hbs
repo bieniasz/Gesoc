@@ -6,7 +6,7 @@
 <link rel="stylesheet" href="css/w3.css">
 <link rel="stylesheet" href="https://fonts.googleapis.com/css?family=Raleway">
 <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/4.7.0/css/font-awesome.min.css">
-<!--link rel="stylesheet" href="css/bandejaDeMensajes.css"-->
+<!-- <link rel="stylesheet" href="css/bandejaDeMensajes.css"> -->
 <link rel="stylesheet" href="css/operaciones.css">
     <script src="https://kit.fontawesome.com/27517fada0.js"></script>
     <link href="https://fonts.googleapis.com/css?family=Lexend+Deca&display=swap" rel="stylesheet">
@@ -77,24 +77,23 @@ html,body,h1,h2,h3,h4,h5 {font-family: "Raleway", sans-serif}
 
   <div id="wrap">
 
-        <div id="filtros">
-            <h4>Filtros</h4>
-            <form action="/filtrarMensajes" method="post">
-                <label for="fechaDesde">Fecha desde</label>
-                <input id="fechaDesde" name="fechaDesde" type="date" class="input-formulario">
+    <h3>Filtros</h3>
+    <form action="/filtrarMensajes" method="post">
+        <label for="fechaDesde">Fecha desde</label>
+        <input id="fechaDesde" name="fechaDesde" type="date" class="input-formulario">
+        <br>
+        <br>
+        <label for="fechaHasta">Fecha hasta</label>
+        <input id="fechaHasta" name="fechaHasta" type="date" class="input-formulario">
+        <select id="leidoNoLeido" name="leidoNoLeido" class="input-formulario">
+            <option value="Todos">Todos</option>
+            <option value="Leidos">Leidos</option>
+        </select>
 
-                <label for="fechaHasta">Fecha hasta</label>
-                <input id="fechaHasta" name="fechaHasta" type="date" class="input-formulario">
 
-                <select id="leidoNoLeido" name="leidoNoLeido" class="input-formulario">
-                    <option value="Todos">Todos</option>
-                    <option value="Leidos">Leidos</option>
-                </select>
+        <input id="botonfiltrar" class="botonfiltrar" type="submit" value="Filtrar">
+    </form>
 
-
-                <input type="submit" value="Filtrar">
-            </form>
-        </div>
       
       <div id="divTablaGrande">
 

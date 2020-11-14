@@ -1,10 +1,13 @@
 .alert {
   padding: 20px;
-  background-color: #2196F3;
   color: white;
 }
 
-.alert.success {
+.alert-progress {
+  background-color: #2196F3;
+}
+
+.alert-success {
     background-color: #4CAF50;
 }
 
@@ -21,4 +24,9 @@
 
 .closebtn:hover {
   color: black;
+}
+
+.btn-border-blue:hover {
+    cursor: pointer;
+    text-decoration-line: none;
 }
