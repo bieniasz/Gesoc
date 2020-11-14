@@ -75,22 +75,24 @@ function correrVinculacion(organizacion) {
 }
 
 function mensajeComplete() {
-    var $divAlert = $(".alert-progress");
-        $divAlert.hide();
+    setTimeout(function() {
+        var $divAlert = $(".alert-progress");
+            $divAlert.hide();
 
-    var div = document.createElement("DIV");
-        div.setAttribute("class", "alert alert-success");
-        document.getElementById("divMensajesDelVinculador").appendChild(div);
+        var div = document.createElement("DIV");
+            div.setAttribute("class", "alert alert-success");
+            document.getElementById("divMensajesDelVinculador").appendChild(div);
 
-    var span = document.createElement("SPAN");
-        span.setAttribute("class", "closebtn");
-        span.setAttribute("onclick", "this.parentElement.style.display='none';");
-        span.innerHTML = "&times;";
-        div.appendChild(span);
+        var span = document.createElement("SPAN");
+            span.setAttribute("class", "closebtn");
+            span.setAttribute("onclick", "this.parentElement.style.display='none';");
+            span.innerHTML = "&times;";
+            div.appendChild(span);
 
-    var strong = document.createElement("STRONG");
-        strong.innerHTML = "Vinculacion completada";
-        div.appendChild(strong);
+        var strong = document.createElement("STRONG");
+            strong.innerHTML = "Vinculacion completada";
+            div.appendChild(strong);
+    }, 4000);
 }
 
 function cerrarVinculadorModal() {
