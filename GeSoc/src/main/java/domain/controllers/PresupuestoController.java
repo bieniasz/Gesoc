@@ -35,6 +35,7 @@ public class PresupuestoController {
     private PresupuestoDAO presupuestoDAO = new PresupuestoDAOMySQL();
     private UserDAO userDAO = new UserDAOMySQL();
     private UsuarioHandler usuarioHandler = new UsuarioHandler();
+    private CriterioDeOperacionesDAO criterioDeOperacionesDAO = new CriterioDeOperacionesDAOMySQL();
 
     
     public ModelAndView mostrarPresupuestos(Request request, Response response)  throws Exception {
@@ -48,14 +49,16 @@ public class PresupuestoController {
     
         List<CategoriaDeOperaciones> categorias = this.categoriaDAO.getTodasLasCategorias();
 
-    
         List<Presupuesto> presupuestos= this.presupuestoDAO.buscarPresupuestoEgresoId(idEgreso);
-        		
+
+        List<CriterioDeOperaciones> criteriosDeOperaciones = this.criterioDeOperacionesDAO.getTodasLosCriterios();
+
         Map<String, Object> parametros = new HashMap<>();
         usuarioHandler.agregarDatosDeUsuario(parametros,usuario);
 
         parametros.put("categorias", categorias);
         parametros.put("presupuestos", presupuestos);
+        parametros.put("criteriosDeOperaciones", criteriosDeOperaciones);
 
         return new ModelAndView(parametros, "presupuestos.hbs");
     }

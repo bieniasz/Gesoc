@@ -92,6 +92,8 @@ html,body,h1,h2,h3,h4,h5 {font-family: "Raleway", sans-serif}
       <div>
             <input style="margin-bottom: 0px;margin-left: 10px; width: 200px" id="criterio" readonly name="criterio" type="text" class="input-formulario">
             <a name="searchCriterio" class=" btn-border-blue fuente" onclick="mostrarBuscarCriterio()" style="cursor:pointer" title="Filtrar por criterio"><i class="fa fa-filter"></i></a>
+            <a name="limpiarFiltro" class=" btn-border-blue fuente" onclick="limpiarFiltro()" style="cursor:pointer" title="Limpiar filtro"><i class="fa fa-remove"></i></a>
+
             <div class="dropdown">
                 <div id="buscarCriterio" class="dropdown-content">
                     <input type="text" placeholder="Search.." id="inputBuscarCriterio" onkeyup="filterFunction('buscarCriterio','inputBuscarCriterio')">
