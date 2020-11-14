@@ -60,3 +60,15 @@ function borrarItem(id) {
 function borrarItemNuevo(id) {
     document.getElementById('rowItemNuevo' + id).remove();
 }
+
+function mostrarBuscarItem() {
+  document.getElementById("buscarItem").classList.toggle("show");
+}
+
+function llenarItem(item) {
+    document.getElementById("descripcionItem").value = item;
+
+    document.getElementById("buscarItem").classList.toggle("show");
+
+}
+

@@ -98,9 +98,11 @@ html,body,h1,h2,h3,h4,h5 {font-family: "Raleway", sans-serif}
         <div class="dropdown">
             <div id="buscarProveedor" class="dropdown-content">
                 <input type="text" placeholder="Search.." id="inputBuscarProveedor" onkeyup="filterFunction('buscarProveedor','inputBuscarProveedor')">
+
                 {{#each provedoores}}
                     <a onClick="llenarProveedor('{{nombreApellido_RazonSocial}}', '{{id}}')">{{nombreApellido_RazonSocial}}</a>
                 {{/each}}
+
             </div>
         </div>
         <br><br>
@@ -220,7 +222,22 @@ html,body,h1,h2,h3,h4,h5 {font-family: "Raleway", sans-serif}
     <div class="modalContent">
         <h3>Agregar nuevo detalle</h3>
         <form>
-            <input type="text" name="descripcionItem" id="descripcionItem" placeholder="Descripcion">
+            <input type="text" readonly name="descripcionItem" class="input-formulario" id="descripcionItem" placeholder="Item">
+
+                    <a name="searchItem" class=" btn btn-search" onclick="mostrarBuscarItem()"><i class="fas fa-search"></i></a>
+
+                    <div class="dropdown">
+                        <div id="buscarItem" class="dropdown-content">
+                            <input type="text" placeholder="Search.." id="inputBuscarItem" onkeyup="filterFunction('buscarItem','inputBuscarItem')">
+                            <div id="itemsDelProveedor">
+
+                            </div>
+
+                        </div>
+                    </div>
+
+
+
             <input type="text" name="cantidadItem" id="cantidadItem" placeholder="Cantidad">
             <input type="text" name="valorItem" id="valorItem" placeholder="Valor total">
         </form>

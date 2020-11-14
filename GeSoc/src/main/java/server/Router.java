@@ -56,6 +56,8 @@ public class Router {
         Spark.before("/egreso", authMiddleware::verificarSesionGeneral);
         Spark.post("/egreso", controllerOperacionEgreso::guardar);
 
+        Spark.post("/obtenerItems", controllerOperacionEgreso::obtenerItemsDelProveedor);
+
         Spark.get("/egresoEditar", controllerOperacionEgreso::editarEgreso, Router.engine);
         Spark.before("/egresoEditar", authMiddleware::verificarSesionGeneral);
         Spark.post("/egresoEditar", controllerOperacionEgreso::guardarEditarEgreso);
