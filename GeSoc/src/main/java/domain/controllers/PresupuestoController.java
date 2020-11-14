@@ -165,12 +165,18 @@ public class PresupuestoController {
     private Boolean getEsElElegido(Request request) {
         System.out.println("ES EL ELEGIDO: " + request.queryParams("prespuestoElegidoCheck"));
 
-        Boolean respuesta;
-        if (request.queryParams("prespuestoElegidoCheck").equals("on")) {
-            respuesta = true;
-        } else {
+        Boolean respuesta = false;
+        try {
+
+            if (request.queryParams("prespuestoElegidoCheck").equals("on")) {
+                respuesta = true;
+            } else {
+                respuesta = false;
+            }
+        } catch (Exception e) {
             respuesta = false;
         }
+
 
         System.out.println("ES EL ELEGIDO: " + respuesta);
        
