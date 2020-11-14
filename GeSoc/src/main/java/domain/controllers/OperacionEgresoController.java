@@ -1,5 +1,6 @@
 package domain.controllers;
 
+import com.google.gson.Gson;
 import db.DAOs.*;
 import db.EntityManagerHelper;
 import domain.entities.ProveedorDocComer.DocumentoComercial;
@@ -21,6 +22,7 @@ import java.util.ArrayList;
 import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
+import java.util.stream.Collectors;
 import java.util.stream.IntStream;
 import java.util.Arrays;
 import java.util.stream.Stream;
@@ -254,6 +256,29 @@ public class OperacionEgresoController {
         this.operacionEgresoDAO.modificarOperacionEgreso(egreso);
 
         return response;
+    }
+
+    public String obtenerItemsDelProveedor(Request request, Response response) throws Exception {
+
+        String stringIdProveedor = request.queryParams("idProveedor");
+
+        Integer idProveedor;
+        try {
+            idProveedor = Integer.parseInt(stringIdProveedor);
+        } catch (NumberFormatException e) {
+            idProveedor = 0;
+        }
+
+        Proveedor proveedor = proveedorDAO.getProveedor(idProveedor);
+
+        List<Item> items = proveedor.getItems();
+
+        List<String> itemsDescripcion = items.stream()
+                .map(item -> item.getDescripcion())
+                .collect(Collectors.toList());
+
+        return new Gson().toJson(itemsDescripcion);
+
     }
 
     public Object guardarDocumentoComercialPresupuesto(Request request, Response response) {
