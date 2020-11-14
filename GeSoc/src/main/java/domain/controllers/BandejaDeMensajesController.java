@@ -111,7 +111,10 @@ public class BandejaDeMensajesController {
         bandeja.agregarFiltro(filtroFecha);
 
         String leidoNoLeido = request.queryParams("leidoNoLeido");
-        if(leidoNoLeido == "Leido") {
+
+        System.out.println(leidoNoLeido);
+        if(leidoNoLeido.equals("Leidos")) {
+            System.out.println("AGREGANDO FILTRO, ENTRO AL IF");
             bandeja.agregarFiltro(new FiltroLeido());
         }
 
