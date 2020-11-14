@@ -56,6 +56,7 @@ public class Router {
 
         Spark.post("/marcarLeido", controllerBandejaDeMensajes::cambiarEstadoMensaje);
         Spark.post("/filtrarMensajes", controllerBandejaDeMensajes::filtrarMensajes, Router.engine);
+        Spark.before("/filtrarMensajes", authMiddleware::verificarSesionGeneral);
 
         Spark.get("/egreso", controllerOperacionEgreso::nuevoEgreso, Router.engine);
         Spark.before("/egreso", authMiddleware::verificarSesionGeneral);
