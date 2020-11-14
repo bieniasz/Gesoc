@@ -16,3 +16,11 @@ function llenarCriterio(criterio) {
 
 }
 
+function limpiarFiltro(){
+
+    document.getElementById("criterio").value = "";
+
+    var $rows = $("#tabla3 tbody");
+        $rows.show();
+}
+
