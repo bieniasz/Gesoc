@@ -72,8 +72,17 @@ function mostrarOcultarAdjuntarRecibo() {
 }
 
 function guardarDocumentoComercial(idEgreso) {
-    var contenidoDocumento = "Documento vacio";
-    var reader = new FileReader();
+    if(document.getElementById("documentoComercialTipo") == "Digital") {
+        postDocumentoDigital(idEgreso);
+    } else {
+        postDocumentoFisico(idEgreso);
+    }
+}
+
+function postDocumentoDigital(idEgreso) {
+   var contenidoDocumento = "Documento vacio";
+
+   var reader = new FileReader();
        reader.readAsDataURL(document.getElementById("documentoComercialAdjunto").files[0]);
        reader.onload = function () {
                 $.post( "/guardarDocumento",
@@ -90,6 +99,62 @@ function guardarDocumentoComercial(idEgreso) {
        reader.onerror = function (error) {
             contenidoDocumento = "Error al serializar el documento";
        };
+}
+
+function postDocumentoFisico(idEgreso) {
+    $.post( "/guardarDocumento",
+        {
+            egresoId: document.getElementById("idEgresoSeleccionadoParaAdjuntarRecibo").value,
+            tipoDocumento: document.getElementById("documentoComercialTipo").value,
+            numero: document.getElementById("documentoComercialNumero").value,
+            tipoComprobanteId: document.getElementById("documentoComercialTipoComprobanteId").value,
+            contenidoSerializado: ""
+        } ).done( function() {
+                location.reload(true);
+        });
+}
+
+function guardarDocumentoComercialPresupuesto() {
+    if(document.getElementById("documentoComercialTipo") == "Digital") {
+        postDocumentoDigitalPresupuesto();
+    } else {
+        postDocumentoFisicoPresupuesto();
+    }
+
+}
+
+function postDocumentoDigitalPresupuesto(idEgreso) {
+   var contenidoDocumento = "Documento vacio";
+       var reader = new FileReader();
+          reader.readAsDataURL(document.getElementById("documentoComercialAdjunto").files[0]);
+          reader.onload = function () {
+                   $.post( "/guardarDocumentoPresupuesto",
+                       {
+                           egresoId: document.getElementById("idEgresoSeleccionadoParaAdjuntarRecibo").value,
+                           tipoDocumento: document.getElementById("documentoComercialTipo").value,
+                           numero: document.getElementById("documentoComercialNumero").value,
+                           tipoComprobanteId: document.getElementById("documentoComercialTipoComprobanteId").value,
+                           contenidoSerializado: reader.result
+                       } ).done( function() {
+                               location.reload(true);
+                       });
+          };
+          reader.onerror = function (error) {
+               contenidoDocumento = "Error al serializar el documento";
+          };
+}
+
+function postDocumentoFisicoPresupuesto(idEgreso) {
+    $.post( "/guardarDocumentoPresupuesto",
+        {
+            egresoId: document.getElementById("idEgresoSeleccionadoParaAdjuntarRecibo").value,
+            tipoDocumento: document.getElementById("documentoComercialTipo").value,
+            numero: document.getElementById("documentoComercialNumero").value,
+            tipoComprobanteId: document.getElementById("documentoComercialTipoComprobanteId").value,
+            contenidoSerializado: ""
+        } ).done( function() {
+                location.reload(true);
+        });
 }
 
 function limpiarAgregarDocumentoModal() {

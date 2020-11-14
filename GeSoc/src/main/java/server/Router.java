@@ -70,6 +70,7 @@ public class Router {
 
 
         Spark.post("/guardarDocumento", controllerOperacionEgreso::guardarDocumentoComercial);
+        Spark.post("/guardarDocumentoPresupuesto", controllerOperacionEgreso::guardarDocumentoComercialPresupuesto);
 
         
         Spark.get("/presupuesto", controllerPresupuesto::nuevoPresupuesto, Router.engine);
