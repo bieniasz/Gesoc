@@ -72,3 +72,11 @@ function llenarItem(item) {
 
 }
 
+function cerrarModalDetalles(){
+    document.getElementsByClassName("modal")[0].style.display = 'none';
+
+    document.getElementById("descripcionItem").value = "";
+
+}
+
+

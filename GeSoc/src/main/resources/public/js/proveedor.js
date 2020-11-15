@@ -7,6 +7,15 @@ function llenarProveedor(proveedor, id, items) {
     document.getElementById("proveedorId").value = id;
     document.getElementById("buscarProveedor").classList.toggle("show");
 
+    $('#tbDetalles').empty();
+    $('#rowItemNuevo0').remove();$('#rowItemNuevo1').remove();$('#rowItemNuevo2').remove();$('#rowItemNuevo3').remove();
+    $('#rowItemNuevo4').remove();$('#rowItemNuevo5').remove();$('#rowItemNuevo6').remove();$('#rowItemNuevo7').remove();
+    $('#rowItemNuevo8').remove();$('#rowItemNuevo9').remove();$('#rowItemNuevo10').remove();$('#rowItemNuevo11').remove();
+    $('#rowItemNuevo12').remove();$('#rowItemNuevo13').remove();$('#rowItemNuevo14').remove();$('#rowItemNuevo15').remove();
+    $('#rowItemNuevo16').remove();$('#rowItemNuevo17').remove();$('#rowItemNuevo18').remove();$('#rowItemNuevo19').remove();
+    $('#rowItemNuevo20').remove();
+
+
     //elminar todas las rows de la tabla de detalles
 
 
@@ -32,7 +41,6 @@ function llenarProveedor(proveedor, id, items) {
                     $("#itemsDelProveedor").empty();
 
     				responseObject.forEach((item) => {
-    				    console.log(item);
 
                         $( "#itemsDelProveedor" ).append("<a onClick=\"llenarItem('"+item+"')\">"+item+"</a>");
 
