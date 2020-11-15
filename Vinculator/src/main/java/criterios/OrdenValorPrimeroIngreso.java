@@ -21,9 +21,10 @@ public class OrdenValorPrimeroIngreso extends CriterioEjecucion {
         //Entonces mantengo este contador de vinculaciones
         //Siempre que se haya hecho al menos una vinculacion, vuelvo a pasar
         //Si en una pasada no se hicieron vinculaciones, no tiene sentido seguir pasando
-        int cantidadVinculaciones = 0;
+        int cantidadVinculaciones;
 
         do {
+            cantidadVinculaciones = 0;
             for(Ingreso ingreso : ingresosOrdenados) {
                 PreCondicion pcFechaAceptable = new PeriodoAceptabilidad(ingreso.getFecha(), ingreso.getFecha_hasta());
                 List<Egreso> egresosAceptados = pcFechaAceptable.filtrarEgresos(repositorioEgresos)
