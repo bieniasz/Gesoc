@@ -67,7 +67,7 @@ public class ParseJsonTest {
 			      ) {
 			    	
         					System.out.println(egreso.getDetalle()); 
-        					System.out.println(egreso.getAsignado());
+        					System.out.println(egreso.isAsignado());
 				}	
         
 	
