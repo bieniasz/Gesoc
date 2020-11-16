@@ -72,10 +72,14 @@ function mostrarOcultarAdjuntarRecibo() {
 }
 
 function guardarDocumentoComercial(idEgreso) {
-    if(document.getElementById("documentoComercialTipo") == "Digital") {
+    console.log(document.getElementById("documentoComercialTipo").value);
+    if(document.getElementById("documentoComercialTipo").value == "Digital") {
+        console.log("Guardando documento digital");
         postDocumentoDigital(idEgreso);
     } else {
+        console.log("Guardando documento fisico");
         postDocumentoFisico(idEgreso);
+
     }
 }
 
@@ -93,7 +97,7 @@ function postDocumentoDigital(idEgreso) {
                         tipoComprobanteId: document.getElementById("documentoComercialTipoComprobanteId").value,
                         contenidoSerializado: reader.result
                     } ).done( function() {
-                            location.reload(true);
+                            //location.reload(true);
                     });
        };
        reader.onerror = function (error) {
@@ -110,12 +114,12 @@ function postDocumentoFisico(idEgreso) {
             tipoComprobanteId: document.getElementById("documentoComercialTipoComprobanteId").value,
             contenidoSerializado: ""
         } ).done( function() {
-                location.reload(true);
+                //location.reload(true);
         });
 }
 
 function guardarDocumentoComercialPresupuesto() {
-    if(document.getElementById("documentoComercialTipo") == "Digital") {
+    if(document.getElementById("documentoComercialTipo").value == "Digital") {
         postDocumentoDigitalPresupuesto();
     } else {
         postDocumentoFisicoPresupuesto();
