@@ -204,5 +204,5 @@ function mensajeDocumentoAdjuntado() {
         var strong = document.createElement("STRONG");
             strong.innerHTML = "Documento guardado";
             div.appendChild(strong);
-    }, 4000);
+    }, 10);
 }
