@@ -19,6 +19,13 @@ function mostrarDocumentoComercialModalPopulado(idEgreso, descripcionTipoDocumen
                  imagen.style = "width:150px";
                  imagen.id = "previsualizacionDelDocumento"
                  document.getElementById("seccionImagen").appendChild(imagen);
+
+            console.log("Boton descargar");
+             var descargar = document.createElement("a");
+                 descargar.href = contenido;
+                 descargar.download = "Documento";
+                 descargar.innerHTML = "Descargar";
+                 document.getElementById("seccionImagen").appendChild(descargar);
          }
 }
 
