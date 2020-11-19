@@ -109,7 +109,7 @@ html,body,h1,h2,h3,h4,h5 {font-family: "Raleway", sans-serif}
 
         <div class="dropdown">
             <div id="buscarCategoria" class="dropdown-content">
-                <input type="text" placeholder="Search.." id="inputBuscarCategoria" onkeyup="filterFunction('buscarCategoria','inputBuscarCategoria')">
+                <input type="text" placeholder="Search.." id="inputBuscarCategoria" onkeyup="filterFunction('buscarCategoria','inputBuscarCategoria')" >
                 {{#each categorias}}
                     <a onClick="agregarCategoria('{{descripcion}}', '{{id}}')">{{descripcion}}</a>
                 {{/each}}
