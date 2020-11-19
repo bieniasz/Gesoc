@@ -2,8 +2,10 @@ package domain.entities.ProveedorDocComer;
 
 import domain.entities.direccion.Direccion;
 import domain.entities.operacionComercial.EntidadPersistente;
+import domain.entities.operacionComercial.Item;
 
 import javax.persistence.*;
+import java.util.List;
 
 @Entity
 @Table
@@ -23,6 +25,9 @@ public class Proveedor extends EntidadPersistente {
 
     @OneToOne(fetch = FetchType.LAZY, cascade=CascadeType.ALL)
     private Direccion direccionPostal ;
+
+    @ManyToMany(fetch = FetchType.LAZY, cascade=CascadeType.ALL)
+    private List<Item> items;
 
     @Column
     private String estado;
@@ -75,6 +80,14 @@ public class Proveedor extends EntidadPersistente {
 
     public void setActivo(boolean activo) {
         this.activo = activo;
+    }
+
+    public List<Item> getItems() {
+        return items;
+    }
+
+    public void setItems(List<Item> items) {
+        this.items = items;
     }
 
     public void altaProveedor(String nomApRazonSocial, String tipoIdentificador, Long numeroIdenti, Direccion direccionPost, String estado){

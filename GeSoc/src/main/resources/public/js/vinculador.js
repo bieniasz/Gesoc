@@ -1,23 +1,58 @@
+var criteriosAdicionales;
+
 function mostrarVinculadorModal() {
-    document.getElementById("modalAgregarDetalle").style.display = 'block';
+    resetBusquedaMix();
+    $("#modalVinculador").show();
 }
 
-var criteriosAdicionales = [];
+function onCriterioSelected() {
+    var criterio = $("#criterioTipo").val();
+    if(criterio == "Mix") {
+        $("#botonBusquedaMixHidden").removeClass("btn-search-hidden");
+    } else {
+        resetBusquedaMix();
+    }
+}
+
+function resetBusquedaMix() {
+    criteriosAdicionales = [];
+    $("#botonBusquedaMixHidden").addClass("btn-search-hidden");
+    $("#criteriosExtra").empty();
+    $("#buscarMix a").removeClass("critSeleccionado");
+    $("#buscarMix a").hide();
+    $("#buscarMix").hide();
+}
+
+function toggleMixDropdown() {
+    $criteriosDisponibles = $("#buscarMix a").filter(function(i){ return !$(this).hasClass("critSeleccionado"); });
+    $criteriosDisponibles.show();
+    $("#buscarMix").toggle();
+}
+
 function agregarCriterioExtra(criterioElegido) {
-
     criteriosAdicionales.push(criterioElegido);
-
-    var criterio = document.createElement("SPAN");
+    $elegido = $("#buscarMix a:contains('" + criterioElegido + "')");
+    $elegido.addClass("critSeleccionado");
+    $elegido.hide();
+    var criterio = document.createElement("span");
         criterio.setAttribute("class", "label label-info");
         criterio.innerHTML = criterioElegido;
-        document.getElementById("criteriosExtra").appendChild(criterio);
+/*
+    var span = document.createElement("span");
+        span.setAttribute("class", "closebtn");
+        span.setAttribute("onclick", "this.parentElement.style.display='none';");
+        span.innerHTML = "&times;";
+
+    criterio.appendChild(span);*/
+    document.getElementById("criteriosExtra").appendChild(criterio);
 
     console.log(criteriosAdicionales);
 }
 
+
 function correrVinculacion(organizacion) {
     var div = document.createElement("DIV");
-        div.setAttribute("class", "alert");
+        div.setAttribute("class", "alert alert-progress");
         document.getElementById("divMensajesDelVinculador").appendChild(div);
 
     var span = document.createElement("SPAN");
@@ -30,7 +65,7 @@ function correrVinculacion(organizacion) {
         strong.innerHTML = "Vinculacion en proceso";
         div.appendChild(strong);
 
-    document.getElementById("modalAgregarDetalle").style.display = 'none';
+    document.getElementById("modalVinculador").style.display = 'none';
 
     $.post( "/vincular", {
         criterio: document.getElementById("criterioTipo").value,
@@ -40,34 +75,28 @@ function correrVinculacion(organizacion) {
 }
 
 function mensajeComplete() {
-    var div = document.createElement("DIV");
-        div.setAttribute("class", "alert success");
-        document.getElementById("divMensajesDelVinculador").appendChild(div);
+    setTimeout(function() {
+        var $divAlert = $(".alert-progress");
+            $divAlert.hide();
 
-    var span = document.createElement("SPAN");
-        span.setAttribute("class", "closebtn");
-        span.setAttribute("onclick", "this.parentElement.style.display='none';");
-        span.innerHTML = "&times;";
-        div.appendChild(span);
+        var div = document.createElement("DIV");
+            div.setAttribute("class", "alert alert-success");
+            document.getElementById("divMensajesDelVinculador").appendChild(div);
 
-    var strong = document.createElement("STRONG");
-        strong.innerHTML = "Vinculacion completada";
-        div.appendChild(strong);
+        var span = document.createElement("SPAN");
+            span.setAttribute("class", "closebtn");
+            span.setAttribute("onclick", "this.parentElement.style.display='none';");
+            span.innerHTML = "&times;";
+            div.appendChild(span);
+
+        var strong = document.createElement("STRONG");
+            strong.innerHTML = "Vinculacion completada";
+            div.appendChild(strong);
+    }, 4000);
 }
 
 function cerrarVinculadorModal() {
-    document.getElementById("modalAgregarDetalle").style.display = 'none';
+    $("#criterioTipo option:contains('Egreso')").prop('selected',true);
+    resetBusquedaMix();
+    $("#modalVinculador").hide();
 }
-
-function mostrarMixBusqueda() {
-    var criterio = document.getElementById("criterioTipo").value;
-
-    if(criterio == "Mix") {
-        document.getElementById("botonBusquedaMixHidden").style.visibility = 'visible';
-    }
-}
-
-function mostrarMixDropdown() {
-    document.getElementById("buscarMix").classList.toggle("show");
-}
-

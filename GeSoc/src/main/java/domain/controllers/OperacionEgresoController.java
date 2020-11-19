@@ -1,5 +1,6 @@
 package domain.controllers;
 
+import com.google.gson.Gson;
 import db.DAOs.*;
 import db.EntityManagerHelper;
 import domain.entities.ProveedorDocComer.DocumentoComercial;
@@ -21,6 +22,7 @@ import java.util.ArrayList;
 import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
+import java.util.stream.Collectors;
 import java.util.stream.IntStream;
 import java.util.Arrays;
 import java.util.stream.Stream;
@@ -34,6 +36,7 @@ public class OperacionEgresoController {
     private MedioDePagoDAO medioDePagoDAO = new MedioDePagoDAOMySQL();
     private TipoComprobanteDAO tipoComprobanteDAO = new TipoComprobanteDAOMySQL();
     private UsuarioHandler usuarioHandler = new UsuarioHandler();
+    private PresupuestoDAO presupuestoDAO = new PresupuestoDAOMySQL();
 
 
 
@@ -251,6 +254,60 @@ public class OperacionEgresoController {
         egreso.setDocumentoComercial(documentoComercial);
 
         this.operacionEgresoDAO.modificarOperacionEgreso(egreso);
+
+        return response;
+    }
+
+    public String obtenerItemsDelProveedor(Request request, Response response) throws Exception {
+
+        String stringIdProveedor = request.queryParams("idProveedor");
+
+        Integer idProveedor;
+        try {
+            idProveedor = Integer.parseInt(stringIdProveedor);
+        } catch (NumberFormatException e) {
+            idProveedor = 0;
+        }
+
+        Proveedor proveedor = proveedorDAO.getProveedor(idProveedor);
+
+        List<Item> items = proveedor.getItems();
+
+        List<String> itemsDescripcion = items.stream()
+                .map(item -> item.getDescripcion())
+                .collect(Collectors.toList());
+
+        return new Gson().toJson(itemsDescripcion);
+
+    }
+
+    public Object guardarDocumentoComercialPresupuesto(Request request, Response response) {
+        TipoComprobante tipoComprobante = new TipoComprobanteDAOMySQL().buscarTipoComprobantePorId(new Integer(request.queryParams("tipoComprobanteId")));
+
+        System.out.println("Numero:" + request.queryParams("numero"));
+        System.out.println("Numero:" + request.queryParams("tipoDocumento"));
+        System.out.println("Numero:" + request.queryParams("tipoComprobanteId"));
+        System.out.println("Numero:" + request.queryParams("contenidoSerializado"));
+
+        DocumentoComercial documentoComercial = new DocumentoComercial();
+        documentoComercial.setNumeroDocumentoComercial(new Long(request.queryParams("numero")));
+        documentoComercial.setTipoDocumentoComercial(tipoComprobante);
+        documentoComercial.setActivo(true);
+        switch (request.queryParams("tipoDocumento")) {
+            case "Fisico":
+                documentoComercial.setTipoDeAdjunto("Fisico");
+                documentoComercial.setContent(null);
+                break;
+            case "Digital":
+                documentoComercial.setTipoDeAdjunto("Digital");
+                documentoComercial.setContent(request.queryParams("contenidoSerializado").getBytes());
+        }
+
+
+        Presupuesto presupuesto = this.presupuestoDAO.buscarPresupuesto(new Integer(request.queryParams("egresoId")));
+        presupuesto.setDocumentoComercial(documentoComercial);
+
+        this.presupuestoDAO.modificarPresupuesto(presupuesto);
 
         return response;
     }

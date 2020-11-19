@@ -19,6 +19,13 @@ function mostrarDocumentoComercialModalPopulado(idEgreso, descripcionTipoDocumen
                  imagen.style = "width:150px";
                  imagen.id = "previsualizacionDelDocumento"
                  document.getElementById("seccionImagen").appendChild(imagen);
+
+            console.log("Boton descargar");
+             var descargar = document.createElement("a");
+                 descargar.href = contenido;
+                 descargar.download = "Documento";
+                 descargar.innerHTML = "Descargar";
+                 document.getElementById("seccionImagen").appendChild(descargar);
          }
 }
 
@@ -72,8 +79,21 @@ function mostrarOcultarAdjuntarRecibo() {
 }
 
 function guardarDocumentoComercial(idEgreso) {
-    var contenidoDocumento = "Documento vacio";
-    var reader = new FileReader();
+    console.log(document.getElementById("documentoComercialTipo").value);
+    if(document.getElementById("documentoComercialTipo").value == "Digital") {
+        console.log("Guardando documento digital");
+        postDocumentoDigital(idEgreso);
+    } else {
+        console.log("Guardando documento fisico");
+        postDocumentoFisico(idEgreso);
+
+    }
+}
+
+function postDocumentoDigital(idEgreso) {
+   var contenidoDocumento = "Documento vacio";
+
+   var reader = new FileReader();
        reader.readAsDataURL(document.getElementById("documentoComercialAdjunto").files[0]);
        reader.onload = function () {
                 $.post( "/guardarDocumento",
@@ -84,12 +104,68 @@ function guardarDocumentoComercial(idEgreso) {
                         tipoComprobanteId: document.getElementById("documentoComercialTipoComprobanteId").value,
                         contenidoSerializado: reader.result
                     } ).done( function() {
-                            location.reload(true);
+                            mensajeDocumentoAdjuntado();
                     });
        };
        reader.onerror = function (error) {
             contenidoDocumento = "Error al serializar el documento";
        };
+}
+
+function postDocumentoFisico(idEgreso) {
+    $.post( "/guardarDocumento",
+        {
+            egresoId: document.getElementById("idEgresoSeleccionadoParaAdjuntarRecibo").value,
+            tipoDocumento: document.getElementById("documentoComercialTipo").value,
+            numero: document.getElementById("documentoComercialNumero").value,
+            tipoComprobanteId: document.getElementById("documentoComercialTipoComprobanteId").value,
+            contenidoSerializado: ""
+        } ).done( function() {
+                mensajeDocumentoAdjuntado();
+        });
+}
+
+function guardarDocumentoComercialPresupuesto() {
+    if(document.getElementById("documentoComercialTipo").value == "Digital") {
+        postDocumentoDigitalPresupuesto();
+    } else {
+        postDocumentoFisicoPresupuesto();
+    }
+
+}
+
+function postDocumentoDigitalPresupuesto(idEgreso) {
+   var contenidoDocumento = "Documento vacio";
+       var reader = new FileReader();
+          reader.readAsDataURL(document.getElementById("documentoComercialAdjunto").files[0]);
+          reader.onload = function () {
+                   $.post( "/guardarDocumentoPresupuesto",
+                       {
+                           egresoId: document.getElementById("idEgresoSeleccionadoParaAdjuntarRecibo").value,
+                           tipoDocumento: document.getElementById("documentoComercialTipo").value,
+                           numero: document.getElementById("documentoComercialNumero").value,
+                           tipoComprobanteId: document.getElementById("documentoComercialTipoComprobanteId").value,
+                           contenidoSerializado: reader.result
+                       } ).done( function() {
+                               mensajeDocumentoAdjuntado();
+                       });
+          };
+          reader.onerror = function (error) {
+               contenidoDocumento = "Error al serializar el documento";
+          };
+}
+
+function postDocumentoFisicoPresupuesto(idEgreso) {
+    $.post( "/guardarDocumentoPresupuesto",
+        {
+            egresoId: document.getElementById("idEgresoSeleccionadoParaAdjuntarRecibo").value,
+            tipoDocumento: document.getElementById("documentoComercialTipo").value,
+            numero: document.getElementById("documentoComercialNumero").value,
+            tipoComprobanteId: document.getElementById("documentoComercialTipoComprobanteId").value,
+            contenidoSerializado: ""
+        } ).done( function() {
+                mensajeDocumentoAdjuntado();
+        });
 }
 
 function limpiarAgregarDocumentoModal() {
@@ -116,4 +192,24 @@ function llenarTipoComprobante(id, descripcion) {
     document.getElementById("documentoComercialTipoComprobanteId").value = id;
 
     document.getElementById("buscarDocumentoComercialTipoComprobante").classList.toggle("show");
+}
+
+function mensajeDocumentoAdjuntado() {
+    setTimeout(function() {
+        document.getElementById("modalAgregarDetalle").style.display = 'none';
+
+        var div = document.createElement("DIV");
+            div.setAttribute("class", "alert alert-success");
+            document.getElementById("divMensajesDocumentoGuardado").appendChild(div);
+
+        var span = document.createElement("SPAN");
+            span.setAttribute("class", "closebtn");
+            span.setAttribute("onclick", "this.parentElement.style.display='none';");
+            span.innerHTML = "&times;";
+            div.appendChild(span);
+
+        var strong = document.createElement("STRONG");
+            strong.innerHTML = "Documento guardado";
+            div.appendChild(strong);
+    }, 10);
 }

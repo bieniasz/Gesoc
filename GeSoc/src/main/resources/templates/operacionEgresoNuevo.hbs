@@ -76,6 +76,7 @@ html,body,h1,h2,h3,h4,h5 {font-family: "Raleway", sans-serif}
 
   <!-- Header -->
   <header class="titulo" style="padding-top:22px">
+      <a href="/operacionesEgreso" class="btn-border-blue fuente"><i class="fa fa-toggle-left"></i> Atrás</a>
       <b><i class="fa fa-bank fa-fw"></i>{{#if egreso}} Operacion de Egreso - Id {{egreso.id}} {{else}} Nueva Operacion de Egreso {{/if}}</b>
   </header>
 
@@ -98,9 +99,11 @@ html,body,h1,h2,h3,h4,h5 {font-family: "Raleway", sans-serif}
         <div class="dropdown">
             <div id="buscarProveedor" class="dropdown-content">
                 <input type="text" placeholder="Search.." id="inputBuscarProveedor" onkeyup="filterFunction('buscarProveedor','inputBuscarProveedor')">
+
                 {{#each provedoores}}
                     <a onClick="llenarProveedor('{{nombreApellido_RazonSocial}}', '{{id}}')">{{nombreApellido_RazonSocial}}</a>
                 {{/each}}
+
             </div>
         </div>
         <br><br>
@@ -173,7 +176,7 @@ html,body,h1,h2,h3,h4,h5 {font-family: "Raleway", sans-serif}
           <th><i class=""></i> Valor Total </th>
           <th><i class="fas fa-tools"></i> Acciones</th>
         </thead>
-        <tbody>
+        <tbody id="tbDetalles">
         {{#if egreso}}
             {{#each egreso.detalle}}
                 <tr id="rowItemExistente{{id}}" name="rowItemExistente{{id}}">
@@ -193,7 +196,7 @@ html,body,h1,h2,h3,h4,h5 {font-family: "Raleway", sans-serif}
       <!-- !FIN Detalle del Egreso! -->
       <br>
       <div align="left" width="90%">
-      <input class="btn-guardar" type="submit" value="Guardar">
+            <input class="btn-guardar" type="submit" value="Guardar">
       </div>
       <br>
     </form>
@@ -220,14 +223,29 @@ html,body,h1,h2,h3,h4,h5 {font-family: "Raleway", sans-serif}
     <div class="modalContent">
         <h3>Agregar nuevo detalle</h3>
         <form>
-            <input type="text" name="descripcionItem" id="descripcionItem" placeholder="Descripcion">
+            <input type="text" readonly name="descripcionItem" class="input-formulario" id="descripcionItem" placeholder="Item">
+
+                    <a name="searchItem" class=" btn btn-search" onclick="mostrarBuscarItem()"><i class="fas fa-search"></i></a>
+
+                    <div class="dropdown">
+                        <div id="buscarItem" class="dropdown-content">
+                            <input type="text" placeholder="Search.." id="inputBuscarItem" onkeyup="filterFunction('buscarItem','inputBuscarItem')">
+                            <div id="itemsDelProveedor">
+
+                            </div>
+
+                        </div>
+                    </div>
+
+
+
             <input type="text" name="cantidadItem" id="cantidadItem" placeholder="Cantidad">
             <input type="text" name="valorItem" id="valorItem" placeholder="Valor total">
         </form>
         <br>
         <div class="">
             <button type="button" name="button" class="btn-verde" onclick="guardarNuevoItem()">Agregar</button>
-            <button type="button" name="button" class="btn-cancelar" onclick="cerrarModal()">Cerrar</button>
+            <button type="button" name="button" class="btn-cancelar" onclick="cerrarModalDetalles()">Cerrar</button>
         </div>
     </div>
 </div>

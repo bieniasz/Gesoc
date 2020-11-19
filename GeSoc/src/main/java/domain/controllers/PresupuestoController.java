@@ -37,6 +37,7 @@ public class PresupuestoController {
     private ImagenesDAO imagenesDAO = new ImagenesDAOMySQL();
     private UserDAO userDAO = new UserDAOMySQL();
     private UsuarioHandler usuarioHandler = new UsuarioHandler();
+    private CriterioDeOperacionesDAO criterioDeOperacionesDAO = new CriterioDeOperacionesDAOMySQL();
 
     
     public ModelAndView mostrarPresupuestos(Request request, Response response)  throws Exception {
@@ -46,9 +47,7 @@ public class PresupuestoController {
         Integer idEgreso = new Integer(request.queryParams("egresoId"));
 
         Usuario usuario = this.userDAO.buscarUsuarioPoruserId(usuarioIDSpark);
-        
-        
-        
+        List<CriterioDeOperaciones> criteriosDeOperaciones = this.criterioDeOperacionesDAO.getTodasLosCriterios();
   
         List<CategoriaDeOperaciones> categorias = this.categoriaDAO.getTodasLasCategorias();
 
@@ -57,12 +56,13 @@ public class PresupuestoController {
         List<Presupuesto> presupuestos= this.presupuestoDAO.buscarPresupuestoEgresoId(idEgreso);
         
         this.arreglarImagenPresupuestos(presupuestos);
-        
+
         Map<String, Object> parametros = new HashMap<>();
         usuarioHandler.agregarDatosDeUsuario(parametros,usuario);
 
         parametros.put("categorias", categorias);
         parametros.put("presupuestos", presupuestos);
+        parametros.put("criteriosDeOperaciones", criteriosDeOperaciones);
         parametros.put("tiposCombantes", tipoComprobanteList);
 
         return new ModelAndView(parametros, "presupuestos.hbs");
@@ -77,9 +77,6 @@ public class PresupuestoController {
         Integer id = new Integer(request.queryParams("presupuestoId"));
 
         Presupuesto presupuesto = this.presupuestoDAO.buscarPresupuesto(id);
-        
-        
-        
         OperacionEgreso operacionEgreso = this.operacionEgresoDAO.buscarOperacionEgresoPorId(presupuesto.getEgreso().getId());
 
         List<Proveedor> proveedores = this.proveedorDAO.getTodosLosProveedores();
@@ -141,19 +138,12 @@ public class PresupuestoController {
 
     public Response guardar(Request request, Response response) throws Exception {
        
-    	String usuarioIDSpark = request.session().attribute("id");       
-       
-               
+    	String usuarioIDSpark = request.session().attribute("id");
         List<DetalleEgreso> detallesEgresos = this.getListaDeDetalle(request);
-        
         Boolean esElElegido = this.getEsElElegido(request);
-        
         OperacionEgreso egreso= this.operacionEgresoDAO.buscarOperacionEgresoPorId(new Integer(request.queryParams("egreso")));
-        
         Integer egresoId = new Integer(request.queryParams("egreso"));
-       
         LocalDate fecha = LocalDate.parse(request.queryParams("fecha"));
-        
         List<CategoriaDeOperaciones> categoriasDeOperaciones = this.getListaDeCategorias(request);
         
         
@@ -165,21 +155,30 @@ public class PresupuestoController {
         builder.setEsElElegido(esElElegido);
       
         Presupuesto presupuesto = builder.build();
-
         this.presupuestoDAO.guardarPresupuesto(presupuesto);
 
         response.redirect("/presupuestos?egresoId="+egresoId);
         return response;
         
-             
-        
-        
-        
     }
 
-    private Boolean getEsElElegido(Request request) {		
-    	             
-          Boolean respuesta = new Boolean(request.queryParams("prespuestoElegidoCheck" ));            
+    private Boolean getEsElElegido(Request request) {
+        System.out.println("ES EL ELEGIDO: " + request.queryParams("prespuestoElegidoCheck"));
+
+        Boolean respuesta = false;
+        try {
+
+            if (request.queryParams("prespuestoElegidoCheck").equals("on")) {
+                respuesta = true;
+            } else {
+                respuesta = false;
+            }
+        } catch (Exception e) {
+            respuesta = false;
+        }
+
+
+        System.out.println("ES EL ELEGIDO: " + respuesta);
        
 		return respuesta;
 	}

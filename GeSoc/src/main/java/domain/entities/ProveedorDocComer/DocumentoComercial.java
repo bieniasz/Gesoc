@@ -23,6 +23,8 @@ public class DocumentoComercial extends EntidadPersistente {
 
     @Column(columnDefinition = "LONGBLOB")
     private byte[] content;
+
+    @Transient
     private String contentDeserealizado;
 
     @Column

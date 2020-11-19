@@ -33,7 +33,7 @@ public class LoginController {
             Usuario usuario = validador.validarLogin(nombreDeUsuario, contrasenia, horaIntento);
             loginRespuesta.setError(0);
             loginRespuesta.setUsuarioID(usuario.getUsuarioId());
-            //Todo sumo el manejo de sessiones por arriba para ver si funciona y luego refactorizar el query.
+
             request.session(true);
             request.session().attribute("id", usuario.getUsuarioId());
 
