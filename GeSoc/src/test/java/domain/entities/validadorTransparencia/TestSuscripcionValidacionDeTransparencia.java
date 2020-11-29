@@ -11,7 +11,8 @@ import domain.entities.usuario.UsuarioRevisor;
 import domain.entities.validacionEgresos.criterios.CantidadIndicada;
 import domain.entities.validacionEgresos.criterios.MenorValor;
 
-public class TestSuscripcionValidacionDeTransparencia {
+public class
+TestSuscripcionValidacionDeTransparencia {
 
     private SuscripcionValidacionDeTransparencia suscripcion;
     private UsuarioRevisor revisor1;

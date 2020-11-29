@@ -6,7 +6,7 @@ import org.quartz.JobExecutionException;
 
 public class SchedulerJob implements Job {
 
-    private ValidadorDeTransparencia validadorDeTransparencia;
+    private ValidadorDeTransparencia validadorDeTransparencia = new ValidadorDeTransparencia();
 
     public void setValidadorDeTransparencia(ValidadorDeTransparencia validador) {
         this.validadorDeTransparencia = validador;

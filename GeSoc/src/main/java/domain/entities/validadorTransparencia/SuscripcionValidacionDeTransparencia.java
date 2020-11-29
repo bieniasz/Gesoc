@@ -4,15 +4,29 @@ import domain.entities.operacionComercial.OperacionEgreso;
 import domain.entities.usuario.UsuarioRevisor;
 import domain.entities.validacionEgresos.CriterioValidacionEgresosPresupuesto;
 
+import javax.persistence.*;
 import java.time.LocalDate;
 import java.util.ArrayList;
 import java.util.List;
 
+@Entity
+@DiscriminatorValue("SuscripcionValidacionDeTransparencia")
 public class SuscripcionValidacionDeTransparencia extends ValidacionPendiente{
+
+    @ManyToMany(fetch= FetchType.EAGER, cascade=CascadeType.ALL)
     private List<UsuarioRevisor> revisores = new ArrayList<UsuarioRevisor>();
+
+    @ManyToOne
     private OperacionEgreso operacionEgreso;
+
+    @ManyToMany(fetch=FetchType.EAGER, cascade={CascadeType.ALL})
     private List<CriterioValidacionEgresosPresupuesto> criteriosDeseados = new ArrayList<CriterioValidacionEgresosPresupuesto>();
+
+    @OneToOne(cascade={CascadeType.ALL})
     private ResultadoDeValidacion resultadoDeValidacion;
+
+    @Column
+    private Boolean validada = false;
 
     @Override
     public void validar(){
@@ -28,6 +42,7 @@ public class SuscripcionValidacionDeTransparencia extends ValidacionPendiente{
 
         this.GenerarResultadoDeValidacion(errores);
         this.notificarRevisores();
+        this.validada = true;
     }
 
     private void GenerarResultadoDeValidacion(List<String> errores){
@@ -65,4 +80,39 @@ public class SuscripcionValidacionDeTransparencia extends ValidacionPendiente{
         this.operacionEgreso = operacion;
     }
 
+    public List<UsuarioRevisor> getRevisores() {
+        return revisores;
+    }
+
+    public void setRevisores(List<UsuarioRevisor> revisores) {
+        this.revisores = revisores;
+    }
+
+    public OperacionEgreso getOperacionEgreso() {
+        return operacionEgreso;
+    }
+
+    public List<CriterioValidacionEgresosPresupuesto> getCriteriosDeseados() {
+        return criteriosDeseados;
+    }
+
+    public void setCriteriosDeseados(List<CriterioValidacionEgresosPresupuesto> criteriosDeseados) {
+        this.criteriosDeseados = criteriosDeseados;
+    }
+
+    public ResultadoDeValidacion getResultadoDeValidacion() {
+        return resultadoDeValidacion;
+    }
+
+    public void setResultadoDeValidacion(ResultadoDeValidacion resultadoDeValidacion) {
+        this.resultadoDeValidacion = resultadoDeValidacion;
+    }
+
+    public Boolean getValidada() {
+        return validada;
+    }
+
+    public void setValidada(Boolean validada) {
+        this.validada = validada;
+    }
 }

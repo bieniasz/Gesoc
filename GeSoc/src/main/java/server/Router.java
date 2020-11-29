@@ -35,6 +35,7 @@ public class Router {
         OperacionIngresoController controllerOperacionIngreso = new OperacionIngresoController();
         PresupuestoController controllerPresupuesto = new PresupuestoController();
         VinculadorController vinculadorController = new VinculadorController();
+        SuscripcionValidacionController suscripcionValidacionController = new SuscripcionValidacionController();
         AuthMiddleware authMiddleware       = new AuthMiddleware();
 
         Spark.get("/", controllerLogin::mostrarLogin, Router.engine);
@@ -90,6 +91,9 @@ public class Router {
         Spark.post("/presupuesto", controllerPresupuesto::guardar);
 
         Spark.post("/vincular", vinculadorController::ejecutarVinculador);
+
+        Spark.get("/suscripcionesValidaciones", suscripcionValidacionController::mostrarSuscripciones, Router.engine);
+        Spark.before("/suscripcionesValidaciones", authMiddleware::verificarSesionGeneral);
 
         
         

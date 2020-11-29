@@ -8,7 +8,6 @@ import static org.quartz.JobBuilder.newJob;
 import static org.quartz.TriggerBuilder.newTrigger;
 
 public class TimerValidadorTransparencia {
-    private ValidadorDeTransparencia validadorDeTransparencia;
     private JobDetail job;
     private Scheduler sched;
 
